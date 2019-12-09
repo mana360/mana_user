@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
-import {View, Text} from 'react-native'
-
+import {View, Text, TouchableOpacity} from 'react-native'
+import HeaderBar from '../config/HeaderBar'
+import FooterBar from '../config/FooterBar'
 export default class Home extends React.Component{
     render(){
+        let {navigation} = this.props
         return(
-            <View>
-                <Text>Welcome Home</Text>
+            <View style={{flex:1,}}>
+                <HeaderBar title="Home" isBack={true} isNotification={true} navigation={navigation}/>
+                    <View style={{flex:1}}>
+                        <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Home')}}>
+                            <Text style={{fontSize:28}}>Welcome</Text>
+                        </TouchableOpacity>
+                    </View>
+                <FooterBar navigation={navigation}/>
             </View>
         )
     }

@@ -8,6 +8,7 @@ const Constants = {
     FONT_SIZE_EXTRA_LARGE:16,
 
    //colors
+    COLOR_GREEN_PROFILE:"rgba(96, 176, 115,1)",
     COLOR_PRIMARY:"rgba(98,180,108,1)",
     COLOR_GREEN:"rgba(131,189,85,1)",
     COLOR_GREEN_LIGHT:"rgba(189,223,162,1)",
@@ -39,7 +40,15 @@ const Constants = {
     Proceed:'proceed',
 
     //Label
-
+SupportSubject:'support subject',
+Message:'message',
+RequestSentSuccessfully:'request sent successfully.',
+Trip:"trip",
+Nyc_Syc:'Nyc-Syc',
+ViewYOurTripDetail:'view your trip details',
+RateYourTrip:'Rate your Trip',
+LabelYourTrip:'Label your Trip',
+ReviewYourTrip:'Review your Trip',
 };
 
 export default Constants;

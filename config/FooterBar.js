@@ -4,7 +4,8 @@
 import React from 'react';
 import {View,Image,StyleSheet ,TouchableOpacity,} from 'react-native';
 import {Footer} from 'native-base'
-import Constants from './Constants'
+import Constants from './Constants';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 class FooterBar extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -69,8 +70,8 @@ footerCol:{
   alignItems:'center',
 },
 footerIcon:{
-  width:40,
-  height:40,
+  width:35,
+  height:35,
   resizeMode:'cover',
 },
 });

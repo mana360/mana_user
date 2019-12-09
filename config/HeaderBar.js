@@ -35,7 +35,7 @@ class HeaderBar extends React.Component {
                   onPress={()=>{this.props.navigation.pop()}}
                 >
                   <Image
-                    source={require('../images/back.png')}
+                    source={require('../images/back_white.png')}
                     style={styles.headerIcon}
                   />
                 </TouchableOpacity>
@@ -144,6 +144,7 @@ headerCol:{
   backgroundColor:'#E8E8E8',
 },
 headerIcon:{
+  tintColor:Constants.COLOR_WHITE,
   width:25,
   height:25,
   resizeMode:'cover',
