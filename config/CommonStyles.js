@@ -327,58 +327,347 @@ const StyleRateAndReview = StyleSheet.create({
         width: 420,
         height: 420,
         borderRadius: 205,
-        top: '-50%',
+        top: '-175%',
         alignSelf: 'center',
         backgroundColor: Constants.COLOR_PRIMARY,
-
-    },
-    mainContainer: {
-        flex: 1,
     },
     ImageCurrentTrip: {
-        width:130,
-        height:130,
-        borderRadius:70,
-        borderWidth:8,
-        borderColor:Constants.COLOR_WHITE,
-        alignSelf:'center',
-        marginTop:'20%',
+        width: 130,
+        height: 130,
+        borderRadius: 70,
+        borderWidth: 8,
+        borderColor: Constants.COLOR_WHITE,
+        alignSelf: 'center',
+        marginTop: '12%',
     },
-    TripDetail_View:{
-        backgroundColor:Constants.COLOR_GREY_DARK,
-        width:'50%',
-        justifyContent:'center',
-        alignItems:'center',
-        alignSelf:'center',
-        borderRadius:50
+    TripDetail_View: {
+        backgroundColor: Constants.COLOR_GREY_DARK,
+        width: '50%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        borderRadius: 50,
+        marginTop: 15,
+        marginBottom: 15,
     },
-    TripDetail_Text:{
-        paddingBottom:8,
-        paddingTop:8,
-        textTransform:'uppercase',
-        fontSize:Constants.FONT_SIZE__MEDIUM,
-        color:Constants.COLOR_WHITE
+    TripDetail_Text: {
+        paddingBottom: 8,
+        paddingTop: 8,
+        textTransform: 'uppercase',
+        fontSize: Constants.FONT_SIZE__MEDIUM,
+        color: Constants.COLOR_WHITE
     },
-    InputBox_View:{ 
-        marginTop:15
+    InputBox_Container: {
+        height: 120,
+        maxHeight: 120,
+        marginVertical: 15,
+        borderRadius: 10,
+        paddingBottom: 50,
+        borderWidth: 0.6,
+        width: '90%',
+        alignSelf: 'center',
+        borderColor: Constants.COLOR_GREY_LIGHT,
     },
-    InputBox_Container:{
-    
+    ratingText: {
+        fontWeight: 'bold',
+        marginLeft: 40,
+        color: Constants.COLOR_GREY_SHADED,
+        fontSize: Constants.FONT_SIZE_LARGE,
     },
-    labelView:{
- marginLeft:'12%'
+    labelView: {
+        top: -11,
+        zIndex: 1,
+        marginLeft: 20,
+        position: 'absolute',
+        justifyContent: 'center',
+        backgroundColor: Constants.COLOR_WHITE,
     },
-    labelText:{
-        fontWeight:'bold',
-        color:Constants.COLOR_GREY_SHADED,
-        fontSize:Constants.FONT_SIZE_LARGE,
+    labelText: {
+        paddingLeft: 5,
+        paddingRight: 5,
+        fontWeight: 'bold',
+        color: Constants.COLOR_GREY_SHADED,
+        fontSize: Constants.FONT_SIZE_LARGE,
+    },
+    textInputbox: {
+        width: '100%',
+        paddingBottom: 30,
+        paddingLeft: 22,
+        paddingRight: 5,
+        alignSelf: 'center',
+    },
+    buttonView: {
+        width: '90%',
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginTop: '10%',
+        marginBottom: 20,
+        alignSelf: 'center',
+        borderRadius: 20,
+        backgroundColor: Constants.COLOR_GREEN,
+    },
+    buttonText: {
+        alignSelf: 'center',
+        textTransform: "uppercase",
+        color: Constants.COLOR_WHITE,
+        fontWeight: 'bold'
+    },
+    modalView: {
+        width: wp('80%'),
+        height: hp('35%'),
+        justifyContent: 'center',
+        backgroundColor: Constants.COLOR_WHITE
+    },
+    leftCross_View: {
+        alignSelf: 'flex-end',
+    },
+    leftCrossText: {
+        right: 10,
+        top: 1,
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        color: Constants.COLOR_GREY_LIGHT,
+    },
+    modalImage: {
+        alignSelf: 'center',
+        width: 100,
+        height: 100,
+    },
+    modalMsg: {
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        textTransform: 'capitalize',
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        color: Constants.COLOR_GREY_LIGHT,
+        marginVertical: 10,
+    },
+    modalButton: {
+        width: '40%',
+        borderRadius: 50,
+        backgroundColor: Constants.COLOR_GREEN,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        marginVertical: 10,
+    },
+    modalButtonText: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        alignSelf: 'center',
+        color: Constants.COLOR_WHITE,
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        fontWeight: 'bold',
+        textTransform: 'uppercase'
+    },
 
-    }
 })
+const StyleViewCompletedDetail = StyleSheet.create({
+    topCircle: {
+        position: 'absolute',
+        zIndex: -1,
+        width: 420,
+        height: 420,
+        borderRadius: 205,
+        top: '-175%',
+        alignSelf: 'center',
+        backgroundColor: Constants.COLOR_PRIMARY,
+    },
+    ImageCurrentTrip: {
+        width: 130,
+        height: 130,
+        borderRadius: 70,
+        borderWidth: 8,
+        borderColor: Constants.COLOR_WHITE,
+        alignSelf: 'center',
+        marginTop: '12%',
+    },
+    label: {
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        color: Constants.COLOR_GREY_DARK,
+    },
+    bottomline: {
+        borderBottomColor: Constants.COLOR_GREEN,
+        borderBottomWidth: 5,
+        width: '20%',
+        alignSelf: 'center',
+        borderRadius: 50,
+        marginTop: '2%',
+        marginBottom: 25
+    },
+    row: {
+        flexDirection: 'row',
+        width: '90%',
+        paddingTop: 20,
+        paddingBottom: 20,
+        alignSelf: 'center',
+        borderBottomWidth: 1.5,
+        borderBottomColor: Constants.COLOR_GREY
+    },
+    col1: {
+        width: '50%'
+    },
+    col1Text: {
+        paddingRight: 5,
+        fontSize: Constants.FONT_SIZE_LARGE,
+        color: Constants.COLOR_GREY_DARK,
+        fontWeight: 'bold',
+    },
+    col2: {
+        width: '50%',
+    },
+    col2Text: {
+        paddingLeft: 10,
+        fontSize: Constants.FONT_SIZE_LARGE,
+        color: Constants.COLOR_GREY_DARK,
 
+    },
+})
+const StyleSignIn = StyleSheet.create({
+    bgImage: {
+        width: wp('100%'),
+        height: hp('100%'),
+        zIndex: -1,
+        position: 'absolute',
+        resizeMode: 'stretch',
+    },
+    loginBox: {
+        width: wp('90%'),
+        paddingRight: 15,
+        paddingLeft: 15,
+        justifyContent: 'center',
+        backgroundColor: Constants.COLOR_WHITE,
+    },
+    logoImage: {
+        width: 150,
+        height: 150,
+        borderRadius: 75,
+        top: -65,
+        alignSelf: 'center',
+        position: 'absolute',
+    },
+    loginLabel: {
+        marginTop: "33%",
+        alignSelf: 'center',
+        color: 'black',
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        color: Constants.COLOR_GREY_DARK
+    },
+    textInput_container: {
+        marginVertical: 15
+    },
+    textInput_style: {
+        borderWidth: 0.7,
+        borderRadius: 50,
+        paddingLeft: 25,
+        marginVertical: 5,
+        borderColor: Constants.COLOR_GREY_LIGHT
+    },
+    labelBox: {
+        zIndex: 1,
+        left: 15,
+        paddingLeft: 2,
+        paddingRight: 2,
+        marginTop: -7,
+        marginLeft: "3%",
+        position: 'absolute',
+        flexDirection: 'row',
+        backgroundColor: 'white',
+        borderColor: Constants.COLOR_GREY_LIGHT
+    },
+    LabelBoxIcon: {
+        width: 18,
+        height: 18,
+        marginHorizontal: 3,
+    },
+    labelBoxText: {
+        fontWeight: 'bold',
+        textTransform: 'capitalize',
+        fontSize: Constants.fontSizeLarge,
+        color: Constants.COLOR_GREY_DARK,
+    },
+    loginButton: {
+        width: wp('80%'),
+        borderRadius: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 15,
+        backgroundColor: Constants.COLOR_GREEN,
+    },
+    Login_buttonText: {
+        color: Constants.COLOR_WHITE,
+        textTransform: 'uppercase',
+        padding: 15,
+        fontWeight: 'bold',
+    },
+    forgotButton: {
+        marginTop: 20,
+        marginBottom: 25,
+    },
+    forgotLabel: {
+        alignSelf: 'center',
+        color: Constants.COLOR_GREY_LIGHT,
+        fontSize: Constants.FONT_SIZE_LARGE,
+    },
+    memberButton: {
+        position: 'absolute',
+        bottom: 25,
+        alignSelf: 'center',
+    },
+    memberLabel: {
+        color: Constants.COLOR_WHITE,
+        fontSize: Constants.FONT_SIZE_LARGE,
+    },
+
+})
+const StyleTermsAndCondition = StyleSheet.create({
+    container: {
+        marginHorizontal: 15,
+        marginVertical: 5,
+        padding: 5,
+    },
+    title: {
+        fontWeight: 'bold',
+        marginVertical: 3,
+        fontSize: Constants.FONT_SIZE__MEDIUM,
+        color: Constants.COLOR_GREY_DARK,
+    },
+    desc: {
+        marginVertical: 2,
+        textAlign: 'justify',
+        fontSize: Constants.FONT_SIZE__MEDIUM,
+        color: Constants.COLOR_GREY_LIGHT,
+    },
+})
+const StyleDashboard = StyleSheet.create({
+    topCircle: {
+        position: 'absolute',
+        zIndex: -1,
+        width: 420,
+        height: 420,
+        borderRadius: 205,
+        top: '-175%',
+        alignSelf: 'center',
+        backgroundColor: Constants.COLOR_PRIMARY,
+    },
+    ImageCurrentTrip: {
+        width: 130,
+        height: 130,
+        borderRadius: 70,
+        borderWidth: 8,
+        borderColor: Constants.COLOR_WHITE,
+        alignSelf: 'center',
+        marginTop: '12%',
+    },
+})
 export {
     StyleHelpAndSupport,
     StyleTripHelpAndSupport,
     StyleNotification,
-    StyleRateAndReview
+    StyleRateAndReview,
+    StyleViewCompletedDetail,
+    StyleSignIn,
+    StyleTermsAndCondition,
+    StyleDashboard,
 }

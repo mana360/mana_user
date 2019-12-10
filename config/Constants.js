@@ -49,6 +49,32 @@ ViewYOurTripDetail:'view your trip details',
 RateYourTrip:'Rate your Trip',
 LabelYourTrip:'Label your Trip',
 ReviewYourTrip:'Review your Trip',
+PartnerName:"Partner's Name",
+Telephonenumber:'Telephone Number',
+DateOfPickUp:'Date of Pick up',
+PickUpTime:'Pick up Time',
+ArrivalTime:'Arrival Time',
+PickUpLocation:'Pick up Location',
+DestinationLocation:'Destination Location',
+CargoType:'Cargo Type',
+CargoHandling:'Cargo Handling',
+CargoHandlingCharges:'Cargo Handling Charges',
+RecurringRequirement:'Recurring Requirement',
+CostOfRecurring:'Cost of Recurring',
+frequency:'Frequency',
+CostOfTruckingService:'Cost of Trucking Service',
+Status:'Status',
+ReviewSentSuccessfully:'Review Sent Successfully.',
+MobileNumber:'Mobile Number',
+Password:'Password',
+SignIn:'SIGN IN',
+ForgotPassword:'Forgot Password?',
+NotAMemmberYet:'Not a Member yet?'
+
+
+
+
+
 };
 
 export default Constants;

@@ -7,6 +7,10 @@ import HelpAndSupport from './views/HelpAndSupport';
 import TripHelpAndSupport from './views/TripHelpAndSupport';
 import Notification from './views/Notification';
 import RateAndReview from './views/RateAndReview';
+import ViewCompletedTripDetail from './views/ViewCompletedTripDetail';
+import SignIn from './views/Signin';
+import TermsAndCondition from './views/TermsAndCondition.';
+import Dashboard from './views/Dashboard';
 
 console.disableYellowBox = true;
 
@@ -35,7 +39,24 @@ const AppNavigator1 = createStackNavigator({
       screen: RateAndReview,
       navigationOptions: () => ({ header: null })
     },
+    ViewCompletedTripDetail: {
+      screen: ViewCompletedTripDetail,
+      navigationOptions: () => ({ header: null })
+    },
+    SignIn: {
+      screen: SignIn,
+      navigationOptions: () => ({ header: null })
+    },
+    TermsAndCondition: {
+      screen: TermsAndCondition,
+      navigationOptions: () => ({ header: null })
+    },
+    Dashboard: {
+      screen: Dashboard,
+      navigationOptions: () => ({ header: null })
+    },
+    
 },
-     {initialRouteName:"RateAndReview"}
+     {initialRouteName:"ViewCompletedTripDetail"}
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

@@ -11,7 +11,7 @@ export default class Splash extends React.Component{
          this.props.navigation.dispatch(
              StackActions.reset({
              index: 0,
-             actions: [NavigationActions.navigate({ routeName: 'Login'})],
+             actions: [NavigationActions.navigate({ routeName: 'SignIn'})],
              }))
            }      
            , 3000);
