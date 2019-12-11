@@ -11,6 +11,8 @@ import ViewCompletedTripDetail from './views/ViewCompletedTripDetail';
 import SignIn from './views/Signin';
 import TermsAndCondition from './views/TermsAndCondition.';
 import Dashboard from './views/Dashboard';
+import TruckBooking from './views/TruckBooking';
+import CurrentTrip from './views/CurrentTrip';
 
 console.disableYellowBox = true;
 
@@ -55,8 +57,15 @@ const AppNavigator1 = createStackNavigator({
       screen: Dashboard,
       navigationOptions: () => ({ header: null })
     },
-    
+    TruckBooking: {
+      screen: TruckBooking,
+      navigationOptions: () => ({ header: null })
+    },
+    CurrentTrip: {
+      screen: CurrentTrip,
+      navigationOptions: () => ({ header: null })
+    },
 },
-     {initialRouteName:"ViewCompletedTripDetail"}
+     {initialRouteName:"TruckBooking"}
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

@@ -1,6 +1,7 @@
 import { Dimensions, StyleSheet } from 'react-native';
 import Constants from '../config/Constants';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import LinearGradient from 'react-native-linear-gradient';
 
 const StyleHelpAndSupport = StyleSheet.create({
     supportTitle: {
@@ -642,24 +643,258 @@ const StyleTermsAndCondition = StyleSheet.create({
 })
 const StyleDashboard = StyleSheet.create({
     topCircle: {
-        position: 'absolute',
-        zIndex: -1,
         width: 420,
         height: 420,
-        borderRadius: 205,
-        top: '-175%',
+        borderRadius: 200,
+        marginTop:'-85%',
         alignSelf: 'center',
         backgroundColor: Constants.COLOR_PRIMARY,
     },
-    ImageCurrentTrip: {
-        width: 130,
-        height: 130,
-        borderRadius: 70,
-        borderWidth: 8,
-        borderColor: Constants.COLOR_WHITE,
-        alignSelf: 'center',
-        marginTop: '12%',
+    cardView:{
+     flex:4,
+     justifyContent:'center',
+     alignItems:'center'
     },
+    ImageView:{
+        flex:1,
+        alignSelf:'center',
+        paddingLeft:5,
+        paddingRight:5,
+        justifyContent:'center',
+        alignItems:'center',
+        borderRightWidth:0.5,
+    },
+    imageD:{
+     width:50,
+     height:50
+    },
+    textD:{
+        paddingRight:1,
+        marginTop:5,
+        fontSize:8,
+        textAlign:"center",
+        alignSelf:'center',
+        textTransform:'capitalize'
+        
+    },
+    labelText:{
+        marginTop:10,
+        marginBottom:5,
+        textAlign:'center',
+        alignSelf:'center',
+        fontWeight:'bold',
+        textTransform:"capitalize",
+        color:Constants.COLOR_GREY_SHADED,
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
+    },
+    bottomLine:{
+        width:'20%',
+        borderRadius:20,
+        borderBottomWidth:5,
+        alignSelf:'center',
+        borderBottomColor:Constants.COLOR_GREEN,
+        marginBottom:20
+    },
+    row:{
+        marginTop:5,
+        marginBottom:15,
+        flexDirection:'row',
+        borderBottomWidth:1.3,
+        paddingBottom:10,
+        justifyContent:"center",
+        alignItems:'center',
+        borderBottomColor:Constants.COLOR_GREY
+    },
+    col1:{
+       width:'30%',
+       paddingLeft:20,
+    },
+    image:{
+        width:90,
+        height:90,
+    },
+    labelText2:{
+        textTransform:"capitalize",
+        fontWeight:'bold',
+        paddingBottom:5,
+    },
+    descText:{
+        color:Constants.COLOR_GREY_LIGHT,
+        fontSize:Constants.FONT_SIZE_SMALL,
+    },
+    col2:{
+     width:'70%',
+     paddingLeft:20,
+     paddingRight:10,
+    },
+})
+const StyleTruckBooking = StyleSheet.create({
+    topCircle: {
+        width: 420,
+        height: 420,
+        borderRadius: 200,
+        marginTop:'-85%',
+        alignSelf: 'center',
+        backgroundColor: Constants.COLOR_PRIMARY,
+    },
+    cardView:{
+     flex:4,
+     justifyContent:'center',
+     alignItems:'center'
+    },
+    ImageView:{
+        flex:1,
+        alignSelf:'center',
+        paddingLeft:5,
+        paddingRight:5,
+        justifyContent:'center',
+        alignItems:'center',
+        borderRightWidth:0.5,
+    },
+    imageD:{
+     width:50,
+     height:50
+    },
+    textD:{
+        paddingRight:1,
+        marginTop:5,
+        fontSize:8,
+        textAlign:"center",
+        alignSelf:'center',
+        textTransform:'capitalize'
+        
+    },
+    labelText:{
+        marginTop:10,
+        marginBottom:5,
+        textAlign:'center',
+        alignSelf:'center',
+        fontWeight:'bold',
+        textTransform:"capitalize",
+        color:Constants.COLOR_GREY_SHADED,
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
+    },
+    bottomLine:{
+        width:'20%',
+        borderRadius:20,
+        borderBottomWidth:5,
+        alignSelf:'center',
+        borderBottomColor:Constants.COLOR_GREEN,
+        marginBottom:20
+    },
+    row:{
+        marginTop:5,
+        marginBottom:10,
+        flexDirection:'row',
+        borderBottomWidth:1.3,
+        paddingBottom:10,
+        justifyContent:"center",
+        alignItems:'center',
+        borderBottomColor:Constants.COLOR_GREY,
+        backgroundColor:Constants.COLOR_WHITE
+    },
+    col1:{
+       width:'30%',
+       paddingLeft:20,
+    },
+    image:{
+        width:90,
+        height:90,
+    },
+    labelText2:{
+        paddingTop:5,
+        paddingBottom:5,
+        textTransform:"capitalize",
+        fontWeight:'bold',
+        color:Constants.COLOR_GREY_DARK,
+    },
+    descText:{
+        color:Constants.COLOR_GREY_LIGHT,
+        fontSize:Constants.FONT_SIZE_SMALL,
+    },
+
+    button:{
+        width:'35%',
+        marginVertical:10,
+        justifyContent:'center',
+        alignItems:'center',
+        borderRadius:25,
+        backgroundColor:Constants.COLOR_GREEN
+    },
+    buttonLabel:{
+        paddingTop:5,
+        paddingBottom:5,
+        textTransform:"uppercase",
+        color:Constants.COLOR_WHITE,
+        fontSize:Constants.FONT_SIZE__MEDIUM
+    },
+    col2:{
+     width:'70%',
+     paddingLeft:20,
+     paddingRight:10,
+    },
+})
+const StyleCurrentTrip = StyleSheet.create({
+    row: {
+        flex: 10,
+        flexDirection: 'row',
+        padding: 5,
+        marginVertical: 5,
+        backgroundColor: Constants.COLOR_WHITE,
+    },
+    col1: {
+        flex: 2,
+        justifyContent: 'center',
+        alignContent: 'center',
+        padding: 5,
+    },
+    icon: {
+        width: 60,
+        height:60,
+        paddingRight:5,
+        paddingLeft:5,
+        resizeMode: 'stretch',
+    },
+    col2: {
+        paddingLeft:5,
+        flex: 8,
+        alignContent: 'center',
+        paddingLeft: 15,
+    },
+    bottomLine:{
+        borderBottomWidth:0.8,
+        borderBottomColor:Constants.COLOR_GREY_DARK,
+        marginBottom:5,
+
+    },
+    label:{
+        marginVertical: 3,
+        textTransform: "capitalize",
+        fontSize: Constants.FONT_SIZE_LARGE,
+        color: Constants.COLOR_GREY_DARK,
+    },
+    imageIcon:{
+        width:18,
+        height:18
+    },
+    desc: {
+        marginVertical: 3,
+        fontSize: Constants.FONT_SIZE__MEDIUM,
+        color: Constants.COLOR_GREY_LIGHT,
+    },
+    dateTime: {
+        marginVertical: 3,
+        fontSize: Constants.FONT_SIZE_SMALL,
+        color: Constants.COLOR_GREY_SHADED,
+    },
+    arrow: {
+        width: 25,
+        height: 25,
+        left: 5,
+        alignSelf:'center',
+        resizeMode: 'stretch'
+    },
+
 })
 export {
     StyleHelpAndSupport,
@@ -670,4 +905,6 @@ export {
     StyleSignIn,
     StyleTermsAndCondition,
     StyleDashboard,
+    StyleTruckBooking,
+    StyleCurrentTrip,
 }

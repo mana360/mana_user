@@ -4,17 +4,16 @@
 import React, { Component } from 'react';
 import {View, Text, TouchableOpacity,Image,ScrollView,Modal,FlatList} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {StyleNotification} from '../config/CommonStyles';
+import {StyleCurrentTrip} from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
-export default class Notification extends React.Component{
+export default class CurrentTrip extends React.Component{
     constructor() {
         super();
         this.state = {
           dataSource:[
-            {id:12, status:"Trip 1 delay", desc:"Lorem ipsum dolor sit amet, consectetur ", dateTime:"10 May 2018 10:24 AM",},
-            {id:5, status:"New Alert", desc:"Lorem ipsum dolor sit amet, consectetur", dateTime:"10 May 2018 10:24 AM",}
+            {id:12, title:"Nyc-Syc", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
           ]
       }
     }
@@ -22,30 +21,36 @@ export default class Notification extends React.Component{
         let {navigation} = this.props
         return(
             <View style={{flex:1,backgroundColor:Constants.COLOR_GREY}}>
-            <HeaderBar title="Notification" isBack={true} isLogout={true} navigation={navigation}/>
+            <HeaderBar title="CURRENT TRIP" isBack={true} isLogout={true} navigation={navigation}/>
             <FlatList
                     style={{marginVertical:15}}
                     numColumns={1}
                     data={this.state.dataSource}
                     renderItem={({item},index)=>{
                   return(
-                       <TouchableOpacity  style={StyleNotification.row} onPress={()=>{alert(item.id)}}>
-                      <View style={StyleNotification.col1}>
+                       <TouchableOpacity  style={StyleCurrentTrip.row} onPress={()=>{alert(item.id)}}>
+                      <View style={StyleCurrentTrip.col1}>
                         <Image
-                            source={require('../images/notification-icon.png')}
-                            style={StyleNotification.icon}
+                            source={require('../images/Truck_Bookings_copy.png')}
+                            style={StyleCurrentTrip.icon}
                         />
                       </View>
-                      <View style={StyleNotification.col2}>
-                          <Text style={StyleNotification.title}>{item.status} </Text>
-                          <Text style={StyleNotification.desc}>{item.desc}
-                          </Text>
-                          <Text style={StyleNotification.dateTime}>{item.dateTime}</Text>
+                      <View style={StyleCurrentTrip.col2}>
+                          <View style={StyleCurrentTrip.bottomLine}>
+                          <Text style={[StyleCurrentTrip.label,{fontWeight:'bold'}]}>{item.title} </Text>
+                          </View> 
+                          <View style={{flexDirection:'row'}}>
+                          <Image source={require('../images/date_icon.png')}
+                                 style={StyleCurrentTrip.imageIcon}
+                        /><Text>{Constants.Date}</Text>
+                          </View>
+                      
+                          <Text style={StyleCurrentTrip.arrow.label}></Text>
                       </View>
-                      <View style={StyleNotification.col1}>
+                      <View style={StyleCurrentTrip.col1}>
                           <Image
                               source={require('../images/forward_icon.png')}
-                              style={StyleNotification.arrow}
+                              style={StyleCurrentTrip.arrow}
                           />
                       </View>
                   </TouchableOpacity>
