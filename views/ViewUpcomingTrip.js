@@ -6,7 +6,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
-export default class ViewCurrentTrip extends React.Component {
+export default class ViewUpcomingTrip extends React.Component {
     constructor() {
         super();
         this.state = {

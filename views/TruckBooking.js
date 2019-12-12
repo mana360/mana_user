@@ -100,7 +100,6 @@ export default class TruckBooking extends React.Component {
 
                     </ScrollView>
                 </View>
-
                 <FooterBar navigation={navigation} />
             </View>
         )

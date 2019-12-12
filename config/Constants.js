@@ -88,6 +88,7 @@ const Constants = {
     ContactNo:'Contact No',
     PartnerName:'Partner Name',
     LiveGeoPin:"Live Geo Pin",
+    WillCauseDelayBecauseOfSomeRoadBloc:'will cause delay because of some road block',
 
 };
 
