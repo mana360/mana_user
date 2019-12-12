@@ -72,7 +72,7 @@ const AppNavigator1 = createStackNavigator({
       navigationOptions: () => ({ header: null })
     },
     ViewUpcomingTrip: {
-      screen: ViewUpcomingTrip,
+      screen: ViewUpcomingTrips,
       navigationOptions: () => ({ header: null })
     },
 },
