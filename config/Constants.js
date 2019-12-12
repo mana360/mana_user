@@ -80,6 +80,16 @@ const Constants = {
     TotalBookings:'total bookings',
     UpcomingTrip:'Upcoming trips',
     ViewAll:'view all',
+    CurrentStatus:"Current Status",
+    EstimatedTimetonextstatus:'Estimated time to next Status Update',
+    EstimatedTimeTocmpleteTrip:'Estimated time to Completion of trip',
+    EstimatedDateTocmpleteTrip:'Estimated Date for Completion of trip',
+    DriverName:'Driver Name',
+    ContactNo:'Contact No',
+    PartnerName:'Partner Name',
+    LiveGeoPin:"Live Geo Pin",
+
 };
+
 
 export default Constants;

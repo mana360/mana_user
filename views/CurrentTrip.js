@@ -8,12 +8,17 @@ import {StyleCurrentTrip} from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
+import constants from 'jest-haste-map/build/constants';
 export default class CurrentTrip extends React.Component{
     constructor() {
         super();
         this.state = {
           dataSource:[
             {id:12, title:"Nyc-Syc", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
+            {id:15, title:"Berlin Sys", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
+            {id:16, title:"gate 3chruch", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
+            {id:17, title:"gate 3chruch", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
+
           ]
       }
     }
@@ -29,33 +34,49 @@ export default class CurrentTrip extends React.Component{
                     renderItem={({item},index)=>{
                   return(
                        <TouchableOpacity  style={StyleCurrentTrip.row} onPress={()=>{alert(item.id)}}>
-                      <View style={StyleCurrentTrip.col1}>
-                        <Image
-                            source={require('../images/Truck_Bookings_copy.png')}
-                            style={StyleCurrentTrip.icon}
-                        />
-                      </View>
-                      <View style={StyleCurrentTrip.col2}>
-                          <View style={StyleCurrentTrip.bottomLine}>
-                          <Text style={[StyleCurrentTrip.label,{fontWeight:'bold'}]}>{item.title} </Text>
-                          </View> 
-                          <View style={{flexDirection:'row'}}>
-                          <Image source={require('../images/date_icon.png')}
-                                 style={StyleCurrentTrip.imageIcon}
-                        /><Text>{Constants.Date}</Text>
-                          </View>
-                      
-                          <Text style={StyleCurrentTrip.arrow.label}></Text>
-                      </View>
-                      <View style={StyleCurrentTrip.col1}>
-                          <Image
-                              source={require('../images/forward_icon.png')}
-                              style={StyleCurrentTrip.arrow}
-                          />
-                      </View>
-                  </TouchableOpacity>
+                            <View style={StyleCurrentTrip.col1}>
+                              <Image
+                                  source={require('../images/Truck_Bookings_copy.png')}
+                                  style={StyleCurrentTrip.icon}
+                              />
+                            </View>
+                            <View style={StyleCurrentTrip.col2}>
+                                <View style={StyleCurrentTrip.bottomLine}>
+                                <Text style={StyleCurrentTrip.title}>{item.title}</Text>
+                                </View> 
+
+                                <View style={{flexDirection:'row',paddingTop:3}}>
+                                    <Image source={require('../images/date_icon.png')}
+                                          style={[StyleCurrentTrip.imageIcon]}
+                                    />
+                                    <Text style={StyleCurrentTrip.labeltext}>{Constants.Date}</Text>
+                                    <Text style={StyleCurrentTrip.datacss}>{item.date}</Text>
+                                </View>
+                            
+                                <View style={{flexDirection:'row'}}>
+                                    <Image source={require('../images/time_icon.png')}
+                                          style={StyleCurrentTrip.imageIcon}
+                                    />
+                                    <Text style={StyleCurrentTrip.labeltext}>{Constants.PickUpTime}</Text>
+                                    <Text style={StyleCurrentTrip.datacss}>{item.pickUpTime}</Text>
+
+                                    <Image source={require('../images/time_icon.png')}
+                                          style={[StyleCurrentTrip.imageIcon,{marginLeft:10}]}
+                                    />
+                                    <Text style={StyleCurrentTrip.labeltext}>{Constants.PickUpTime}</Text>
+                                    <Text style={StyleCurrentTrip.datacss}>{item.dropUpTime}</Text>
+                                </View>
+                            </View>
+                            <View style={StyleCurrentTrip.col3}>
+                                <Image
+                                    source={require('../images/forward_icon.png')}
+                                    style={StyleCurrentTrip.arrow}
+                                />
+                            </View>
+                     </TouchableOpacity>
+                  
                  )
-             }}
+             }} 
              extraData={this.state}
              keyExtractor={item=>item.id}
             />
