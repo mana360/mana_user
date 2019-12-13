@@ -34,7 +34,7 @@ export default class ViewCurrentTrip extends React.Component {
                                  <Image source={require('../images/current_trips.png')}
                                      style={StyleViewCurrentTrip.ImageCurrentTrip}
                                  />
-                                  <Image source={require('../images/invoice_details.png')}
+                                  <Image source={require('../images/support_icon.png')}
                                         style={StyleViewCurrentTrip.sideImage}
                                   />
                             </View>

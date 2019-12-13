@@ -1,8 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 import Constants from '../config/Constants';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import LinearGradient from 'react-native-linear-gradient';
-import constants from 'jest-haste-map/build/constants';
 
 const StyleHelpAndSupport = StyleSheet.create({
     supportTitle: {
@@ -863,7 +861,7 @@ const StyleCurrentTrip = StyleSheet.create({
         paddingLeft: 15,
     },
     title: {
-        textTransform:"capitalize",
+        textTransform: "capitalize",
         color: Constants.COLOR_GREY_DARK,
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
         fontWeight: 'bold',
@@ -887,7 +885,7 @@ const StyleCurrentTrip = StyleSheet.create({
         fontSize: Constants.FONT_SIZE_SMALL,
     },
     datacss: {
-        paddingLeft:3,
+        paddingLeft: 3,
         color: Constants.COLOR_GREY_DARK,
         fontSize: Constants.FONT_SIZE_SMALL
     },
@@ -928,31 +926,32 @@ const StyleViewCurrentTrip = StyleSheet.create({
         borderColor: Constants.COLOR_WHITE,
         alignSelf: 'center',
         marginTop: '8%',
-        resizeMode:"cover"
+        resizeMode: "cover"
     },
-    sideImage:{
-        width:70,
-        height:70,
-        marginTop:'15%',
-        borderWidth:6,
-        marginHorizontal:15,
-        borderColor:Constants.COLOR_WHITE,
-        borderRadius:35, 
+    sideImage: {
+        width: 65,
+        height: 65,
+        marginTop: '15%',
+        borderWidth: 6,
+        marginHorizontal: 15,
+        borderColor: Constants.COLOR_WHITE,
+        borderRadius: 35,
+        resizeMode: "cover",
     },
-    title:{
-        alignSelf:'center',
-        fontWeight:'bold',
-        fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
-        color:Constants.COLOR_GREY_DARK
+    title: {
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        color: Constants.COLOR_GREY_DARK
     },
-    bottomLine:{
+    bottomLine: {
         borderBottomColor: Constants.COLOR_GREEN,
         borderBottomWidth: 5,
         width: '15%',
         alignSelf: 'center',
         borderRadius: 50,
-        marginTop:5,
-        marginBottom:20,
+        marginTop: 5,
+        marginBottom: 20,
     },
     row: {
         flexDirection: 'row',
@@ -974,36 +973,315 @@ const StyleViewCurrentTrip = StyleSheet.create({
     },
     col2: {
         width: '50%',
-        height:'100%',
-        alignItems:'center',
-        flexDirection:'row',
+        height: '100%',
+        alignItems: 'center',
+        flexDirection: 'row',
     },
     col2Text: {
         paddingLeft: 10,
         fontSize: Constants.FONT_SIZE_LARGE,
         color: Constants.COLOR_GREY_DARK,
     },
-    bottomButton:{
-        width:'40%',
-        flexDirection:'row',
+    bottomButton: {
+        width: '40%',
+        flexDirection: 'row',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 20,
+        backgroundColor: Constants.COLOR_GREEN,
+        borderRadius: 50,
+    },
+    buttonIcon: {
+        width: 20,
+        height: 20,
+        padding: 5,
+        marginRight: 5
+    },
+    buttonText: {
+        color: Constants.COLOR_WHITE,
+        paddingTop: 10,
+        paddingBottom: 10,
+        textTransform: "uppercase",
+    },
+})
+const StyleViewUpcomingTrip = StyleSheet.create({
+    topCircle: {
+        position: 'absolute',
+        zIndex: -1,
+        width: 420,
+        height: 420,
+        borderRadius: 205,
+        top: '-195%',
+        alignSelf: 'center',
+        backgroundColor: Constants.COLOR_PRIMARY,
+    },
+    ImageCurrentTrip: {
+        width: 130,
+        height: 130,
+        borderRadius: 70,
+        borderWidth: 8,
+        borderColor: Constants.COLOR_WHITE,
+        marginTop: '8%',
+        resizeMode: "cover",
+        marginHorizontal: 10,
+    },
+    imageSideView: {
+        marginTop: '17%',
+        marginLeft: 35
+    },
+    sideImage: {
+        width: 70,
+        height: 70,
+        borderWidth: 6,
+        borderColor: Constants.COLOR_WHITE,
+        borderRadius: 35,
+    },
+    title: {
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        color: Constants.COLOR_GREY_DARK
+    },
+    bottomLine: {
+        borderBottomColor: Constants.COLOR_GREEN,
+        borderBottomWidth: 5,
+        width: '15%',
+        alignSelf: 'center',
+        borderRadius: 50,
+        marginTop: 5,
+        marginBottom: 20,
+    },
+    row: {
+        flexDirection: 'row',
+        width: '90%',
+        paddingTop: 20,
+        paddingBottom: 20,
+        alignSelf: 'center',
+        borderBottomWidth: 1.5,
+        borderBottomColor: Constants.COLOR_GREY
+    },
+    col1: {
+        width: '50%'
+    },
+    col1Text: {
+        paddingRight: 5,
+        fontSize: Constants.FONT_SIZE_LARGE,
+        color: Constants.COLOR_GREY_DARK,
+        fontWeight: 'bold',
+    },
+    col2: {
+        width: '50%',
+        height: '100%',
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    col2Text: {
+        paddingLeft: 10,
+        fontSize: Constants.FONT_SIZE_LARGE,
+        color: Constants.COLOR_GREY_DARK,
+    },
+    bottomButton: {
+        width: '40%',
+        flexDirection: 'row',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 20,
+        backgroundColor: Constants.COLOR_RED,
+        borderRadius: 50,
+    },
+    buttonIcon: {
+        width: 20,
+        height: 20,
+        padding: 5,
+        marginRight: 5
+    },
+    buttonText: {
+        color: Constants.COLOR_WHITE,
+        paddingTop: 10,
+        paddingBottom: 10,
+        textTransform: "uppercase",
+    },
+    InvoiceModalView: {
+        backgroundColor: Constants.COLOR_WHITE,
+        width: wp('95%'),
+        justifyContent: 'center',
+        paddingLeft: 10,
+        paddingRight: 10,
+        alignSelf: 'center',
+
+    },
+    InvoiceTitle: {
+        color: Constants.COLOR_GREEN,
+        textTransform: 'uppercase',
+        fontSize: Constants.fontSizeLarge,
+        fontWeight: 'bold',
+        paddingTop: 10,
+        paddingBottom: 5,
+    },
+    invoiceLabel: {
+        textTransform: "capitalize",
+        fontSize: Constants.FONT_SIZE_SMALL,
+        paddingLeft: 2,
+        paddingRight: 2,
+    },
+    InvoicebottomLine: {
+        borderBottomWidth: 2,
+        borderBottomColor: Constants.COLOR_GREY_DARK,
+        width: '99%',
+        alignSelf: 'center',
+        borderRadius: 50,
+    },
+    buttonView: {
+        backgroundColor: Constants.COLOR_GREEN,
+        width: '50%',
+        alignSelf: 'center',
+        borderRadius: 20,
+        marginVertical: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    cancelModalView:{
+        width:wp('80%'),
+        backgroundColor:Constants.COLOR_WHITE,
         alignSelf:'center',
-        justifyContent:'center',
-        alignItems:'center',
-        marginVertical:20,
-        backgroundColor:Constants.COLOR_GREEN,
-        borderRadius:50,
     },
-    buttonIcon:{
-        width:20,
-        height:20,
-        padding:5,
-        marginRight:5
+    leftcrossView:{
+        alignSelf:'flex-end',
+        right:5,
+        top:5, 
     },
-    buttonText:{
-        color:Constants.COLOR_WHITE,
-        paddingTop:10,
-        paddingBottom:10,
-        textTransform:"uppercase",
+    leftCrossText:{
+        fontSize:Constants.FONT_SIZE_LARGE,
+        color:Constants.COLOR_GREY_DARK,
+    },
+    modalMsg:{},
+    cancelModalButton:{},
+    cancelModalButtonText:{}
+
+    
+
+
+})
+const StyleUpcomingTrip = StyleSheet.create({
+    row: {
+        flex: 10,
+        flexDirection: 'row',
+        padding: 5,
+        marginVertical: 5,
+        backgroundColor: Constants.COLOR_WHITE,
+    },
+    col1: {
+        flex: 1.5,
+        justifyContent: 'center',
+        alignContent: 'center',
+        padding: 5,
+    },
+    icon: {
+        width: 60,
+        height: 60,
+        paddingRight: 5,
+        paddingLeft: 5,
+        resizeMode: 'stretch',
+    },
+    col2: {
+        paddingLeft: 5,
+        flex: 8,
+        alignContent: 'center',
+        paddingLeft: 15,
+    },
+    title: {
+        textTransform: "capitalize",
+        color: Constants.COLOR_GREY_DARK,
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        fontWeight: 'bold',
+        padding: 5
+    },
+    bottomLine: {
+        borderBottomWidth: 0.8,
+        borderBottomColor: Constants.COLOR_GREY_DARK,
+        marginBottom: 5,
+    },
+    imageIcon: {
+        width: 13,
+        height: 13,
+    },
+    labeltext: {
+        paddingLeft: 2,
+        marginBottom: 8,
+        fontWeight: 'bold',
+        textTransform: "capitalize",
+        color: Constants.COLOR_GREY_DARK,
+        fontSize: Constants.FONT_SIZE_SMALL,
+    },
+    datacss: {
+        paddingLeft: 3,
+        color: Constants.COLOR_GREY_DARK,
+        fontSize: Constants.FONT_SIZE_SMALL
+    },
+    desc: {
+        fontSize: Constants.FONT_SIZE__MEDIUM,
+        color: Constants.COLOR_GREY_LIGHT,
+    },
+    col3: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    arrow: {
+        width: 20,
+        height: 20,
+        left: 5,
+        alignSelf: 'center',
+        resizeMode: 'stretch'
+    },
+
+})
+const StyleInvoice = StyleSheet.create({
+    InvoiceModalView: {
+        backgroundColor: Constants.COLOR_WHITE,
+        width: wp('95%'),
+        justifyContent: 'center',
+        paddingLeft: 10,
+        paddingRight: 10,
+        alignSelf: 'center',
+    },
+    InvoiceTitle: {
+        color: Constants.COLOR_GREEN,
+        textTransform: 'uppercase',
+        fontSize: Constants.fontSizeLarge,
+        fontWeight: 'bold',
+        paddingTop: 10,
+        paddingBottom: 5,
+    },
+    invoiceLabel: {
+        textTransform: "capitalize",
+        fontSize: Constants.FONT_SIZE_SMALL,
+        paddingLeft: 2,
+        paddingRight: 2,
+    },
+    InvoicebottomLine: {
+        borderBottomWidth: 2,
+        borderBottomColor: Constants.COLOR_GREY_DARK,
+        width: '99%',
+        alignSelf: 'center',
+        borderRadius: 50,
+    },
+    buttonView: {
+        backgroundColor: Constants.COLOR_GREEN,
+        width: '50%',
+        alignSelf: 'center',
+        borderRadius: 20,
+        marginVertical: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    buttonText: {
+        color: Constants.COLOR_WHITE,
+        paddingTop: 10,
+        paddingBottom: 10,
+        textTransform: "uppercase",
     },
 })
 export {
@@ -1018,4 +1296,7 @@ export {
     StyleTruckBooking,
     StyleCurrentTrip,
     StyleViewCurrentTrip,
+    StyleViewUpcomingTrip,
+    StyleInvoice,
+    StyleUpcomingTrip,
 }

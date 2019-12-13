@@ -38,10 +38,13 @@ const Constants = {
     NO:"no",
     Next:'next',
     Proceed:'proceed',
+    CANCELTRIP:'cancel trip',
+    LiveGeoPin:"Live Geo Pin",
     
     //Label
     CurrentTrip:'current trips',
     Date:'date',
+    Invoice:'invoice',
     ForgotPassword:'Forgot Password?',
     Nyc_Syc:'Nyc-Syc',
     ViewYOurTripDetail:'view your trip details',
@@ -60,6 +63,7 @@ const Constants = {
     DestinationLocation:'Destination Location',
     CostOfTruckingService:'Cost of Trucking Service',
     CargoType:'Cargo Type',
+    CargoDesc:'Cargo Description',
     CargoHandling:'Cargo Handling',
     CargoHandlingCharges:'Cargo Handling Charges',
     CostOfRecurring:'Cost of Recurring',
@@ -89,7 +93,14 @@ const Constants = {
     PartnerName:'Partner Name',
     LiveGeoPin:"Live Geo Pin",
     WillCauseDelayBecauseOfSomeRoadBloc:'will cause delay because of some road block',
-
+    Description:'description',
+    Quantity:'quantity',
+    Price:'price',
+    Total:'total',
+    termsAndConditionMsg:'Please send payment within 30 days of reciving this invoice.there will be 1.5% interest charge per month on late invoices.',
+    DownloadInvoice:'download invoice',
+    Cancelleation_msg:'Cancellation of trip will cause you with the penalty cost.',
+    cancellation_msgDelete:"Are you sure want to delete the trip?",
 };
 
 
