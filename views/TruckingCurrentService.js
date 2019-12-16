@@ -7,16 +7,15 @@ import {StyleCurrentTrip} from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
-export default class CurrentTrip extends React.Component{
+export default class TruckingCurrentService extends React.Component{
     constructor() {
         super();
         this.state = {
           dataSource:[
-            {id:12, title:"Nyc-Syc", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
-            {id:15, title:"Berlin Sys", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
-            {id:16, title:"gate 3chruch", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
-            {id:17, title:"gate 3chruch", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
-
+            {id:12, title:"ABC Service", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
+            {id:15, title:"BABC Service", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
+            {id:16, title:"ABC Service", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
+            {id:17, title:"ABC Service", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
           ]
       }
     }
@@ -24,7 +23,7 @@ export default class CurrentTrip extends React.Component{
         let {navigation} = this.props
         return(
             <View style={{flex:1,backgroundColor:Constants.COLOR_GREY}}>
-            <HeaderBar title="CURRENT TRIP" isBack={true} isLogout={true} navigation={navigation}/>
+            <HeaderBar title="CURRENT SERVICES" isBack={true} isLogout={true} navigation={navigation}/>
             <FlatList
                     style={{marginVertical:15}}
                     numColumns={1}
@@ -35,7 +34,7 @@ export default class CurrentTrip extends React.Component{
                          
                             <View style={StyleCurrentTrip.col1}>
                               <Image
-                                  source={require('../images/Truck_Bookings_copy.png')}
+                                  source={require('../images/Trucking_+Warehouse.png')}
                                   style={StyleCurrentTrip.icon}
                               />
                             </View>

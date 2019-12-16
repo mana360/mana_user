@@ -324,7 +324,7 @@ const StyleRateAndReview = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
-        width: 420,
+        width:wp('120%'),
         height: 420,
         borderRadius: 205,
         top: '-175%',
@@ -463,7 +463,7 @@ const StyleViewCompletedDetail = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
-        width: 420,
+        width:wp('120%'),
         height: 420,
         borderRadius: 205,
         top: '-175%',
@@ -642,7 +642,7 @@ const StyleTermsAndCondition = StyleSheet.create({
 })
 const StyleDashboard = StyleSheet.create({
     topCircle: {
-        width: 420,
+        width:wp('120%'),
         height: 420,
         borderRadius: 200,
         marginTop: '-85%',
@@ -729,7 +729,7 @@ const StyleDashboard = StyleSheet.create({
 })
 const StyleTruckBooking = StyleSheet.create({
     topCircle: {
-        width: 420,
+        width:wp('120%'),
         height: 420,
         borderRadius: 200,
         marginTop: '-85%',
@@ -911,7 +911,7 @@ const StyleViewCurrentTrip = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
-        width: 420,
+        width:wp('120%'),
         height: 420,
         borderRadius: 205,
         top: '-195%',
@@ -983,12 +983,12 @@ const StyleViewCurrentTrip = StyleSheet.create({
         color: Constants.COLOR_GREY_DARK,
     },
     bottomButton: {
-        width: '40%',
+         paddingHorizontal:25,
         flexDirection: 'row',
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 20,
+        marginVertical: 25,
         backgroundColor: Constants.COLOR_GREEN,
         borderRadius: 50,
     },
@@ -1082,7 +1082,7 @@ const StyleViewUpcomingTrip = StyleSheet.create({
         color: Constants.COLOR_GREY_DARK,
     },
     bottomButton: {
-        width: '40%',
+        paddingHorizontal:25,
         flexDirection: 'row',
         alignSelf: 'center',
         justifyContent: 'center',
@@ -1142,27 +1142,43 @@ const StyleViewUpcomingTrip = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    cancelModalView:{
-        width:wp('80%'),
-        backgroundColor:Constants.COLOR_WHITE,
+    cancelModalView: {
+        width: wp('80%'),
+        borderRadius:5,
+        backgroundColor: Constants.COLOR_WHITE,
+        alignSelf: 'center',
+        justifyContent: 'center'
+    },
+    leftcrossView: {
+        alignSelf: 'flex-end',
+        right: 8,
+        top: 8,
+        marginBottom:15
+    },
+    modalMsg: {
+        width: wp('80%'),
+        fontSize: Constants.FONT_SIZE_LARGE,
+        color: Constants.COLOR_GREY_DARK,
+        fontWeight: "bold",
+        textAlign: "center",
+        alignSelf: 'center',
+        marginBottom:15
+
+    },
+    cancelModalButton: {
+        width: wp('30%'),
+        justifyContent:'center',
+        marginHorizontal:10,
+        backgroundColor: Constants.COLOR_GREEN,
+        paddingVertical:10,
+        borderRadius:20,
+    },
+    cancelModalButtonText: {
+        fontWeight:'bold',
         alignSelf:'center',
-    },
-    leftcrossView:{
-        alignSelf:'flex-end',
-        right:5,
-        top:5, 
-    },
-    leftCrossText:{
-        fontSize:Constants.FONT_SIZE_LARGE,
-        color:Constants.COLOR_GREY_DARK,
-    },
-    modalMsg:{},
-    cancelModalButton:{},
-    cancelModalButtonText:{}
-
-    
-
-
+        textTransform:"uppercase",
+        color:Constants.COLOR_WHITE
+    }
 })
 const StyleUpcomingTrip = StyleSheet.create({
     row: {
@@ -1243,9 +1259,20 @@ const StyleInvoice = StyleSheet.create({
         backgroundColor: Constants.COLOR_WHITE,
         width: wp('95%'),
         justifyContent: 'center',
-        paddingLeft: 10,
-        paddingRight: 10,
+        paddingLeft: 5,
+        paddingRight: 5,
+        marginHorizontal: 10,
         alignSelf: 'center',
+        height: hp('80%'),
+        maxHeight: hp('80%'),
+    },
+    crossView: {
+        alignSelf: 'flex-end',
+        top: 5,
+        right: 5
+    },
+    crossText: {
+        color: Constants.COLOR_GREEN_DARK,
     },
     InvoiceTitle: {
         color: Constants.COLOR_GREEN,
@@ -1284,6 +1311,7 @@ const StyleInvoice = StyleSheet.create({
         textTransform: "uppercase",
     },
 })
+
 export {
     StyleHelpAndSupport,
     StyleTripHelpAndSupport,

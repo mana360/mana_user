@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {View, Text, TouchableOpacity,ScrollView} from 'react-native'
+import {View, Text, TouchableOpacity,ScrollView} from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { StyleInvoice} from '../config/CommonStyles';
 import Constants from '../config/Constants';
 export default class Invoice extends React.Component{
@@ -18,9 +19,19 @@ export default class Invoice extends React.Component{
     render(){
         let {navigation} = this.props
         return(
-            <View style={{flex:1,backgroundColor:'rgba(0,0,0,0.5)',justifyContent:'center'}}>
-                <ScrollView>
-                    <View style={StyleInvoice.InvoiceModalView}>
+            <View style={{flex:1,backgroundColor:'rgba(0,0,0,0.5)',justifyContent:'center',}}>
+                 <View style={[StyleInvoice.InvoiceModalView,{}]}>
+               <ScrollView>
+                         <TouchableOpacity style={StyleInvoice.crossView}
+                         onPress={()=>{
+                            if(this.props.clickCallback!=undefined){
+                         this.props.clickCallback();
+                        
+                            }
+                        }}
+                        >
+                             <Text style={StyleInvoice.crossText}>X</Text>
+                         </TouchableOpacity>
                         <Text style={[StyleInvoice.InvoiceTitle,{alignSelf:'center'}]}>{Constants.Invoice}</Text>
                         
                          <View style={{alignSelf:'flex-end',flexDirection:'column',paddingBottom:15}}>
@@ -122,8 +133,8 @@ export default class Invoice extends React.Component{
                                }}>
                                    <Text style={StyleInvoice.buttonText}>{ Constants.DownloadInvoice}</Text>
                                </TouchableOpacity>
-                         </View>
                          </ScrollView>
+                         </View>
             </View>
         )
     }

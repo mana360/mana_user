@@ -17,6 +17,13 @@ import ViewCurrentTrip from './views/ViewCurrentTrip';
 import ViewUpcomingTrip from './views/ViewUpcomingTrip';
 import Invoice from './views/InvoiceView';
 import UpcomingTrip from './views/UpcomingTrip';
+import WarehouseServices from './views/WarehouseServices';
+import WarehouseServicesCurrentTrip from './views/WarehouseServiceCurrentTrip';
+import WarehouseServiceUpcomingTrip from './views/WarehouseServiceUpcomingTrip';
+import WarehouseServiceViewCurrentTrip from './views/WarehouseServiceViewCurrentTrip';
+import WarehouseViewUpcomingDetail from './views/WareHouseViewUpcomingDetails';
+import TruckingWarehouseServices from './views/TruckingWarehouseServices';
+import TruckingCurrentService from './views/TruckingCurrentService';
 
 console.disableYellowBox = true;
 
@@ -85,7 +92,35 @@ const AppNavigator1 = createStackNavigator({
       screen: UpcomingTrip,
       navigationOptions: () => ({ header: null })
     },
+    WarehouseServices: {
+      screen: WarehouseServices,
+      navigationOptions: () => ({ header: null })
+    },
+    WarehouseServicesCurrentTrip: {
+      screen: WarehouseServicesCurrentTrip,
+      navigationOptions: () => ({ header: null })
+    },
+    WarehouseServiceUpcomingTrip: {
+      screen: WarehouseServiceUpcomingTrip,
+      navigationOptions: () => ({ header: null })
+    },
+    WarehouseServiceViewCurrentTrip: {
+      screen: WarehouseServiceViewCurrentTrip,
+      navigationOptions: () => ({ header: null })
+    },
+    WarehouseViewUpcomingDetail: {
+      screen: WarehouseViewUpcomingDetail,
+      navigationOptions: () => ({ header: null })
+    },
+    TruckingWarehouseServices: {
+      screen: TruckingWarehouseServices,
+      navigationOptions: () => ({ header: null })
+    },
+    TruckingCurrentService: {
+      screen: TruckingCurrentService,
+      navigationOptions: () => ({ header: null })
+    },
 },
-     {initialRouteName:"Invoice"}
+     {initialRouteName:"TruckingWarehouseServices"}
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

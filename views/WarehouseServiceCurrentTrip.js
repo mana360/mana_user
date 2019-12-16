@@ -2,12 +2,13 @@
     design by -mayur
  */
 import React, { Component } from 'react';
-import {View, Text, TouchableOpacity,Image,FlatList} from 'react-native';
+import {View, Text, TouchableOpacity,Image,ScrollView,Modal,FlatList} from 'react-native';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {StyleCurrentTrip} from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
-export default class CurrentTrip extends React.Component{
+export default class WarehouseServicesCurrentTrip extends React.Component{
     constructor() {
         super();
         this.state = {
@@ -35,7 +36,7 @@ export default class CurrentTrip extends React.Component{
                          
                             <View style={StyleCurrentTrip.col1}>
                               <Image
-                                  source={require('../images/Truck_Bookings_copy.png')}
+                                  source={require('../images/WarehouseServices_copy.png')}
                                   style={StyleCurrentTrip.icon}
                               />
                             </View>

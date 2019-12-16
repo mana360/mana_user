@@ -8,7 +8,7 @@ import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import { thisExpression } from '@babel/types';
 import Invoice from './InvoiceView';
-export default class ViewUpcomingTrip extends React.Component {
+export default class WarehouseViewUpcomingDetail extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -24,7 +24,7 @@ export default class ViewUpcomingTrip extends React.Component {
         return (
             <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                 <View style={StyleViewUpcomingTrip.cancelModalView}>
-                <TouchableOpacity style={StyleViewUpcomingTrip.leftcrossView}
+                    <TouchableOpacity style={StyleViewUpcomingTrip.leftcrossView}
                         onPress={() => {
                             this.setState({ cancelModal_Visible: false })
                         }}
@@ -60,20 +60,20 @@ export default class ViewUpcomingTrip extends React.Component {
 return(
     <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
     <View style={StyleViewUpcomingTrip.cancelModalView}>
-    <TouchableOpacity style={StyleViewUpcomingTrip.leftcrossView}
-                        onPress={() => {
-                            this.setState({ cancelModal_Visible: false })
-                        }}
-                    >
-                         <Image source={require('../images/close.png')} 
-                                 style={{width:12,height:12,}}
-                         />
-                    </TouchableOpacity>
+          <TouchableOpacity style={StyleViewUpcomingTrip.leftcrossView}
+              onPress={() => {
+                  this.setState({ cancelModal_Visible: false,isSuccesfull:false })
+              }}
+          >
+              <Image source={require('../images/close.png')} 
+                    style={{width:12,height:12,top:5,right:5}}
+              />
+          </TouchableOpacity>
           <Image style={{ width: 80, height: 80, alignSelf: 'center', marginVertical: 5 }}
           source={require('../images/sent_icon.png')}
          />
          <Text style={[StyleViewUpcomingTrip.modalMsg, { marginTop: 5 }]}>{Constants.TripCanceledSuccessfully}</Text>
-        <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 10 }]}>{Constants.checkYourregisteredEmailIdPeneltyInfo}</Text>
+        <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 5 }]}>{Constants.checkYourregisteredEmailIdPeneltyInfo}</Text>
      </View>
  </View> 
 )
@@ -84,7 +84,7 @@ return(
         return (
             <View style={{ flex: 1 }}>
 
-                <HeaderBar title="VIEW UPCOMING TRIP" isBack={true} isLogout={true} navigation={navigation} />
+                <HeaderBar title="VIEW UPCOMING TRIP DETAILS" isBack={true} isLogout={true} navigation={navigation} />
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%' }} bounces={false}>
                         <View style={{ marginBottom: 2 }}>
@@ -108,13 +108,13 @@ return(
                                         style={StyleViewUpcomingTrip.sideImage}
                                     />
                                 </TouchableOpacity>
-                                <Image source={require('../images/current_trips.png')}
+                                <Image source={require('../images/WarehouseServices_copy.png')}
                                     style={StyleViewUpcomingTrip.ImageCurrentTrip}
                                 />
 
                             </View>
                         </View>
-                        <Text style={StyleViewUpcomingTrip.title}>CHURCH gate2- SYS</Text>
+                        <Text style={StyleViewUpcomingTrip.title}>PVR</Text>
                         <View style={StyleViewUpcomingTrip.bottomLine}></View>
 
                         <View style={StyleViewUpcomingTrip.row}>
@@ -122,7 +122,7 @@ return(
                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PartnerName}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>ABC Service</Text>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>PVR Service</Text>
                             </View>
                         </View>
 
@@ -137,37 +137,37 @@ return(
 
                         <View style={StyleViewUpcomingTrip.row}>
                             <View style={StyleViewUpcomingTrip.col1}>
-                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DateOfPickUp}</Text>
+                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Duration}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>11/04/2019</Text>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>12/01/2019 to 12/1/2019</Text>
                             </View>
                         </View>
 
                         <View style={StyleViewUpcomingTrip.row}>
                             <View style={StyleViewUpcomingTrip.col1}>
-                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpTime}</Text>
+                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.WarehoueType}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>11:00 AM</Text>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>Public</Text>
                             </View>
                         </View>
 
                         <View style={StyleViewUpcomingTrip.row}>
                             <View style={StyleViewUpcomingTrip.col1}>
-                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpLocation}</Text>
+                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.StorageType}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>275 N Marr Road ,CA</Text>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>Refrigerator</Text>
                             </View>
                         </View>
 
                         <View style={StyleViewUpcomingTrip.row}>
                             <View style={StyleViewUpcomingTrip.col1}>
-                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DestinationLocation}</Text>
+                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Quantity}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>Block no 2 Jackson Street</Text>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>7</Text>
                             </View>
                         </View>
 
@@ -200,7 +200,16 @@ return(
 
                         <View style={StyleViewUpcomingTrip.row}>
                             <View style={StyleViewUpcomingTrip.col1}>
-                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.RecurringRequirement}</Text>
+                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.BasicDescription}</Text>
+                            </View>
+                            <View style={StyleViewUpcomingTrip.col2}>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>loremp_ ipsomeloremp_ ipsomeloremp_ ipsomeloremp_ ipsomeloremp_ ipsomeloremp_ ipsome</Text>
+                            </View>
+                        </View>
+
+                        <View style={StyleViewUpcomingTrip.row}>
+                            <View style={StyleViewUpcomingTrip.col1}>
+                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoInssurance}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
                                 <Text style={StyleViewUpcomingTrip.col2Text}>Yes</Text>
@@ -209,10 +218,37 @@ return(
 
                         <View style={StyleViewUpcomingTrip.row}>
                             <View style={StyleViewUpcomingTrip.col1}>
+                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.SizeofgoodStored}</Text>
+                            </View>
+                            <View style={StyleViewUpcomingTrip.col2}>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>38kg</Text>
+                            </View>
+                        </View>
+
+                        <View style={StyleViewUpcomingTrip.row}>
+                            <View style={StyleViewUpcomingTrip.col1}>
+                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Dimension}</Text>
+                            </View>
+                            <View style={StyleViewUpcomingTrip.col2}>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>100*50*50* inches</Text>
+                            </View>
+                        </View>
+
+                        <View style={StyleViewUpcomingTrip.row}>
+                            <View style={StyleViewUpcomingTrip.col1}>
+                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.VolumetricWeight}</Text>
+                            </View>
+                            <View style={StyleViewUpcomingTrip.col2}>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>18kg</Text>
+                            </View>
+                        </View>
+
+                        <View style={StyleViewUpcomingTrip.row}>
+                            <View style={StyleViewUpcomingTrip.col1}>
                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CostOfRecurring}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>US $34</Text>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>US $35</Text>
                             </View>
                         </View>
 
@@ -227,7 +263,7 @@ return(
 
                         <View style={StyleViewUpcomingTrip.row}>
                             <View style={StyleViewUpcomingTrip.col1}>
-                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CostOfTruckingService}</Text>
+                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CostOfWarehouseServices}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
                                 <Text style={StyleViewUpcomingTrip.col2Text}>US $450</Text>
@@ -236,10 +272,10 @@ return(
 
                         <View style={StyleViewUpcomingTrip.row}>
                             <View style={StyleViewUpcomingTrip.col1}>
-                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoDesc}</Text>
+                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoDescription}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>Lorem ipsomeLorem ipsomeLorem ipsomeLorem </Text>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>Loremp ispsomeLoremp ispsomeLoremp ispsomeLorempispsome</Text>
                             </View>
                         </View>
 

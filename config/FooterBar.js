@@ -24,7 +24,11 @@ class FooterBar extends React.Component {
         <View style={{flex:4, flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
 
             <View style={styles.footerCol}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={()=>{
+                     this.props.navigation.navigate('Dashboard')
+                  }}
+                >
                   <Image
                     source={require('../images/home.png')}
                     style={styles.footerIcon}

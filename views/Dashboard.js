@@ -36,33 +36,49 @@ export default class Dashboard extends React.Component {
                             </View>
                             <Card style={{width:'90%',alignSelf:'center',maxHeight:100,marginTop:'-27%',borderRadius:5}}>
                                     <CardItem style={StyleDashboard.cardView} >
-                                        <View style={StyleDashboard.ImageView}> 
+                                        <TouchableOpacity style={StyleDashboard.ImageView}
+                                           onPress={()=>{
+                                               this.props.navigation.navigate('TruckBooking')
+                                           }}
+                                        > 
                                             <Image source={require('../images/Truck_Bookings.png')}
                                                 style={StyleDashboard.imageD}
                                                 />
                                             <Text style={StyleDashboard.textD}>{Constants.TruckBooking}</Text>
-                                        </View>
+                                        </TouchableOpacity>
 
-                                        <View style={StyleDashboard.ImageView}> 
+                                        <TouchableOpacity style={StyleDashboard.ImageView}
+                                             onPress={()=>{
+                                                this.props.navigation.navigate('WarehouseServices')
+                                            }}
+                                        > 
                                             <Image source={require('../images/Warehouse_Services.png')}
                                                 style={StyleDashboard.imageD}
                                             />
                                             <Text style={StyleDashboard.textD}>{Constants.WarehouseService}</Text>
-                                        </View>
+                                        </TouchableOpacity>
 
-                                        <View style={StyleDashboard.ImageView}> 
+                                        <TouchableOpacity style={StyleDashboard.ImageView}
+                                             onPress={()=>{
+                                                this.props.navigation.navigate('TruckingWarehouseServices')
+                                            }}
+                                        > 
                                             <Image source={require('../images/Trucking+Warehouse.png')}
                                                 style={StyleDashboard.imageD}
                                             />
                                             <Text style={StyleDashboard.textD}>{Constants.truckingwarehouse}</Text>
-                                        </View>
+                                        </TouchableOpacity>
 
-                                        <View style={[StyleDashboard.ImageView,{borderRightWidth:0}]}> 
+                                        <TouchableOpacity style={[StyleDashboard.ImageView,{borderRightWidth:0}]}
+                                              onPress={()=>{
+                                                this.props.navigation.navigate('TruckBooking')
+                                            }}
+                                        > 
                                             <Image source={require('../images/Collect_My_Load.png')}
                                                 style={StyleDashboard.imageD}
                                             />
                                             <Text style={StyleDashboard.textD}>{Constants.CollectMyLoad}</Text>
-                                        </View>
+                                        </TouchableOpacity>
                                  </CardItem>
                             </Card>
                             <Text style={StyleDashboard.labelText}>{Constants.TotalBookings}</Text>

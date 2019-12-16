@@ -90,17 +90,36 @@ const Constants = {
     EstimatedDateTocmpleteTrip:'Estimated Date for Completion of trip',
     DriverName:'Driver Name',
     ContactNo:'Contact No',
-    PartnerName:'Partner Name',
+    PartnerName:"Partner's Name",
     LiveGeoPin:"Live Geo Pin",
     WillCauseDelayBecauseOfSomeRoadBloc:'will cause delay because of some road block',
-    Description:'description',
-    Quantity:'quantity',
+    Description:'Description',
+    Quantity:'Quantity',
     Price:'price',
     Total:'total',
     termsAndConditionMsg:'Please send payment within 30 days of reciving this invoice.there will be 1.5% interest charge per month on late invoices.',
     DownloadInvoice:'download invoice',
     Cancelleation_msg:'Cancellation of trip will cause you with the penalty cost.',
     cancellation_msgDelete:"Are you sure want to delete the trip?",
+    TripCanceledSuccessfully:'Trip Cancelled SuccessFully.',
+    checkYourregisteredEmailIdPeneltyInfo:'Check your registered email ID For Penalty information.',
+    Duration:'Duration',
+    TelephoneNo:'Telephone No.',
+    StorageType:'Storage Type',
+    WarehoueType:'Warehouse Type',
+    BasicDescription:'Basic Description',
+    CargoInssurance:'Cargo Insurance',
+    Dimension:'Dimensions',
+    VolumetricWeight:'Volumetric Weight',
+    warehouseLocation:'Warehouse Location',
+    Size:'Size',
+    SizeofgoodStored:'Size of Good Stored',
+    CargoDescription:'Cargo Description',
+    CostOfWarehouseServices:'Cost of Warehouse Services',
+    DurationOfWarehouse:'Duration of Warehouse'
+
+
+
 };
 
 
