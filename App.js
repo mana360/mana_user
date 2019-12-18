@@ -23,7 +23,12 @@ import WarehouseServiceUpcomingTrip from './views/WarehouseServiceUpcomingTrip';
 import WarehouseServiceViewCurrentTrip from './views/WarehouseServiceViewCurrentTrip';
 import WarehouseViewUpcomingDetail from './views/WareHouseViewUpcomingDetails';
 import TruckingWarehouseServices from './views/TruckingWarehouseServices';
-import TruckingCurrentService from './views/TruckingCurrentService';
+import TruckingWarehouseCurrentService from './views/TruckingWarehouseCurrentService';
+import TruckingWarehouseUpcomingServices from './views/TruckingWarehouseCurrentTripDetails';
+import TruckingWarehouseCurrentTripDetails from './views/TruckingWarehouseCurrentTripDetails';
+import TruckingWarehouseUpcomingTrip from './views/TruckingWarehouseUpcomingTrip';
+import TruckingWarehouseViewUpcomingTrip from './views/TruckingWarehouseViewUpcomingTrip';
+import CollectMyLoad from './views/CollectMyLoad';
 
 console.disableYellowBox = true;
 
@@ -116,11 +121,27 @@ const AppNavigator1 = createStackNavigator({
       screen: TruckingWarehouseServices,
       navigationOptions: () => ({ header: null })
     },
-    TruckingCurrentService: {
-      screen: TruckingCurrentService,
+    TruckingWarehouseCurrentService: {
+      screen: TruckingWarehouseCurrentService,
+      navigationOptions: () => ({ header: null })
+    },
+    TruckingWarehouseCurrentTripDetails: {
+      screen: TruckingWarehouseCurrentTripDetails,
+      navigationOptions: () => ({ header: null })
+    },
+    TruckingWarehouseUpcomingTrip: {
+      screen: TruckingWarehouseUpcomingTrip,
+      navigationOptions: () => ({ header: null })
+    },
+    TruckingWarehouseViewUpcomingTrip: {
+      screen: TruckingWarehouseViewUpcomingTrip,
+      navigationOptions: () => ({ header: null })
+    },
+    CollectMyLoad: {
+      screen: CollectMyLoad,
       navigationOptions: () => ({ header: null })
     },
 },
-     {initialRouteName:"TruckingWarehouseServices"}
+     {initialRouteName:"TruckBooking"}
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

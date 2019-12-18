@@ -52,7 +52,7 @@ export default class TruckingWarehouseServices extends React.Component {
                                         <Image source={require('../images/Trucking_+Warehouse.png')}
                                                 style={StyleTruckBooking.imageD}
                                                 />
-                                            <Text style={StyleTruckBooking.textD}>{Constants.truckingwarehouse}</Text>
+                                            <Text style={[StyleTruckBooking.textD,{color:Constants.COLOR_GREEN}]}>{Constants.truckingwarehouse}</Text>
                                         </TouchableOpacity>
 
                                         <TouchableOpacity style={[StyleTruckBooking.ImageView,{borderRightWidth:0}]}> 
@@ -91,7 +91,7 @@ export default class TruckingWarehouseServices extends React.Component {
                                  style={StyleTruckBooking.image}/>
                                 </View>
                                 <View style={StyleTruckBooking.col2}>
-                                <Text style={[StyleTruckBooking.labelText2]}>{Constants.UpcomingTrip}</Text>
+                                     <Text style={[StyleTruckBooking.labelText2]}>{Constants.UpcomingTrip}</Text>
                                      <Text style={StyleTruckBooking.descText}>fnsldfn fnsldfn fnsldfnfnsldfnfnsldfnfnsldfn fnsldfn fnsldfn lorempipsom</Text>
                                      <TouchableOpacity style={StyleTruckBooking.button}
                                             onPress={()=>{

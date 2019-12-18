@@ -7,16 +7,15 @@ import {StyleCurrentTrip} from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
-export default class TruckingCurrentService extends React.Component{
+export default class TruckingWarehouseCurrentService extends React.Component{
     constructor() {
         super();
         this.state = {
-          dataSource:[
-            {id:12, title:"ABC Service", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
-            {id:15, title:"BABC Service", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
-            {id:16, title:"ABC Service", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
-            {id:17, title:"ABC Service", date:"27/11/2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
-          ]
+            dataSource:[
+                {id:12, title:"Nyc-Syc", date:"27 May 2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
+                {id:15, title:"Nyc Sys", date:"27 May 2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
+                {id:16, title:"Nyc 3chruch", date:"27 May 2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
+              ]
       }
     }
     render(){

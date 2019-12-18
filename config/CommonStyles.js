@@ -325,7 +325,7 @@ const StyleRateAndReview = StyleSheet.create({
         position: 'absolute',
         zIndex: -1,
         width:wp('120%'),
-        height: 420,
+        height:hp('63%'),
         borderRadius: 205,
         top: '-175%',
         alignSelf: 'center',
@@ -643,7 +643,7 @@ const StyleTermsAndCondition = StyleSheet.create({
 const StyleDashboard = StyleSheet.create({
     topCircle: {
         width:wp('120%'),
-        height: 420,
+        height:hp('63%'),
         borderRadius: 200,
         marginTop: '-85%',
         alignSelf: 'center',
@@ -674,7 +674,6 @@ const StyleDashboard = StyleSheet.create({
         textAlign: "center",
         alignSelf: 'center',
         textTransform: 'capitalize'
-
     },
     labelText: {
         marginTop: 10,
@@ -730,7 +729,7 @@ const StyleDashboard = StyleSheet.create({
 const StyleTruckBooking = StyleSheet.create({
     topCircle: {
         width:wp('120%'),
-        height: 420,
+        height:hp('63%'),
         borderRadius: 200,
         marginTop: '-85%',
         alignSelf: 'center',
@@ -912,7 +911,7 @@ const StyleViewCurrentTrip = StyleSheet.create({
         position: 'absolute',
         zIndex: -1,
         width:wp('120%'),
-        height: 420,
+        height:hp('63%'),
         borderRadius: 205,
         top: '-195%',
         alignSelf: 'center',
@@ -1009,8 +1008,8 @@ const StyleViewUpcomingTrip = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
-        width: 420,
-        height: 420,
+        width:wp('120%'),
+        height:hp('63%'),
         borderRadius: 205,
         top: '-195%',
         alignSelf: 'center',
@@ -1222,6 +1221,7 @@ const StyleUpcomingTrip = StyleSheet.create({
     imageIcon: {
         width: 13,
         height: 13,
+        paddingRight:3,
     },
     labeltext: {
         paddingLeft: 2,
@@ -1311,6 +1311,132 @@ const StyleInvoice = StyleSheet.create({
         textTransform: "uppercase",
     },
 })
+const StyleCollectMyLoad = StyleSheet.create({
+    topCircle: {
+        width:wp('120%'),
+        height:hp('63%'),
+        borderRadius: 200,
+        marginTop: '-85%',
+        alignSelf: 'center',
+        backgroundColor: Constants.COLOR_PRIMARY,
+    },
+    cardView: {
+        flex: 4,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    ImageView: {
+        flex: 1,
+        alignSelf: 'center',
+        paddingLeft: 5,
+        paddingRight: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRightWidth: 0.5,
+    },
+    imageD: {
+        width: 50,
+        height: 50
+    },
+    textD: {
+        paddingRight: 1,
+        marginTop: 5,
+        fontSize: 8,
+        textAlign: "center",
+        alignSelf: 'center',
+        textTransform: 'capitalize'
+    },
+    labelText: {
+        marginTop: 10,
+        marginBottom: 2,
+        textAlign: 'center',
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        textTransform: "capitalize",
+        color: Constants.COLOR_GREY_SHADED,
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+    },
+    bottomLine: {
+        width: '20%',
+        borderRadius: 20,
+        borderBottomWidth: 5,
+        alignSelf: 'center',
+        borderBottomColor: Constants.COLOR_GREEN,
+        marginBottom: 20
+    },
+    row: {
+        marginBottom: 10,
+        flexDirection: 'row',
+        borderBottomWidth: 1.3,
+        paddingBottom: 10,
+        justifyContent: "center",
+        alignItems: 'center',
+        borderBottomColor: Constants.COLOR_GREY,
+        backgroundColor: Constants.COLOR_WHITE
+    },
+    col1: {
+        width: '30%',
+        paddingLeft: 20,
+    },
+    image: {
+        width: 90,
+        height: 90,
+    },
+    labelText2: {
+        paddingTop: 5,
+        paddingBottom: 5,
+        textTransform: "capitalize",
+        fontWeight: 'bold',
+        color: Constants.COLOR_GREY_DARK,
+    },
+    descText: {
+        color: Constants.COLOR_GREY_LIGHT,
+        fontSize: Constants.FONT_SIZE_SMALL,
+    },
+
+    button: {
+        width: '35%',
+        marginVertical: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 25,
+        backgroundColor: Constants.COLOR_GREEN
+    },
+    buttonLabel: {
+        paddingTop: 5,
+        paddingBottom: 5,
+        textTransform: "uppercase",
+        color: Constants.COLOR_WHITE,
+        fontSize: Constants.FONT_SIZE__MEDIUM
+    },
+    col2: {
+        width: '70%',
+        paddingLeft: 20,
+        paddingRight: 10,
+    },
+    ServicesView:{
+        backgroundColor:Constants.COLOR_WHITE,
+    },
+    ServImageView:{
+        marginHorizontal:'5%',
+        paddingTop:5,
+        paddingBottom:5,
+        flexDirection:'column'
+    },
+    ServText:{
+        fontSize:Constants.FONT_SIZE_SMALL,
+        color:Constants.COLOR_GREY_DARK,
+        fontWeight:'bold',
+        textTransform:'uppercase',
+        textAlign:'center',
+        alignSelf:'center',
+    
+    },
+    ServImage:{
+        width:70,
+        height:70,
+    }
+})
 
 export {
     StyleHelpAndSupport,
@@ -1327,4 +1453,5 @@ export {
     StyleViewUpcomingTrip,
     StyleInvoice,
     StyleUpcomingTrip,
+    StyleCollectMyLoad,
 }

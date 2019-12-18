@@ -71,7 +71,7 @@ export default class Dashboard extends React.Component {
 
                                         <TouchableOpacity style={[StyleDashboard.ImageView,{borderRightWidth:0}]}
                                               onPress={()=>{
-                                                this.props.navigation.navigate('TruckBooking')
+                                                this.props.navigation.navigate('CollectMyLoad')
                                             }}
                                         > 
                                             <Image source={require('../images/Collect_My_Load.png')}

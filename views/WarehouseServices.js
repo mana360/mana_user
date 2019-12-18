@@ -53,7 +53,7 @@ export default class WarehouseServices extends React.Component {
                                         <Image source={require('../images/WarehouseServices_copy.png')}
                                                 style={StyleTruckBooking.imageD}
                                                 />
-                                            <Text style={StyleTruckBooking.textD}>{Constants.WarehouseService}</Text>
+                                            <Text style={[StyleTruckBooking.textD,{color:Constants.COLOR_GREEN}]}>{Constants.WarehouseService}</Text>
                                         </TouchableOpacity>
 
                                         <TouchableOpacity style={StyleTruckBooking.ImageView}

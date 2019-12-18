@@ -85,9 +85,9 @@ const Constants = {
     UpcomingTrip:'Upcoming trips',
     ViewAll:'view all',
     CurrentStatus:"Current Status",
-    EstimatedTimetonextstatus:'Estimated time to next Status Update',
-    EstimatedTimeTocmpleteTrip:'Estimated time to Completion of trip',
-    EstimatedDateTocmpleteTrip:'Estimated Date for Completion of trip',
+    EstimatedTimetonextstatus:'Estimated time to next status update',
+    EstimatedTimeTocmpleteTrip:'Estimated time to completion of trip',
+    EstimatedDateTocmpleteTrip:'Estimated Date for completion of trip',
     DriverName:'Driver Name',
     ContactNo:'Contact No',
     PartnerName:"Partner's Name",
@@ -116,8 +116,16 @@ const Constants = {
     SizeofgoodStored:'Size of Good Stored',
     CargoDescription:'Cargo Description',
     CostOfWarehouseServices:'Cost of Warehouse Services',
-    DurationOfWarehouse:'Duration of Warehouse'
-
+    DurationOfWarehouse:'Duration of Warehouse',
+    PhoneNumber:'Phone Number',
+    Location:'Location',
+    ViewMap:'View Map',
+    MyBooking:'My Booking',
+    NewBooking:'New Booking',
+    CollectMyloadOtherServices:'collect my load other services',
+    ReferAFriend:'refer a friend',
+    RateCard:'rate card',
+    MyDiscountVoucher:'my discount \n vouchers'
 
 
 };

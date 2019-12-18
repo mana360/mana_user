@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity, TouchableHighlightBase } from 'react-native';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { StyleViewUpcomingTrip, StyleUpcomingTrip } from '../config/CommonStyles';
+import { View, Text, Image, ScrollView, Modal, TouchableOpacity, } from 'react-native';
+import { StyleViewUpcomingTrip, } from '../config/CommonStyles';
 import RBSheet from "react-native-raw-bottom-sheet";
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
-import { thisExpression } from '@babel/types';
 import Invoice from './InvoiceView';
 export default class WarehouseViewUpcomingDetail extends React.Component {
     constructor() {

@@ -45,7 +45,7 @@ export default class TruckBooking extends React.Component {
                                             <Image source={require('../images/Truck_Bookings_copy.png')}
                                                 style={StyleTruckBooking.imageD}
                                                 />
-                                            <Text style={StyleTruckBooking.textD}>{Constants.TruckBooking}</Text>
+                                            <Text style={[StyleTruckBooking.textD,{color:Constants.COLOR_GREEN}]}>{Constants.TruckBooking}</Text>
                                         </TouchableOpacity>
 
                                         <TouchableOpacity style={StyleTruckBooking.ImageView}
@@ -72,7 +72,7 @@ export default class TruckBooking extends React.Component {
 
                                         <TouchableOpacity style={[StyleTruckBooking.ImageView,{borderRightWidth:0}]}
                                                 onPress={()=>{
-                                                    this.props.navigation.navigate('TruckingWarehouseServices');
+                                                    this.props.navigation.navigate('CollectMyLoad');
                                             }} 
                                         > 
                                         <Image source={require('../images/Collect_My_Load.png')}
