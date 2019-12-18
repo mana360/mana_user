@@ -19,10 +19,17 @@ export default class CurrentTrip extends React.Component {
         }
     }
     render() {
+
         let { navigation } = this.props
+        let isTruck = this.props.navigation.getParam('flag_truck_booking')
+        let isWarehouse=this.props.navigation.getParam('flag_warehouse_services')
+        let isTruckingWarehouse=this.props.navigation.getParam('flag_Trucking_warehouse')
+        //let isWareHouse= 
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
-                <HeaderBar title="CURRENT TRIP" isBack={true} isLogout={true} navigation={navigation} />
+                <HeaderBar 
+                    title="Current Trip"
+                    isBack={true} isLogout={true} navigation={navigation} />
                 <FlatList
                     style={{ marginVertical: 15 }}
                     numColumns={1}

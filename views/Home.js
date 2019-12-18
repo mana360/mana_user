@@ -8,13 +8,7 @@ export default class Home extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            datasource:[
-                {id:'1',desc:'abcdfg',quantity:'1',price:'45.00', total:'45.00'},
-                {id:'2',desc:'abcdfg',quantity:'1',price:'45.00', total:'45.00'},
-                {id:'3',desc:'abcdfg',quantity:'1',price:'45.00', total:'45.00'},
-                {id:'4',desc:'abcdfg',quantity:'1',price:'45.00', total:'45.00'},
-                {id:'5',desc:'abcdfg',quantity:'1',price:'45.00', total:'45.00'},
-            ]
+          
         }
     }
     render(){

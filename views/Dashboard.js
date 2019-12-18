@@ -1,16 +1,19 @@
 /* screen -MANAPPCUS002
     design by -mayur
  */
-import React, { Component } from 'react';
-import { View, Text, Image, TextInput, ScrollView, Modal,TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, Image,ScrollView,Text,TouchableOpacity } from 'react-native';
 import {  Card,CardItem} from "native-base";
 import  LinearGradient from "react-native-linear-gradient";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { StyleDashboard } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
-import StarRating from "react-native-star-rating";
+import TruckBooking from './TruckBooking';
+import WarehouseServices from './WarehouseServices';
+import TruckingWarehouseServices from './TruckingWarehouseServices';
+import { ThemeColors } from 'react-navigation';
+import CollectMyLoad from './CollectMyLoad';
 export default class Dashboard extends React.Component {
     constructor() {
         super();
@@ -19,73 +22,17 @@ export default class Dashboard extends React.Component {
             inputLabelTrip: '',
             reviewTrip: '',
             modal_Visible:false,
+            screen_title:'Dashboard'
         }
     }
     onStarRatingPress(rating) {
         this.setState({ starCount: rating })
      
     }
-    render() {
-        let { navigation } = this.props
-        return (
-            <View style={{ flex: 1 }}>
-           <HeaderBar title="DASHBOARD"  isLogout={true} navigation={navigation} />
-                <View style={{ flex: 1 }}>
-                    <ScrollView  bounces={false}>
-                            <View style={StyleDashboard.topCircle}>
-                            </View>
-                            <Card style={{width:'90%',alignSelf:'center',maxHeight:100,marginTop:'-27%',borderRadius:5}}>
-                                    <CardItem style={StyleDashboard.cardView} >
-                                        <TouchableOpacity style={StyleDashboard.ImageView}
-                                           onPress={()=>{
-                                               this.props.navigation.navigate('TruckBooking')
-                                           }}
-                                        > 
-                                            <Image source={require('../images/Truck_Bookings.png')}
-                                                style={StyleDashboard.imageD}
-                                                />
-                                            <Text style={StyleDashboard.textD}>{Constants.TruckBooking}</Text>
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity style={StyleDashboard.ImageView}
-                                             onPress={()=>{
-                                                this.props.navigation.navigate('WarehouseServices')
-                                            }}
-                                        > 
-                                            <Image source={require('../images/Warehouse_Services.png')}
-                                                style={StyleDashboard.imageD}
-                                            />
-                                            <Text style={StyleDashboard.textD}>{Constants.WarehouseService}</Text>
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity style={StyleDashboard.ImageView}
-                                             onPress={()=>{
-                                                this.props.navigation.navigate('TruckingWarehouseServices')
-                                            }}
-                                        > 
-                                            <Image source={require('../images/Trucking+Warehouse.png')}
-                                                style={StyleDashboard.imageD}
-                                            />
-                                            <Text style={StyleDashboard.textD}>{Constants.truckingwarehouse}</Text>
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity style={[StyleDashboard.ImageView,{borderRightWidth:0}]}
-                                              onPress={()=>{
-                                                this.props.navigation.navigate('CollectMyLoad')
-                                            }}
-                                        > 
-                                            <Image source={require('../images/Collect_My_Load.png')}
-                                                style={StyleDashboard.imageD}
-                                            />
-                                            <Text style={StyleDashboard.textD}>{Constants.CollectMyLoad}</Text>
-                                        </TouchableOpacity>
-                                 </CardItem>
-                            </Card>
-                            <Text style={StyleDashboard.labelText}>{Constants.TotalBookings}</Text>
-                            <View style={StyleDashboard.bottomLine}>
-                            </View>
-
-                            <View style={StyleDashboard.row}>
+    getDashboard(){
+        return(
+            <View>
+                <View style={StyleDashboard.row}>
                                  <View style={StyleDashboard.col1}>
                                  <Image source={require('../images/Warehouse_Services.png')}
                                  style={StyleDashboard.image}/>
@@ -125,6 +72,112 @@ export default class Dashboard extends React.Component {
                                 <Text style={[StyleDashboard.labelText2,{color:'rgba(82, 173, 209,1)'}]}>{Constants.CollectMyLoad}</Text>
                                      <Text style={StyleDashboard.descText}>fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
                                 </View>
+                            </View>
+                      </View> 
+        )
+    }
+    render() {
+        let { navigation } = this.props
+        return (
+            <View style={{ flex: 1,backgroundColor:Constants.COLOR_GREY}}>
+           <HeaderBar title={this.state.screen_title}  isLogout={true} navigation={navigation} />
+                <View style={{ flex: 1 }}>
+                    <ScrollView  bounces={false}>
+                            <View style={StyleDashboard.topCircle}>
+                            </View>
+                            <Card style={{width:'90%',alignSelf:'center',maxHeight:100,marginTop:'-27%',borderRadius:5}}>
+                                    <CardItem style={StyleDashboard.cardView} >
+                                        <TouchableOpacity style={StyleDashboard.ImageView}
+                                           onPress={()=>{
+                                            //    this.props.navigation.navigate('TruckBooking')
+                                            this.setState({screen_title:"Truck Bookings"})
+                                           }}
+                                        > 
+                                            <Image source={this.state.screen_title=="Truck Bookings"?require('../images/Truck_Bookings_copy.png'):require('../images/Truck_Bookings.png')}
+                                                style={[StyleDashboard.imageD]}
+                                                />
+                                            <Text style={StyleDashboard.textD}>{Constants.TruckBooking}</Text>
+                                        </TouchableOpacity>
+
+                                        <LinearGradient colors={['white','grey','white']} start={{ x:0, y: 0 }} end={{ x: 1, y: 1 }}>
+                                            <View style={{width:0.7,height:75,}}>
+                                            </View>
+                                        </LinearGradient>
+
+                                        <TouchableOpacity style={StyleDashboard.ImageView}
+                                             onPress={()=>{
+                                                this.setState({screen_title:"Warehouse Services"})
+                                            }}
+                                        > 
+                                            <Image source={this.state.screen_title=="Warehouse Services"?require('../images/WarehouseServices_copy.png'):require('../images/Warehouse_Services.png')}
+                                                style={StyleDashboard.imageD}
+                                            />
+                                            <Text style={StyleDashboard.textD}>{Constants.WarehouseService}</Text>
+                                        </TouchableOpacity>
+
+                                        <LinearGradient colors={['white','grey','white']} start={{ x:0, y: 0 }} end={{ x: 1, y: 1 }}>
+                                            <View style={{width:0.7,height:75,}}>
+                                            </View>
+                                        </LinearGradient>
+
+                                        <TouchableOpacity style={StyleDashboard.ImageView}
+                                                onPress={()=>{
+                                                    this.setState({screen_title:"Trucking Warehouse Services"})
+                                                }}
+                                        > 
+                                            <Image source={this.state.screen_title=="Trucking Warehouse Services"?require('../images/Trucking_+Warehouse.png'):require('../images/Trucking+Warehouse.png')}
+                                                style={StyleDashboard.imageD}
+                                            />
+                                            <Text style={StyleDashboard.textD}>{Constants.truckingwarehouse}</Text>
+                                        </TouchableOpacity>
+
+                                        <LinearGradient colors={['white','grey','white']} start={{ x:0, y: 0 }} end={{ x: 1, y: 1 }}>
+                                            <View style={{width:0.7,height:75,}}>
+                                            </View>
+                                        </LinearGradient>
+
+                                        <TouchableOpacity style={[StyleDashboard.ImageView,{borderRightWidth:0}]}
+                                              onPress={()=>{
+                                                this.setState({screen_title:"Pick My Load"})
+                                            }}
+                                        > 
+                                            <Image source={this.state.screen_title=="Pick My Load"?require('../images/Collect_My_Load_active.png'):require('../images/Collect_My_Load.png')}
+                                                style={StyleDashboard.imageD}
+                                            />
+                                            <Text style={StyleDashboard.textD}>{Constants.CollectMyLoad}</Text>
+                                        </TouchableOpacity>
+                                 </CardItem>
+                            </Card>
+                         
+                            <Text style={StyleDashboard.labelText}>{Constants.TotalBookings}</Text>
+                            <View style={StyleDashboard.bottomLine}>
+                            </View>
+                        
+                            
+                            <View>
+                                {
+                                    this.state.screen_title=="Dashboard"
+                                    ?
+                                        this.getDashboard()
+                                    :
+                                        this.state.screen_title=="Truck Bookings"
+                                        ?
+                                        <TruckBooking navigation={navigation} />
+                                        :
+                                            this.state.screen_title=="Warehouse Services"
+                                            ?
+                                            <WarehouseServices navigation={navigation} />
+                                            :
+                                                this.state.screen_title=="Trucking Warehouse Services"
+                                                ?
+                                                <TruckingWarehouseServices navigation={navigation} />
+                                                :   
+                                                this.state.screen_title=="Pick My Load"
+                                                ?
+                                               <CollectMyLoad navigation={navigation} />
+                                                :
+                                        null
+                                }
                             </View>
 
                     </ScrollView>

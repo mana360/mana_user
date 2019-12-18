@@ -30,62 +30,7 @@ export default class TruckBooking extends React.Component {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1,backgroundColor:Constants.COLOR_GREY }}>
-           <HeaderBar title="TRUCK BOOKING"  isLogout={true} navigation={navigation} />
                 <View style={{ flex: 1 }}>
-                    <ScrollView  bounces={false}>
-                            <View style={StyleTruckBooking.topCircle}>
-                            </View>
-                            <Card style={{width:'90%',alignSelf:'center',maxHeight:100,marginTop:'-27%',borderRadius:5}}>
-                                    <CardItem style={StyleTruckBooking.cardView} >
-                                        <TouchableOpacity style={StyleTruckBooking.ImageView}
-                                          onPress={()=>{
-                                            this.props.navigation.navigate('TruckBooking');
-                                          }} 
-                                        > 
-                                            <Image source={require('../images/Truck_Bookings_copy.png')}
-                                                style={StyleTruckBooking.imageD}
-                                                />
-                                            <Text style={[StyleTruckBooking.textD,{color:Constants.COLOR_GREEN}]}>{Constants.TruckBooking}</Text>
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity style={StyleTruckBooking.ImageView}
-                                              onPress={()=>{
-                                                this.props.navigation.navigate('WarehouseServices');
-                                        }} 
-                                        > 
-                                        <Image source={require('../images/Warehouse_Services.png')}
-                                                style={StyleTruckBooking.imageD}
-                                                />
-                                            <Text style={StyleTruckBooking.textD}>{Constants.WarehouseService}</Text>
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity style={StyleTruckBooking.ImageView}
-                                            onPress={()=>{
-                                                this.props.navigation.navigate('TruckingWarehouseServices');
-                                        }} 
-                                        > 
-                                        <Image source={require('../images/Trucking+Warehouse.png')}
-                                                style={StyleTruckBooking.imageD}
-                                                />
-                                            <Text style={StyleTruckBooking.textD}>{Constants.truckingwarehouse}</Text>
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity style={[StyleTruckBooking.ImageView,{borderRightWidth:0}]}
-                                                onPress={()=>{
-                                                    this.props.navigation.navigate('CollectMyLoad');
-                                            }} 
-                                        > 
-                                        <Image source={require('../images/Collect_My_Load.png')}
-                                                style={StyleTruckBooking.imageD}
-                                                />
-                                            <Text style={StyleTruckBooking.textD}>{Constants.CollectMyLoad}</Text>
-                                        </TouchableOpacity>
-                                 </CardItem>
-                            </Card>
-                            <Text style={StyleTruckBooking.labelText}>{Constants.TotalBookings}</Text>
-                            <View style={StyleTruckBooking.bottomLine}>
-                            </View>
-
                             <View style={StyleTruckBooking.row}>
                                  <View style={StyleTruckBooking.col1}>
                                  <Image source={require('../images/Warehouse_Services.png')}
@@ -96,7 +41,7 @@ export default class TruckBooking extends React.Component {
                                      <Text style={StyleTruckBooking.descText}>fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
                                      <TouchableOpacity style={StyleTruckBooking.button}
                                               onPress={()=>{
-                                                  this.props.navigation.navigate('CurrentTrip');
+                                                  this.props.navigation.navigate('CurrentTrip',{flag_truck_booking:1});
                                               }} 
                                     >
                                            <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>
@@ -114,17 +59,14 @@ export default class TruckBooking extends React.Component {
                                      <Text style={StyleTruckBooking.descText}>fnsldfn fnsldfn fnsldfnfnsldfnfnsldfnfnsldfn fnsldfn fnsldfn lorempipsom</Text>
                                      <TouchableOpacity style={StyleTruckBooking.button}
                                             onPress={()=>{
-                                                    this.props.navigation.navigate('UpcomingTrip');
+                                                    this.props.navigation.navigate('CurrentTrip',{flag_truck_booking:2});
                                             }} 
                                     >
                                            <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>
                                      </TouchableOpacity>
                                 </View>
                             </View>
-
-                    </ScrollView>
-                </View>
-                <FooterBar navigation={navigation} />
+                      </View>
             </View>
         )
     }

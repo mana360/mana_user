@@ -661,11 +661,10 @@ const StyleDashboard = StyleSheet.create({
         paddingRight: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRightWidth: 0.5,
     },
     imageD: {
         width: 50,
-        height: 50
+        height: 50,
     },
     textD: {
         paddingRight: 1,
@@ -691,21 +690,22 @@ const StyleDashboard = StyleSheet.create({
         borderBottomWidth: 5,
         alignSelf: 'center',
         borderBottomColor: Constants.COLOR_GREEN,
-        marginBottom: 20
+        marginBottom: 15
     },
     row: {
-        marginTop: 5,
-        marginBottom: 15,
+        marginBottom: 10,
         flexDirection: 'row',
         borderBottomWidth: 1.3,
         paddingBottom: 10,
         justifyContent: "center",
         alignItems: 'center',
+        backgroundColor:Constants.COLOR_WHITE,
         borderBottomColor: Constants.COLOR_GREY
     },
     col1: {
         width: '30%',
         paddingLeft: 20,
+        paddingTop:10
     },
     image: {
         width: 90,
@@ -747,7 +747,6 @@ const StyleTruckBooking = StyleSheet.create({
         paddingRight: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRightWidth: 0.5,
     },
     imageD: {
         width: 50,
@@ -1332,7 +1331,6 @@ const StyleCollectMyLoad = StyleSheet.create({
         paddingRight: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRightWidth: 0.5,
     },
     imageD: {
         width: 50,
@@ -1421,7 +1419,7 @@ const StyleCollectMyLoad = StyleSheet.create({
         marginHorizontal:'5%',
         paddingTop:5,
         paddingBottom:5,
-        flexDirection:'column'
+        flexDirection:'column',
     },
     ServText:{
         fontSize:Constants.FONT_SIZE_SMALL,
@@ -1436,6 +1434,9 @@ const StyleCollectMyLoad = StyleSheet.create({
         width:70,
         height:70,
     }
+})
+const StylePercentageGraph=StyleSheet.create({
+
 })
 
 export {
@@ -1454,4 +1455,5 @@ export {
     StyleInvoice,
     StyleUpcomingTrip,
     StyleCollectMyLoad,
+    StylePercentageGraph,
 }
