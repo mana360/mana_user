@@ -324,8 +324,8 @@ const StyleRateAndReview = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
-        width:wp('120%'),
-        height:hp('63%'),
+        width: wp('120%'),
+        height: hp('63%'),
         borderRadius: 205,
         top: '-175%',
         alignSelf: 'center',
@@ -463,7 +463,7 @@ const StyleViewCompletedDetail = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
-        width:wp('120%'),
+        width: wp('120%'),
         height: 420,
         borderRadius: 205,
         top: '-175%',
@@ -642,8 +642,8 @@ const StyleTermsAndCondition = StyleSheet.create({
 })
 const StyleDashboard = StyleSheet.create({
     topCircle: {
-        width:wp('120%'),
-        height:hp('63%'),
+        width: wp('120%'),
+        height: hp('63%'),
         borderRadius: 200,
         marginTop: '-85%',
         alignSelf: 'center',
@@ -699,13 +699,13 @@ const StyleDashboard = StyleSheet.create({
         paddingBottom: 10,
         justifyContent: "center",
         alignItems: 'center',
-        backgroundColor:Constants.COLOR_WHITE,
+        backgroundColor: Constants.COLOR_WHITE,
         borderBottomColor: Constants.COLOR_GREY
     },
     col1: {
         width: '30%',
         paddingLeft: 20,
-        paddingTop:10
+        paddingTop: 10
     },
     image: {
         width: 90,
@@ -728,8 +728,8 @@ const StyleDashboard = StyleSheet.create({
 })
 const StyleTruckBooking = StyleSheet.create({
     topCircle: {
-        width:wp('120%'),
-        height:hp('63%'),
+        width: wp('120%'),
+        height: hp('63%'),
         borderRadius: 200,
         marginTop: '-85%',
         alignSelf: 'center',
@@ -909,8 +909,8 @@ const StyleViewCurrentTrip = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
-        width:wp('120%'),
-        height:hp('63%'),
+        width: wp('120%'),
+        height: hp('63%'),
         borderRadius: 205,
         top: '-195%',
         alignSelf: 'center',
@@ -981,7 +981,7 @@ const StyleViewCurrentTrip = StyleSheet.create({
         color: Constants.COLOR_GREY_DARK,
     },
     bottomButton: {
-         paddingHorizontal:25,
+        paddingHorizontal: 25,
         flexDirection: 'row',
         alignSelf: 'center',
         justifyContent: 'center',
@@ -1007,8 +1007,8 @@ const StyleViewUpcomingTrip = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
-        width:wp('120%'),
-        height:hp('63%'),
+        width: wp('120%'),
+        height: hp('63%'),
         borderRadius: 205,
         top: '-195%',
         alignSelf: 'center',
@@ -1080,7 +1080,7 @@ const StyleViewUpcomingTrip = StyleSheet.create({
         color: Constants.COLOR_GREY_DARK,
     },
     bottomButton: {
-        paddingHorizontal:25,
+        paddingHorizontal: 25,
         flexDirection: 'row',
         alignSelf: 'center',
         justifyContent: 'center',
@@ -1142,7 +1142,7 @@ const StyleViewUpcomingTrip = StyleSheet.create({
     },
     cancelModalView: {
         width: wp('80%'),
-        borderRadius:5,
+        borderRadius: 5,
         backgroundColor: Constants.COLOR_WHITE,
         alignSelf: 'center',
         justifyContent: 'center'
@@ -1151,7 +1151,7 @@ const StyleViewUpcomingTrip = StyleSheet.create({
         alignSelf: 'flex-end',
         right: 8,
         top: 8,
-        marginBottom:15
+        marginBottom: 15
     },
     modalMsg: {
         width: wp('80%'),
@@ -1160,22 +1160,22 @@ const StyleViewUpcomingTrip = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
         alignSelf: 'center',
-        marginBottom:15
+        marginBottom: 15
 
     },
     cancelModalButton: {
         width: wp('30%'),
-        justifyContent:'center',
-        marginHorizontal:10,
+        justifyContent: 'center',
+        marginHorizontal: 10,
         backgroundColor: Constants.COLOR_GREEN,
-        paddingVertical:10,
-        borderRadius:20,
+        paddingVertical: 10,
+        borderRadius: 20,
     },
     cancelModalButtonText: {
-        fontWeight:'bold',
-        alignSelf:'center',
-        textTransform:"uppercase",
-        color:Constants.COLOR_WHITE
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        textTransform: "uppercase",
+        color: Constants.COLOR_WHITE
     }
 })
 const StyleUpcomingTrip = StyleSheet.create({
@@ -1220,7 +1220,7 @@ const StyleUpcomingTrip = StyleSheet.create({
     imageIcon: {
         width: 13,
         height: 13,
-        paddingRight:3,
+        paddingRight: 3,
     },
     labeltext: {
         paddingLeft: 2,
@@ -1312,8 +1312,8 @@ const StyleInvoice = StyleSheet.create({
 })
 const StyleCollectMyLoad = StyleSheet.create({
     topCircle: {
-        width:wp('120%'),
-        height:hp('63%'),
+        width: wp('120%'),
+        height: hp('63%'),
         borderRadius: 200,
         marginTop: '-85%',
         alignSelf: 'center',
@@ -1412,31 +1412,171 @@ const StyleCollectMyLoad = StyleSheet.create({
         paddingLeft: 20,
         paddingRight: 10,
     },
-    ServicesView:{
-        backgroundColor:Constants.COLOR_WHITE,
+    ServicesView: {
+        backgroundColor: Constants.COLOR_WHITE,
     },
-    ServImageView:{
-        marginHorizontal:'5%',
-        paddingTop:5,
-        paddingBottom:5,
-        flexDirection:'column',
+    ServImageView: {
+        marginHorizontal: '5%',
+        paddingTop: 5,
+        paddingBottom: 5,
+        flexDirection: 'column',
     },
-    ServText:{
-        fontSize:Constants.FONT_SIZE_SMALL,
-        color:Constants.COLOR_GREY_DARK,
-        fontWeight:'bold',
-        textTransform:'uppercase',
-        textAlign:'center',
-        alignSelf:'center',
-    
+    ServText: {
+        fontSize: Constants.FONT_SIZE_SMALL,
+        color: Constants.COLOR_GREY_DARK,
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        textAlign: 'center',
+        alignSelf: 'center',
+
     },
-    ServImage:{
-        width:70,
-        height:70,
+    ServImage: {
+        width: 70,
+        height: 70,
     }
 })
-const StylePercentageGraph=StyleSheet.create({
-
+const StyleMyProfile = StyleSheet.create({
+    topCircle: {
+        position: 'absolute',
+        zIndex: -1,
+        width: wp('120%'),
+        height: hp('63%'),
+        borderRadius: 205,
+        top: '-195%',
+        alignSelf: 'center',
+        backgroundColor: Constants.COLOR_PRIMARY,
+    },
+    ProfileImage: {
+        width: 130,
+        height: 130,
+        borderRadius: 70,
+        borderWidth: 8,
+        borderColor: Constants.COLOR_WHITE,
+        alignSelf: 'center',
+        marginTop: '8%',
+        resizeMode: "cover"
+    },
+    sideImageView: {
+        marginTop: '15%',
+    },
+    sideImage: {
+        width: 65,
+        height: 65,
+        borderWidth: 6,
+        marginHorizontal: 15,
+        borderColor: Constants.COLOR_WHITE,
+        borderRadius: 35,
+        resizeMode: "cover",
+    },
+    label: {
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        marginTop: 10,
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        color: Constants.COLOR_GREY_DARK,
+    },
+    bottomline: {
+        borderBottomColor: Constants.COLOR_GREEN,
+        borderBottomWidth: 5,
+        width: '15%',
+        alignSelf: 'center',
+        marginTop: 5,
+        borderRadius: 50,
+        marginBottom: 10
+    },
+    row: {
+        flexDirection: 'row',
+        width: '90%',
+        paddingTop: 20,
+        paddingBottom: 20,
+        alignSelf: 'center',
+        borderBottomWidth: 1.5,
+        borderBottomColor: Constants.COLOR_GREY
+    },
+    col1: {
+        width: '50%',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    Icon: {
+        width: 20,
+        height: 20,
+    },
+    col1Text: {
+        paddingRight: 5,
+        fontSize: Constants.FONT_SIZE_LARGE,
+        color: Constants.COLOR_GREY_DARK,
+        fontWeight: 'bold',
+        paddingLeft: 10,
+    },
+    col2: {
+        width: '50%',
+        height: '100%',
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    col2Text: {
+        paddingLeft: 10,
+        fontSize: Constants.FONT_SIZE_LARGE,
+        color: Constants.COLOR_GREY_DARK,
+    },
+    ModalWrapper: {
+        backgroundColor: Constants.COLOR_WHITE,
+        width: wp('90%'),
+        alignSelf: 'center',
+        borderRadius:5,
+    },
+    TextInputView: {
+        paddingLeft: 20,
+        borderWidth: 0.8,
+        width: wp('80%'),
+        height: 55,
+        marginBottom: '8%',
+        alignSelf: 'center',
+        borderRadius: 50,
+        borderColor: Constants.COLOR_GREY_DARK,
+        backgroundColor: Constants.COLOR_WHITE,
+    },
+    LabelView: {
+        flexDirection: 'row',
+        position: 'absolute',
+        zIndex: 1,
+        marginLeft: '8%',
+        top: '-20%',
+        paddingHorizontal: 5,
+        justifyContent: 'center',
+        alignItems: "center",
+        backgroundColor: Constants.COLOR_WHITE
+    },
+    modalLabelText: {
+        paddingLeft: 5,
+        textAlign: "center",
+        textTransform: "capitalize",
+        color: Constants.COLOR_GREY_DARK
+    },
+    labelIcon: {
+        width: 17,
+        height: 17
+    },
+    TextInput: {
+        fontSize: Constants.FONT_SIZE_LARGE
+    },
+    ButtonView: {
+        width: '90%',
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginBottom: 30,
+        backgroundColor: Constants.COLOR_GREEN,
+    },
+    ButtonLabel: {
+        paddingVertical: 15,
+        textTransform: "uppercase",
+        fontWeight: "bold",
+        color: Constants.COLOR_WHITE,
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE
+    },
 })
 
 export {
@@ -1455,5 +1595,5 @@ export {
     StyleInvoice,
     StyleUpcomingTrip,
     StyleCollectMyLoad,
-    StylePercentageGraph,
+    StyleMyProfile,
 }

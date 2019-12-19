@@ -36,7 +36,7 @@ export default class CurrentTrip extends React.Component {
                     data={this.state.dataSource}
                     renderItem={({ item }, index) => {
                         return (
-                            <TouchableOpacity style={StyleCurrentTrip.row} onPress={() => { alert(item.id) }}>
+                            <TouchableOpacity style={StyleCurrentTrip.row} onPress={() => {this.props.navigation.navigate('ViewCurrentTrip') }}>
 
                                 <View style={StyleCurrentTrip.col1}>
                                     <Image

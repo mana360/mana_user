@@ -29,7 +29,9 @@ import TruckingWarehouseCurrentTripDetails from './views/TruckingWarehouseCurren
 import TruckingWarehouseUpcomingTrip from './views/TruckingWarehouseUpcomingTrip';
 import TruckingWarehouseViewUpcomingTrip from './views/TruckingWarehouseViewUpcomingTrip';
 import CollectMyLoad from './views/CollectMyLoad';
-import PercentageGraph from './views/PercentageGraph';
+import CompanyMyProfile from './views/CompanyProfile';
+import UserProfile from './views/UserProfile';
+import MyProfile from './views/MyProfile';
 
 console.disableYellowBox = true;
 
@@ -142,11 +144,20 @@ const AppNavigator1 = createStackNavigator({
       screen: CollectMyLoad,
       navigationOptions: () => ({ header: null })
     },
-    PercentageGraph: {
-      screen: PercentageGraph,
+    CompanyProfile: {
+      screen: CompanyMyProfile,
       navigationOptions: () => ({ header: null })
     },
+    UserProfile: {
+      screen: UserProfile,
+      navigationOptions: () => ({ header: null })
+    },
+    MyProfile: {
+      screen: MyProfile,
+      navigationOptions: () => ({ header: null })
+    },
+    
 },
-     {initialRouteName:"Dashboard"}
+     {initialRouteName:"MyProfile"}
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

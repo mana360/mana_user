@@ -1,61 +1,33 @@
-import React from 'react';
-import Svg,{Polyline} from 'react-native-svg';
-import {View, Text, TouchableOpacity,ScrollView,StyleSheet,Image} from 'react-native';
-import { StylePercentageGraph } from '../config/CommonStyles';
-export default class PercentageGraph extends React.Component{
-    constructor(props){
-        super(props);
-        this.state={
-          
-        }
-    }
-    
-    render(){
-        const startPoint = [25, 25];
-const controlPoint = [300, 175];
-const endPoint = [25, 325];
+// import React from 'react';
+// import Svg,{Polyline} from 'react-native-svg';
+// import {View, Text, TouchableOpacity,ScrollView,StyleSheet,Image} from 'react-native';
+// import { StylePercentageGraph } from '../config/CommonStyles';
 
-const path = (
-  <path
-    d={`
-      M ${startPoint}
-      Q ${controlPoint} ${endPoint}
-    `}
-    fill="none"
-    stroke="hotpink"
-    strokeWidth={5}
-  />
-)
-        let {navigation} = this.props
-        return(
-            <svg
-            viewBox="0 0 200 350"
-            style={{ maxHeight: 400 }}
-          >
-            {path}
-          </svg>
-        )
-    }
-}
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    imageContainer: {
-      alignItems: 'center',
-      backgroundColor: 'yellow'
-    },
-    imageWrapper: {
-      width: 125, // half of the image width
-      height: 250,
-      backgroundColor: 'transparent',
-      overflow: 'hidden'
-    },
-    image: {
-      width: 250,
-      height: 250,
-      borderRadius: 125, // half of the image width
-      backgroundColor: 'transparent'
-    }
-  });
+// import { Svg, Defs, Rect, Mask, Circle } from 'react-native-svg';
+// const WrappedSvg = () => (
+//     <View style={{ aspectRatio: 1 }}>
+//         <Svg height="100%" width="100%" viewBox="0 0 100 100">
+//             <Defs>
+//                 <Mask id="mask" x="0" y="0" height="100%" width="100%">
+//                     <Rect height="100%" width="100%" fill="#fff" />
+//                     <Circle r="45" cx="50" cy="50" />
+//                 </Mask>
+//             </Defs>
+//             <Rect height="100%" width="100%" fill="rgba(0, 0, 0, 0.5)" mask="url(#mask)" fill-opacity="0" />
+//         </Svg>
+//     </View>
+// );
+
+// export class index extends Component {
+//     render() {
+//         return (
+//             <View style={{ backgroundColor: '#FFFFFF', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+
+//                 <View style={{ width: Dimensions.get('window').width, height: 300, position: 'absolute' }}>
+//                     <WrappedSvg />
+//                 </View>
+//             </View>
+//         );
+//     }
+// }

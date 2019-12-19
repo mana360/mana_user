@@ -29,7 +29,7 @@ export default class TruckingWarehouseUpcomingTrip extends React.Component {
                     data={this.state.dataSource}
                     renderItem={({ item }, index) => {
                         return (
-                            <TouchableOpacity style={StyleUpcomingTrip.row} onPress={() => { alert(item.id) }}>
+                            <TouchableOpacity style={StyleUpcomingTrip.row} onPress={() => { this.props.navigation.navigate('TruckingWarehouseViewUpcomingTrip') }}>
                                 <View style={StyleUpcomingTrip.col1}>
                                     <Image
                                         source={require('../images/Trucking_+Warehouse.png')}

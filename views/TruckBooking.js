@@ -41,7 +41,7 @@ export default class TruckBooking extends React.Component {
                                      <Text style={StyleTruckBooking.descText}>fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
                                      <TouchableOpacity style={StyleTruckBooking.button}
                                               onPress={()=>{
-                                                  this.props.navigation.navigate('CurrentTrip',{flag_truck_booking:1});
+                                                  this.props.navigation.navigate('CurrentTrip');
                                               }} 
                                     >
                                            <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>
@@ -59,7 +59,7 @@ export default class TruckBooking extends React.Component {
                                      <Text style={StyleTruckBooking.descText}>fnsldfn fnsldfn fnsldfnfnsldfnfnsldfnfnsldfn fnsldfn fnsldfn lorempipsom</Text>
                                      <TouchableOpacity style={StyleTruckBooking.button}
                                             onPress={()=>{
-                                                    this.props.navigation.navigate('CurrentTrip',{flag_truck_booking:2});
+                                                    this.props.navigation.navigate('UpcomingTrip');
                                             }} 
                                     >
                                            <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>

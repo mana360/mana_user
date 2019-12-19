@@ -31,7 +31,7 @@ export default class TruckingWarehouseServices extends React.Component {
                                      <Text style={StyleTruckBooking.descText}>fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
                                      <TouchableOpacity style={StyleTruckBooking.button}
                                               onPress={()=>{
-                                                  this.props.navigation.navigate('CurrentTrip',{flag_Trucking_warehouse:1});
+                                                  this.props.navigation.navigate('TruckingWarehouseCurrentService');
                                               }} 
                                     >
                                            <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>
@@ -49,7 +49,7 @@ export default class TruckingWarehouseServices extends React.Component {
                                      <Text style={StyleTruckBooking.descText}>fnsldfn fnsldfn fnsldfnfnsldfnfnsldfnfnsldfn fnsldfn fnsldfn lorempipsom</Text>
                                      <TouchableOpacity style={StyleTruckBooking.button}
                                             onPress={()=>{
-                                                this.props.navigation.navigate('CurrentTrip',{flag_Trucking_warehouse:2});
+                                                this.props.navigation.navigate('TruckingWarehouseUpcomingTrip');
                                             }} 
                                     >
                                            <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>

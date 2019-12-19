@@ -96,7 +96,7 @@ export default class Dashboard extends React.Component {
                                             <Image source={this.state.screen_title=="Truck Bookings"?require('../images/Truck_Bookings_copy.png'):require('../images/Truck_Bookings.png')}
                                                 style={[StyleDashboard.imageD]}
                                                 />
-                                            <Text style={StyleDashboard.textD}>{Constants.TruckBooking}</Text>
+                                            <Text style={this.state.screen_title=="Truck Bookings"?[StyleDashboard.textD,{color:Constants.COLOR_GREEN}]:[StyleDashboard.textD]}>{Constants.TruckBooking}</Text>
                                         </TouchableOpacity>
 
                                         <LinearGradient colors={['white','grey','white']} start={{ x:0, y: 0 }} end={{ x: 1, y: 1 }}>
@@ -112,7 +112,7 @@ export default class Dashboard extends React.Component {
                                             <Image source={this.state.screen_title=="Warehouse Services"?require('../images/WarehouseServices_copy.png'):require('../images/Warehouse_Services.png')}
                                                 style={StyleDashboard.imageD}
                                             />
-                                            <Text style={StyleDashboard.textD}>{Constants.WarehouseService}</Text>
+                                            <Text style={this.state.screen_title=="Warehouse Services"?[StyleDashboard.textD,{color:Constants.COLOR_GREEN}]:[StyleDashboard.textD]}>{Constants.WarehouseService}</Text>
                                         </TouchableOpacity>
 
                                         <LinearGradient colors={['white','grey','white']} start={{ x:0, y: 0 }} end={{ x: 1, y: 1 }}>
@@ -128,7 +128,7 @@ export default class Dashboard extends React.Component {
                                             <Image source={this.state.screen_title=="Trucking Warehouse Services"?require('../images/Trucking_+Warehouse.png'):require('../images/Trucking+Warehouse.png')}
                                                 style={StyleDashboard.imageD}
                                             />
-                                            <Text style={StyleDashboard.textD}>{Constants.truckingwarehouse}</Text>
+                                            <Text style={this.state.screen_title=="Trucking Warehouse Services"?[StyleDashboard.textD,{color:Constants.COLOR_GREEN}]:[StyleDashboard.textD]}>{Constants.truckingwarehouse}</Text>
                                         </TouchableOpacity>
 
                                         <LinearGradient colors={['white','grey','white']} start={{ x:0, y: 0 }} end={{ x: 1, y: 1 }}>
@@ -144,7 +144,7 @@ export default class Dashboard extends React.Component {
                                             <Image source={this.state.screen_title=="Pick My Load"?require('../images/Collect_My_Load_active.png'):require('../images/Collect_My_Load.png')}
                                                 style={StyleDashboard.imageD}
                                             />
-                                            <Text style={StyleDashboard.textD}>{Constants.CollectMyLoad}</Text>
+                                            <Text style={this.state.screen_title=="Pick My Load"?[StyleDashboard.textD,{color:Constants.COLOR_GREEN}]:[StyleDashboard.textD]}>{Constants.CollectMyLoad}</Text>
                                         </TouchableOpacity>
                                  </CardItem>
                             </Card>
