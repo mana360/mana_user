@@ -32,6 +32,9 @@ import CollectMyLoad from './views/CollectMyLoad';
 import CompanyMyProfile from './views/CompanyProfile';
 import UserProfile from './views/UserProfile';
 import MyProfile from './views/MyProfile';
+import EditProfile from './views/EditProfile';
+import ForgotPassword from './views/ForgotPassword';
+import SetPassword from './views/SetPassword';
 
 console.disableYellowBox = true;
 
@@ -156,8 +159,16 @@ const AppNavigator1 = createStackNavigator({
       screen: MyProfile,
       navigationOptions: () => ({ header: null })
     },
+    EditProfile: {
+      screen: EditProfile,
+      navigationOptions: () => ({ header: null })
+    },
+    SetPassword: {
+      screen: SetPassword,
+      navigationOptions: () => ({ header: null })
+    },
     
 },
-     {initialRouteName:"MyProfile"}
+     {initialRouteName:"SetPassword"}
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

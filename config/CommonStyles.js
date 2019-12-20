@@ -1562,6 +1562,106 @@ const StyleMyProfile = StyleSheet.create({
         fontSize: Constants.FONT_SIZE_LARGE
     },
     ButtonView: {
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginBottom: 30,
+        backgroundColor: Constants.COLOR_GREEN,
+    },
+    ButtonLabel: {
+        paddingVertical: 10,
+        textTransform: "uppercase",
+        fontWeight: "bold",
+        color: Constants.COLOR_WHITE,
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE
+    },
+})
+const StyleEditProfile = StyleSheet.create({
+    topCircle: {
+        position: 'absolute',
+        zIndex: -1,
+        width: wp('120%'),
+        height: hp('63%'),
+        borderRadius: 205,
+        top: '-195%',
+        alignSelf: 'center',
+        backgroundColor: Constants.COLOR_PRIMARY,
+    },
+    ProfileImage: {
+        width: 130,
+        height: 130,
+        borderRadius: 70,
+        borderWidth: 8,
+        borderColor: Constants.COLOR_WHITE,
+        alignSelf: 'center',
+        marginTop: '8%',
+        resizeMode: "cover"
+    },
+    sideImageView: {
+        marginTop: '15%',
+    },
+    sideImage: {
+        width: 65,
+        height: 65,
+        borderWidth: 6,
+        marginHorizontal: 15,
+        borderColor: Constants.COLOR_WHITE,
+        borderRadius: 35,
+        resizeMode: "cover",
+    },
+    label: {
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        marginTop: 10,
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        color: Constants.COLOR_GREY_DARK,
+    },
+    bottomline: {
+        borderBottomColor: Constants.COLOR_GREEN,
+        borderBottomWidth: 5,
+        width: '15%',
+        alignSelf: 'center',
+        marginTop: 5,
+        borderRadius: 50,
+        marginBottom: 10
+    },
+    TextInputView: {
+        paddingLeft: 20,
+        borderWidth: 0.8,
+        width: wp('90%'),
+        height: 50,
+        alignSelf: 'center',
+        borderRadius: 50,
+        marginBottom:25,
+        justifyContent:'center',
+        borderColor: Constants.COLOR_GREY_DARK,
+        backgroundColor: Constants.COLOR_WHITE,
+    },
+    LabelView: {
+        flexDirection: 'row',
+        position: 'absolute',
+        zIndex: 1,
+        marginLeft: '7%',
+        top: '-22%',
+        justifyContent: 'center',
+        alignItems: "center",
+        backgroundColor: Constants.COLOR_WHITE
+    },
+    modalLabelText: {
+        paddingLeft: 5,
+        textAlign: "center",
+        textTransform: "capitalize",
+        color: Constants.COLOR_GREY_DARK
+    },
+    labelIcon: {
+        width: 17,
+        height: 17
+    },
+    TextInput: {
+        fontSize: Constants.FONT_SIZE_LARGE
+    },
+    ButtonView: {
         width: '90%',
         borderRadius: 50,
         justifyContent: 'center',
@@ -1571,14 +1671,119 @@ const StyleMyProfile = StyleSheet.create({
         backgroundColor: Constants.COLOR_GREEN,
     },
     ButtonLabel: {
-        paddingVertical: 15,
+        paddingVertical: 12,
         textTransform: "uppercase",
-        fontWeight: "bold",
         color: Constants.COLOR_WHITE,
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE
     },
 })
-
+const StyleForgotPassword = StyleSheet.create({
+    textMsg:{
+     textAlign:'center',
+     fontWeight:"bold",
+     marginTop:'20%',
+     fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
+     color:Constants.COLOR_GREY_DARK
+    },
+    TextInputView: {
+        paddingLeft: 20,
+        borderWidth: 0.8,
+        width: wp('90%'),
+        height: 50,
+        alignSelf: 'center',
+        borderRadius: 50,
+       marginTop:50,
+        justifyContent:'center',
+        borderColor: Constants.COLOR_GREY_DARK,
+        backgroundColor: Constants.COLOR_WHITE,
+    },
+    LabelView: {
+        flexDirection: 'row',
+        position: 'absolute',
+        zIndex: 1,
+        marginLeft: '7%',
+        top: '-22%',
+        justifyContent: 'center',
+        alignItems: "center",
+        backgroundColor: Constants.COLOR_WHITE
+    },
+    modalLabelText: {
+        paddingLeft: 5,
+        textAlign: "center",
+        textTransform: "capitalize",
+        color: Constants.COLOR_GREY_DARK
+    },
+    labelIcon: {
+        width: 17,
+        height: 17
+    },
+    TextInput: {
+        fontSize: Constants.FONT_SIZE_LARGE
+    },
+    ButtonView:{
+      backgroundColor:Constants.COLOR_GREEN,
+      justifyContent:'center',
+      alignSelf:'center',
+      borderRadius:50,
+      alignSelf:'center',
+      width:'40%',
+      marginLeft:25,
+      paddingVertical:10,
+    },
+    buttonLabel:{
+        alignSelf:'center',
+        textTransform:"uppercase",
+        color:Constants.COLOR_WHITE,
+        fontWeight:'bold',
+        fontSize:Constants.fontSizeExtraLarge
+    },
+    ModalView:{
+        backgroundColor: Constants.COLOR_WHITE,
+        width: wp('90%'),
+        alignSelf: 'center',
+        borderRadius:5,
+        justifyContent:'center',
+    },
+    modalTextMSg:{
+        alignSelf:'center',
+        color:Constants.COLOR_GREEN,
+        fontWeight:"bold",
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
+        marginTop:15,
+        marginBottom:25,
+    },
+    ModaltextInput:{
+        width: wp('60%'),
+        borderWidth: 1,
+        borderRadius: 5,
+        letterSpacing: 15,
+        marginVertical: '4%',
+        textAlign: 'center',
+        borderStyle: 'dashed',
+        alignSelf:'center',
+        backgroundColor:Constants.COLOR_GREY,
+        borderColor:Constants.COLOR_GREY_LIGHT,
+    },
+    resendText:{
+        alignSelf:'center',
+        textDecorationLine:"underline",
+        color:Constants.COLOR_GREEN
+    },
+    modalButtonView:{
+        backgroundColor:Constants.COLOR_GREEN,
+        borderRadius:20,
+        alignSelf:'center',
+        justifyContent:'center',
+        marginHorizontal:10
+    },
+    modalButtonLabel:{
+        textTransform:'uppercase',
+        color:Constants.COLOR_WHITE,
+        fontWeight:'bold',
+        paddingHorizontal:35,
+        paddingVertical:10
+    },
+})
 export {
     StyleHelpAndSupport,
     StyleTripHelpAndSupport,
@@ -1596,4 +1801,6 @@ export {
     StyleUpcomingTrip,
     StyleCollectMyLoad,
     StyleMyProfile,
+    StyleEditProfile,
+    StyleForgotPassword
 }

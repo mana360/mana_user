@@ -50,7 +50,11 @@ class FooterBar extends React.Component {
             </View>
 
             <View style={styles.footerCol}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                   onPress={()=>{
+                    this.props.navigation.navigate('Notification')
+                 }} 
+                >
                   <Image
                     source={require('../images/notification.png')}
                     style={styles.footerIcon}

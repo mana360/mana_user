@@ -40,6 +40,7 @@ const Constants = {
     Proceed: 'proceed',
     CANCELTRIP: 'cancel trip',
     LiveGeoPin: "Live Geo Pin",
+    Set:'Set',
 
     //Label
     CurrentTrip: 'current trips',
@@ -144,6 +145,16 @@ const Constants = {
     NewPassword:'New Password',
     ConfirmPassword:'Confirm Password',
     Update:'Update',
+    ChangeSavedSuccessFully:'changes saved successfully',
+    MobileNumber:'Mobile Number',
+    KindlyEnteryourRegisteredMobNo:'Kindly enter your registered \n Mobile Number to receive Verification code',
+    VerificationCode:'Verification code (OTP)',
+    ResendCode:'ResendCode',
+    EnterOTP:'Enter OTP',
+    EnteredCodeIssuccessFullyVerified:'Entered code is successfully verified',
+    SetNewPassword:'set new password',
+    NewPassword:'New Password',
+    PasswordHasResetSuccessfully:'Password has Reset Successfully.'
 
 
 
