@@ -1,7 +1,11 @@
+/* screen -MANAPPCUS049
+    design by -mayur
+ */
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { StyleSignUp } from '../config/CommonStyles'
 import Constants from '../config/Constants';
+import { StackActions, NavigationActions } from 'react-navigation';
 export default class SignUp extends Component {
   constructor() {
     super();
@@ -9,6 +13,7 @@ export default class SignUp extends Component {
       mobile_number: '',
       password: '',
       confirm_password:'',
+      referral_code:'',
       referalRadio_button:false,
       policyRadio_button:false
     }
@@ -25,7 +30,7 @@ export default class SignUp extends Component {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
         <Image style={StyleSignUp.bgImage} source={require('../images/Splash_screen.jpg')} />
-        <View style={this.state.referalRadio_button?[StyleSignUp.loginBox,{height:'78%',maxHeight:'78%'}]:[StyleSignUp.loginBox]}>
+        <View style={this.state.referalRadio_button?[StyleSignUp.loginBox,{height:'85%'}]:StyleSignUp.loginBox}>
 
           <Image style={StyleSignUp.logoImage}
             source={require('../images/AppLauncher.png')}
@@ -78,7 +83,7 @@ export default class SignUp extends Component {
               <Image source={this.state.referalRadio_button?require('../images/radio_buttons_selected.png'):require('../images/radio_buttons.png')}
                      style={StyleSignUp.policyImage}/>
             </TouchableOpacity>
-            <Text>{Constants.IhaveAReferalCode}</Text>
+            <Text style={{color:Constants.COLOR_GREY_DARK}}>{Constants.IhaveAReferalCode}</Text>
           </View>
            
           <View style={this.state.referalRadio_button?[StyleSignUp.referaltxtinputView,{marginVertical:10,}]:{display:"none"}}>
@@ -87,15 +92,17 @@ export default class SignUp extends Component {
               <Text style={StyleSignUp.labelBoxText}>{Constants.Referralcode}</Text>
             </View>
             <TextInput placeholder='Enter Referral Code'
-              secureTextEntry={true}
               style={{marginLeft:25}}
-              value={this.state.password}
-              onChangeText={(newtext) => { this.setState({ password: newtext }) }} />
+              value={this.state.referral_code}
+              onChangeText={(newtext) => { this.setState({ referral_code: newtext }) }} />
           </View>
 
           <View style={StyleSignUp.policyView}>
-            <TouchableOpacity>
-              <Image source={require('../images/radio_buttons.png')}
+          <TouchableOpacity
+            onPress={()=>{
+               this.setState({policyRadio_button:!this.state.policyRadio_button})
+            }}>
+              <Image source={this.state.policyRadio_button?require('../images/radio_buttons_selected.png'):require('../images/radio_buttons.png')}
                      style={StyleSignUp.policyImage}/>
             </TouchableOpacity>
             <Text style={{color:Constants.COLOR_GREY_DARK}}>{Constants.IagreeTo}</Text>
@@ -111,15 +118,22 @@ export default class SignUp extends Component {
             </TouchableOpacity>
             <Text> & </Text>
             <TouchableOpacity>
-                <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy}</Text>
+                <Text style={StyleSignUp.PolicyLabel}>{Constants.PaymentPolicy}</Text>
             </TouchableOpacity>
           
           </View>
 
 
-          <TouchableOpacity 
-            onPress={() => { this.props.navigation.navigate('MyProfile') }}
-            style={StyleSignUp.loginButton}>
+          <TouchableOpacity
+            disabled={this.state.policyRadio_button?false:true} 
+            onPress={() => { 
+              // this.props.navigation.dispatch(
+              //   StackActions.reset({
+              //   index: 0,
+              //   actions: [NavigationActions.navigate({ routeName: ''})],
+              //   }))
+           }}
+            style={this.state.policyRadio_button?StyleSignUp.loginButton:[StyleSignUp.loginButton,{backgroundColor:Constants.COLOR_GREY_LIGHT}]}>
             <Text style={StyleSignUp.Login_buttonText}>{Constants.SignUp}</Text>
           </TouchableOpacity>
         </View>

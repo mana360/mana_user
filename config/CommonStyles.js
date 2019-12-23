@@ -1794,8 +1794,7 @@ const StyleSignUp = StyleSheet.create({
         width: wp('90%'),
         paddingRight: 15,
         paddingLeft: 15,
-        height:'70%',
-        maxHeight:'70%',
+        height:'78%',
         justifyContent: 'center',
         backgroundColor: Constants.COLOR_WHITE,
     },
@@ -1888,7 +1887,7 @@ const StyleSignUp = StyleSheet.create({
    },
     memberButton: {
         position: 'absolute',
-        bottom: 25,
+        bottom: 5,
         alignSelf: 'center',
     },
     memberLabel: {

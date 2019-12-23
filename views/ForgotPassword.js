@@ -4,6 +4,7 @@ import { StyleForgotPassword } from '../config/CommonStyles';
 import Constants from '../config/Constants';
 import FooterBar from '../config/FooterBar';
 import HeaderBar from '../config/HeaderBar';
+import { StackActions, NavigationActions } from 'react-navigation';
 export default class ForgotPassword extends React.Component {
     constructor(props) {
         super(props);
@@ -47,7 +48,12 @@ export default class ForgotPassword extends React.Component {
                         <TouchableOpacity style={StyleForgotPassword.modalButtonView}
                             onPress={()=>{
                                 this.setState({modal_visible:false})
-                                this.props.navigation.navigate('SetPassword');
+                                this.props.navigation.dispatch(
+                                    StackActions.reset({
+                                    index: 0,
+                                    actions: [NavigationActions.navigate({ routeName: 'SetPassword'})],
+                                    }))
+                              
                             }}
                         >
                             <Text style={StyleForgotPassword.modalButtonLabel}>{Constants.VERIFY}</Text>

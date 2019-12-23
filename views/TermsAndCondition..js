@@ -1,3 +1,6 @@
+/* screen -MANAPPCUS0011
+    design by -mayur
+ */
 import React, { Component } from 'react';
 import { View, Text, FlatList, } from 'react-native';
 import HeaderBar from '../config/HeaderBar'

@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS002
+/* screen -MANAPPCUS007
     design by -mayur
  */
 import React, { Component } from 'react';

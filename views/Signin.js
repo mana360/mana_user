@@ -1,7 +1,11 @@
+/* screen -MANAPPCUS010
+    design by -mayur
+ */
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity,TextInput } from 'react-native';
 import { StyleSignIn } from '../config/CommonStyles'
 import Constants from '../config/Constants';
+import { StackActions, NavigationActions } from 'react-navigation';
 export default class SignIn extends Component {
   constructor() {
     super();
@@ -11,7 +15,7 @@ export default class SignIn extends Component {
     }
   }
   static navigationOptions = ({ navigation }) => {
-    return {
+    return {                                              
       header: null,
     };
   };
@@ -54,7 +58,13 @@ export default class SignIn extends Component {
               onChangeText={(newtext) => { this.setState({ password: newtext }) }} />
           </View>
 
-          <TouchableOpacity onPress={() => { this.props.navigation.navigate('MyProfile') }}
+          <TouchableOpacity onPress={() => { 
+                                    this.props.navigation.dispatch(
+                                      StackActions.reset({
+                                      index: 0,
+                                      actions: [NavigationActions.navigate({ routeName: 'Dashboard'})],
+                                      }))
+                             }}
             style={StyleSignIn.loginButton}>
             <Text style={StyleSignIn.Login_buttonText}>{Constants.SignIn}</Text>
           </TouchableOpacity>
