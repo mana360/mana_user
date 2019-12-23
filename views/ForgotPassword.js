@@ -45,13 +45,17 @@ export default class ForgotPassword extends React.Component {
                     <View style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'center', marginVertical: 15 }}>
                                 
                         <TouchableOpacity style={StyleForgotPassword.modalButtonView}
-                          
+                            onPress={()=>{
+                                this.setState({modal_visible:false})
+                                this.props.navigation.navigate('SetPassword');
+                            }}
                         >
                             <Text style={StyleForgotPassword.modalButtonLabel}>{Constants.VERIFY}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={StyleForgotPassword.modalButtonView}
                             onPress={()=>{
                                 this.setState({modal_visible:false})
+                                this.props.navigation.navigate('CurrentTrip');
                             }}
                         >
                             <Text style={StyleForgotPassword.modalButtonLabel}>{Constants.BACK}</Text>

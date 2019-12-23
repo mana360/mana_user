@@ -88,17 +88,10 @@ return(
                         <View style={{ marginBottom: 2 }}>
                             <View style={StyleViewUpcomingTrip.topCircle} />
 
-                            <View style={{ flexDirection: 'row', }}>
-                                <Modal
-                                    animationType='fade'
-                                    transparent={true}
-                                    visible={this.state.invoiceModal_Visible}
-                                >
-                                    <Invoice clickCallback={() => {
-                                        this.setState({ invoiceModal_Visible: false });
-                                    }} />
-                                </Modal>
-                                <TouchableOpacity style={StyleViewUpcomingTrip.imageSideView}
+                         
+                            <View style={{ flexDirection: 'row',justifyContent:'center',alignItems:'center' }}>
+                             
+                                <TouchableOpacity style={[StyleViewUpcomingTrip.imageSideView,{marginBottom:-30,marginLeft:-80,marginRight:10}]}
                                     onPress={() => {
                                         this.setState({ invoiceModal_Visible: true });
                                     }} >
@@ -305,6 +298,15 @@ return(
          </View>
 
                 <FooterBar navigation={navigation} />
+                <Modal
+                                    animationType='fade'
+                                    transparent={true}
+                                    visible={this.state.invoiceModal_Visible}
+                                >
+                                    <Invoice clickCallback={() => {
+                                        this.setState({ invoiceModal_Visible: false });
+                                    }} />
+                                </Modal>
             </View>
         )
     }

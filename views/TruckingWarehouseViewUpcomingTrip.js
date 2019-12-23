@@ -87,29 +87,21 @@ return(
                         <View style={{ marginBottom: 2 }}>
                             <View style={StyleViewUpcomingTrip.topCircle} />
 
-                            <View style={{ flexDirection: 'row', }}>
-                                <Modal
-                                    animationType='fade'
-                                    transparent={true}
-                                    visible={this.state.invoiceModal_Visible}
-                                >
-                                    <Invoice clickCallback={() => {
-                                        this.setState({ invoiceModal_Visible: false });
-                                    }} />
-                                </Modal>
-                                <TouchableOpacity style={StyleViewUpcomingTrip.imageSideView}
-                                    onPress={() => {
-                                        this.setState({ invoiceModal_Visible: true });
-                                    }} >
-                                    <Image source={require('../images/invoice_details.png')}
-                                        style={StyleViewUpcomingTrip.sideImage}
-                                    />
-                                </TouchableOpacity>
-                                <Image source={require('../images/Trucking_+Warehouse.png')}
-                                    style={StyleViewUpcomingTrip.ImageCurrentTrip}
-                                />
+                            <View style={{ flexDirection: 'row',justifyContent:'center',alignItems:'center' }}>
+                             
+                             <TouchableOpacity style={[StyleViewUpcomingTrip.imageSideView,{marginBottom:-30,marginLeft:-80,marginRight:10}]}
+                                 onPress={() => {
+                                     this.setState({ invoiceModal_Visible: true });
+                                 }} >
+                                 <Image source={require('../images/invoice_details.png')}
+                                     style={StyleViewUpcomingTrip.sideImage}
+                                 />
+                             </TouchableOpacity>
+                             <Image source={require('../images/Trucking_+Warehouse.png')}
+                                 style={StyleViewUpcomingTrip.ImageCurrentTrip}
+                             />
 
-                            </View>
+                         </View>
                         </View>
                         <Text style={StyleViewUpcomingTrip.title}>PVR Services</Text>
                         <View style={StyleViewUpcomingTrip.bottomLine}></View>
@@ -331,6 +323,15 @@ return(
          </View>
 
                 <FooterBar navigation={navigation} />
+                <Modal
+                                    animationType='fade'
+                                    transparent={true}
+                                    visible={this.state.invoiceModal_Visible}
+                                >
+                                    <Invoice clickCallback={() => {
+                                        this.setState({ invoiceModal_Visible: false });
+                                    }} />
+                                </Modal>
             </View>
         )
     }

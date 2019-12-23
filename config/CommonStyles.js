@@ -324,8 +324,8 @@ const StyleRateAndReview = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
-        width: wp('120%'),
-        height: hp('63%'),
+        width: '120%',
+        height:430,
         borderRadius: 205,
         top: '-175%',
         alignSelf: 'center',
@@ -463,8 +463,8 @@ const StyleViewCompletedDetail = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
-        width: wp('120%'),
-        height: 420,
+        width: '120%',
+        height:420,
         borderRadius: 205,
         top: '-175%',
         alignSelf: 'center',
@@ -525,7 +525,7 @@ const StyleViewCompletedDetail = StyleSheet.create({
 const StyleSignIn = StyleSheet.create({
     bgImage: {
         width: wp('100%'),
-        height: hp('100%'),
+        height:'100%',
         zIndex: -1,
         position: 'absolute',
         resizeMode: 'stretch',
@@ -642,8 +642,8 @@ const StyleTermsAndCondition = StyleSheet.create({
 })
 const StyleDashboard = StyleSheet.create({
     topCircle: {
-        width: wp('120%'),
-        height: hp('63%'),
+        width: wp('120'),
+        height:hp('65'),
         borderRadius: 200,
         marginTop: '-85%',
         alignSelf: 'center',
@@ -728,8 +728,8 @@ const StyleDashboard = StyleSheet.create({
 })
 const StyleTruckBooking = StyleSheet.create({
     topCircle: {
-        width: wp('120%'),
-        height: hp('63%'),
+        width: '120%',
+        height:420,
         borderRadius: 200,
         marginTop: '-85%',
         alignSelf: 'center',
@@ -909,10 +909,10 @@ const StyleViewCurrentTrip = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
-        width: wp('120%'),
-        height: hp('63%'),
-        borderRadius: 205,
-        top: '-195%',
+        width: '120%',
+        height:420,
+        borderRadius: 250,
+        top: '-190%',
         alignSelf: 'center',
         backgroundColor: Constants.COLOR_PRIMARY,
     },
@@ -1007,8 +1007,8 @@ const StyleViewUpcomingTrip = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
-        width: wp('120%'),
-        height: hp('63%'),
+        width: '120%',
+        height:420,
         borderRadius: 205,
         top: '-195%',
         alignSelf: 'center',
@@ -1020,13 +1020,11 @@ const StyleViewUpcomingTrip = StyleSheet.create({
         borderRadius: 70,
         borderWidth: 8,
         borderColor: Constants.COLOR_WHITE,
-        marginTop: '8%',
+        marginTop: 30,
+        alignSelf:'center',
         resizeMode: "cover",
-        marginHorizontal: 10,
     },
     imageSideView: {
-        marginTop: '17%',
-        marginLeft: 35
     },
     sideImage: {
         width: 70,
@@ -1312,8 +1310,8 @@ const StyleInvoice = StyleSheet.create({
 })
 const StyleCollectMyLoad = StyleSheet.create({
     topCircle: {
-        width: wp('120%'),
-        height: hp('63%'),
+        width: '120%',
+        height:420,
         borderRadius: 200,
         marginTop: '-85%',
         alignSelf: 'center',
@@ -1439,8 +1437,8 @@ const StyleMyProfile = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
-        width: wp('120%'),
-        height: hp('63%'),
+        width: wp('120'),
+        height:430,
         borderRadius: 205,
         top: '-195%',
         alignSelf: 'center',
@@ -1581,8 +1579,8 @@ const StyleEditProfile = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
-        width: wp('120%'),
-        height: hp('63%'),
+        width: wp('120'),
+        height:430,
         borderRadius: 205,
         top: '-195%',
         alignSelf: 'center',
@@ -1784,6 +1782,121 @@ const StyleForgotPassword = StyleSheet.create({
         paddingVertical:10
     },
 })
+const StyleSignUp = StyleSheet.create({
+    bgImage: {
+        width: wp('100%'),
+        height:'100%',
+        zIndex: -1,
+        position: 'absolute',
+        resizeMode: 'stretch',
+    },
+    loginBox: {
+        width: wp('90%'),
+        paddingRight: 15,
+        paddingLeft: 15,
+        height:'70%',
+        maxHeight:'70%',
+        justifyContent: 'center',
+        backgroundColor: Constants.COLOR_WHITE,
+    },
+    logoImage: {
+        width: 150,
+        height: 150,
+        borderRadius: 75,
+        top: -70,
+        alignSelf: 'center',
+        position: 'absolute',
+    },
+    loginLabel: {
+        alignSelf: 'center',
+        color: 'black',
+        marginBottom:5,
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        color: Constants.COLOR_GREY_DARK
+    },
+    textInput_container: {
+        marginVertical:7
+    },
+    textInput_style: {
+        borderWidth: 0.7,
+        borderRadius: 50,
+        paddingLeft: 25,
+        marginVertical: 5,
+        borderColor: Constants.COLOR_GREY_LIGHT
+    },
+    labelBox: {
+        zIndex: 1,
+        left: 15,
+        paddingLeft: 2,
+        paddingRight: 2,
+        marginTop: -7,
+        marginLeft: "3%",
+        position: 'absolute',
+        flexDirection: 'row',
+        backgroundColor: 'white',
+        borderColor: Constants.COLOR_GREY_LIGHT
+    },
+    LabelBoxIcon: {
+        width: 18,
+        height: 18,
+        marginHorizontal: 3,
+    },
+    labelBoxText: {
+        fontWeight: 'bold',
+        textTransform: 'capitalize',
+        fontSize: Constants.fontSizeLarge,
+        color: Constants.COLOR_GREY_DARK,
+    },
+    loginButton: {
+        width: wp('80%'),
+        borderRadius: 50,
+        bottom:5,
+        position:'absolute',
+        alignSelf:'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 15,
+        backgroundColor: Constants.COLOR_GREEN,
+    },
+    Login_buttonText: {
+        color: Constants.COLOR_WHITE,
+        textTransform: 'uppercase',
+        padding: 15,
+        fontWeight: 'bold',
+    },
+    policyView:{
+        flexDirection:"row",
+        paddingLeft:20,
+        marginVertical:5,
+    },
+    policyButton:{},
+    policyImage:{
+       width:18,
+       height:18,
+       marginRight:5
+   },
+   referaltxtinputView:{
+    borderWidth: 0.7,
+    borderRadius: 50,
+    marginVertical: 5,
+    borderColor: Constants.COLOR_GREY_LIGHT
+   },
+   PolicyLabel:{
+       color:Constants.COLOR_GREEN,
+   },
+    memberButton: {
+        position: 'absolute',
+        bottom: 25,
+        alignSelf: 'center',
+    },
+    memberLabel: {
+        color: Constants.COLOR_WHITE,
+        fontSize: Constants.FONT_SIZE_LARGE,
+    },
+
+})
 export {
     StyleHelpAndSupport,
     StyleTripHelpAndSupport,
@@ -1802,5 +1915,6 @@ export {
     StyleCollectMyLoad,
     StyleMyProfile,
     StyleEditProfile,
-    StyleForgotPassword
+    StyleForgotPassword,
+    StyleSignUp,
 }

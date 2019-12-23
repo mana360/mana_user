@@ -27,7 +27,7 @@ export default class ViewCurrentTrip extends React.Component {
                         <View style={{ marginBottom: 2 }}>
                             <View style={StyleViewCurrentTrip.topCircle} />
 
-                            <View style={{flexDirection:'row',justifyContent:'center'}}>
+                            <View style={{flexDirection:'row',justifyContent:'center',}}>
                                  <Image source={require('../images/invoice_details.png')}
                                         style={StyleViewCurrentTrip.sideImage}
                                 />

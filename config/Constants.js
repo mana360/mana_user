@@ -154,7 +154,15 @@ const Constants = {
     EnteredCodeIssuccessFullyVerified:'Entered code is successfully verified',
     SetNewPassword:'set new password',
     NewPassword:'New Password',
-    PasswordHasResetSuccessfully:'Password has Reset Successfully.'
+    PasswordHasResetSuccessfully:'Password has Reset Successfully.',
+    SignUp:'Sign Up',
+    AlreadyAMember:'Already a Member?',
+    IhaveAReferalCode:'I have a referral code',
+    IagreeTo:'I agree to ',
+    TermsAndConditions:'Terms & Conditions',
+    CancellationPlicy:'Cancellation Policy',
+    PaymentPolicy:'Payment Policy',
+    Referralcode:'Referral Code',
 
 
 

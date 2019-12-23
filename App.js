@@ -35,6 +35,7 @@ import MyProfile from './views/MyProfile';
 import EditProfile from './views/EditProfile';
 import ForgotPassword from './views/ForgotPassword';
 import SetPassword from './views/SetPassword';
+import SignUp from './views/SignUp';
 
 console.disableYellowBox = true;
 
@@ -163,12 +164,20 @@ const AppNavigator1 = createStackNavigator({
       screen: EditProfile,
       navigationOptions: () => ({ header: null })
     },
+    ForgotPassword: {
+      screen: ForgotPassword,
+      navigationOptions: () => ({ header: null })
+    },
     SetPassword: {
       screen: SetPassword,
       navigationOptions: () => ({ header: null })
     },
+    SignUp: {
+      screen: SignUp,
+      navigationOptions: () => ({ header: null })
+    },
     
 },
-     {initialRouteName:"SetPassword"}
+     {initialRouteName:"Splash"}
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

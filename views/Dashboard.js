@@ -85,7 +85,7 @@ export default class Dashboard extends React.Component {
                     <ScrollView  bounces={false}>
                             <View style={StyleDashboard.topCircle}>
                             </View>
-                            <Card style={{width:'90%',alignSelf:'center',maxHeight:100,marginTop:'-27%',borderRadius:5}}>
+                            <Card style={{width:'90%',alignSelf:'center',height:115,maxHeight:115,marginTop:'-27%',borderRadius:5}}>
                                     <CardItem style={StyleDashboard.cardView} >
                                         <TouchableOpacity style={StyleDashboard.ImageView}
                                            onPress={()=>{

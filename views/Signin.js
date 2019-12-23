@@ -35,7 +35,7 @@ export default class SignIn extends Component {
                 source={require('../images/mobile_number.png')} />
               <Text style={StyleSignIn.labelBoxText}>{Constants.MobileNumber}</Text>
             </View>
-            <TextInput placeholder='Mobile Number'
+            <TextInput placeholder='Enter Mobile Number'
               style={StyleSignIn.textInput_style}
               value={this.state.mobile_number}
               onChangeText={(newText) => { this.setState({ mobile_number: newText }) }} />
@@ -47,7 +47,7 @@ export default class SignIn extends Component {
 
             </View>
 
-            <TextInput placeholder='Password'
+            <TextInput placeholder='Enter Password'
               secureTextEntry={true}
               style={StyleSignIn.textInput_style}
               value={this.state.password}
@@ -69,7 +69,7 @@ export default class SignIn extends Component {
 
         <TouchableOpacity
                 onPress={() => { 
-                        this.props.navigation.navigate('Registration') 
+                        this.props.navigation.navigate('SignUp') 
                 }}
                 style={StyleSignIn.memberButton}
           >

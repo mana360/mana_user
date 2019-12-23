@@ -37,7 +37,8 @@ modal_setSuccessfully(){
   
                     <TouchableOpacity style={[StyleMyProfile.ButtonView, { paddingHorizontal: 50, marginVertical:15 }]}
                         onPress={()=>{
-                            this.setState({modalVisible_SavedMsg:false,modalVisible_Changepassword:false})
+                            this.setState({modal_visible:false})
+                            this.props.navigation.navigate('SignIn')
                         }}
                     >
                         <Text style={StyleMyProfile.ButtonLabel}>{Constants.OK}</Text>
@@ -67,10 +68,9 @@ modal_setSuccessfully(){
                             <Text style={StyleForgotPassword.modalLabelText}>{Constants.NewPassword}</Text>
                         </View>
                         <TextInput
-                            placeholder="Enter Mobile Number"
+                            placeholder="Enter Password"
                             style={StyleForgotPassword.TextInput}
                             value={this.state.mobile_number}
-                            keyboardType="number-pad"
                             maxLength={10}
                             onChangeText={(text) => { this.setState({ mobile_number: text }) }}
                         />
@@ -84,10 +84,9 @@ modal_setSuccessfully(){
                             <Text style={StyleForgotPassword.modalLabelText}>{Constants.ConfirmPassword}</Text>
                         </View>
                         <TextInput
-                            placeholder="Enter Mobile Number"
+                            placeholder="Enter Password"
                             style={StyleForgotPassword.TextInput}
                             value={this.state.mobile_number}
-                            keyboardType="number-pad"
                             maxLength={10}
                             onChangeText={(text) => { this.setState({ mobile_number: text }) }}
                         />
