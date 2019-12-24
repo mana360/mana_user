@@ -1,3 +1,6 @@
+/* screen -MANAPPCUS041
+    design by -mayur
+ */
 import React from 'react';
 import { View, Text, TouchableOpacity, Image,Modal,TextInput } from 'react-native'
 import { StyleForgotPassword } from '../config/CommonStyles';
@@ -47,12 +50,9 @@ export default class ForgotPassword extends React.Component {
                                 
                         <TouchableOpacity style={StyleForgotPassword.modalButtonView}
                             onPress={()=>{
-                                this.setState({modal_visible:false})
-                                this.props.navigation.dispatch(
-                                    StackActions.reset({
-                                    index: 0,
-                                    actions: [NavigationActions.navigate({ routeName: 'SetPassword'})],
-                                    }))
+                                this.setState({modal_visible:false});
+                                this.props.navigation.navigate('SetPassword');
+                                   
                               
                             }}
                         >

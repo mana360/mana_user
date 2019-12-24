@@ -1,3 +1,6 @@
+/* screen -MANAPPCUS030
+    design by -mayur
+ */
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -6,6 +9,8 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
+import Invoice from './InvoiceView';
+import TripHelpAndSupport from './TripHelpAndSupport';
 export default class TruckingWarehouseCurrentTripDetails extends React.Component {
     constructor() {
         super();
@@ -14,6 +19,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
             inputLabelTrip: '',
             reviewTrip: '',
             modal_Visible: false,
+            invoiceModal_Visible:false
         }
     }
     render() {
@@ -25,20 +31,36 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%' }} bounces={false}>
                         <View style={{ marginBottom: 2 }}>
-                            <View style={StyleViewCurrentTrip.topCircle} />
-
-                            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                <Image source={require('../images/invoice_details.png')}
-                                    style={StyleViewCurrentTrip.sideImage}
-                                />
-                                <Image source={require('../images/Trucking_+Warehouse.png')}
-                                    style={StyleViewCurrentTrip.ImageCurrentTrip}
-                                />
-                                <Image source={require('../images/support_icon.png')}
-                                    style={StyleViewCurrentTrip.sideImage}
-                                />
+                            <View style={StyleViewCurrentTrip.topCircle}>
                             </View>
-                        </View>
+
+                                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                                    <TouchableOpacity style={{marginTop:55}}
+                                        onPress={()=>{
+                                            this.setState({invoiceModal_Visible:true})
+                                        }}
+                                    >
+                                        <Image source={require('../images/invoice_details.png')}
+                                            style={StyleViewCurrentTrip.sideImage}
+                                        />
+                                    </TouchableOpacity>
+                                
+                                    <Image source={require('../images/Trucking_+Warehouse.png')}
+                                        style={StyleViewCurrentTrip.ImageCurrentTrip}
+                                    />
+                                    
+                                    <TouchableOpacity style={{marginTop:55}}
+                                        onPress={()=>{
+                                                this.props.navigation.navigate('HelpAndSupport',{flag_truckingWarehouse:false});
+                                        }}
+                                    >
+                                        <Image source={require('../images/support_icon.png')}
+                                        style={StyleViewCurrentTrip.sideImage}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                      </View>
+
                         <Text style={StyleViewCurrentTrip.title}>Current Trip:NYC - SYS</Text>
                         <View style={StyleViewCurrentTrip.bottomLine}></View>
 
@@ -223,6 +245,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                 <Text style={StyleViewCurrentTrip.col2Text}>100*50*50</Text>
                             </View>
                         </View>
+                        
                         <View style={StyleViewCurrentTrip.row}>
                             <View style={StyleViewCurrentTrip.col1}>
                                 <Text style={StyleViewCurrentTrip.col1Text}>{Constants.Dimension}</Text>
@@ -255,6 +278,16 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                 </View>
 
                 <FooterBar navigation={navigation} />
+
+                <Modal
+                                    animationType='fade'
+                                    transparent={true}
+                                    visible={this.state.invoiceModal_Visible}
+                                >
+                                    <Invoice clickCallback={() => {
+                                        this.setState({ invoiceModal_Visible: false });
+                                    }} />
+                </Modal>
             </View>
         )
     }

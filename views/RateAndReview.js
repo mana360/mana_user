@@ -85,34 +85,7 @@ export default class RateAndReview extends React.Component {
                                     }}
                                 />
                             </View>
-                            <Modal
-                                transparent={true}
-                                animationType="fade"
-                                visible={this.state.modal_Visible}
-                            >
-                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                                    <View style={StyleRateAndReview.modalView}>
-                                        <TouchableOpacity style={StyleRateAndReview.leftCross_View}
-                                            onPress={() => {
-                                                this.setState({ modal_Visible: false })
-                                            }}
-                                        >
-                                            <Text style={StyleRateAndReview.leftCrossText}>X</Text>
-                                        </TouchableOpacity>
-                                        <Image style={StyleRateAndReview.modalImage}
-                                            source={require('../images/sent_icon.png')}
-                                        />
-                                        <Text style={StyleRateAndReview.modalMsg}>{Constants.ReviewSentSuccessfully}</Text>
-                                        <TouchableOpacity style={StyleRateAndReview.modalButton}
-                                            onPress={() => {
-                                                this.setState({ modal_Visible: false })
-                                            }}
-                                        >
-                                            <Text style={StyleRateAndReview.modalButtonText}>{Constants.OK}</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </Modal>
+                     
 
                             <TouchableOpacity style={StyleRateAndReview.buttonView}
                                 onPress={()=>{
@@ -127,6 +100,37 @@ export default class RateAndReview extends React.Component {
                 </View>
 
                 <FooterBar navigation={navigation} />
+                <Modal
+                    transparent={true}
+                    animationType="fade"
+                    visible={this.state.modal_Visible}
+                >
+                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                                    <View style={StyleRateAndReview.modalView}>
+                                    <TouchableOpacity style={{ alignSelf: 'flex-end', top:5, right: 10 }}
+                                              onPress={() => {
+                                                      this.setState({ modal_Visible: false })
+                                                 }}
+                                    >
+                                        <Image source={require('../images/close.png')}
+                                            style={{ width: 15, height: 15 }}
+                                        />
+                                    </TouchableOpacity>
+                                        <Image style={StyleRateAndReview.modalImage}
+                                            source={require('../images/sent_icon.png')}
+                                        />
+                                        <Text style={StyleRateAndReview.modalMsg}>{Constants.ReviewSentSuccessfully}</Text>
+                                        <TouchableOpacity style={StyleRateAndReview.modalButton}
+                                            onPress={() => {
+                                                this.setState({ modal_Visible: false });
+                                                this.props.navigation.navigate('Dashboard')
+                                            }}
+                                        >
+                                            <Text style={StyleRateAndReview.modalButtonText}>{Constants.OK}</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </Modal>
             </View>
         )
     }

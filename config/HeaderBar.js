@@ -55,7 +55,10 @@ class HeaderBar extends React.Component {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity style={isLogout ? {display:'flex'} : {display:'none'}}
-                  onPress={()=>{this.setState({isLogoutModalVisible:true})}}
+                  onPress={()=>{
+                    this.setState({isLogoutModalVisible:true})
+                    
+                  }}
                 >
                   <Image
                     source={require('../images/logout.png')}
@@ -82,7 +85,7 @@ class HeaderBar extends React.Component {
                       this.props.navigation.dispatch(
                         StackActions.reset({
                         index: 0,
-                        actions: [NavigationActions.navigate({ routeName: 'Login'})],})
+                        actions: [NavigationActions.navigate({ routeName: 'SignIn'})],})
                       )
                     }}
                   >

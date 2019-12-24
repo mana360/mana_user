@@ -35,7 +35,8 @@ const StyleHelpAndSupport = StyleSheet.create({
         marginHorizontal: 15,
         borderWidth: 0.3,
         borderRadius: 40,
-        marginVertical: 25,
+        marginTop:10,
+        marginBottom:10,
         borderColor: Constants.COLOR_GREY_LIGHT,
     },
     pickerTitle: {
@@ -929,7 +930,6 @@ const StyleViewCurrentTrip = StyleSheet.create({
     sideImage: {
         width: 65,
         height: 65,
-        marginTop: '15%',
         borderWidth: 6,
         marginHorizontal: 15,
         borderColor: Constants.COLOR_WHITE,
@@ -954,8 +954,8 @@ const StyleViewCurrentTrip = StyleSheet.create({
     row: {
         flexDirection: 'row',
         width: '90%',
-        paddingTop: 20,
-        paddingBottom: 20,
+        paddingTop: 15,
+        paddingBottom: 15,
         alignSelf: 'center',
         borderBottomWidth: 1.5,
         borderBottomColor: Constants.COLOR_GREY
@@ -1051,8 +1051,8 @@ const StyleViewUpcomingTrip = StyleSheet.create({
     row: {
         flexDirection: 'row',
         width: '90%',
-        paddingTop: 20,
-        paddingBottom: 20,
+        paddingTop: 15,
+        paddingBottom: 15,
         alignSelf: 'center',
         borderBottomWidth: 1.5,
         borderBottomColor: Constants.COLOR_GREY

@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS002
+/* screen -MANAPPCUS018
     design by -mayur
  */
 import React, { Component } from 'react';
@@ -31,7 +31,8 @@ export default class UpcomingTrip extends React.Component{
                     data={this.state.dataSource}
                     renderItem={({item},index)=>{
                   return(
-                       <TouchableOpacity  style={StyleUpcomingTrip.row} onPress={()=>{this.props.navigation.navigate('ViewUpcomingTrip');}}>
+                       <TouchableOpacity  style={StyleUpcomingTrip.row} onPress={()=>{
+                           this.props.navigation.navigate('ViewUpcomingTrip');}}>
                             <View style={StyleUpcomingTrip.col1}>
                               <Image
                                   source={require('../images/Truck_Bookings_copy.png')}

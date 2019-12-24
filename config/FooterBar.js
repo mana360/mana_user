@@ -63,7 +63,11 @@ class FooterBar extends React.Component {
             </View>
 
             <View style={styles.footerCol}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                      onPress={()=>{
+                        this.props.navigation.navigate('HelpAndSupport')
+                     }}    
+                >
                   <Image
                     source={require('../images/support.png')}
                     style={styles.footerIcon}

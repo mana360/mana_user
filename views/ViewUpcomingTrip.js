@@ -1,3 +1,6 @@
+/* screen -MANAPPCUS019
+    design by -mayur
+ */
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity, TouchableHighlightBase } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -16,21 +19,20 @@ export default class ViewUpcomingTrip extends React.Component {
             reviewTrip: '',
             invoiceModal_Visible: false,
             cancelModal_Visible: false,
-            isSuccesfull:false,
+            isSuccesfull: false,
         }
     }
     delete_trip() {
         return (
             <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                 <View style={StyleViewUpcomingTrip.cancelModalView}>
-                <TouchableOpacity style={StyleViewUpcomingTrip.leftcrossView}
+                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 5, right: 10, marginBottom: 5 }}
                         onPress={() => {
                             this.setState({ cancelModal_Visible: false })
                         }}
                     >
-                         <Image source={require('../images/close.png')} 
-                                 style={{width:12,height:12,}}
-                         />
+                        <Image source={require('../images/close.png')}
+                            style={{ width: 15, height: 15 }} />
                     </TouchableOpacity>
 
                     <Text style={StyleViewUpcomingTrip.modalMsg}>{Constants.Cancelleation_msg}</Text>
@@ -38,9 +40,9 @@ export default class ViewUpcomingTrip extends React.Component {
 
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 10 }}>
                         <TouchableOpacity style={StyleViewUpcomingTrip.cancelModalButton}
-                                onPress={()=>{
-                                    this.setState({isSuccesfull:true})
-                                }}
+                            onPress={() => {
+                                this.setState({ isSuccesfull: true, })
+                            }}
                         >
                             <Text style={StyleViewUpcomingTrip.cancelModalButtonText}>{Constants.YES}</Text>
                         </TouchableOpacity>
@@ -56,42 +58,39 @@ export default class ViewUpcomingTrip extends React.Component {
         )
     }
     TripCancelledSuccessfully() {
-return(
-    <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-    <View style={StyleViewUpcomingTrip.cancelModalView}>
-    <TouchableOpacity style={StyleViewUpcomingTrip.leftcrossView}
+        return (
+            <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                <View style={StyleViewUpcomingTrip.cancelModalView}>
+                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 5, right: 10 }}
                         onPress={() => {
-                            this.setState({ cancelModal_Visible: false })
+                            this.setState({ cancelModal_Visible: false });
+                            this.props.navigation.goBack();
                         }}
                     >
-                         <Image source={require('../images/close.png')} 
-                                 style={{width:12,height:12,}}
-                         />
+                        <Image source={require('../images/close.png')}
+                            style={{ width: 15, height: 15 }} />
                     </TouchableOpacity>
-          <Image style={{ width: 80, height: 80, alignSelf: 'center', marginVertical: 5 }}
-          source={require('../images/sent_icon.png')}
-         />
-         <Text style={[StyleViewUpcomingTrip.modalMsg, { marginTop: 5 }]}>{Constants.TripCanceledSuccessfully}</Text>
-        <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 10 }]}>{Constants.checkYourregisteredEmailIdPeneltyInfo}</Text>
-     </View>
- </View> 
-)
-       
+                    <Image style={{ width: 80, height: 80, alignSelf: 'center', marginVertical: 5 }}
+                        source={require('../images/sent_icon.png')}
+                    />
+                    <Text style={[StyleViewUpcomingTrip.modalMsg, { marginTop: 5 }]}>{Constants.TripCanceledSuccessfully}</Text>
+                    <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 10 }]}>{Constants.checkYourregisteredEmailIdPeneltyInfo}</Text>
+                </View>
+            </View>
+        )
+
     }
     render() {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1 }}>
-
                 <HeaderBar title="VIEW UPCOMING TRIP" isBack={true} isLogout={true} navigation={navigation} />
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%' }} bounces={false}>
                         <View style={{ marginBottom: 2 }}>
                             <View style={StyleViewUpcomingTrip.topCircle} />
-
-                            <View style={{ flexDirection: 'row',justifyContent:'center',alignItems:'center' }}>
-                             
-                                <TouchableOpacity style={[StyleViewUpcomingTrip.imageSideView,{marginBottom:-30,marginLeft:-80,marginRight:10}]}
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                <TouchableOpacity style={[StyleViewUpcomingTrip.imageSideView, { marginBottom: -30, marginLeft: -80, marginRight: 10 }]}
                                     onPress={() => {
                                         this.setState({ invoiceModal_Visible: true });
                                     }} >
@@ -102,9 +101,9 @@ return(
                                 <Image source={require('../images/current_trips.png')}
                                     style={StyleViewUpcomingTrip.ImageCurrentTrip}
                                 />
-
                             </View>
                         </View>
+
                         <Text style={StyleViewUpcomingTrip.title}>CHURCH gate2- SYS</Text>
                         <View style={StyleViewUpcomingTrip.bottomLine}></View>
 
@@ -234,8 +233,6 @@ return(
                             </View>
                         </View>
 
-
-
                         <TouchableOpacity style={StyleViewUpcomingTrip.bottomButton}
                             onPress={() => {
                                 this.setState({ cancelModal_Visible: true })
@@ -243,34 +240,36 @@ return(
                         >
                             <Text style={StyleViewUpcomingTrip.buttonText}>{Constants.CANCELTRIP}</Text>
                         </TouchableOpacity>
-                        <Modal
-                            animationType='fade'
-                            transparent={true}
-                            visible={this.state.cancelModal_Visible}
-                            style={{ flex: 1 }}
-                        >   
-                        {
-                        this.state.isSuccesfull
-                        ?
-                        this.TripCancelledSuccessfully()
-                        :
-                        this.delete_trip()
-                        }
-                    </Modal>
 
-             </ScrollView>
-         </View>
+                    </ScrollView>
+                </View>
 
                 <FooterBar navigation={navigation} />
+
                 <Modal
-                                    animationType='fade'
-                                    transparent={true}
-                                    visible={this.state.invoiceModal_Visible}
-                                >
-                                    <Invoice clickCallback={() => {
-                                        this.setState({ invoiceModal_Visible: false });
-                                    }} />
-                                </Modal>
+                    animationType='fade'
+                    transparent={true}
+                    visible={this.state.cancelModal_Visible}
+                    style={{ flex: 1 }}
+                >
+                    {
+                        this.state.isSuccesfull
+                            ?
+                            this.TripCancelledSuccessfully()
+                            :
+                            this.delete_trip()
+                    }
+                </Modal>
+
+                <Modal
+                    animationType='fade'
+                    transparent={true}
+                    visible={this.state.invoiceModal_Visible}
+                >
+                    <Invoice clickCallback={() => {
+                        this.setState({ invoiceModal_Visible: false });
+                    }} />
+                </Modal>
             </View>
         )
     }

@@ -102,7 +102,7 @@ const Constants = {
     DownloadInvoice: 'download invoice',
     Cancelleation_msg: 'Cancellation of trip will cause you with the penalty cost.',
     cancellation_msgDelete: "Are you sure want to delete the trip?",
-    TripCanceledSuccessfully: 'Trip Cancelled SuccessFully.',
+    TripCanceledSuccessfully: 'Trip Cancelled Successfully.',
     checkYourregisteredEmailIdPeneltyInfo: 'Check your registered email ID For Penalty information.',
     Duration: 'Duration',
     TelephoneNo: 'Telephone No.',

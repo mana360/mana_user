@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS002
+/* screen -MANAPPCUS031
     design by -mayur
  */
 import React, { Component } from 'react';
@@ -29,7 +29,11 @@ export default class TruckingWarehouseUpcomingTrip extends React.Component {
                     data={this.state.dataSource}
                     renderItem={({ item }, index) => {
                         return (
-                            <TouchableOpacity style={StyleUpcomingTrip.row} onPress={() => { this.props.navigation.navigate('TruckingWarehouseViewUpcomingTrip') }}>
+                            <TouchableOpacity style={StyleUpcomingTrip.row}
+                                onPress={() => {
+                                    this.props.navigation.navigate('TruckingWarehouseViewUpcomingTrip')
+                                }}
+                            >
                                 <View style={StyleUpcomingTrip.col1}>
                                     <Image
                                         source={require('../images/Trucking_+Warehouse.png')}
@@ -62,6 +66,7 @@ export default class TruckingWarehouseUpcomingTrip extends React.Component {
                                         <Text style={StyleUpcomingTrip.labeltext}>{Constants.PickUpTime}</Text>
                                         <Text style={StyleUpcomingTrip.datacss}>{item.dropUpTime}</Text>
                                     </View>
+                                
                                 </View>
                                 <View style={StyleUpcomingTrip.col3}>
                                     <Image

@@ -1,3 +1,6 @@
+/* screen -MANAPPCUS025
+    design by -mayur
+ */
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, ScrollView, Modal,TouchableOpacity } from 'react-native';
 import { StyleViewCurrentTrip } from '../config/CommonStyles';
@@ -5,6 +8,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
+import Invoice from './InvoiceView';
 export default class WarehouseServiceViewCurrentTrip extends React.Component {
     constructor() {
         super();
@@ -12,6 +16,7 @@ export default class WarehouseServiceViewCurrentTrip extends React.Component {
             starCount: null,
             inputLabelTrip: '',
             reviewTrip: '',
+            invoiceModal_Visible:false,
             modal_Visible:false,
         }
     }
@@ -27,17 +32,32 @@ export default class WarehouseServiceViewCurrentTrip extends React.Component {
                             <View style={StyleViewCurrentTrip.topCircle} />
 
                             <View style={{flexDirection:'row',justifyContent:'center'}}>
-                                 <Image source={require('../images/invoice_details.png')}
-                                        style={StyleViewCurrentTrip.sideImage}
-                                />
+                                 <TouchableOpacity style={{marginTop:55}}
+                                        onPress={()=>{
+                                            this.setState({invoiceModal_Visible:true})
+                                        }} 
+                                >
+                                    <Image source={require('../images/invoice_details.png')}
+                                            style={[StyleViewCurrentTrip.sideImage,{}]}
+                                    />
+                                 </TouchableOpacity>
                                  <Image source={require('../images/WarehouseServices_copy.png')}
-                                     style={StyleViewCurrentTrip.ImageCurrentTrip}
-                                 />
-                                  <Image source={require('../images/support_icon.png')}
-                                        style={StyleViewCurrentTrip.sideImage}
-                                  />
+                                        style={StyleViewCurrentTrip.ImageCurrentTrip}
+                                    />
+                                 <TouchableOpacity style={{marginTop:55}}
+                                    onPress={()=>{
+                                        this.props.navigation.navigate('HelpAndSupport',{flag_Warehouse:false});
+                                    }}
+                                 >
+                                    <Image source={require('../images/support_icon.png')}
+                                            style={[StyleViewCurrentTrip.sideImage,{}]}
+                                    />
+                                 </TouchableOpacity>
+                                
+                                  
                             </View>
                         </View>
+                     
                         <Text style={StyleViewCurrentTrip.title}>ABC Services</Text>
                             <View style={StyleViewCurrentTrip.bottomLine}></View>
 
@@ -149,7 +169,6 @@ export default class WarehouseServiceViewCurrentTrip extends React.Component {
                                </View>
                             </View>
 
-
                             <View style={StyleViewCurrentTrip.row}>
                                 <View style={StyleViewCurrentTrip.col1}> 
                                      <Text style={StyleViewCurrentTrip.col1Text}>{Constants.Dimension}</Text>
@@ -176,7 +195,6 @@ export default class WarehouseServiceViewCurrentTrip extends React.Component {
                                      <Text style={StyleViewCurrentTrip.col2Text}>in storage</Text>
                                </View>
                             </View>
-
 
                             <TouchableOpacity style={StyleViewCurrentTrip.bottomButton}
                                 onPress={()=>{
@@ -210,9 +228,19 @@ export default class WarehouseServiceViewCurrentTrip extends React.Component {
                          paddingTop:10,fontSize:Constants.FONT_SIZE_LARGE,color:'grey',alignSelf:'center'}}>{ Constants.WillCauseDelayBecauseOfSomeRoadBloc}</Text>
                       
                     </RBSheet>
-                </View>
+              
+               </View>
 
                 <FooterBar navigation={navigation} />
+                <Modal
+                                    animationType='fade'
+                                    transparent={true}
+                                    visible={this.state.invoiceModal_Visible}
+                                >
+                                    <Invoice clickCallback={() => {
+                                        this.setState({ invoiceModal_Visible: false });
+                                    }} />
+                                </Modal>
             </View>
         )
     }

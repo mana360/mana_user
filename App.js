@@ -178,6 +178,6 @@ const AppNavigator1 = createStackNavigator({
     },
     
 },
-     {initialRouteName:"SignUp"}
+     {initialRouteName:"TruckingWarehouseCurrentService"}
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

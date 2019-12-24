@@ -1,5 +1,5 @@
-/* screen -MANAPPCUS002
-    design by -mayur
+/* screen -MANAPPCUS024
+    design by -mayur s
  */
 import React, { Component } from 'react';
 import {View, Text, TouchableOpacity,Image,ScrollView,Modal,FlatList} from 'react-native';

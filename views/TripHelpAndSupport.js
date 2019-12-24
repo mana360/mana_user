@@ -15,10 +15,13 @@ export default class TripHelpAndSupport extends React.Component{
           support_subject:"Lorem ipsum",
           support_message:"",
           support_contact_number:"8866114477",
-          modal_Visible:'false',
+          modal_Visible:false,
+          isUser:'',
+          isTruck:'',
         }
       }
     render(){
+        
         let {navigation} = this.props
         return(
             <View style={{flex:1,}}>

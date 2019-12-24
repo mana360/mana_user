@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS002
+/* screen -MANAPPCUS023
     design by -mayur
  */
 import React, { Component } from 'react';
@@ -13,7 +13,6 @@ export default class WarehouseServices extends React.Component {
         
         }
     }
-  
     render() {
         let { navigation } = this.props
         return (

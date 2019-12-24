@@ -1,4 +1,6 @@
-
+/* screen -MANAPPCUS048
+    design by -mayur
+ */
 import React, { Component } from 'react';
 import { View, Text, Image,TouchableOpacity } from 'react-native';
 import { StyleCollectMyLoad } from '../config/CommonStyles';
@@ -16,7 +18,7 @@ export default class CollectMyLoad extends React.Component {
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
                 
-                        <View style={StyleCollectMyLoad.row}>
+                <View style={StyleCollectMyLoad.row}>
                             <View style={StyleCollectMyLoad.col1}>
                                 <Image source={require('../images/Warehouse_Services.png')}
                                     style={StyleCollectMyLoad.image} />
@@ -34,7 +36,7 @@ export default class CollectMyLoad extends React.Component {
                             </View>
                         </View>
 
-                        <View style={StyleCollectMyLoad.row}>
+                    <View style={StyleCollectMyLoad.row}>
                             <View style={StyleCollectMyLoad.col1}>
                                 <Image source={require('../images/Warehouse_Services.png')}
                                     style={StyleCollectMyLoad.image} />

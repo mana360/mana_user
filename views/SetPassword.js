@@ -1,3 +1,6 @@
+/* screen -MANAPPCUS043
+    design by -mayur
+ */
 import React from 'react';
 import { View, Text, TouchableOpacity, Image,Modal,TextInput } from 'react-native'
 import { StyleForgotPassword,StyleMyProfile } from '../config/CommonStyles';

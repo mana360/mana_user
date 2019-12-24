@@ -29,7 +29,12 @@ export default class Notification extends React.Component{
                     data={this.state.dataSource}
                     renderItem={({item},index)=>{
                   return(
-                       <TouchableOpacity  style={StyleNotification.row} onPress={()=>{alert(item.id)}}>
+                       <TouchableOpacity  style={StyleNotification.row} onPress={()=>{alert(item.id)}}
+                                onPress={()=>{
+                                    this.props.navigation.navigate('RateAndReview');
+                                }}
+                       
+                       >
                       <View style={StyleNotification.col1}>
                         <Image
                             source={require('../images/notification-icon.png')}

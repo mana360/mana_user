@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS002
+/* screen -MANAPPCUS046
     design by -mayur
  */
 import React, { Component } from 'react';
@@ -30,7 +30,8 @@ export default class WarehouseServiceUpcomingTrip extends React.Component{
                     data={this.state.dataSource}
                     renderItem={({item},index)=>{
                   return(
-                       <TouchableOpacity  style={StyleUpcomingTrip.row} onPress={()=>{this.props.navigation.navigate('WarehouseViewUpcomingDetail')}}>
+                       <TouchableOpacity  style={StyleUpcomingTrip.row} onPress={()=>{
+                           this.props.navigation.navigate('WarehouseViewUpcomingDetail')}}>
                             <View style={StyleUpcomingTrip.col1}>
                               <Image
                                   source={require('../images/WarehouseServices_copy.png')}
