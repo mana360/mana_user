@@ -20,7 +20,7 @@ export default class TruckingWarehouseViewUpcomingTrip extends React.Component {
             isSuccesfull: false,
         }
     }
-delete_trip() {
+    delete_trip() {
         return (
             <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                 <View style={StyleViewUpcomingTrip.cancelModalView}>
@@ -56,11 +56,11 @@ delete_trip() {
             </View>
         )
     }
-TripCancelledSuccessfully() {
+    TripCancelledSuccessfully() {
         return (
             <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                 <View style={StyleViewUpcomingTrip.cancelModalView}>
-                <TouchableOpacity style={{ alignSelf: 'flex-end', top: 5, right: 10 }}
+                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 5, right: 10 }}
                         onPress={() => {
                             this.setState({ cancelModal_Visible: false });
                             this.props.navigation.goBack();

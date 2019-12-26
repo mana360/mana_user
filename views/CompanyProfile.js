@@ -22,6 +22,7 @@ export default class CompanyMyProfile extends React.Component {
         return (
 
             <View style={{}}>
+
                 <View style={StyleMyProfile.row}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/company_name.png')}
@@ -94,7 +95,6 @@ export default class CompanyMyProfile extends React.Component {
                     </View>
                 </View>
 
-
                 <View style={StyleMyProfile.row}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/address.png')}
@@ -145,7 +145,6 @@ export default class CompanyMyProfile extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-
 
             </View>
 

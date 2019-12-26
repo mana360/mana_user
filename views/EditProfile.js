@@ -11,9 +11,9 @@ export default class EditProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            current_password:'',
-            new_password:'',
-            confirm_password:'',
+            current_password: '',
+            new_password: '',
+            confirm_password: '',
             password_visible: true,
             screen_title: 'CompanyProfile',
             first_name: '',
@@ -26,7 +26,7 @@ export default class EditProfile extends React.Component {
             email_id: '',
             password: '',
             modalVisible_Changepassword: false,
-            modalVisible_SavedMsg:false,
+            modalVisible_successMsg: false,
         }
     }
 
@@ -47,7 +47,7 @@ export default class EditProfile extends React.Component {
 
                     <View style={{ marginTop: 10 }} >
 
-                    <View style={StyleMyProfile.TextInputView}>
+                        <View style={StyleMyProfile.TextInputView}>
                             <View style={StyleMyProfile.LabelView}>
                                 <Image source={require('../images/password.png')}
                                     style={StyleMyProfile.labelIcon}
@@ -95,8 +95,8 @@ export default class EditProfile extends React.Component {
                             />
                         </View>
                     </View>
-                    <TouchableOpacity style={[StyleMyProfile.ButtonView,{width:'90%'}]}
-                        onPress={()=>{this.setState({modalVisible_SavedMsg:true})}}
+                    <TouchableOpacity style={[StyleMyProfile.ButtonView, { width: '90%' }]}
+                        onPress={() => { this.setState({ modalVisible_successMsg: true }) }}
                     >
                         <Text style={StyleMyProfile.ButtonLabel}>{Constants.Update}</Text>
                     </TouchableOpacity>
@@ -110,8 +110,8 @@ export default class EditProfile extends React.Component {
             <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
                 <View style={[StyleMyProfile.ModalWrapper, { width: '80%' }]}>
                     <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
-                        onPress={()=>{
-                            this.setState({modalVisible_SavedMsg:false,modalVisible_Changepassword:false})
+                        onPress={() => {
+                            this.setState({ modalVisible_successMsg: false, modalVisible_Changepassword: false })
                         }}
                     >
                         <Image source={require('../images/close.png')}
@@ -124,8 +124,9 @@ export default class EditProfile extends React.Component {
                     />
                     <Text style={[StyleMyProfile.col1Text, { textTransform: 'capitalize', alignSelf: 'center', fontSize: Constants.FONT_SIZE_EXTRA_LARGE }]}>{Constants.ChangeSavedSuccessFully}</Text>
                     <TouchableOpacity style={[StyleMyProfile.ButtonView, { paddingHorizontal: 50, marginVertical: 15 }]}
-                        onPress={()=>{
-                            this.setState({modalVisible_SavedMsg:false,modalVisible_Changepassword:false})
+                        onPress={() => {
+                            this.setState({ modalVisible_successMsg: false, modalVisible_Changepassword: false })
+                            this.props.navigation.navigate('MyProfile');
                         }}
                     >
                         <Text style={StyleMyProfile.ButtonLabel}>{Constants.OK}</Text>
@@ -157,20 +158,6 @@ export default class EditProfile extends React.Component {
                                         style={StyleEditProfile.sideImage}
                                     />
                                 </TouchableOpacity>
-                                <Modal
-                                    visible={this.state.modalVisible_Changepassword}
-                                    animationType='fade'
-                                    transparent={true}
-                                >
-                                    {this.Modal_ChangePassword()}
-                                </Modal>
-                                <Modal
-                                    visible={this.state.modalVisible_SavedMsg}
-                                    animationType='fade'
-                                    transparent={true}
-                                >
-                                    {this.Modal_chnagesSaveSuccessFully()}
-                                </Modal>
 
                                 <Image source={require('../images/Profile_pic.png')}
                                     style={StyleEditProfile.ProfileImage}
@@ -308,6 +295,7 @@ export default class EditProfile extends React.Component {
                                     onChangeText={(text) => { this.setState({ email_id: text }) }}
                                 />
                             </View>
+
                             <View style={StyleEditProfile.TextInputView}>
                                 <View style={StyleEditProfile.LabelView}>
                                     <Image source={require('../images/password.png')}
@@ -315,7 +303,7 @@ export default class EditProfile extends React.Component {
                                     />
                                     <Text style={StyleEditProfile.modalLabelText}>{Constants.Password}</Text>
                                 </View>
-                                <View style={{ flexDirection: "row", justifyContent: 'center',alignSelf:'center'}}>
+                                <View style={{ flexDirection: "row", justifyContent: 'center', alignSelf: 'center' }}>
                                     <TextInput
                                         placeholder="Enter Password"
                                         style={[StyleEditProfile.TextInput, { width: '90%' }]}
@@ -323,10 +311,10 @@ export default class EditProfile extends React.Component {
                                         value={this.state.password}
                                         onChangeText={(text) => { this.setState({ password: text }) }}
                                     />
-                                    <TouchableOpacity style={{ alignSelf: 'flex-end', right: 15,alignSelf:'center'}}
-                                            onPress={()=>{
-                                                this.setState({password_visible:!this.state.password_visible})
-                                            }}
+                                    <TouchableOpacity style={{ alignSelf: 'flex-end', right: 15, alignSelf: 'center' }}
+                                        onPress={() => {
+                                            this.setState({ password_visible: !this.state.password_visible })
+                                        }}
                                     >
                                         <Image source={this.state.password_visible ? require('../images/hide_pass.png') : require('../images/show_pass.png')}
                                             style={{ width: 20, height: 20, alignSelf: 'center' }}
@@ -335,17 +323,36 @@ export default class EditProfile extends React.Component {
                                 </View>
                             </View>
 
-                            <TouchableOpacity style={StyleEditProfile.ButtonView}>
-                                        <Text style={StyleEditProfile.ButtonLabel}>{Constants.Update}</Text>
+                            <TouchableOpacity style={StyleEditProfile.ButtonView}
+                                onPress={()=>{
+                                        this.setState({modalVisible_successMsg:true})
+                                }}
+                            >
+                                <Text style={StyleEditProfile.ButtonLabel}>{Constants.Update}</Text>
                             </TouchableOpacity>
 
-
-
                         </View>
+
                     </ScrollView>
+
                 </View>
 
                 <FooterBar navigation={navigation} />
+                <Modal
+                    visible={this.state.modalVisible_Changepassword}
+                    animationType='fade'
+                    transparent={true}
+                >
+                    {this.Modal_ChangePassword()}
+                </Modal>
+                <Modal
+                    visible={this.state.modalVisible_successMsg}
+                    animationType='fade'
+                    transparent={true}
+                >
+                    {this.Modal_chnagesSaveSuccessFully()}
+                </Modal>
+
             </View>
         )
     }

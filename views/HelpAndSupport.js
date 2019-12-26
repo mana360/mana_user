@@ -22,13 +22,13 @@ export default class HelpAndSupport extends React.Component {
         }
     }
     render() {
-        let IsTrucking =this.props.navigation.getParam('flag_truckBooking',false);
-        let IsWarehouse=this.props.navigation.getParam('flag_Warehouse',false);
-        let IsTruckingWarehouse=this.props.navigation.getParam('flag_truckingWarehouse',false);
+        let IsTrucking = this.props.navigation.getParam('flag_truckBooking', false);
+        let IsWarehouse = this.props.navigation.getParam('flag_Warehouse', false);
+        let IsTruckingWarehouse = this.props.navigation.getParam('flag_truckingWarehouse', false);
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, }}>
-                <HeaderBar title={this.state.isUser? "Help & Support" : "Trip-Help & support"}
+                <HeaderBar title={this.state.isUser ? "Help & Support" : "Trip-Help & support"}
 
                     isBack={true} isLogout={true} navigation={navigation} />
 
@@ -65,24 +65,24 @@ export default class HelpAndSupport extends React.Component {
 
                         <View style={{ backgroundColor: Constants.COLOR_WHITE }}>
 
-                            <View style={this.state.isUser?[{ paddingLeft: 45, marginTop: 15, }]:{ display: 'none' } }>
+                            <View style={this.state.isUser ? [{ paddingLeft: 45, marginTop: 15, }] : { display: 'none' }}>
                                 <Text style={StyleTripHelpAndSupport.pickerTitle}>{Constants.Trip}</Text>
                                 <Text style={{ color: Constants.COLOR_GREY_LIGHT, marginVertical: 2 }}>{Constants.Nyc_Syc}</Text>
                             </View>
 
-                            <View style={this.state.isUser==IsWarehouse? { display: 'none' } : [{ paddingLeft: 45, marginTop: 15, }]}>
+                            <View style={this.state.isUser == IsWarehouse ? { display: 'none' } : [{ paddingLeft: 45, marginTop: 15, }]}>
                                 <Text style={StyleTripHelpAndSupport.pickerTitle}>{Constants.Trip}</Text>
                                 <Text style={{ color: Constants.COLOR_GREY_LIGHT, marginVertical: 2 }}>{Constants.Nyc_Syc}</Text>
 
                             </View>
-{/* 
+                            {/* 
                             <View style={this.state.isUser==IsTrucking? { display: 'none' } : [{ paddingLeft: 45, marginTop: 15, }]}>
                                 <Text style={StyleTripHelpAndSupport.pickerTitle}>{Constants.Trip}</Text>
                                 <Text style={{ color: Constants.COLOR_GREY_LIGHT, marginVertical: 2 }}>{Constants.Nyc_Syc}</Text>
 
                             </View> */}
 
-                            <View style={this.state.isUser?[StyleHelpAndSupport.pickerView,{marginTop:35}]:[StyleHelpAndSupport.pickerView,{marginTop:25}]}>
+                            <View style={this.state.isUser ? [StyleHelpAndSupport.pickerView, { marginTop: 35 }] : [StyleHelpAndSupport.pickerView, { marginTop: 25 }]}>
                                 <View style={{ position: 'absolute', top: -15, left: 20, padding: 5, paddingLeft: 10, paddingRight: 10, backgroundColor: Constants.COLOR_WHITE, }}>
                                     <Text style={StyleHelpAndSupport.pickerTitle}>{Constants.SupportSubject}</Text>
                                 </View>
@@ -135,6 +135,7 @@ export default class HelpAndSupport extends React.Component {
                         </View>
 
                     </View>
+
                 </ScrollView>
 
                 <FooterBar navigation={navigation} />
@@ -146,7 +147,7 @@ export default class HelpAndSupport extends React.Component {
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
                         <View style={StyleHelpAndSupport.modalView}>
-                            <TouchableOpacity style={{ alignSelf: 'flex-end', top:5, right: 10 }}
+                            <TouchableOpacity style={{ alignSelf: 'flex-end', top: 5, right: 10 }}
                                 onPress={() => {
                                     this.setState({ modal_Visible: false })
                                 }}
@@ -162,6 +163,7 @@ export default class HelpAndSupport extends React.Component {
                             <TouchableOpacity style={StyleHelpAndSupport.modalButton}
                                 onPress={() => {
                                     this.setState({ modal_Visible: false })
+                                    this.props.navigation.navigate('Dashboard')
                                 }}
                             >
                                 <Text style={StyleHelpAndSupport.modalButtonText}>{Constants.OK}</Text>
@@ -171,7 +173,7 @@ export default class HelpAndSupport extends React.Component {
 
 
                 </Modal>
-          
+
             </View>
         )
     }
