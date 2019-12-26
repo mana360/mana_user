@@ -1,5 +1,5 @@
 /* screen -MANAPPCUS0011
-    design by -mayur
+    design by -mayur s
  */
 import React, { Component } from 'react';
 import { View, Text, FlatList, } from 'react-native';
@@ -19,21 +19,42 @@ export default class TermsAndCondition extends Component {
     }
   }
   render() {
-    let { navigation } = this.props
+    let { navigation } = this.props;
+    let flag = this.props.navigation.getParam('flag');
+
     return (
       <View style={{ flex: 1, backgroundColor: Constants.colorGrey }}>
-        <HeaderBar title="Terms & conditions" isBack={true} isLogout={true} navigation={navigation} />
+        <HeaderBar
+          title={
+            flag=="TermsAndCondition"
+            ?
+            "Terms & Conditions"
+            :
+            flag=="CancellationPolicy"
+            ?
+            "Cancellation Policy"
+            :
+            flag=="PaymentPolicy"
+            ?
+            "Payment Policy"
+            : null
+          }
+           isBack={true} isLogout={true} navigation={navigation} />
         <FlatList
-          data={this.state.data}
-          extraData={this.state}
-          keyExtractor={(index) => index.toString()}
-          numColumns={1}
-          bounces={false}
-          renderItem={
+            data={this.state.data}
+            extraData={this.state}
+            keyExtractor={(index) => index.toString()}
+            numColumns={1}
+            bounces={false}
+            renderItem={
             ({ item }) =>
+
               <View style={StyleTermsAndCondition.container}>
+
                 <Text style={StyleTermsAndCondition.title}>{item.title}</Text>
+
                 <Text style={StyleTermsAndCondition.desc}>{item.desc}</Text>
+
               </View>
           }
         />

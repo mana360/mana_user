@@ -1,5 +1,5 @@
 /* screen -MANAPPCUS030
-    design by -mayur
+    design by -mayur s
  */
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity } from 'react-native';
@@ -30,6 +30,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                 <HeaderBar title="TRUCKING + WAREHOUSE    CURRENT TRIP DETAILS" isBack={true} isLogout={true} navigation={navigation} />
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%' }} bounces={false}>
+                      
                         <View style={{ marginBottom: 2 }}>
                             <View style={StyleViewCurrentTrip.topCircle}>
                             </View>
@@ -51,7 +52,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                     
                                     <TouchableOpacity style={{marginTop:55}}
                                         onPress={()=>{
-                                                this.props.navigation.navigate('HelpAndSupport',{flag_truckingWarehouse:false});
+                                                this.props.navigation.navigate('HelpAndSupport',{flag:false});
                                         }}
                                     >
                                         <Image source={require('../images/support_icon.png')}
@@ -278,7 +279,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                 </View>
 
                 <FooterBar navigation={navigation} />
-
+               
                 <Modal
                                     animationType='fade'
                                     transparent={true}
@@ -288,6 +289,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                         this.setState({ invoiceModal_Visible: false });
                                     }} />
                 </Modal>
+
             </View>
         )
     }

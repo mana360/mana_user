@@ -35,8 +35,8 @@ const StyleHelpAndSupport = StyleSheet.create({
         marginHorizontal: 15,
         borderWidth: 0.3,
         borderRadius: 40,
-        marginTop:10,
-        marginBottom:10,
+        marginTop: 10,
+        marginBottom: 10,
         borderColor: Constants.COLOR_GREY_LIGHT,
     },
     pickerTitle: {
@@ -74,15 +74,14 @@ const StyleHelpAndSupport = StyleSheet.create({
     buttonView: {
         padding: 10,
         borderRadius: 25,
-        marginTop: "20%",
-        marginBottom: 10,
+        marginTop: 50,
+        marginBottom: 15,
         marginHorizontal: 20,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Constants.COLOR_GREEN,
     },
     buttonText: {
-        paddingTop: 10,
         textAlign: 'center',
         color: Constants.COLOR_WHITE,
         fontSize: Constants.FONT_SIZE_LARGE,
@@ -326,7 +325,7 @@ const StyleRateAndReview = StyleSheet.create({
         position: 'absolute',
         zIndex: -1,
         width: '120%',
-        height:430,
+        height: 430,
         borderRadius: 205,
         top: '-175%',
         alignSelf: 'center',
@@ -465,7 +464,7 @@ const StyleViewCompletedDetail = StyleSheet.create({
         position: 'absolute',
         zIndex: -1,
         width: '120%',
-        height:420,
+        height: 420,
         borderRadius: 205,
         top: '-175%',
         alignSelf: 'center',
@@ -526,7 +525,7 @@ const StyleViewCompletedDetail = StyleSheet.create({
 const StyleSignIn = StyleSheet.create({
     bgImage: {
         width: wp('100%'),
-        height:'100%',
+        height: '100%',
         zIndex: -1,
         position: 'absolute',
         resizeMode: 'stretch',
@@ -644,7 +643,7 @@ const StyleTermsAndCondition = StyleSheet.create({
 const StyleDashboard = StyleSheet.create({
     topCircle: {
         width: wp('120'),
-        height:hp('65'),
+        height: hp('65'),
         borderRadius: 200,
         marginTop: '-85%',
         alignSelf: 'center',
@@ -730,7 +729,7 @@ const StyleDashboard = StyleSheet.create({
 const StyleTruckBooking = StyleSheet.create({
     topCircle: {
         width: '120%',
-        height:420,
+        height: 420,
         borderRadius: 200,
         marginTop: '-85%',
         alignSelf: 'center',
@@ -911,7 +910,7 @@ const StyleViewCurrentTrip = StyleSheet.create({
         position: 'absolute',
         zIndex: -1,
         width: '120%',
-        height:420,
+        height: 420,
         borderRadius: 250,
         top: '-190%',
         alignSelf: 'center',
@@ -1008,7 +1007,7 @@ const StyleViewUpcomingTrip = StyleSheet.create({
         position: 'absolute',
         zIndex: -1,
         width: '120%',
-        height:420,
+        height: 420,
         borderRadius: 205,
         top: '-195%',
         alignSelf: 'center',
@@ -1021,7 +1020,7 @@ const StyleViewUpcomingTrip = StyleSheet.create({
         borderWidth: 8,
         borderColor: Constants.COLOR_WHITE,
         marginTop: 30,
-        alignSelf:'center',
+        alignSelf: 'center',
         resizeMode: "cover",
     },
     imageSideView: {
@@ -1311,7 +1310,7 @@ const StyleInvoice = StyleSheet.create({
 const StyleCollectMyLoad = StyleSheet.create({
     topCircle: {
         width: '120%',
-        height:420,
+        height: 420,
         borderRadius: 200,
         marginTop: '-85%',
         alignSelf: 'center',
@@ -1431,14 +1430,90 @@ const StyleCollectMyLoad = StyleSheet.create({
     ServImage: {
         width: 70,
         height: 70,
-    }
+    },
+    modalCotainer: {
+        width: wp('90%'),
+        alignSelf: 'center',
+        borderRadius: 5,
+        backgroundColor: Constants.COLOR_WHITE,
+    },
+    modalText: {
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        paddingBottom:10,
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        color: Constants.COLOR_GREEN
+    },
+    modalrow: {
+        width:'100%',
+        flexDirection: 'row',
+        justifyContent:'center',
+    },
+    modalcol1: {
+       width:'70%',
+    },
+    modalcol2: {
+       width:'30%',
+    },
+    modalTittle:{
+        paddingLeft:18,
+        paddingBottom:10,
+        fontWeight:'bold',
+        color:Constants.COLOR_GREEN
+    },
+    keytext: {
+        paddingLeft:18,
+        paddingBottom:10,
+        color:Constants.COLOR_GREY_DARK
+    },
+    valueText: {
+        alignSelf:'flex-start',
+        paddingLeft:20,
+        color:Constants.COLOR_GREEN
+    },
+    textInput_container: {
+        flexDirection:'row',
+        alignItems:'center',
+        paddingBottom:20
+    },
+    textInput_style: {
+        borderWidth: 0.7,
+        borderRadius: 50,
+        paddingLeft: 25,
+        marginVertical: 5,
+        width:'95%',
+        borderColor: Constants.COLOR_GREY_LIGHT
+    },
+    labelBox: {
+        zIndex: 1,
+        left: 15,
+        paddingLeft: 2,
+        paddingRight: 2,
+        marginTop: -7,
+        marginLeft: "7%",
+        position: 'absolute',
+        flexDirection: 'row',
+        backgroundColor: 'white',
+        borderColor: Constants.COLOR_GREY_LIGHT
+    },
+    LabelBoxIcon: {
+        width: 18,
+        height: 18,
+        marginHorizontal: 3,
+    },
+    labelBoxText: {
+        fontWeight: 'bold',
+        textTransform: 'capitalize',
+        fontSize: Constants.fontSizeLarge,
+        color: Constants.COLOR_GREY_DARK,
+    },
 })
 const StyleMyProfile = StyleSheet.create({
     topCircle: {
         position: 'absolute',
         zIndex: -1,
         width: wp('120'),
-        height:430,
+        height: 430,
         borderRadius: 205,
         top: '-195%',
         alignSelf: 'center',
@@ -1522,7 +1597,7 @@ const StyleMyProfile = StyleSheet.create({
         backgroundColor: Constants.COLOR_WHITE,
         width: wp('90%'),
         alignSelf: 'center',
-        borderRadius:5,
+        borderRadius: 5,
     },
     TextInputView: {
         paddingLeft: 20,
@@ -1580,7 +1655,7 @@ const StyleEditProfile = StyleSheet.create({
         position: 'absolute',
         zIndex: -1,
         width: wp('120'),
-        height:430,
+        height: 430,
         borderRadius: 205,
         top: '-195%',
         alignSelf: 'center',
@@ -1631,8 +1706,8 @@ const StyleEditProfile = StyleSheet.create({
         height: 50,
         alignSelf: 'center',
         borderRadius: 50,
-        marginBottom:25,
-        justifyContent:'center',
+        marginBottom: 25,
+        justifyContent: 'center',
         borderColor: Constants.COLOR_GREY_DARK,
         backgroundColor: Constants.COLOR_WHITE,
     },
@@ -1676,12 +1751,12 @@ const StyleEditProfile = StyleSheet.create({
     },
 })
 const StyleForgotPassword = StyleSheet.create({
-    textMsg:{
-     textAlign:'center',
-     fontWeight:"bold",
-     marginTop:'20%',
-     fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
-     color:Constants.COLOR_GREY_DARK
+    textMsg: {
+        textAlign: 'center',
+        fontWeight: "bold",
+        marginTop: '20%',
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        color: Constants.COLOR_GREY_DARK
     },
     TextInputView: {
         paddingLeft: 20,
@@ -1690,8 +1765,8 @@ const StyleForgotPassword = StyleSheet.create({
         height: 50,
         alignSelf: 'center',
         borderRadius: 50,
-       marginTop:50,
-        justifyContent:'center',
+        marginTop: 50,
+        justifyContent: 'center',
         borderColor: Constants.COLOR_GREY_DARK,
         backgroundColor: Constants.COLOR_WHITE,
     },
@@ -1718,39 +1793,39 @@ const StyleForgotPassword = StyleSheet.create({
     TextInput: {
         fontSize: Constants.FONT_SIZE_LARGE
     },
-    ButtonView:{
-      backgroundColor:Constants.COLOR_GREEN,
-      justifyContent:'center',
-      alignSelf:'center',
-      borderRadius:50,
-      alignSelf:'center',
-      width:'40%',
-      marginLeft:25,
-      paddingVertical:10,
+    ButtonView: {
+        backgroundColor: Constants.COLOR_GREEN,
+        justifyContent: 'center',
+        alignSelf: 'center',
+        borderRadius: 50,
+        alignSelf: 'center',
+        width: '40%',
+        marginLeft: 25,
+        paddingVertical: 10,
     },
-    buttonLabel:{
-        alignSelf:'center',
-        textTransform:"uppercase",
-        color:Constants.COLOR_WHITE,
-        fontWeight:'bold',
-        fontSize:Constants.fontSizeExtraLarge
+    buttonLabel: {
+        alignSelf: 'center',
+        textTransform: "uppercase",
+        color: Constants.COLOR_WHITE,
+        fontWeight: 'bold',
+        fontSize: Constants.fontSizeExtraLarge
     },
-    ModalView:{
+    ModalView: {
         backgroundColor: Constants.COLOR_WHITE,
         width: wp('90%'),
         alignSelf: 'center',
-        borderRadius:5,
-        justifyContent:'center',
+        borderRadius: 5,
+        justifyContent: 'center',
     },
-    modalTextMSg:{
-        alignSelf:'center',
-        color:Constants.COLOR_GREEN,
-        fontWeight:"bold",
-        fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
-        marginTop:15,
-        marginBottom:25,
+    modalTextMSg: {
+        alignSelf: 'center',
+        color: Constants.COLOR_GREEN,
+        fontWeight: "bold",
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        marginTop: 15,
+        marginBottom: 25,
     },
-    ModaltextInput:{
+    ModaltextInput: {
         width: wp('60%'),
         borderWidth: 1,
         borderRadius: 5,
@@ -1758,34 +1833,34 @@ const StyleForgotPassword = StyleSheet.create({
         marginVertical: '4%',
         textAlign: 'center',
         borderStyle: 'dashed',
-        alignSelf:'center',
-        backgroundColor:Constants.COLOR_GREY,
-        borderColor:Constants.COLOR_GREY_LIGHT,
+        alignSelf: 'center',
+        backgroundColor: Constants.COLOR_GREY,
+        borderColor: Constants.COLOR_GREY_LIGHT,
     },
-    resendText:{
-        alignSelf:'center',
-        textDecorationLine:"underline",
-        color:Constants.COLOR_GREEN
+    resendText: {
+        alignSelf: 'center',
+        textDecorationLine: "underline",
+        color: Constants.COLOR_GREEN
     },
-    modalButtonView:{
-        backgroundColor:Constants.COLOR_GREEN,
-        borderRadius:20,
-        alignSelf:'center',
-        justifyContent:'center',
-        marginHorizontal:10
+    modalButtonView: {
+        backgroundColor: Constants.COLOR_GREEN,
+        borderRadius: 20,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 10
     },
-    modalButtonLabel:{
-        textTransform:'uppercase',
-        color:Constants.COLOR_WHITE,
-        fontWeight:'bold',
-        paddingHorizontal:35,
-        paddingVertical:10
+    modalButtonLabel: {
+        textTransform: 'uppercase',
+        color: Constants.COLOR_WHITE,
+        fontWeight: 'bold',
+        paddingHorizontal: 35,
+        paddingVertical: 10
     },
 })
 const StyleSignUp = StyleSheet.create({
     bgImage: {
         width: wp('100%'),
-        height:'100%',
+        height: '100%',
         zIndex: -1,
         position: 'absolute',
         resizeMode: 'stretch',
@@ -1794,7 +1869,7 @@ const StyleSignUp = StyleSheet.create({
         width: wp('90%'),
         paddingRight: 15,
         paddingLeft: 15,
-        height:'78%',
+        height: '78%',
         justifyContent: 'center',
         backgroundColor: Constants.COLOR_WHITE,
     },
@@ -1809,14 +1884,14 @@ const StyleSignUp = StyleSheet.create({
     loginLabel: {
         alignSelf: 'center',
         color: 'black',
-        marginBottom:5,
+        marginBottom: 5,
         fontWeight: 'bold',
         textTransform: 'uppercase',
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
         color: Constants.COLOR_GREY_DARK
     },
     textInput_container: {
-        marginVertical:7
+        marginVertical: 7
     },
     textInput_style: {
         borderWidth: 0.7,
@@ -1851,9 +1926,9 @@ const StyleSignUp = StyleSheet.create({
     loginButton: {
         width: wp('80%'),
         borderRadius: 50,
-        bottom:5,
-        position:'absolute',
-        alignSelf:'center',
+        bottom: 5,
+        position: 'absolute',
+        alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 15,
@@ -1865,26 +1940,26 @@ const StyleSignUp = StyleSheet.create({
         padding: 15,
         fontWeight: 'bold',
     },
-    policyView:{
-        flexDirection:"row",
-        paddingLeft:20,
-        marginVertical:5,
+    policyView: {
+        flexDirection: "row",
+        paddingLeft: 20,
+        marginVertical: 5,
     },
-    policyButton:{},
-    policyImage:{
-       width:18,
-       height:18,
-       marginRight:5
-   },
-   referaltxtinputView:{
-    borderWidth: 0.7,
-    borderRadius: 50,
-    marginVertical: 5,
-    borderColor: Constants.COLOR_GREY_LIGHT
-   },
-   PolicyLabel:{
-       color:Constants.COLOR_GREEN,
-   },
+    policyButton: {},
+    policyImage: {
+        width: 18,
+        height: 18,
+        marginRight: 5
+    },
+    referaltxtinputView: {
+        borderWidth: 0.7,
+        borderRadius: 50,
+        marginVertical: 5,
+        borderColor: Constants.COLOR_GREY_LIGHT
+    },
+    PolicyLabel: {
+        color: Constants.COLOR_GREEN,
+    },
     memberButton: {
         position: 'absolute',
         bottom: 5,
@@ -1894,7 +1969,48 @@ const StyleSignUp = StyleSheet.create({
         color: Constants.COLOR_WHITE,
         fontSize: Constants.FONT_SIZE_LARGE,
     },
+    modalCotainer: {
+        width: wp('90%'),
+        alignSelf: 'center',
+        borderRadius: 5,
+        backgroundColor: Constants.COLOR_WHITE,
+    },
+    ModalMsg: {
+        paddingRight: 5,
+        fontWeight: 'bold',
+        paddingLeft: 10,
+        alignSelf: 'center',
+        paddingBottom: 25,
+        color: Constants.COLOR_GREY_DARK,
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE
+    }
 
+})
+const styleDiscountVoucher = StyleSheet.create({
+    titleView:{
+        borderBottomWidth:0.5,
+        marginBottom:25,
+        paddingBottom:10,
+        borderBottomColor:Constants.COLOR_GREY_LIGHT,
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE
+    },
+    title:{
+        textTransform:"uppercase",
+        color:Constants.COLOR_GREEN,
+        paddingLeft:5,
+        fontWeight:'bold'
+    },
+    discountText:{
+        fontSize:Constants.FONT_SIZE__MEDIUM,
+        color:Constants.COLOR_GREEN,
+        paddingLeft:5,
+
+    },
+    validityDate:{
+        fontSize:Constants.FONT_SIZE__MEDIUM,
+        paddingLeft:10,
+        color:Constants.COLOR_GREY_DARK,
+    }
 })
 export {
     StyleHelpAndSupport,
@@ -1916,4 +2032,5 @@ export {
     StyleEditProfile,
     StyleForgotPassword,
     StyleSignUp,
+    styleDiscountVoucher,
 }

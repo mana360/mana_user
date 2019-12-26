@@ -1,5 +1,5 @@
 /* screen -MANAPPCUS0017
-    design by -mayur
+    design by -mayur s
  */
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity } from 'react-native';
@@ -30,8 +30,8 @@ export default class ViewCurrentTrip extends React.Component {
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%' }} bounces={false}>
                         <View style={{ marginBottom: 2 }}>
-                            <View style={StyleViewCurrentTrip.topCircle} />
 
+                            <View style={StyleViewCurrentTrip.topCircle} />
                             <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
                                 <TouchableOpacity style={{ marginTop: 45, }}
                                     onPress={() => {
@@ -49,7 +49,7 @@ export default class ViewCurrentTrip extends React.Component {
                                 />
                                 <TouchableOpacity style={{ marginTop: 45, }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('HelpAndSupport', { flag_truckBooking: false })
+                                        this.props.navigation.navigate('HelpAndSupport', { flag: false })
                                     }}
                                 >
                                     <Image source={require('../images/support_icon.png')}
@@ -57,6 +57,7 @@ export default class ViewCurrentTrip extends React.Component {
                                     />
                                 </TouchableOpacity>
                             </View>
+                      
                         </View>
 
                         <Text style={StyleViewCurrentTrip.title}>NYC - SYS</Text>

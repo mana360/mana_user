@@ -1,5 +1,5 @@
 /* screen -MANAPPCUS019
-    design by -mayur
+    design by -mayur s
  */
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity, TouchableHighlightBase } from 'react-native';
@@ -86,7 +86,9 @@ export default class ViewUpcomingTrip extends React.Component {
             <View style={{ flex: 1 }}>
                 <HeaderBar title="VIEW UPCOMING TRIP" isBack={true} isLogout={true} navigation={navigation} />
                 <View style={{ flex: 1 }}>
+
                     <ScrollView style={{ width: '100%' }} bounces={false}>
+
                         <View style={{ marginBottom: 2 }}>
                             <View style={StyleViewUpcomingTrip.topCircle} />
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -242,6 +244,7 @@ export default class ViewUpcomingTrip extends React.Component {
                         </TouchableOpacity>
 
                     </ScrollView>
+               
                 </View>
 
                 <FooterBar navigation={navigation} />

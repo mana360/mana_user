@@ -9,7 +9,7 @@ import Notification from './views/Notification';
 import RateAndReview from './views/RateAndReview';
 import ViewCompletedTripDetail from './views/ViewCompletedTripDetail';
 import SignIn from './views/Signin';
-import TermsAndCondition from './views/TermsAndCondition.';
+import TermsAndCondition from './views/TermsAndCondition';
 import Dashboard from './views/Dashboard';
 import TruckBooking from './views/TruckBooking';
 import CurrentTrip from './views/CurrentTrip';
@@ -36,6 +36,7 @@ import EditProfile from './views/EditProfile';
 import ForgotPassword from './views/ForgotPassword';
 import SetPassword from './views/SetPassword';
 import SignUp from './views/SignUp';
+import DiscountVoucher from './views/DiscountVoucher';
 
 console.disableYellowBox = true;
 
@@ -176,6 +177,11 @@ const AppNavigator1 = createStackNavigator({
       screen: SignUp,
       navigationOptions: () => ({ header: null })
     },
+    DiscountVoucher: {
+      screen: DiscountVoucher,
+      navigationOptions: () => ({ header: null })
+    },
+    
 },
      {initialRouteName:"Splash"}
 )
