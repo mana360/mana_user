@@ -1,5 +1,5 @@
 /* screen -MANAPPCUS002
-    design by -mayur
+    design by -mayur s
  */
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, Picker, TextInput, Modal } from 'react-native';
@@ -17,14 +17,12 @@ export default class HelpAndSupport extends React.Component {
             support_message: "",
             support_contact_number: "8866114477",
             modal_Visible: false,
-            isUser: false,
+            isUser:true ,
 
         }
     }
     render() {
-        let IsTrucking = this.props.navigation.getParam('flag_truckBooking', false);
-        let IsWarehouse = this.props.navigation.getParam('flag_Warehouse', false);
-        let IsTruckingWarehouse = this.props.navigation.getParam('flag_truckingWarehouse', false);
+        let IsTrip = this.props.navigation.getParam('flag', false);
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, }}>
@@ -65,22 +63,10 @@ export default class HelpAndSupport extends React.Component {
 
                         <View style={{ backgroundColor: Constants.COLOR_WHITE }}>
 
-                            <View style={this.state.isUser ? [{ paddingLeft: 45, marginTop: 15, }] : { display: 'none' }}>
+                            <View style={this.state.isUser ? { display: 'none' }:[{ paddingLeft: 45, marginTop: 15, }]}>
                                 <Text style={StyleTripHelpAndSupport.pickerTitle}>{Constants.Trip}</Text>
                                 <Text style={{ color: Constants.COLOR_GREY_LIGHT, marginVertical: 2 }}>{Constants.Nyc_Syc}</Text>
                             </View>
-
-                            <View style={this.state.isUser == IsWarehouse ? { display: 'none' } : [{ paddingLeft: 45, marginTop: 15, }]}>
-                                <Text style={StyleTripHelpAndSupport.pickerTitle}>{Constants.Trip}</Text>
-                                <Text style={{ color: Constants.COLOR_GREY_LIGHT, marginVertical: 2 }}>{Constants.Nyc_Syc}</Text>
-
-                            </View>
-                            {/* 
-                            <View style={this.state.isUser==IsTrucking? { display: 'none' } : [{ paddingLeft: 45, marginTop: 15, }]}>
-                                <Text style={StyleTripHelpAndSupport.pickerTitle}>{Constants.Trip}</Text>
-                                <Text style={{ color: Constants.COLOR_GREY_LIGHT, marginVertical: 2 }}>{Constants.Nyc_Syc}</Text>
-
-                            </View> */}
 
                             <View style={this.state.isUser ? [StyleHelpAndSupport.pickerView, { marginTop: 35 }] : [StyleHelpAndSupport.pickerView, { marginTop: 25 }]}>
                                 <View style={{ position: 'absolute', top: -15, left: 20, padding: 5, paddingLeft: 10, paddingRight: 10, backgroundColor: Constants.COLOR_WHITE, }}>

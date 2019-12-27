@@ -164,6 +164,12 @@ const Constants = {
     CancellationPlicy:'Cancellation Policy',
     PaymentPolicy:'Payment Policy',
     Referralcode:'Referral Code',
+    WelcomeToMana360:'Wellcome to Mana360!!' ,
+    RateCard:'Rate Card',
+    Amount:'Amount',
+    SmallLessthan:'Small(Less than 1 kg)',
+    Medium:'Medium(1-2 kgs)',
+    Large:'Large(1-3 kgs)'
 
 
 

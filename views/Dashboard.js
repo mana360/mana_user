@@ -85,8 +85,10 @@ export default class Dashboard extends React.Component {
                     <ScrollView  bounces={false}>
                             <View style={StyleDashboard.topCircle}>
                             </View>
+
                             <Card style={{width:'90%',alignSelf:'center',height:115,maxHeight:115,marginTop:'-27%',borderRadius:5}}>
                                     <CardItem style={StyleDashboard.cardView} >
+
                                         <TouchableOpacity style={StyleDashboard.ImageView}
                                            onPress={()=>{
                                             //    this.props.navigation.navigate('TruckBooking')
@@ -146,7 +148,9 @@ export default class Dashboard extends React.Component {
                                             />
                                             <Text style={this.state.screen_title=="Pick My Load"?[StyleDashboard.textD,{color:Constants.COLOR_GREEN}]:[StyleDashboard.textD]}>{Constants.CollectMyLoad}</Text>
                                         </TouchableOpacity>
+                                 
                                  </CardItem>
+                          
                             </Card>
                          
                             <Text style={StyleDashboard.labelText}>{Constants.TotalBookings}</Text>

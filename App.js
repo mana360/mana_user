@@ -9,7 +9,7 @@ import Notification from './views/Notification';
 import RateAndReview from './views/RateAndReview';
 import ViewCompletedTripDetail from './views/ViewCompletedTripDetail';
 import SignIn from './views/Signin';
-import TermsAndCondition from './views/TermsAndCondition.';
+import TermsAndCondition from './views/TermsAndCondition';
 import Dashboard from './views/Dashboard';
 import TruckBooking from './views/TruckBooking';
 import CurrentTrip from './views/CurrentTrip';
@@ -39,7 +39,7 @@ import SignUp from './views/SignUp';
 import DiscountVouchers from './views/DiscountVouchers';
 import BookingSummary from './views/BookingSummary';
 import ViewMap from './views/ViewMap';
-
+import MapViews from './views/MapView';
 
 console.disableYellowBox = true;
 
@@ -192,6 +192,12 @@ const AppNavigator1 = createStackNavigator({
       screen: ViewMap,
       navigationOptions: () => ({ header: null })
     },
+   
+    MapViews: {
+      screen: MapViews,
+      navigationOptions: () => ({ header: null })
+    },
+    
 },
      {initialRouteName:"ViewMap"}
 )

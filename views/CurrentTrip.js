@@ -1,5 +1,5 @@
 /* screen -MANAPPCUS016
-    design by -mayur
+    design by -mayur s
  */
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
@@ -44,6 +44,7 @@ export default class CurrentTrip extends React.Component {
                                         style={StyleCurrentTrip.icon}
                                     />
                                 </View>
+                              
                                 <View style={StyleCurrentTrip.col2}>
                                     <View style={StyleCurrentTrip.bottomLine}>
                                         <Text style={StyleCurrentTrip.title}>{item.title}</Text>
@@ -71,12 +72,14 @@ export default class CurrentTrip extends React.Component {
                                         <Text style={StyleCurrentTrip.datacss}>{item.dropUpTime}</Text>
                                     </View>
                                 </View>
+                              
                                 <View style={StyleCurrentTrip.col3}>
                                     <Image
                                         source={require('../images/forward_icon.png')}
                                         style={StyleCurrentTrip.arrow}
                                     />
                                 </View>
+                            
                             </TouchableOpacity>
 
                         )
@@ -84,7 +87,9 @@ export default class CurrentTrip extends React.Component {
                     extraData={this.state}
                     keyExtractor={item => item.id}
                 />
+               
                 <FooterBar navigation={navigation} />
+          
             </View>
         )
     }
