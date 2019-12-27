@@ -2,7 +2,7 @@
     design by -mayur s
  */
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, Modal } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, Modal,ScrollView } from 'react-native';
 import { StyleSignUp } from '../config/CommonStyles'
 import Constants from '../config/Constants';
 import { StackActions, NavigationActions } from 'react-navigation';
@@ -59,8 +59,8 @@ export default class SignUp extends Component {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
         <Image style={StyleSignUp.bgImage} source={require('../images/Splash_screen.jpg')} />
-
-        <View style={this.state.referalRadio_button ? [StyleSignUp.loginBox, { height: '75%' }] : StyleSignUp.loginBox}>
+     
+        <View style={StyleSignUp.loginBox}>
 
           <Image style={StyleSignUp.logoImage}
             source={require('../images/AppLauncher.png')}
@@ -134,7 +134,7 @@ export default class SignUp extends Component {
               onChangeText={(newtext) => { this.setState({ referral_code: newtext }) }} />
           </View>
 
-          <View style={StyleSignUp.policyView}>
+          <View style={[StyleSignUp.policyView,]}>
             <TouchableOpacity
               onPress={() => {
                 this.setState({ policyRadio_button: !this.state.policyRadio_button })
@@ -153,7 +153,7 @@ export default class SignUp extends Component {
             <Text style={{ color: Constants.COLOR_GREY_DARK }}>,</Text>
           </View>
 
-          <View style={[{ paddingLeft: 42, flexDirection: 'row' }]}>
+          <View style={[{ paddingLeft: 42, flexDirection: 'row',marginBottom:10 }]}>
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('TermsAndCondition', { flag: 'CancellationPolicy' })
@@ -198,7 +198,7 @@ export default class SignUp extends Component {
           </TouchableOpacity>
 
         </View>
-
+     
         <TouchableOpacity style={StyleSignUp.memberButton}
           onPress={() => {
             this.props.navigation.navigate('SignIn')

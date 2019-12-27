@@ -47,7 +47,7 @@ class HeaderBar extends React.Component {
 
             <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
                 <TouchableOpacity style={isNotification ? {display:'flex'} : {display:'none'}}
-                  onPress={()=>{this.props.navigation.navigate('Notifications')}}
+                  onPress={()=>{this.props.navigation.navigate('Notification')}}
                 >
                   <Image
                     source={require('../images/notification.png')}

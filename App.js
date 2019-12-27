@@ -37,6 +37,7 @@ import ForgotPassword from './views/ForgotPassword';
 import SetPassword from './views/SetPassword';
 import SignUp from './views/SignUp';
 import DiscountVoucher from './views/DiscountVoucher';
+import MapViews from './views/MapView';
 
 console.disableYellowBox = true;
 
@@ -181,8 +182,12 @@ const AppNavigator1 = createStackNavigator({
       screen: DiscountVoucher,
       navigationOptions: () => ({ header: null })
     },
+    MapViews: {
+      screen: MapViews,
+      navigationOptions: () => ({ header: null })
+    },
     
 },
-     {initialRouteName:"SignUp"}
+     {initialRouteName:"Splash"}
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

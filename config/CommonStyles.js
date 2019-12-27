@@ -1589,7 +1589,7 @@ const StyleMyProfile = StyleSheet.create({
         flexDirection: 'row',
     },
     col2Text: {
-        paddingLeft: 10,
+        paddingLeft: 20,
         fontSize: Constants.FONT_SIZE_LARGE,
         color: Constants.COLOR_GREY_DARK,
     },
@@ -1866,33 +1866,30 @@ const StyleSignUp = StyleSheet.create({
         resizeMode: 'stretch',
     },
     loginBox: {
-        width: wp('90%'),
-        paddingRight: 15,
-        paddingLeft: 15,
-        height: '68%',
-        marginTop:35,
+        marginHorizontal:15,
+        padding:15,
+        marginTop:15,
         justifyContent: 'center',
         backgroundColor: Constants.COLOR_WHITE,
     },
     logoImage: {
-        width: 150,
-        height: 150,
+        width: 140,
+        height: 140,
         borderRadius: 75,
-        top: -95,
+        marginTop:-95,
         alignSelf: 'center',
-        position: 'absolute',
     },
     loginLabel: {
+        marginVertical:10,
         alignSelf: 'center',
         color: 'black',
-        marginBottom: 5,
         fontWeight: 'bold',
         textTransform: 'uppercase',
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
         color: Constants.COLOR_GREY_DARK
     },
     textInput_container: {
-        marginVertical:5
+        marginVertical:10
     },
     textInput_style: {
         borderWidth: 0.7,
@@ -1927,8 +1924,7 @@ const StyleSignUp = StyleSheet.create({
     loginButton: {
         width: wp('80%'),
         borderRadius: 50,
-        bottom: 15,
-        position: 'absolute',
+        marginTop:10,
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
@@ -2012,6 +2008,18 @@ const styleDiscountVoucher = StyleSheet.create({
         color:Constants.COLOR_GREY_DARK,
     }
 })
+const StyleMapView = StyleSheet.create({
+    MainContainer: {
+        height:'83%',
+        left: 0,
+        right: 0,
+    },
+    mapStyle: {
+        height:'100%',
+        left: 0,
+        right: 0,
+    },
+})
 export {
     StyleHelpAndSupport,
     StyleTripHelpAndSupport,
@@ -2033,4 +2041,5 @@ export {
     StyleForgotPassword,
     StyleSignUp,
     styleDiscountVoucher,
+    StyleMapView,
 }
