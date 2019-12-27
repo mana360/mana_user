@@ -60,7 +60,7 @@ export default class SignUp extends Component {
 
         <Image style={StyleSignUp.bgImage} source={require('../images/Splash_screen.jpg')} />
 
-        <View style={this.state.referalRadio_button ? [StyleSignUp.loginBox, { height: '85%' }] : StyleSignUp.loginBox}>
+        <View style={this.state.referalRadio_button ? [StyleSignUp.loginBox, { height: '75%' }] : StyleSignUp.loginBox}>
 
           <Image style={StyleSignUp.logoImage}
             source={require('../images/AppLauncher.png')}

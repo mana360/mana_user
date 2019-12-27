@@ -1869,7 +1869,8 @@ const StyleSignUp = StyleSheet.create({
         width: wp('90%'),
         paddingRight: 15,
         paddingLeft: 15,
-        height: '78%',
+        height: '68%',
+        marginTop:35,
         justifyContent: 'center',
         backgroundColor: Constants.COLOR_WHITE,
     },
@@ -1877,27 +1878,27 @@ const StyleSignUp = StyleSheet.create({
         width: 150,
         height: 150,
         borderRadius: 75,
-        top: -70,
+        top: -95,
         alignSelf: 'center',
         position: 'absolute',
     },
     loginLabel: {
         alignSelf: 'center',
         color: 'black',
-        marginBottom: 5,
+        marginBottom: 8,
         fontWeight: 'bold',
         textTransform: 'uppercase',
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
         color: Constants.COLOR_GREY_DARK
     },
     textInput_container: {
-        marginVertical: 7
+        marginVertical:5
     },
     textInput_style: {
         borderWidth: 0.7,
         borderRadius: 50,
         paddingLeft: 25,
-        marginVertical: 5,
+        marginVertical: 3,
         borderColor: Constants.COLOR_GREY_LIGHT
     },
     labelBox: {
@@ -1926,18 +1927,17 @@ const StyleSignUp = StyleSheet.create({
     loginButton: {
         width: wp('80%'),
         borderRadius: 50,
-        bottom: 5,
+        bottom: 15,
         position: 'absolute',
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 15,
         backgroundColor: Constants.COLOR_GREEN,
     },
     Login_buttonText: {
         color: Constants.COLOR_WHITE,
         textTransform: 'uppercase',
-        padding: 15,
+        padding: 13,
         fontWeight: 'bold',
     },
     policyView: {
@@ -1962,7 +1962,7 @@ const StyleSignUp = StyleSheet.create({
     },
     memberButton: {
         position: 'absolute',
-        bottom: 5,
+        bottom: 10,
         alignSelf: 'center',
     },
     memberLabel: {

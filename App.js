@@ -183,6 +183,6 @@ const AppNavigator1 = createStackNavigator({
     },
     
 },
-     {initialRouteName:"Splash"}
+     {initialRouteName:"SignUp"}
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

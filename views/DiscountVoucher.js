@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, Modal, FlatList } from 'react-native'
-import { StyleCollectMyLoad, styleDiscountVoucher } from '../config/CommonStyles';
-import { Card, CardItem } from 'native-base';
+import {styleDiscountVoucher } from '../config/CommonStyles';
+import { Card, CardItem, FooterTab } from 'native-base';
 import HeaderBar from '../config/HeaderBar';
+import FooterBar from '../config/FooterBar';
 export default class DiscountVoucher extends React.Component {
     constructor(props) {
         super(props);
@@ -53,8 +54,9 @@ export default class DiscountVoucher extends React.Component {
                     }}
                     
                 >
-
                 </FlatList>
+                <FooterBar navigation={navigation} />
+
             </View>
 
         )
