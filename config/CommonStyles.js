@@ -1885,7 +1885,7 @@ const StyleSignUp = StyleSheet.create({
     loginLabel: {
         alignSelf: 'center',
         color: 'black',
-        marginBottom: 8,
+        marginBottom: 5,
         fontWeight: 'bold',
         textTransform: 'uppercase',
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
