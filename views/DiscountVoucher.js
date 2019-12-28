@@ -1,3 +1,6 @@
+/* screen -MANAPPCUS060
+    design by -mayur s
+ */
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, Modal, FlatList } from 'react-native'
 import {styleDiscountVoucher } from '../config/CommonStyles';
@@ -19,7 +22,7 @@ export default class DiscountVoucher extends React.Component {
         let { navigation } = this.props
         return (
             <View style={{flex:1}}>
-                <HeaderBar isBack={true} title='Discount vouchers' isNotification={true}/>
+                <HeaderBar isBack={true} title='Discount vouchers' isNotification={true} navigation={navigation}/>
                 <FlatList
                     data={this.state.dataSource}
                     extraData={this.state}

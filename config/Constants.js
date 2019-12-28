@@ -41,6 +41,7 @@ const Constants = {
     CANCELTRIP: 'cancel trip',
     LiveGeoPin: "Live Geo Pin",
     Set:'Set',
+    APPLY: 'APPLY',
 
     //Label
     CurrentTrip: 'current trips',

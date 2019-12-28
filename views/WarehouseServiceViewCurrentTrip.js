@@ -199,8 +199,9 @@ export default class WarehouseServiceViewCurrentTrip extends React.Component {
                         </View>
 
                         <TouchableOpacity style={StyleViewCurrentTrip.bottomButton}
-                            onPress={() => {
-                                this.RBSheet.open();
+                             onPress={() => {
+                                this.props.navigation.navigate('MapViews',{flag:'warehouse'})
+                                // this.RBSheet.open(); //delay msg
                             }}
                         >
                             <Image source={require('../images/live_geo_pin.png')}

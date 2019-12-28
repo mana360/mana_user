@@ -23,15 +23,18 @@ export default class ViewCurrentTrip extends React.Component {
     }
     render() {
         let { navigation } = this.props
+       
         return (
             <View style={{ flex: 1 }}>
 
                 <HeaderBar title="VIEW CURRENT TRIP" isBack={true} isLogout={true} navigation={navigation}/>
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%' }} bounces={false}>
+                     
                         <View style={{ marginBottom: 2 }}>
 
                             <View style={StyleViewCurrentTrip.topCircle} />
+
                             <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
                                 <TouchableOpacity style={{ marginTop: 45, }}
                                     onPress={() => {
@@ -137,7 +140,8 @@ export default class ViewCurrentTrip extends React.Component {
 
                         <TouchableOpacity style={StyleViewCurrentTrip.bottomButton}
                             onPress={() => {
-                                this.RBSheet.open();
+                                this.props.navigation.navigate('MapViews',{flag:'truck'})
+                                // this.RBSheet.open(); //delay msg
                             }}
                         >
                             <Image source={require('../images/live_geo_pin.png')}
@@ -147,6 +151,7 @@ export default class ViewCurrentTrip extends React.Component {
                         </TouchableOpacity>
 
                     </ScrollView>
+                   
                     <RBSheet
                         ref={ref => {
                             this.RBSheet = ref;
@@ -169,6 +174,7 @@ export default class ViewCurrentTrip extends React.Component {
                         }}>{Constants.WillCauseDelayBecauseOfSomeRoadBloc}</Text>
 
                     </RBSheet>
+              
                 </View>
 
                 <FooterBar navigation={navigation} />
@@ -182,7 +188,7 @@ export default class ViewCurrentTrip extends React.Component {
                         this.setState({ invoiceModal_Visible: false });
                     }} />
                 </Modal>
-
+           
             </View>
         )
     }

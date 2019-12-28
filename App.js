@@ -39,6 +39,10 @@ import SignUp from './views/SignUp';
 import DiscountVoucher from './views/DiscountVoucher';
 import MyBookings from './views/MyBookings'
 import MyBookingDetails from './views/MyBookingDetails'
+import DiscountVouchers from './views/DiscountVouchers';
+import BookingSummary from './views/BookingSummary';
+import ViewMap from './views/ViewMap';
+import MapViews from './views/MapView';
 
 console.disableYellowBox = true;
 
@@ -179,8 +183,21 @@ const AppNavigator1 = createStackNavigator({
       screen: SignUp,
       navigationOptions: () => ({ header: null })
     },
-    DiscountVoucher: {
-      screen: DiscountVoucher,
+    DiscountVouchers: {
+      screen: DiscountVouchers,
+      navigationOptions: () => ({ header: null })
+    },
+    BookingSummary: {
+      screen: BookingSummary,
+      navigationOptions: () => ({ header: null })
+    },
+    ViewMap: {
+      screen: ViewMap,
+      navigationOptions: () => ({ header: null })
+    },
+   
+    MapViews: {
+      screen: MapViews,
       navigationOptions: () => ({ header: null })
     },
     MyBookings:{

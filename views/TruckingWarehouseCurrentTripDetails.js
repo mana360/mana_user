@@ -132,7 +132,12 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                             <View style={StyleViewCurrentTrip.col1}>
                                 <Text style={StyleViewCurrentTrip.col1Text}>{Constants.LiveGeoPin}</Text>
                             </View>
-                            <TouchableOpacity style={StyleViewCurrentTrip.col2}>
+                            <TouchableOpacity style={StyleViewCurrentTrip.col2}
+                                 onPress={() => {
+                                    this.props.navigation.navigate('MapViews',{flag:'truckingWarehouse'})
+                                    
+                                }}
+                            >
                             <Image source={require('../images/live_geo_pin.png')}
                                     style={{width:20,height:20,tintColor:Constants.COLOR_GREEN,marginRight:5,marginLeft:3}}/>
                             <Text style={{color:Constants.COLOR_GREEN}}>{Constants.ViewMap}</Text>
