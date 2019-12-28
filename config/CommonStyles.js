@@ -2012,7 +2012,118 @@ const styleDiscountVoucher = StyleSheet.create({
         color:Constants.COLOR_GREY_DARK,
     }
 })
+const StyleMyBooking = StyleSheet.create({
+    newBookingIcom:{
+        width:100,
+        height:70,
+        resizeMode:'stretch',
+        alignSelf:'center',
+    },
+    newBookingInstructionText:{
+        textAlign:'center',
+        marginVertical:15,
+        fontSize:Constants.FONT_SIZE_LARGE,
+        color:Constants.COLOR_GREY_DARK,
+    },
+    newBookingButtonView:{
+        width:160,
+        padding:10,
+        borderRadius:30,
+        alignSelf:'center',
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:Constants.COLOR_GREEN,
+    },
+    newBookingButtonText:{
+        textTransform:'uppercase',
+        color:Constants.COLOR_WHITE,
+        fontSize:Constants.FONT_SIZE__MEDIUM,
+    },
+    tab: {
+        backgroundColor: "rgba(92,167,108,1)",
+        borderRightWidth: 0.2,
+        borderRightColor: Constants.colorGreenDark,
+    },
+    tab_active: {
+        backgroundColor: "rgba(92,167,108,1)",
+        borderRightWidth: 0.2,
+        borderRightColor: Constants.colorGreenDark,
+    },
+    tab_text: {
+        fontSize: Constants.fontSizeExtraLarge,
+        color: Constants.COLOR_BLACK,
+    },
+    tab_active_text: {
+        color: Constants.COLOR_WHITE,
+        fontSize: Constants.fontSizeExtraLarge,
+    },
+    bookingRow:{
+        padding:0,
+        marginVertical:5,
+    },
+    bookingId:{
+        fontWeight:'bold',
+        textTransform:'uppercase',
+        color:Constants.COLOR_GREEN,
+        fontSize:Constants.FONT_SIZE__MEDIUM,
+    },
+    bookingStatus:{
+        textAlign:'right',
+        fontWeight:'bold',
+        textTransform:'uppercase',
+        fontSize:Constants.FONT_SIZE__MEDIUM,
+    },
+    labelText:{
+        fontWeight:'bold',
+        textTransform:'capitalize',
+        color:Constants.COLOR_GREY_DARK,
+        fontSize:Constants.FONT_SIZE_MEDIUM,
+    },
+    valueText:{
+        color:Constants.COLOR_GREY_DARK,
+        fontSize:Constants.FONT_SIZE_MEDIUM,
+    },
+})
+const StyleMyBookingDetails = StyleSheet.create({
+detailsRow:{
+    flex:2,
+    flexDirection:'row',
+    paddingTop:10,
+    paddingBottom:10,
+    paddingLeft:5,
+    marginVertical:5,
+    marginHorizontal:15,
+    borderBottomWidth:0.5,
+    borderBottomColor:"rgba(64,64,64,0.5)",
+},
+detailsKey:{
+    fontWeight:'bold',
+    color:Constants.COLOR_GREY_DARK,
+    fontSize:Constants.FONT_SIZE_MEDIUM,
+    textTransform:'capitalize',
+},
+detailsValue:{
+    color:Constants.COLOR_GREY_DARK,
+    fontSize:Constants.FONT_SIZE_MEDIUM,
+},
+buttionView:{
+    width:160,
+    padding:10,
+    borderRadius:40,
+    marginVertical:15,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:Constants.COLOR_GREEN,
+},
+buttonText:{
+    color:Constants.COLOR_WHITE,
+    textTransform:'uppercase',
+    fontSize:Constants.FONT_SIZE__MEDIUM,
+},
+})
 export {
+    StyleMyBookingDetails,
+    StyleMyBooking,
     StyleHelpAndSupport,
     StyleTripHelpAndSupport,
     StyleNotification,
