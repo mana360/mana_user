@@ -189,6 +189,8 @@ const Constants = {
     SHARE_MY_RIDE:"share my ride",
     CANCEL_ORDER:"cancel order",
     VEHICLE_REG_NUMBER:"Vehicle reg number",
+    CANCEL_REASON:"cancel reason",
+    REASON:"reason",
 };
 
 export default Constants;
