@@ -72,24 +72,26 @@ const StyleHelpAndSupport = StyleSheet.create({
         fontSize: Constants.FONT_SIZE_LARGE,
     },
     buttonView: {
-        padding: 10,
         borderRadius: 25,
-        marginTop: 50,
-        marginBottom: 15,
-        marginHorizontal: 20,
+        marginTop:65,
+        width:'90%',
+        marginBottom:20,
+        alignSelf:'center',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Constants.COLOR_GREEN,
     },
     buttonText: {
         textAlign: 'center',
+        paddingVertical:10,
         color: Constants.COLOR_WHITE,
         fontSize: Constants.FONT_SIZE_LARGE,
         textTransform: 'uppercase',
     },
     modalView: {
         width: wp('80%'),
-        height: hp('35%'),
+        padding:5,
+        borderRadius:5,
         justifyContent: 'center',
         backgroundColor: Constants.COLOR_WHITE
     },
@@ -113,7 +115,7 @@ const StyleHelpAndSupport = StyleSheet.create({
         fontWeight: 'bold',
         textTransform: 'capitalize',
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
-        color: Constants.COLOR_GREY_LIGHT,
+        color: Constants.COLOR_GREY_DARK,
         marginVertical: 10,
     },
     modalButton: {
@@ -414,7 +416,6 @@ const StyleRateAndReview = StyleSheet.create({
     },
     modalView: {
         width: wp('80%'),
-        height: hp('35%'),
         justifyContent: 'center',
         backgroundColor: Constants.COLOR_WHITE
     },
@@ -437,7 +438,7 @@ const StyleRateAndReview = StyleSheet.create({
         fontWeight: 'bold',
         textTransform: 'capitalize',
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
-        color: Constants.COLOR_GREY_LIGHT,
+        color: Constants.COLOR_GREY_DARK,
         marginVertical: 10,
     },
     modalButton: {
@@ -497,8 +498,8 @@ const StyleViewCompletedDetail = StyleSheet.create({
     row: {
         flexDirection: 'row',
         width: '90%',
-        paddingTop: 20,
-        paddingBottom: 20,
+        paddingTop: 15,
+        paddingBottom: 15,
         alignSelf: 'center',
         borderBottomWidth: 1.5,
         borderBottomColor: Constants.COLOR_GREY
@@ -535,18 +536,19 @@ const StyleSignIn = StyleSheet.create({
         paddingRight: 15,
         paddingLeft: 15,
         justifyContent: 'center',
+        borderRadius:5,
         backgroundColor: Constants.COLOR_WHITE,
     },
     logoImage: {
         width: 150,
         height: 150,
         borderRadius: 75,
-        top: -65,
+        top: -85,
         alignSelf: 'center',
         position: 'absolute',
     },
     loginLabel: {
-        marginTop: "33%",
+        marginTop:80,
         alignSelf: 'center',
         color: 'black',
         fontWeight: 'bold',
@@ -555,7 +557,7 @@ const StyleSignIn = StyleSheet.create({
         color: Constants.COLOR_GREY_DARK
     },
     textInput_container: {
-        marginVertical: 15
+        marginVertical: 10
     },
     textInput_style: {
         borderWidth: 0.7,
@@ -1880,7 +1882,7 @@ const StyleSignUp = StyleSheet.create({
         alignSelf: 'center',
     },
     loginLabel: {
-        marginVertical:10,
+        marginVertical:5,
         alignSelf: 'center',
         color: 'black',
         fontWeight: 'bold',
@@ -1889,21 +1891,18 @@ const StyleSignUp = StyleSheet.create({
         color: Constants.COLOR_GREY_DARK
     },
     textInput_container: {
-        marginVertical:10
+        marginVertical:9
     },
     textInput_style: {
         borderWidth: 0.7,
         borderRadius: 50,
         paddingLeft: 25,
-        marginVertical: 3,
         borderColor: Constants.COLOR_GREY_LIGHT
     },
     labelBox: {
         zIndex: 1,
         left: 15,
-        paddingLeft: 2,
-        paddingRight: 2,
-        marginTop: -7,
+        marginTop: -10,
         marginLeft: "3%",
         position: 'absolute',
         flexDirection: 'row',
@@ -2010,7 +2009,7 @@ const styleDiscountVoucher = StyleSheet.create({
 })
 const StyleMapView = StyleSheet.create({
     MainContainer: {
-        height:'83%',
+        height:'85%',
         left: 0,
         right: 0,
     },

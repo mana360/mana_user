@@ -43,9 +43,13 @@ export default class RateAndReview extends React.Component {
 
                         <View>
 
-                            <View style={StyleRateAndReview.TripDetail_View}>
+                            <TouchableOpacity style={StyleRateAndReview.TripDetail_View}
+                                onPress={()=>{
+                                    this.props.navigation.navigate('ViewCompletedTripDetail')
+                                }}
+                            >
                                 <Text style={StyleRateAndReview.TripDetail_Text}>{Constants.ViewYOurTripDetail}</Text>
-                            </View>
+                            </TouchableOpacity>
 
                             <View style={{ marginVertical: 10 }}>
 
@@ -116,7 +120,7 @@ export default class RateAndReview extends React.Component {
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
                         <View style={StyleRateAndReview.modalView}>
-                            <TouchableOpacity style={{ alignSelf: 'flex-end', top: 5, right: 10 }}
+                            <TouchableOpacity style={{ alignSelf: 'flex-end', top:10, right: 10 }}
                                 onPress={() => {
                                     this.setState({ modal_Visible: false })
                                 }}
@@ -135,10 +139,11 @@ export default class RateAndReview extends React.Component {
                                     this.props.navigation.navigate('Dashboard')
                                 }}
                             >
-                                <Text style={StyleRateAndReview.modalButtonText}>{Constants.OK}</Text>
+                                <Text style={StyleRateAndReview.modalButtonText}>{Constants.SEND}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
+               
                 </Modal>
 
             </View>
