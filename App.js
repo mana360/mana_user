@@ -39,7 +39,6 @@ import SignUp from './views/SignUp';
 import LocationDetails from './views/LocationDetails';
 import LoadCategory from './views/LoadCategory';
 import BookingSummary from './views/BookingSummary';
-
 import DiscountVoucher from './views/DiscountVoucher';
 import MyBookings from './views/MyBookings'
 import MyBookingDetails from './views/MyBookingDetails'
@@ -198,9 +197,13 @@ const AppNavigator1 = createStackNavigator({
     BookingSummary: {
       screen: BookingSummary,
       navigationOptions: () => ({ header: null })
-    },
+    },   
     DiscountVouchers: {
       screen: DiscountVouchers,
+      navigationOptions: () => ({ header: null })
+    },
+    DiscountVoucher: {
+      screen: DiscountVoucher,
       navigationOptions: () => ({ header: null })
     },
     ViewMap: {
@@ -226,7 +229,7 @@ const AppNavigator1 = createStackNavigator({
 
 
 },
-    {initialRouteName:"CollectMyLoad"} 
+    {initialRouteName:"Splash"} 
 
 )
 export const AppNavigator = createAppContainer(AppNavigator1);
