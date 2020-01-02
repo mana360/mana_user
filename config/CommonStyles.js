@@ -2,6 +2,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 import Constants from '../config/Constants';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
+
 const StyleHelpAndSupport = StyleSheet.create({
     supportTitle: {
         fontWeight: 'bold',
@@ -1896,6 +1897,327 @@ const StyleSignUp = StyleSheet.create({
     },
 
 })
+const StyleLocationDetails = StyleSheet.create({
+    locationWrapp:{
+        flex:1,
+        paddingLeft:25,
+        paddingRight:25,
+        paddingTop:36,
+    },
+    labelIconLoc: {
+        width: 20,
+        height: 20,	
+        position:"absolute",
+        right:16,
+        top:12,
+	},
+    inputContainer: {
+	    backgroundColor: '#fff',  
+		borderColor: '#ccc',  
+		width:'100%',		
+		position:'relative',
+		borderRadius: 50,
+		borderWidth: 0.8,
+		height:45,
+		marginBottom: 35,  
+	},
+	labelBoxNew: {	 
+		position:'absolute',
+		left:20,
+		top:-11,
+		backgroundColor:'#fff',
+		paddingLeft:0,
+		paddingRight:4,
+		flexDirection: 'row',
+	},
+	labelTextNew: {
+		color: '#717880',
+		paddingLeft:6,
+		fontSize: 15,  	
+		fontFamily: "Roboto-Medium",			
+	},
+	inputBox: {
+		color: '#a4a4a4',
+		fontSize: Constants.FONT_SIZE_LARGE,
+		paddingLeft:26,
+		paddingRight:38,
+        fontFamily: "Roboto-Light",		
+        marginTop:4,	
+    },
+    nextAddrBtn: {
+		backgroundColor: Constants.COLOR_GREEN,
+		borderRadius: 50,
+		padding:12,
+        alignSelf:"flex-end",
+        alignItems:"center",	
+        width:164,
+        marginBottom:35,
+	},
+	nextAddrBtnText: {
+		color: '#fff',
+		fontSize: 16,  	
+		textTransform:'uppercase',	
+        fontFamily: "Roboto-Medium",
+    },
+    instructContainer: {
+	    backgroundColor: '#fff',  
+		borderColor: '#ccc',  
+		width:'100%',		
+		position:'relative',
+		borderRadius: 10,
+		borderWidth: 0.8,
+		height:140,
+        marginBottom: 35,  
+        paddingRight:10,
+	},    
+    textarea: {
+        textAlignVertical: 'top',  // hack android
+        height: 140,
+        fontSize: Constants.FONT_SIZE_LARGE,
+        color: '#4a4a4a',
+        fontFamily: "Roboto-Light",	
+        paddingLeft:25,
+        marginTop:5,
+    },
+    logButton: {
+		backgroundColor: Constants.COLOR_GREEN,
+		borderRadius: 50,
+		padding:12,
+        alignItems:"center",
+        marginTop:30,
+        marginBottom:35,
+	},
+	logButtonText: {
+		color: '#fff',
+		fontSize: 18,  	
+		textTransform:'uppercase',	
+		fontFamily: "Roboto-Medium",				
+    },
+    IconClose:{
+        position:"absolute",
+        right:0,
+        top:6,
+        width:34,
+        height:34,
+    }
+    
+})
+const StyleLoadCategory = StyleSheet.create({
+    loadWrapp:{
+        flex:1,
+        paddingLeft:25,
+        paddingRight:25,
+        paddingTop:36,
+    },
+    loadBox:{
+        borderWidth:1,
+        borderColor:'#ccc',
+        borderRadius:6,
+        flexDirection: 'row',	
+        flex:1,
+        justifyContent:'center',     
+        height:100,
+        marginBottom:40,
+    },
+    loadLt:{
+        flex:1,
+        paddingLeft:0,
+        paddingRight:0,
+        alignSelf: 'center',
+        alignItems:'center',
+    },     
+    radioBtn: {		
+	},
+	radioImage: {
+		width:30,
+		height:30,
+    },
+    loadRt:{
+        flex:8,
+    },    
+    boxLoad: {
+        width:110,
+        height:120,
+        borderRadius:6,
+        backgroundColor: Constants.COLOR_GREEN,        
+        left:0,
+        top:-12,
+        zIndex:1,  
+        position:'absolute',
+    },
+    catImage: {
+        flex: 1,     
+        alignSelf: 'center',
+        width:70,
+        height:70,
+        resizeMode: 'contain',	
+    },        
+    loadCatBox:{        
+        paddingLeft:130,         
+        flex: 1,     
+        justifyContent:'center', 
+    },
+    loadCatTxt:{
+        color:Constants.COLOR_GREEN,
+        fontFamily: "Roboto-Bold",
+        letterSpacing:0.3,	
+        fontSize:18,	
+    },    
+})
+const StyleBookingSummary = StyleSheet.create({
+    booksummWrapp:{
+        flex:1,
+    },
+    booksumminnWrapp:{
+        flex:1,
+        paddingLeft:25,
+        paddingRight:25,
+        paddingTop:36,
+    },
+    topBox:{
+        flex:1,
+        backgroundColor:Constants.COLOR_GREY_DARK,
+        borderRadius:3,
+        marginBottom:40,
+    },
+    topinnBox:{
+        flex:1,
+        paddingVertical:22,
+        paddingHorizontal:18,
+        justifyContent:'center',
+    },
+    topinnTxt:{
+        color:Constants.COLOR_WHITE,
+        fontSize:Constants.FONT_SIZE_EXTRA_MEDIUM,
+        fontFamily: "Roboto-Medium",
+    },
+    priceBox:{
+        flex:1,
+        backgroundColor:Constants.COLOR_GREY,
+        paddingHorizontal:25,
+        paddingVertical:26,
+    },
+    priceTxt:{
+        flex:3,
+        alignItems:'flex-start',
+        fontFamily: "Roboto-Medium",
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
+        color:Constants.COLOR_FOOTER_GREY,
+        letterSpacing:0.5,
+    },
+    priceVol:{
+        flex:8,
+        textAlign:'right',
+        alignItems:'flex-end',
+        fontFamily: "Roboto-Medium",
+        fontSize:22,
+        color:Constants.COLOR_FOOTER_GREY,
+        letterSpacing:0.5,
+    },
+    discntBtn:{
+        alignItems:'center',
+        flex:1,
+        marginTop:35,
+        marginBottom:40,
+    },
+    discntText:{
+        color: '#fff',
+		fontSize: Constants.FONT_SIZE__MEDIUM,  	
+		textTransform:'uppercase',	
+        fontFamily: "Roboto-Medium",	
+        backgroundColor: Constants.COLOR_GREEN,
+        borderRadius: 50,
+        paddingVertical:10,
+        paddingHorizontal:18,
+    },
+    modalpopupBox: {
+        flex:1,
+        backgroundColor:'rgba(0,0,0,0.6)',
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    modalinnBox: {
+        borderRadius:5,
+        width: wp('93%'),
+        height: hp('40'),
+        backgroundColor: Constants.COLOR_WHITE,
+        position:'relative',
+    },
+    serpopSec:{
+        paddingHorizontal:18,
+        paddingVertical:30,   
+        flex:1,    
+    },
+    othserTxt:{
+        fontFamily: "Roboto-Medium",	
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,  	
+        color: Constants.COLOR_GREY_DARK,
+        textTransform:"uppercase",
+        alignItems:'center',
+        textAlign:'center',
+        letterSpacing:0.3,
+        marginBottom:30,
+    },
+    inputboxDropDown: {
+	    backgroundColor: '#fff',  
+		borderColor: '#ccc',  
+		width:'100%',		
+		position:'relative',
+		borderRadius: 50,
+		borderWidth: 0.8,
+		height:50,
+        marginBottom: 28,  
+        paddingHorizontal:26,
+	},
+    dropInner:{
+        fontSize:14,
+        width:'100%',
+        height: 'auto',
+        fontFamily: "Roboto-Light",	
+       
+    },
+    popCloseImg:{
+        position:'absolute',
+        right:25,
+        top:20,
+        width:26,
+        height:26,
+    },
+    otherServiceBox:{
+        flex:1, 
+    },
+    otherTxtser:{
+        fontFamily: "Roboto-Medium",	
+        fontSize: Constants.FONT_SIZE_EXTRA_MEDIUM,  	
+        color: Constants.COLOR_GREY_DARK,
+        letterSpacing:0.3,
+        marginBottom:10,
+    },
+    grayBox:{
+        flex:1,
+        flexDirection:'row',
+        backgroundColor:Constants.COLOR_GREY,
+        borderRadius:6,
+        paddingVertical:25,
+        paddingHorizontal:20,
+    },
+    ltSec:{
+        flex:8,       
+        justifyContent:'center',
+    },
+    rtSec:{
+        flex:2,       
+        alignItems:'flex-end',
+    },
+    removeImg:{
+        width:34,
+        height:34,
+    },
+})
+
+
+
+
 export {
     StyleHelpAndSupport,
     StyleTripHelpAndSupport,
@@ -1916,4 +2238,7 @@ export {
     StyleEditProfile,
     StyleForgotPassword,
     StyleSignUp,
+    StyleLocationDetails,
+    StyleLoadCategory,
+    StyleBookingSummary,
 }
