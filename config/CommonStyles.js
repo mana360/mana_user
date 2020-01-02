@@ -1981,6 +1981,98 @@ const StyleSignUp = StyleSheet.create({
     }
 
 })
+const StyleDiscountVouchers = StyleSheet.create({
+    pagebody:{
+        flex:1, 
+        backgroundColor:Constants.colorGrey,
+        width:'100%',
+        padding:20,
+    },
+    voucherbgimg:{
+        justifyContent:'center',
+        alignItems:'center',
+        width:'100%', 
+        flex:1,
+        position:'relative',
+    },
+    vourimg:{
+        width:'100%',
+        height:80,
+        resizeMode:'contain', 
+        zIndex:-1,
+    },
+    vouchertxtbox:{
+        position:'absolute',
+        top:10,
+        left:10,
+        zIndex:2,  
+        flex:1,
+        flexDirection: 'row',
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    voucerinnerimg:{
+        flex:2,
+        height:45,
+        marginTop:2,
+        justifyContent:'center',
+        alignItems:'center',
+        resizeMode:'contain', 
+    },
+    voucerinnertxt:{ 
+        flex:7,
+        marginLeft:15,
+        flexDirection:'column',
+    },
+    voucerinntxthead:{
+        color: Constants.COLOR_GREEN_PROFILE,
+        fontFamily: 'Roboto-Medium',
+        fontSize: Constants.FONT_SIZE_LARGE,
+        width:'90%',
+        paddingBottom:2,
+        borderBottomColor: '#cfcfcf',
+        borderBottomWidth: 1,
+        marginTop:2,
+    },
+    voucervaiddiscountbtn:{
+        flexDirection:'row',
+        width:'90%',
+        flex:2,
+        marginTop:2,
+    },
+    voucervaiddiscount:{
+        flexDirection:'column', 
+        flex:1,
+    },
+    voucerdate:{
+        color: Constants.COLOR_BLACK_LIGHT,
+        fontFamily: 'Roboto-Regular',
+        fontSize: Constants.FONT_SIZE__MEDIUM, 
+    },
+    voucerdiscount:{
+        color: Constants.COLOR_GREEN,
+        fontFamily: 'Roboto-Regular',
+        fontSize: Constants.FONT_SIZE__MEDIUM,
+    },
+    voucerbtn:{
+        alignItems:'flex-end',
+        flex:1,
+        justifyContent:'center',
+    },
+    voucerapplybtn:{
+      backgroundColor: Constants.COLOR_GREEN, 
+      color:Constants. COLOR_WHITE,
+      paddingHorizontal:18,
+      paddingVertical:2, 
+      borderRadius:20,
+      fontSize: Constants.FONT_SIZE__MEDIUM, 
+
+    }
+})
+const StyleViewMap = StyleSheet.create({
+    map:{
+        
+    }})
 const styleDiscountVoucher = StyleSheet.create({
     titleView:{
         borderBottomWidth:0.5,
@@ -2007,6 +2099,206 @@ const styleDiscountVoucher = StyleSheet.create({
         color:Constants.COLOR_GREY_DARK,
     }
 })
+const StyleMyBooking = StyleSheet.create({
+    newBookingIcom:{
+        width:100,
+        height:70,
+        resizeMode:'stretch',
+        alignSelf:'center',
+    },
+    newBookingInstructionText:{
+        textAlign:'center',
+        marginVertical:15,
+        fontSize:Constants.FONT_SIZE_LARGE,
+        color:Constants.COLOR_GREY_DARK,
+    },
+    newBookingButtonView:{
+        width:160,
+        padding:10,
+        borderRadius:30,
+        alignSelf:'center',
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:Constants.COLOR_GREEN,
+    },
+    newBookingButtonText:{
+        textTransform:'uppercase',
+        color:Constants.COLOR_WHITE,
+        fontSize:Constants.FONT_SIZE__MEDIUM,
+    },
+    tab: {
+        backgroundColor: "rgba(92,167,108,1)",
+        borderRightWidth: 0.2,
+        borderRightColor: Constants.colorGreenDark,
+    },
+    tab_active: {
+        backgroundColor: "rgba(92,167,108,1)",
+        borderRightWidth: 0.2,
+        borderRightColor: Constants.colorGreenDark,
+    },
+    tab_text: {
+        fontSize: Constants.fontSizeExtraLarge,
+        color: Constants.COLOR_BLACK,
+    },
+    tab_active_text: {
+        color: Constants.COLOR_WHITE,
+        fontSize: Constants.fontSizeExtraLarge,
+    },
+    bookingRow:{
+        padding:0,
+        marginVertical:5,
+    },
+    bookingId:{
+        fontWeight:'bold',
+        textTransform:'uppercase',
+        color:Constants.COLOR_GREEN,
+        fontSize:Constants.FONT_SIZE__MEDIUM,
+    },
+    bookingStatus:{
+        textAlign:'right',
+        fontWeight:'bold',
+        textTransform:'uppercase',
+        fontSize:Constants.FONT_SIZE__MEDIUM,
+    },
+    labelText:{
+        fontWeight:'bold',
+        textTransform:'capitalize',
+        color:Constants.COLOR_GREY_DARK,
+        fontSize:Constants.FONT_SIZE_MEDIUM,
+    },
+    valueText:{
+        color:Constants.COLOR_GREY_DARK,
+        fontSize:Constants.FONT_SIZE_MEDIUM,
+    },
+})
+const StyleMyBookingDetails = StyleSheet.create({
+detailsRow:{
+    flex:2,
+    flexDirection:'row',
+    paddingTop:10,
+    paddingBottom:10,
+    paddingLeft:5,
+    marginVertical:5,
+    marginHorizontal:15,
+    borderBottomWidth:0.5,
+    borderBottomColor:"rgba(64,64,64,0.5)",
+},
+detailsKey:{
+    fontWeight:'bold',
+    color:Constants.COLOR_GREY_DARK,
+    fontSize:Constants.FONT_SIZE_MEDIUM,
+    textTransform:'capitalize',
+},
+detailsValue:{
+    color:Constants.COLOR_GREY_DARK,
+    fontSize:Constants.FONT_SIZE_MEDIUM,
+},
+buttionView:{
+    width:160,
+    padding:10,
+    borderRadius:40,
+    marginVertical:15,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:Constants.COLOR_GREEN,
+},
+buttonText:{
+    color:Constants.COLOR_WHITE,
+    textTransform:'uppercase',
+    fontSize:Constants.FONT_SIZE__MEDIUM,
+},
+infoView:{
+    position:'absolute',
+    zIndex:+1,
+    right:'5%',
+    top:'20%',
+    width:wp(35),
+},
+infoViewTitle:{
+    color:Constants.COLOR_GREY_DARK,
+    fontWeight:'bold',
+    textAlign:'center',
+    marginVertical:3,
+    fontSize:Constants.FONT_SIZE_SMALL,
+},
+infoViewDesc:{
+    textAlign:'center',
+    color:Constants.COLOR_GREY_DARK,
+    fontSize:Constants.FONT_SIZE_SMALL,
+},
+infoViewShape:{
+    position:'absolute',
+    top:-7,
+    right:-6,
+    width: 0,
+    height: 0,
+    marginTop:-1,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderRightWidth:15,
+    borderTopWidth:15,
+    borderRightColor: 'transparent',
+    borderTopColor:Constants.COLOR_WHITE,
+    transform: [ {rotate: '-45deg'}],
+},
+reasonView:{
+    padding:10,
+    borderRadius:3,    
+    justifyContent:'center',
+    backgroundColor:Constants.COLOR_WHITE,
+},
+reasonCloser:{
+    position:'absolute',
+    top:5,
+    right:8,
+    width:15,
+    height:15,    
+},
+reasonTitle:{
+    fontWeight:'bold',
+    textAlign:'center',
+    textTransform:'capitalize',
+    color:Constants.COLOR_GREEN,
+    fontSize:Constants.FONT_SIZE_LARGE,
+},
+reasonTextView:{
+    height:100,
+    maxHeight:100,
+    marginTop:10,
+    paddingLeft:5,
+    marginBottom:10,
+    marginHorizontal:8,
+    borderRadius:3,
+    borderWidth:0.5,
+    borderColor:"rgba(64,64,64,0.5)",
+},
+reasonText:{
+    fontSize:Constants.FONT_SIZE__MEDIUM,
+},
+reasonNote:{
+    marginVertical:10,
+    textAlign:'center',
+    fontWeight:'bold',
+    color:Constants.COLOR_RED,
+    fontSize:Constants.FONT_SIZE__SMALL,
+},
+reasonButtonView:{
+    width:'45%',
+    padding:10,
+    borderRadius:30,
+    marginVertical:8,
+    alignSelf:'center',
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:Constants.COLOR_GREEN,
+},
+reasonButtonText:{
+    textAlign:'center',
+    textTransform:'uppercase',
+    color:Constants.COLOR_WHITE,
+    fontSize:Constants.FONT_SIZE_MEDIUM,
+},
+})
 const StyleMapView = StyleSheet.create({
     MainContainer: {
         height:'85%',
@@ -2020,6 +2312,8 @@ const StyleMapView = StyleSheet.create({
     },
 })
 export {
+    StyleMyBookingDetails,
+    StyleMyBooking,
     StyleHelpAndSupport,
     StyleTripHelpAndSupport,
     StyleNotification,
@@ -2039,6 +2333,8 @@ export {
     StyleEditProfile,
     StyleForgotPassword,
     StyleSignUp,
+    StyleDiscountVouchers,
+    StyleViewMap,
     styleDiscountVoucher,
     StyleMapView,
 }
