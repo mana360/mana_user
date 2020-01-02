@@ -195,27 +195,23 @@ const AppNavigator1 = createStackNavigator({
       screen: MapViews,
       navigationOptions: () => ({ header: null })
     },
+    PaymentMethod: {
+      screen: PaymentMethod,
+      navigationOptions: () => ({ header: null })
+    },
 
-PaymentMethod: {
-  screen: PaymentMethod,
-  navigationOptions: () => ({ header: null })
-},
-
-MyBookings:{
-  screen:MyBookings,
-  navigationOptions:()=>({header:null})
-},
-MyBookingDetails:{
-  screen:MyBookingDetails,
-  navigationOptions:()=>({header:null})
-},
+    MyBookings:{
+      screen:MyBookings,
+      navigationOptions:()=>({header:null})
+    },
+    MyBookingDetails:{
+      screen:MyBookingDetails,
+      navigationOptions:()=>({header:null})
+    },
 
 
 },
      {initialRouteName:"PaymentMethod"}
-   
-
-
-
+  
 )
 export const AppNavigator = createAppContainer(AppNavigator1);
