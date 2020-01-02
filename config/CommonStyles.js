@@ -73,25 +73,25 @@ const StyleHelpAndSupport = StyleSheet.create({
     },
     buttonView: {
         borderRadius: 25,
-        marginTop:65,
-        width:'90%',
-        marginBottom:20,
-        alignSelf:'center',
+        marginTop: 65,
+        width: '90%',
+        marginBottom: 20,
+        alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Constants.COLOR_GREEN,
     },
     buttonText: {
+        paddingVertical: 10,
         textAlign: 'center',
-        paddingVertical:10,
+        textTransform: 'uppercase',
         color: Constants.COLOR_WHITE,
         fontSize: Constants.FONT_SIZE_LARGE,
-        textTransform: 'uppercase',
     },
     modalView: {
         width: wp('80%'),
-        padding:5,
-        borderRadius:5,
+        padding: 5,
+        borderRadius: 5,
         justifyContent: 'center',
         backgroundColor: Constants.COLOR_WHITE
     },
@@ -517,7 +517,7 @@ const StyleViewCompletedDetail = StyleSheet.create({
         width: '50%',
     },
     col2Text: {
-        paddingLeft: 10,
+        paddingLeft: 15,
         fontSize: Constants.FONT_SIZE_LARGE,
         color: Constants.COLOR_GREY_DARK,
 
@@ -536,7 +536,7 @@ const StyleSignIn = StyleSheet.create({
         paddingRight: 15,
         paddingLeft: 15,
         justifyContent: 'center',
-        borderRadius:5,
+        borderRadius: 5,
         backgroundColor: Constants.COLOR_WHITE,
     },
     logoImage: {
@@ -548,7 +548,7 @@ const StyleSignIn = StyleSheet.create({
         position: 'absolute',
     },
     loginLabel: {
-        marginTop:80,
+        marginTop: 80,
         alignSelf: 'center',
         color: 'black',
         fontWeight: 'bold',
@@ -1142,6 +1142,7 @@ const StyleViewUpcomingTrip = StyleSheet.create({
     cancelModalView: {
         width: wp('80%'),
         borderRadius: 5,
+        padding:10,
         backgroundColor: Constants.COLOR_WHITE,
         alignSelf: 'center',
         justifyContent: 'center'
@@ -1159,7 +1160,7 @@ const StyleViewUpcomingTrip = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
         alignSelf: 'center',
-        marginBottom: 15
+        
 
     },
     cancelModalButton: {
@@ -1442,48 +1443,48 @@ const StyleCollectMyLoad = StyleSheet.create({
     modalText: {
         alignSelf: 'center',
         fontWeight: 'bold',
-        paddingBottom:10,
+        paddingBottom: 10,
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
         color: Constants.COLOR_GREEN
     },
     modalrow: {
-        width:'100%',
+        width: '100%',
         flexDirection: 'row',
-        justifyContent:'center',
+        justifyContent: 'center',
     },
     modalcol1: {
-       width:'70%',
+        width: '70%',
     },
     modalcol2: {
-       width:'30%',
+        width: '30%',
     },
-    modalTittle:{
-        paddingLeft:18,
-        paddingBottom:10,
-        fontWeight:'bold',
-        color:Constants.COLOR_GREEN
+    modalTittle: {
+        paddingLeft: 18,
+        paddingBottom: 10,
+        fontWeight: 'bold',
+        color: Constants.COLOR_GREEN
     },
     keytext: {
-        paddingLeft:18,
-        paddingBottom:10,
-        color:Constants.COLOR_GREY_DARK
+        paddingLeft: 18,
+        paddingBottom: 10,
+        color: Constants.COLOR_GREY_DARK
     },
     valueText: {
-        alignSelf:'flex-start',
-        paddingLeft:20,
-        color:Constants.COLOR_GREEN
+        alignSelf: 'flex-start',
+        paddingLeft: 20,
+        color: Constants.COLOR_GREEN
     },
     textInput_container: {
-        flexDirection:'row',
-        alignItems:'center',
-        paddingBottom:20
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingBottom: 20
     },
     textInput_style: {
         borderWidth: 0.7,
         borderRadius: 50,
         paddingLeft: 25,
         marginVertical: 5,
-        width:'95%',
+        width: '95%',
         borderColor: Constants.COLOR_GREY_LIGHT
     },
     labelBox: {
@@ -1532,7 +1533,7 @@ const StyleMyProfile = StyleSheet.create({
         resizeMode: "cover"
     },
     sideImageView: {
-        marginTop: '15%',
+     marginTop:25
     },
     sideImage: {
         width: 65,
@@ -1562,8 +1563,8 @@ const StyleMyProfile = StyleSheet.create({
     row: {
         flexDirection: 'row',
         width: '90%',
-        paddingTop: 20,
-        paddingBottom: 20,
+        paddingTop: 15,
+        paddingBottom: 15,
         alignSelf: 'center',
         borderBottomWidth: 1.5,
         borderBottomColor: Constants.COLOR_GREY
@@ -1674,7 +1675,7 @@ const StyleEditProfile = StyleSheet.create({
         resizeMode: "cover"
     },
     sideImageView: {
-        marginTop: '15%',
+        marginTop:25,
     },
     sideImage: {
         width: 65,
@@ -1868,9 +1869,9 @@ const StyleSignUp = StyleSheet.create({
         resizeMode: 'stretch',
     },
     loginBox: {
-        marginHorizontal:15,
-        padding:15,
-        marginTop:15,
+        marginHorizontal: 15,
+        padding: 15,
+        marginTop: 15,
         justifyContent: 'center',
         backgroundColor: Constants.COLOR_WHITE,
     },
@@ -1878,11 +1879,11 @@ const StyleSignUp = StyleSheet.create({
         width: 140,
         height: 140,
         borderRadius: 75,
-        marginTop:-95,
+        marginTop: -95,
         alignSelf: 'center',
     },
     loginLabel: {
-        marginVertical:5,
+        marginVertical: 5,
         alignSelf: 'center',
         color: 'black',
         fontWeight: 'bold',
@@ -1891,7 +1892,7 @@ const StyleSignUp = StyleSheet.create({
         color: Constants.COLOR_GREY_DARK
     },
     textInput_container: {
-        marginVertical:9
+        marginVertical: 9
     },
     textInput_style: {
         borderWidth: 0.7,
@@ -1923,7 +1924,7 @@ const StyleSignUp = StyleSheet.create({
     loginButton: {
         width: wp('80%'),
         borderRadius: 50,
-        marginTop:10,
+        marginTop: 10,
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
@@ -1982,149 +1983,158 @@ const StyleSignUp = StyleSheet.create({
 
 })
 const StyleDiscountVouchers = StyleSheet.create({
-    pagebody:{
-        flex:1, 
-        backgroundColor:Constants.colorGrey,
-        width:'100%',
-        padding:20,
+    pagebody: {
+        flex: 1,
+        backgroundColor: Constants.colorGrey,
+        width: '100%',
+        padding: 20,
     },
-    voucherbgimg:{
-        justifyContent:'center',
-        alignItems:'center',
-        width:'100%', 
-        flex:1,
-        position:'relative',
+    voucherbgimg: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        flex: 1,
+        position: 'relative',
     },
-    vourimg:{
-        width:'100%',
-        height:80,
-        resizeMode:'contain', 
-        zIndex:-1,
+    vourimg: {
+        width: '100%',
+        height: 80,
+        resizeMode: 'contain',
+        zIndex: -1,
     },
-    vouchertxtbox:{
-        position:'absolute',
-        top:10,
-        left:10,
-        zIndex:2,  
-        flex:1,
+    vouchertxtbox: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        zIndex: 2,
+        flex: 1,
         flexDirection: 'row',
-        justifyContent:'center',
-        alignItems:'center',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    voucerinnerimg:{
-        flex:2,
-        height:45,
-        marginTop:2,
-        justifyContent:'center',
-        alignItems:'center',
-        resizeMode:'contain', 
+    voucerinnerimg: {
+        flex: 2,
+        height: 45,
+        marginTop: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        resizeMode: 'contain',
     },
-    voucerinnertxt:{ 
-        flex:7,
-        marginLeft:15,
-        flexDirection:'column',
+    voucerinnertxt: {
+        flex: 7,
+        marginLeft: 15,
+        flexDirection: 'column',
     },
-    voucerinntxthead:{
+    voucerinntxthead: {
         color: Constants.COLOR_GREEN_PROFILE,
         fontFamily: 'Roboto-Medium',
         fontSize: Constants.FONT_SIZE_LARGE,
-        width:'90%',
-        paddingBottom:2,
+        width: '90%',
+        paddingBottom: 2,
         borderBottomColor: '#cfcfcf',
         borderBottomWidth: 1,
-        marginTop:2,
+        marginTop: 2,
     },
-    voucervaiddiscountbtn:{
-        flexDirection:'row',
-        width:'90%',
-        flex:2,
-        marginTop:2,
+    voucervaiddiscountbtn: {
+        flexDirection: 'row',
+        width: '90%',
+        flex: 2,
+        marginTop: 2,
     },
-    voucervaiddiscount:{
-        flexDirection:'column', 
-        flex:1,
+    voucervaiddiscount: {
+        flexDirection: 'column',
+        flex: 1,
     },
-    voucerdate:{
+    voucerdate: {
         color: Constants.COLOR_BLACK_LIGHT,
         fontFamily: 'Roboto-Regular',
-        fontSize: Constants.FONT_SIZE__MEDIUM, 
+        fontSize: Constants.FONT_SIZE__MEDIUM,
     },
-    voucerdiscount:{
+    voucerdiscount: {
         color: Constants.COLOR_GREEN,
         fontFamily: 'Roboto-Regular',
         fontSize: Constants.FONT_SIZE__MEDIUM,
     },
-    voucerbtn:{
-        alignItems:'flex-end',
-        flex:1,
-        justifyContent:'center',
+    voucerbtn: {
+        alignItems: 'flex-end',
+        flex: 1,
+        justifyContent: 'center',
     },
-    voucerapplybtn:{
-      backgroundColor: Constants.COLOR_GREEN, 
-      color:Constants. COLOR_WHITE,
-      paddingHorizontal:18,
-      paddingVertical:2, 
-      borderRadius:20,
-      fontSize: Constants.FONT_SIZE__MEDIUM, 
+    voucerapplybtn: {
+        backgroundColor: Constants.COLOR_GREEN,
+        color: Constants.COLOR_WHITE,
+        paddingHorizontal: 18,
+        paddingVertical: 2,
+        borderRadius: 20,
+        fontSize: Constants.FONT_SIZE__MEDIUM,
 
     }
 })
 const StyleViewMap = StyleSheet.create({
-    map:{
-        
-    }})
-const styleDiscountVoucher = StyleSheet.create({
-    titleView:{
-        borderBottomWidth:0.5,
-        marginBottom:25,
-        paddingBottom:10,
-        borderBottomColor:Constants.COLOR_GREY_LIGHT,
-        fontSize:Constants.FONT_SIZE_EXTRA_LARGE
-    },
-    title:{
-        textTransform:"uppercase",
-        color:Constants.COLOR_GREEN,
-        paddingLeft:5,
-        fontWeight:'bold'
-    },
-    discountText:{
-        fontSize:Constants.FONT_SIZE__MEDIUM,
-        color:Constants.COLOR_GREEN,
-        paddingLeft:5,
+    map: {
 
+    }
+})
+const styleDiscountVoucher = StyleSheet.create({
+    bgImage: {
+        position: "absolute",
+        zIndex: -1,
+        alignSelf: 'center',
+        height: 90,
+        width: '95%', marginHorizontal: 15,
+        resizeMode: 'stretch',
     },
-    validityDate:{
-        fontSize:Constants.FONT_SIZE__MEDIUM,
-        paddingLeft:10,
-        color:Constants.COLOR_GREY_DARK,
+    titleView: {
+        paddingVertical: 5,
+        borderBottomWidth: 0.5,
+        marginBottom: 15,
+        paddingBottom: 5,
+        width: '80%',
+        alignSelf: 'center',
+        borderBottomColor: Constants.COLOR_GREY_LIGHT,
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE
+    },
+    title: {
+        textTransform: "uppercase",
+        color: Constants.COLOR_GREEN,
+        fontWeight: 'bold'
+    },
+    discountText: {
+        fontSize: Constants.FONT_SIZE__MEDIUM,
+        color: Constants.COLOR_GREEN,
+    },
+    validityDate: {
+        fontSize: Constants.FONT_SIZE__MEDIUM,
+        paddingLeft: 10,
+        color: Constants.COLOR_GREY_DARK,
     }
 })
 const StyleMyBooking = StyleSheet.create({
-    newBookingIcom:{
-        width:100,
-        height:70,
-        resizeMode:'stretch',
-        alignSelf:'center',
+    newBookingIcom: {
+        width: 100,
+        height: 70,
+        resizeMode: 'stretch',
+        alignSelf: 'center',
     },
-    newBookingInstructionText:{
-        textAlign:'center',
-        marginVertical:15,
-        fontSize:Constants.FONT_SIZE_LARGE,
-        color:Constants.COLOR_GREY_DARK,
+    newBookingInstructionText: {
+        textAlign: 'center',
+        marginVertical: 15,
+        fontSize: Constants.FONT_SIZE_LARGE,
+        color: Constants.COLOR_GREY_DARK,
     },
-    newBookingButtonView:{
-        width:160,
-        padding:10,
-        borderRadius:30,
-        alignSelf:'center',
-        alignItems:'center',
-        justifyContent:'center',
-        backgroundColor:Constants.COLOR_GREEN,
+    newBookingButtonView: {
+        width: 160,
+        padding: 10,
+        borderRadius: 30,
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Constants.COLOR_GREEN,
     },
-    newBookingButtonText:{
-        textTransform:'uppercase',
-        color:Constants.COLOR_WHITE,
-        fontSize:Constants.FONT_SIZE__MEDIUM,
+    newBookingButtonText: {
+        textTransform: 'uppercase',
+        color: Constants.COLOR_WHITE,
+        fontSize: Constants.FONT_SIZE__MEDIUM,
     },
     tab: {
         backgroundColor: "rgba(92,167,108,1)",
@@ -2144,169 +2154,169 @@ const StyleMyBooking = StyleSheet.create({
         color: Constants.COLOR_WHITE,
         fontSize: Constants.fontSizeExtraLarge,
     },
-    bookingRow:{
-        padding:0,
-        marginVertical:5,
+    bookingRow: {
+        padding: 0,
+        marginVertical: 5,
     },
-    bookingId:{
-        fontWeight:'bold',
-        textTransform:'uppercase',
-        color:Constants.COLOR_GREEN,
-        fontSize:Constants.FONT_SIZE__MEDIUM,
+    bookingId: {
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        color: Constants.COLOR_GREEN,
+        fontSize: Constants.FONT_SIZE__MEDIUM,
     },
-    bookingStatus:{
-        textAlign:'right',
-        fontWeight:'bold',
-        textTransform:'uppercase',
-        fontSize:Constants.FONT_SIZE__MEDIUM,
+    bookingStatus: {
+        textAlign: 'right',
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        fontSize: Constants.FONT_SIZE__MEDIUM,
     },
-    labelText:{
-        fontWeight:'bold',
-        textTransform:'capitalize',
-        color:Constants.COLOR_GREY_DARK,
-        fontSize:Constants.FONT_SIZE_MEDIUM,
+    labelText: {
+        fontWeight: 'bold',
+        textTransform: 'capitalize',
+        color: Constants.COLOR_GREY_DARK,
+        fontSize: Constants.FONT_SIZE_MEDIUM,
     },
-    valueText:{
-        color:Constants.COLOR_GREY_DARK,
-        fontSize:Constants.FONT_SIZE_MEDIUM,
+    valueText: {
+        color: Constants.COLOR_GREY_DARK,
+        fontSize: Constants.FONT_SIZE_MEDIUM,
     },
 })
 const StyleMyBookingDetails = StyleSheet.create({
-detailsRow:{
-    flex:2,
-    flexDirection:'row',
-    paddingTop:10,
-    paddingBottom:10,
-    paddingLeft:5,
-    marginVertical:5,
-    marginHorizontal:15,
-    borderBottomWidth:0.5,
-    borderBottomColor:"rgba(64,64,64,0.5)",
-},
-detailsKey:{
-    fontWeight:'bold',
-    color:Constants.COLOR_GREY_DARK,
-    fontSize:Constants.FONT_SIZE_MEDIUM,
-    textTransform:'capitalize',
-},
-detailsValue:{
-    color:Constants.COLOR_GREY_DARK,
-    fontSize:Constants.FONT_SIZE_MEDIUM,
-},
-buttionView:{
-    width:160,
-    padding:10,
-    borderRadius:40,
-    marginVertical:15,
-    alignItems:'center',
-    justifyContent:'center',
-    backgroundColor:Constants.COLOR_GREEN,
-},
-buttonText:{
-    color:Constants.COLOR_WHITE,
-    textTransform:'uppercase',
-    fontSize:Constants.FONT_SIZE__MEDIUM,
-},
-infoView:{
-    position:'absolute',
-    zIndex:+1,
-    right:'5%',
-    top:'20%',
-    width:wp(35),
-},
-infoViewTitle:{
-    color:Constants.COLOR_GREY_DARK,
-    fontWeight:'bold',
-    textAlign:'center',
-    marginVertical:3,
-    fontSize:Constants.FONT_SIZE_SMALL,
-},
-infoViewDesc:{
-    textAlign:'center',
-    color:Constants.COLOR_GREY_DARK,
-    fontSize:Constants.FONT_SIZE_SMALL,
-},
-infoViewShape:{
-    position:'absolute',
-    top:-7,
-    right:-6,
-    width: 0,
-    height: 0,
-    marginTop:-1,
-    backgroundColor: 'transparent',
-    borderStyle: 'solid',
-    borderRightWidth:15,
-    borderTopWidth:15,
-    borderRightColor: 'transparent',
-    borderTopColor:Constants.COLOR_WHITE,
-    transform: [ {rotate: '-45deg'}],
-},
-reasonView:{
-    padding:10,
-    borderRadius:3,    
-    justifyContent:'center',
-    backgroundColor:Constants.COLOR_WHITE,
-},
-reasonCloser:{
-    position:'absolute',
-    top:5,
-    right:8,
-    width:15,
-    height:15,    
-},
-reasonTitle:{
-    fontWeight:'bold',
-    textAlign:'center',
-    textTransform:'capitalize',
-    color:Constants.COLOR_GREEN,
-    fontSize:Constants.FONT_SIZE_LARGE,
-},
-reasonTextView:{
-    height:100,
-    maxHeight:100,
-    marginTop:10,
-    paddingLeft:5,
-    marginBottom:10,
-    marginHorizontal:8,
-    borderRadius:3,
-    borderWidth:0.5,
-    borderColor:"rgba(64,64,64,0.5)",
-},
-reasonText:{
-    fontSize:Constants.FONT_SIZE__MEDIUM,
-},
-reasonNote:{
-    marginVertical:10,
-    textAlign:'center',
-    fontWeight:'bold',
-    color:Constants.COLOR_RED,
-    fontSize:Constants.FONT_SIZE__SMALL,
-},
-reasonButtonView:{
-    width:'45%',
-    padding:10,
-    borderRadius:30,
-    marginVertical:8,
-    alignSelf:'center',
-    alignItems:'center',
-    justifyContent:'center',
-    backgroundColor:Constants.COLOR_GREEN,
-},
-reasonButtonText:{
-    textAlign:'center',
-    textTransform:'uppercase',
-    color:Constants.COLOR_WHITE,
-    fontSize:Constants.FONT_SIZE_MEDIUM,
-},
+    detailsRow: {
+        flex: 2,
+        flexDirection: 'row',
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 5,
+        marginVertical: 5,
+        marginHorizontal: 15,
+        borderBottomWidth: 0.5,
+        borderBottomColor: "rgba(64,64,64,0.5)",
+    },
+    detailsKey: {
+        fontWeight: 'bold',
+        color: Constants.COLOR_GREY_DARK,
+        fontSize: Constants.FONT_SIZE_MEDIUM,
+        textTransform: 'capitalize',
+    },
+    detailsValue: {
+        color: Constants.COLOR_GREY_DARK,
+        fontSize: Constants.FONT_SIZE_MEDIUM,
+    },
+    buttionView: {
+        width: 160,
+        padding: 10,
+        borderRadius: 40,
+        marginVertical: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Constants.COLOR_GREEN,
+    },
+    buttonText: {
+        color: Constants.COLOR_WHITE,
+        textTransform: 'uppercase',
+        fontSize: Constants.FONT_SIZE__MEDIUM,
+    },
+    infoView: {
+        position: 'absolute',
+        zIndex: +1,
+        right: '5%',
+        top: '20%',
+        width: wp(35),
+    },
+    infoViewTitle: {
+        color: Constants.COLOR_GREY_DARK,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginVertical: 3,
+        fontSize: Constants.FONT_SIZE_SMALL,
+    },
+    infoViewDesc: {
+        textAlign: 'center',
+        color: Constants.COLOR_GREY_DARK,
+        fontSize: Constants.FONT_SIZE_SMALL,
+    },
+    infoViewShape: {
+        position: 'absolute',
+        top: -7,
+        right: -6,
+        width: 0,
+        height: 0,
+        marginTop: -1,
+        backgroundColor: 'transparent',
+        borderStyle: 'solid',
+        borderRightWidth: 15,
+        borderTopWidth: 15,
+        borderRightColor: 'transparent',
+        borderTopColor: Constants.COLOR_WHITE,
+        transform: [{ rotate: '-45deg' }],
+    },
+    reasonView: {
+        padding: 10,
+        borderRadius: 3,
+        justifyContent: 'center',
+        backgroundColor: Constants.COLOR_WHITE,
+    },
+    reasonCloser: {
+        position: 'absolute',
+        top: 5,
+        right: 8,
+        width: 15,
+        height: 15,
+    },
+    reasonTitle: {
+        fontWeight: 'bold',
+        textAlign: 'center',
+        textTransform: 'capitalize',
+        color: Constants.COLOR_GREEN,
+        fontSize: Constants.FONT_SIZE_LARGE,
+    },
+    reasonTextView: {
+        height: 100,
+        maxHeight: 100,
+        marginTop: 10,
+        paddingLeft: 5,
+        marginBottom: 10,
+        marginHorizontal: 8,
+        borderRadius: 3,
+        borderWidth: 0.5,
+        borderColor: "rgba(64,64,64,0.5)",
+    },
+    reasonText: {
+        fontSize: Constants.FONT_SIZE__MEDIUM,
+    },
+    reasonNote: {
+        marginVertical: 10,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        color: Constants.COLOR_RED,
+        fontSize: Constants.FONT_SIZE__SMALL,
+    },
+    reasonButtonView: {
+        width: '45%',
+        padding: 10,
+        borderRadius: 30,
+        marginVertical: 8,
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Constants.COLOR_GREEN,
+    },
+    reasonButtonText: {
+        textAlign: 'center',
+        textTransform: 'uppercase',
+        color: Constants.COLOR_WHITE,
+        fontSize: Constants.FONT_SIZE_MEDIUM,
+    },
 })
 const StyleMapView = StyleSheet.create({
     MainContainer: {
-        height:'85%',
+        flex: 1,
         left: 0,
         right: 0,
     },
     mapStyle: {
-        height:'100%',
+        height: '100%',
         left: 0,
         right: 0,
     },

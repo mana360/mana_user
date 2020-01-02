@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS008
+/* screen -MANAPPCUS017,17-1
     design by -mayur s
  */
 import React, { Component } from 'react';
@@ -35,9 +35,9 @@ export default class ViewCurrentTrip extends React.Component {
 
                             <View style={StyleViewCurrentTrip.topCircle} />
 
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center',alignItems:"center" }}>
 
-                                <TouchableOpacity style={{ marginTop: 55, }}
+                                <TouchableOpacity style={{ marginTop: 25, }}
                                     onPress={() => {
                                         return (
                                             this.setState({ invoiceModal_Visible: true })
@@ -51,7 +51,7 @@ export default class ViewCurrentTrip extends React.Component {
                                 <Image source={require('../images/current_trips.png')}
                                     style={StyleViewCurrentTrip.ImageCurrentTrip}
                                 />
-                                <TouchableOpacity style={{ marginTop: 55, }}
+                                <TouchableOpacity style={{ marginTop: 25, }}
                                     onPress={() => {
                                         this.props.navigation.navigate('HelpAndSupport', { flag: false })
                                     }}

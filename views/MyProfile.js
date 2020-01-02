@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS036
+/* screen -MANAPPCUS036,36-1,37
     design by -mayur s
  */ 
 import React from 'react';
@@ -142,7 +142,7 @@ export default class MyProfile extends React.Component {
                         <View style={{ marginBottom: 2 }}>
                             <View style={StyleMyProfile.topCircle} />
 
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems:'center'}}>
                                 <TouchableOpacity style={StyleMyProfile.sideImageView}
                                     onPress={() => {
                                         this.setState({ modalVisible_Changepassword: true })
@@ -152,20 +152,7 @@ export default class MyProfile extends React.Component {
                                         style={StyleMyProfile.sideImage}
                                     />
                                 </TouchableOpacity>
-                                <Modal
-                                    visible={this.state.modalVisible_Changepassword}
-                                    animationType='fade'
-                                    transparent={true}
-                                >
-                                    {this.Modal_ChangePassword()}
-                                </Modal>
-                                <Modal
-                                    visible={this.state.modalVisible_SavedMsg}
-                                    animationType='fade'
-                                    transparent={true}
-                                >
-                                    {this.Modal_chnagesSaveSuccessFully()}
-                                </Modal>
+                              
 
                                 <Image source={require('../images/Profile_pic.png')}
                                     style={StyleMyProfile.ProfileImage}
@@ -203,6 +190,20 @@ export default class MyProfile extends React.Component {
                 </View>
 
                 <FooterBar navigation={navigation} />
+                <Modal
+                                    visible={this.state.modalVisible_Changepassword}
+                                    animationType='fade'
+                                    transparent={true}
+                                >
+                                    {this.Modal_ChangePassword()}
+                                </Modal>
+                <Modal
+                    visible={this.state.modalVisible_SavedMsg}
+                    animationType='fade'
+                    transparent={true}
+                >
+                    {this.Modal_chnagesSaveSuccessFully()}
+                </Modal>
             </View>
         )
     }

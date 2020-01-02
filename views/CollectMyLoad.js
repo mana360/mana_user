@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS048
+/* screen -MANAPPCUS048,57,58,60
     design by -mayur s
  */
 import React, { Component } from 'react';
@@ -113,7 +113,7 @@ ReferAFriend(){
                         <View style={{ width: '75%', alignSelf: 'center', paddingLeft: 15 }}>
                             <View style={StyleCollectMyLoad.labelBox}>
                                 <Image style={StyleCollectMyLoad.LabelBoxIcon}
-                                    source={require('../images/email_id.png')} />
+                                    source={require('../images/mobile_number.png')} />
                                 <Text style={StyleCollectMyLoad.labelBoxText}>{Constants.MobileNumber}</Text>
                             </View>
                             <TextInput placeholder='Enter Mobile Number'

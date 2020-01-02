@@ -1,8 +1,8 @@
-/* screen -MANAPPCUS049
+/* screen -MANAPPCUS049,50,51,52
     design by -mayur s
  */
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, Modal,ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, Modal, ScrollView } from 'react-native';
 import { StyleSignUp } from '../config/CommonStyles'
 import Constants from '../config/Constants';
 import { StackActions, NavigationActions } from 'react-navigation';
@@ -32,11 +32,11 @@ export default class SignUp extends Component {
             <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
               onPress={() => {
                 this.setState({ modalVisible_welcome: false })
-                  this.props.navigation.dispatch(
-                    StackActions.reset({
-                      index: 0,
-                      actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
-                    }))
+                this.props.navigation.dispatch(
+                  StackActions.reset({
+                    index: 0,
+                    actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
+                  }))
               }}
             >
               <Image source={require('../images/close.png')}
@@ -59,8 +59,8 @@ export default class SignUp extends Component {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
         <Image style={StyleSignUp.bgImage} source={require('../images/Splash_screen.jpg')} />
-     
-        <View style={this.state.referalRadio_button?[StyleSignUp.loginBox,{marginTop:50}]:StyleSignUp.loginBox}>
+
+        <View style={this.state.referalRadio_button ? [StyleSignUp.loginBox, { marginTop: 50 }] : StyleSignUp.loginBox}>
 
           <Image style={StyleSignUp.logoImage}
             source={require('../images/AppLauncher.png')}
@@ -76,6 +76,7 @@ export default class SignUp extends Component {
             <TextInput placeholder='Enter Mobile Number'
               style={StyleSignUp.textInput_style}
               keyboardType='number-pad'
+              maxLength={10}
               value={this.state.mobile_number}
               onChangeText={(newText) => {
                 if (!isNaN(newText))
@@ -120,7 +121,7 @@ export default class SignUp extends Component {
               <Image source={this.state.referalRadio_button ? require('../images/radio_buttons_selected.png') : require('../images/radio_buttons.png')}
                 style={StyleSignUp.policyImage} />
             </TouchableOpacity>
-            <Text style={{ color: Constants.COLOR_GREY_DARK }}>{Constants.IhaveAReferalCode}</Text>
+            <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}>{Constants.IhaveAReferalCode}</Text>
           </View>
 
           <View style={this.state.referalRadio_button ? [StyleSignUp.referaltxtinputView, { marginVertical: 10, }] : { display: "none" }}>
@@ -135,14 +136,18 @@ export default class SignUp extends Component {
           </View>
 
           <View style={[StyleSignUp.policyView,]}>
+
             <TouchableOpacity
               onPress={() => {
                 this.setState({ policyRadio_button: !this.state.policyRadio_button })
-              }}>
+              }}
+            >
               <Image source={this.state.policyRadio_button ? require('../images/radio_buttons_selected.png') : require('../images/radio_buttons.png')}
                 style={StyleSignUp.policyImage} />
             </TouchableOpacity>
-            <Text style={{ color: Constants.COLOR_GREY_DARK }}>{Constants.IagreeTo}</Text>
+
+            <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}>{Constants.IagreeTo}</Text>
+
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('TermsAndCondition', { flag: 'TermsAndCondition' })
@@ -150,10 +155,12 @@ export default class SignUp extends Component {
             >
               <Text style={StyleSignUp.PolicyLabel}>{Constants.TermsAndConditions}</Text>
             </TouchableOpacity>
+
             <Text style={{ color: Constants.COLOR_GREY_DARK }}>,</Text>
           </View>
 
-          <View style={[{ paddingLeft: 42, flexDirection: 'row',marginBottom:10 }]}>
+          <View style={[{ paddingLeft: 42, flexDirection: 'row', marginBottom: 10 }]}>
+
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('TermsAndCondition', { flag: 'CancellationPolicy' })
@@ -161,7 +168,9 @@ export default class SignUp extends Component {
             >
               <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy}</Text>
             </TouchableOpacity>
-            <Text> & </Text>
+
+            <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}> & </Text>
+
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('TermsAndCondition', { flag: 'PaymentPolicy' })
@@ -187,18 +196,14 @@ export default class SignUp extends Component {
                   }))
               }
                 , 3000);
-              // this.props.navigation.dispatch(
-              //   StackActions.reset({
-              //   index: 0,
-              //   actions: [NavigationActions.navigate({ routeName: ''})],
-              //   }))
+
             }}
             style={this.state.policyRadio_button ? StyleSignUp.loginButton : [StyleSignUp.loginButton, { backgroundColor: Constants.COLOR_GREY_LIGHT }]}>
             <Text style={StyleSignUp.Login_buttonText}>{Constants.SignUp}</Text>
           </TouchableOpacity>
 
         </View>
-     
+
         <TouchableOpacity style={StyleSignUp.memberButton}
           onPress={() => {
             this.props.navigation.navigate('SignIn')

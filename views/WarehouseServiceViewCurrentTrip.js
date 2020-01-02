@@ -33,8 +33,8 @@ export default class WarehouseServiceViewCurrentTrip extends React.Component {
                         <View style={{ marginBottom: 2 }}>
                             <View style={StyleViewCurrentTrip.topCircle} />
 
-                            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                <TouchableOpacity style={{ marginTop: 55 }}
+                            <View style={{ flexDirection: 'row', justifyContent: 'center',alignItems:'center' }}>
+                                <TouchableOpacity style={{ marginTop: 25 }}
                                     onPress={() => {
                                         this.setState({ invoiceModal_Visible: true })
                                     }}
@@ -46,7 +46,7 @@ export default class WarehouseServiceViewCurrentTrip extends React.Component {
                                 <Image source={require('../images/WarehouseServices_copy.png')}
                                     style={StyleViewCurrentTrip.ImageCurrentTrip}
                                 />
-                                <TouchableOpacity style={{ marginTop: 55 }}
+                                <TouchableOpacity style={{ marginTop: 25 }}
                                     onPress={() => {
                                         this.props.navigation.navigate('HelpAndSupport', { flag: false });
                                     }}

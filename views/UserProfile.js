@@ -88,7 +88,7 @@ export default class UserProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.SecondaryNo}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>ghj@gmail.com</Text>
+                        <Text style={StyleMyProfile.col2Text}>+9145475651</Text>
                     </View>
                 </View>
 
@@ -112,13 +112,13 @@ export default class UserProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.Email}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>FGDHJAS</Text>
+                        <Text style={StyleMyProfile.col2Text}>bhj@gmail.com</Text>
                     </View>
                 </View>
 
                 <View style={[StyleMyProfile.row, { borderBottomWidth: 0 }]}>
 
-                    <View style={StyleMyProfile.col1}>
+                <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/password.png')}
                             style={StyleMyProfile.Icon}
                         />

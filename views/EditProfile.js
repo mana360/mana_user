@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS039
+/* screen -MANAPPCUS039,38,40
     design by -mayur s
  */
 import React from 'react';
@@ -148,7 +148,7 @@ export default class EditProfile extends React.Component {
                         <View style={{ marginBottom: 2 }}>
                             <View style={StyleEditProfile.topCircle} />
 
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center',alignItems:'center' }}>
                                 <TouchableOpacity style={StyleEditProfile.sideImageView}
                                     onPress={() => {
                                         this.setState({ modalVisible_Changepassword: true })
@@ -247,7 +247,15 @@ export default class EditProfile extends React.Component {
                                     placeholder="Enter Telephone No"
                                     style={StyleEditProfile.TextInput}
                                     value={this.state.telephone_no}
-                                    onChangeText={(text) => { this.setState({ telephone_no: text }) }}
+                                    keyboardType="number-pad"
+                                    maxLength={10}
+                                    onChangeText={(text) => {
+                                        if(!isNaN(text))
+                                        this.setState({ telephone_no: text }) 
+                                        else
+                                        this.setState({ telephone_no: '' }) 
+
+                                    }}
                                 />
                             </View>
 
@@ -262,7 +270,14 @@ export default class EditProfile extends React.Component {
                                     placeholder="Enter Secondary No"
                                     style={StyleEditProfile.TextInput}
                                     value={this.state.secondary_no}
-                                    onChangeText={(text) => { this.setState({ secondary_no: text }) }}
+                                    keyboardType="number-pad"
+                                    maxLength={10}
+                                    onChangeText={(text) => { 
+                                        if(!isNaN(text))
+                                        this.setState({ secondary_no: text }) 
+                                        else
+                                        this.setState({ secondary_no: '' }) 
+                                    }}
                                 />
                             </View>
 

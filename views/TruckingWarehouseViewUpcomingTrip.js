@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS032
+/* screen -MANAPPCUS032,33,34
     design by -mayur s
  */
 import React from 'react';
@@ -24,23 +24,22 @@ export default class TruckingWarehouseViewUpcomingTrip extends React.Component {
         return (
             <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                 <View style={StyleViewUpcomingTrip.cancelModalView}>
-                    <TouchableOpacity style={StyleViewUpcomingTrip.leftcrossView}
+                    <TouchableOpacity style={{ alignSelf: 'flex-end', marginBottom: 5 }}
                         onPress={() => {
                             this.setState({ cancelModal_Visible: false })
                         }}
                     >
                         <Image source={require('../images/close.png')}
-                            style={{ width: 12, height: 12, }}
-                        />
+                            style={{ width: 15, height: 15 }} />
                     </TouchableOpacity>
 
-                    <Text style={StyleViewUpcomingTrip.modalMsg}>{Constants.Cancelleation_msg}</Text>
-                    <Text style={StyleViewUpcomingTrip.modalMsg}>{Constants.cancellation_msgDelete}</Text>
+                    <Text style={[StyleViewUpcomingTrip.modalMsg,{marginBottom:10}]}>{Constants.Cancelleation_msg}</Text>
+                    <Text style={[StyleViewUpcomingTrip.modalMsg,{marginBottom:10}]}>{Constants.cancellation_msgDelete}</Text>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 10 }}>
                         <TouchableOpacity style={StyleViewUpcomingTrip.cancelModalButton}
                             onPress={() => {
-                                this.setState({ isSuccesfull: true })
+                                this.setState({ isSuccesfull: true, })
                             }}
                         >
                             <Text style={StyleViewUpcomingTrip.cancelModalButtonText}>{Constants.YES}</Text>
@@ -52,15 +51,16 @@ export default class TruckingWarehouseViewUpcomingTrip extends React.Component {
                             <Text style={StyleViewUpcomingTrip.cancelModalButtonText}>{Constants.NO}</Text>
                         </TouchableOpacity>
                     </View>
+            
                 </View>
-            </View>
+           </View>
         )
     }
     TripCancelledSuccessfully() {
         return (
             <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                 <View style={StyleViewUpcomingTrip.cancelModalView}>
-                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 5, right: 10 }}
+                    <TouchableOpacity style={{ alignSelf: 'flex-end',marginBottom:5}}
                         onPress={() => {
                             this.setState({ cancelModal_Visible: false });
                             this.props.navigation.goBack();
@@ -73,7 +73,7 @@ export default class TruckingWarehouseViewUpcomingTrip extends React.Component {
                         source={require('../images/sent_icon.png')}
                     />
                     <Text style={[StyleViewUpcomingTrip.modalMsg, { marginTop: 5 }]}>{Constants.TripCanceledSuccessfully}</Text>
-                    <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 5 }]}>{Constants.checkYourregisteredEmailIdPeneltyInfo}</Text>
+                    <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 10 }]}>{Constants.checkYourregisteredEmailIdPeneltyInfo}</Text>
                 </View>
             </View>
         )
@@ -87,12 +87,13 @@ export default class TruckingWarehouseViewUpcomingTrip extends React.Component {
                 <HeaderBar title="VIEW UPCOMING TRIP DETAILS" isBack={true} isLogout={true} navigation={navigation} />
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%' }} bounces={false}>
-                        <View style={{ marginBottom: 2 }}>
+                    
+                     <View style={{ marginBottom: 2 }}>
                             <View style={StyleViewUpcomingTrip.topCircle} />
 
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
 
-                                <TouchableOpacity style={[StyleViewUpcomingTrip.imageSideView, { marginBottom: -30, marginLeft: -80, marginRight: 10 }]}
+                                <TouchableOpacity style={[StyleViewUpcomingTrip.imageSideView, { marginBottom: -28, marginLeft: -80, marginRight: 10 }]}
                                     onPress={() => {
                                         this.setState({ invoiceModal_Visible: true });
                                     }} >

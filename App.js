@@ -155,6 +155,10 @@ const AppNavigator1 = createStackNavigator({
       screen: CollectMyLoad,
       navigationOptions: () => ({ header: null })
     },
+    DiscountVoucher: {
+      screen: DiscountVoucher,
+      navigationOptions: () => ({ header: null })
+    },
     CompanyProfile: {
       screen: CompanyMyProfile,
       navigationOptions: () => ({ header: null })
@@ -195,7 +199,6 @@ const AppNavigator1 = createStackNavigator({
       screen: ViewMap,
       navigationOptions: () => ({ header: null })
     },
-   
     MapViews: {
       screen: MapViews,
       navigationOptions: () => ({ header: null })
@@ -209,10 +212,6 @@ const AppNavigator1 = createStackNavigator({
       navigationOptions:()=>({header:null})
     },
 },
-<<<<<<< HEAD
-     {initialRouteName:"SignIn"}
-=======
-     {initialRouteName:"MyBookings"}
->>>>>>> 98a20fba9a1d0e6fd44c7a2e27a4def366bb2f93
+     {initialRouteName:"WarehouseServiceViewCurrentTrip"}
 )
 export const AppNavigator = createAppContainer(AppNavigator1);
