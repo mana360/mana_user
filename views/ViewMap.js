@@ -2,258 +2,87 @@
     design by -Sameer 
  */
 import React from 'react';
-import {View, Text, TouchableOpacity, Image, ScrollView, Picker, TextInput, Modal, FlatList, ImageBackground, StyleSheet, } from 'react-native';
+import {View, Text, TouchableOpacity, Image, ScrollView, Picker, TextInput, Modal, FlatList, ImageBackground, StyleSheet, Button, } from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {StyleViewMap} from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import MapView from 'react-native-maps';
-export default class ViewMap extends React.Component{
-    
-    render(){
-        
-        let {navigation} = this.props
-        return(
-            <View style={{flex:1,}}>
-                {/* Header Start */ }
-                <HeaderBar  title="VIEW MAP" isBack={true} isLogout={true} navigation={navigation}/>
-                {/* Header Close */ }
-                {/* Main Body Start */}
-                <View style={{flex:1,}}>
-                    <MapView // remove if not using Google Maps
-                    style={
-                        [
-                            {
-                              "elementType": "geometry",
-                              "stylers": [
-                                {
-                                  "color": "#ebe3cd"
-                                }
-                              ]
-                            },
-                            {
-                              "elementType": "labels.text.fill",
-                              "stylers": [
-                                {
-                                  "color": "#523735"
-                                }
-                              ]
-                            },
-                            {
-                              "elementType": "labels.text.stroke",
-                              "stylers": [
-                                {
-                                  "color": "#f5f1e6"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "administrative",
-                              "elementType": "geometry.stroke",
-                              "stylers": [
-                                {
-                                  "color": "#c9b2a6"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "administrative.land_parcel",
-                              "elementType": "geometry.stroke",
-                              "stylers": [
-                                {
-                                  "color": "#dcd2be"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "administrative.land_parcel",
-                              "elementType": "labels.text.fill",
-                              "stylers": [
-                                {
-                                  "color": "#ae9e90"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "landscape.natural",
-                              "elementType": "geometry",
-                              "stylers": [
-                                {
-                                  "color": "#dfd2ae"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "poi",
-                              "elementType": "geometry",
-                              "stylers": [
-                                {
-                                  "color": "#dfd2ae"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "poi",
-                              "elementType": "labels.text.fill",
-                              "stylers": [
-                                {
-                                  "color": "#93817c"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "poi.park",
-                              "elementType": "geometry.fill",
-                              "stylers": [
-                                {
-                                  "color": "#a5b076"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "poi.park",
-                              "elementType": "labels.text.fill",
-                              "stylers": [
-                                {
-                                  "color": "#447530"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "road",
-                              "elementType": "geometry",
-                              "stylers": [
-                                {
-                                  "color": "#f5f1e6"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "road.arterial",
-                              "elementType": "geometry",
-                              "stylers": [
-                                {
-                                  "color": "#fdfcf8"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "road.highway",
-                              "elementType": "geometry",
-                              "stylers": [
-                                {
-                                  "color": "#f8c967"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "road.highway",
-                              "elementType": "geometry.stroke",
-                              "stylers": [
-                                {
-                                  "color": "#e9bc62"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "road.highway.controlled_access",
-                              "elementType": "geometry",
-                              "stylers": [
-                                {
-                                  "color": "#e98d58"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "road.highway.controlled_access",
-                              "elementType": "geometry.stroke",
-                              "stylers": [
-                                {
-                                  "color": "#db8555"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "road.local",
-                              "elementType": "labels.text.fill",
-                              "stylers": [
-                                {
-                                  "color": "#806b63"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "transit.line",
-                              "elementType": "geometry",
-                              "stylers": [
-                                {
-                                  "color": "#dfd2ae"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "transit.line",
-                              "elementType": "labels.text.fill",
-                              "stylers": [
-                                {
-                                  "color": "#8f7d77"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "transit.line",
-                              "elementType": "labels.text.stroke",
-                              "stylers": [
-                                {
-                                  "color": "#ebe3cd"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "transit.station",
-                              "elementType": "geometry",
-                              "stylers": [
-                                {
-                                  "color": "#dfd2ae"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "water",
-                              "elementType": "geometry.fill",
-                              "stylers": [
-                                {
-                                  "color": "#b9d3c2"
-                                }
-                              ]
-                            },
-                            {
-                              "featureType": "water",
-                              "elementType": "labels.text.fill",
-                              "stylers": [
-                                {
-                                  "color": "#92998d"
-                                }
-                              ]
-                            }
-                          ]
+import { Marker } from 'react-native-maps';
+import { } from 'react-native-gesture-handler';
+import RBSheet from "react-native-raw-bottom-sheet";
 
-                    }
-                    region={{
-                        latitude: 18.568034,
-                        longitude: 73.7729529,
-                        latitudeDelta: 0.015,
-                        longitudeDelta: 0.0121,
-                    }}
-                    >
-                    </MapView>
-                </View>
-                {/* Main Body Close */}
-                {/* Footer Start */}
-                <FooterBar navigation={navigation}/>
-                {/* Footer Close */}
-            </View>
+export default class ViewMap extends React.Component{
+   
+  render(){
+    let {navigation} = this.props
+      return(
+        <View style={{flex:1,}}>
+          {/* Header Start */ }
+          <HeaderBar  title="VIEW MAP" isBack={true} isLogout={true} navigation={navigation}/>
+          {/* Header Close */ }
+          {/* Main Body Start */}
+          <View style={{flex:1,}}>
+            <MapView
+              onPress={() => {
+                this.RBSheet.open();
+              }}
+              style={StyleViewMap.mapStyle}
+              showsUserLocation={false}
+              zoomEnabled={true}
+              zoomControlEnabled={true}
+              initialRegion={{
+                  latitude: 18.5581568,
+                  longitude: 73.7828864,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+              }}>
+              <Marker
+                  coordinate={{ latitude: 18.5581568, longitude: 73.7828864 }}
+                  title={"JavaTpoint"}
+                  description={"Java Training Institute"}
+                  />
+            </MapView>
+          </View>
+          <RBSheet
+            ref={ref => {
+              this.RBSheet = ref;
+            }}
+            height={150}
+            duration={250}
+            customStyles={{
+              container: {
+                borderTopLeftRadius: 50,
+                borderTopRightRadius: 50,
+              }
+            }}
+            >
+            <View style={StyleViewMap.viewmaprbs }>
+              <View style={StyleViewMap.maplocationtxt}>
+                <View style={StyleViewMap.mapimgwid}>
+                  <Image style={StyleViewMap.mapimg} source={require('../images/address.png')} />
+                </View> 
+                <View style={StyleViewMap.maptxtwid}>
+                  <Text style={StyleViewMap.maptxt}>{Constants.Lorem}</Text> 
+                </View> 
+              </View>
+              <View style={StyleViewMap.maplocationbtn}>
+                <TouchableOpacity onPress={this._onPressButton}>
+                  <View style={StyleViewMap.mapbottbtn}>
+                    <Text style={StyleViewMap.mapbottbtntxt}>select</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>  
+            </View>  
+          </RBSheet>
+          {/* Main Body Close */}
+          {/* Footer Start */}
+          <FooterBar navigation={navigation}/>
+          {/* Footer Close */}
+        </View>
         )
     }
 }
+
+

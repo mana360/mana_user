@@ -37,9 +37,9 @@ import ForgotPassword from './views/ForgotPassword';
 import SetPassword from './views/SetPassword';
 import SignUp from './views/SignUp';
 import DiscountVouchers from './views/DiscountVouchers';
-import BookingSummary from './views/BookingSummary';
 import ViewMap from './views/ViewMap';
 import MapViews from './views/MapView';
+import PaymentMethod from './views/PaymentMethod';
 
 console.disableYellowBox = true;
 
@@ -184,21 +184,20 @@ const AppNavigator1 = createStackNavigator({
       screen: DiscountVouchers,
       navigationOptions: () => ({ header: null })
     },
-    BookingSummary: {
-      screen: BookingSummary,
-      navigationOptions: () => ({ header: null })
-    },
     ViewMap: {
       screen: ViewMap,
       navigationOptions: () => ({ header: null })
     },
-   
     MapViews: {
       screen: MapViews,
       navigationOptions: () => ({ header: null })
     },
+    PaymentMethod: {
+      screen: PaymentMethod,
+      navigationOptions: () => ({ header: null })
+    },
     
 },
-     {initialRouteName:"ViewMap"}
+     {initialRouteName:"PaymentMethod"}
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

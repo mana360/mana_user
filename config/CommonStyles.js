@@ -1986,8 +1986,7 @@ const StyleDiscountVouchers = StyleSheet.create({
     pagebody:{
         flex:1, 
         backgroundColor:Constants.colorGrey,
-        width:'100%',
-        padding:20,
+        padding:15,
     },
     voucherbgimg:{
         justifyContent:'center',
@@ -1995,11 +1994,12 @@ const StyleDiscountVouchers = StyleSheet.create({
         width:'100%', 
         flex:1,
         position:'relative',
+        marginVertical:5,
     },
     vourimg:{
         width:'100%',
         height:80,
-        resizeMode:'contain', 
+        resizeMode:'stretch', 
         zIndex:-1,
     },
     vouchertxtbox:{
@@ -2007,7 +2007,6 @@ const StyleDiscountVouchers = StyleSheet.create({
         top:10,
         left:10,
         zIndex:2,  
-        flex:1,
         flexDirection: 'row',
         justifyContent:'center',
         alignItems:'center',
@@ -2015,15 +2014,15 @@ const StyleDiscountVouchers = StyleSheet.create({
     voucerinnerimg:{
         flex:2,
         height:45,
-        marginTop:2,
         justifyContent:'center',
         alignItems:'center',
-        resizeMode:'contain', 
+        resizeMode:'contain',
     },
     voucerinnertxt:{ 
         flex:7,
         marginLeft:15,
         flexDirection:'column',
+        width:'100%',
     },
     voucerinntxthead:{
         color: Constants.COLOR_GREEN_PROFILE,
@@ -2031,9 +2030,10 @@ const StyleDiscountVouchers = StyleSheet.create({
         fontSize: Constants.FONT_SIZE_LARGE,
         width:'90%',
         paddingBottom:2,
+        fontSize:14,
         borderBottomColor: '#cfcfcf',
         borderBottomWidth: 1,
-        marginTop:2,
+        textTransform:'uppercase',
     },
     voucervaiddiscountbtn:{
         flexDirection:'row',
@@ -2061,20 +2061,14 @@ const StyleDiscountVouchers = StyleSheet.create({
         justifyContent:'center',
     },
     voucerapplybtn:{
-      backgroundColor: Constants.COLOR_GREEN, 
-      color:Constants. COLOR_WHITE,
-      paddingHorizontal:18,
-      paddingVertical:2, 
-      borderRadius:20,
-      fontSize: Constants.FONT_SIZE__MEDIUM, 
-
+        backgroundColor: Constants.COLOR_GREEN, 
+        color:Constants. COLOR_WHITE,
+        paddingHorizontal:18,
+        paddingVertical:2, 
+        borderRadius:20,
+        fontSize: Constants.FONT_SIZE__MEDIUM, 
     }
 })
-const StyleViewMap = StyleSheet.create({
-    map:{
-        
-    }})
-    
 const styleDiscountVoucher = StyleSheet.create({
     titleView:{
         borderBottomWidth:0.5,
@@ -2113,6 +2107,240 @@ const StyleMapView = StyleSheet.create({
         right: 0,
     },
 })
+const StyleViewMap = StyleSheet.create({
+    mapStyle: {
+        height:'100%',
+        left: 0,
+        right: 0,
+    }, 
+    viewmaprbs:{
+        flex:1,
+        marginTop:35,
+        marginHorizontal:20,
+    },
+    maplocationtxt:{
+        flex:1,   
+        width:'100%', 
+        flexDirection:'row',
+    },
+    mapimgwid:{
+        flex:1, 
+    },
+    mapimg:{
+        marginTop:2,
+        width: 20,
+        height: 20,
+    },
+    maptxtwid:{
+        flex:10,
+    },
+    maptxt:{
+        width:'100%',
+        fontSize: Constants.FONT_SIZE_LARGE, 
+        color: 'grey', 
+    },
+    maplocationbtn:{
+        flex:1,
+        width:'100%',
+    },
+    mapbottbtn:{
+       alignItems:'center',
+       backgroundColor: Constants.COLOR_GREEN,
+       paddingVertical:10,
+       borderRadius:20,
+    },
+    mapbottbtntxt:{
+        color:Constants.COLOR_WHITE,
+        textTransform:'uppercase',
+        fontFamily:'Roboto-Medium',
+    }
+})
+const StylePaymentMethod = StyleSheet.create({
+    paymentamount:{
+        flex:1, 
+        backgroundColor:'#f0f0f0',
+        padding:20,
+        
+    },
+    paymentamounttxt:{
+        flexDirection:'row',
+        flex:2,
+        paddingVertical:15,
+        borderBottomColor: '#c6c6c6',
+        borderBottomWidth: 1, 
+        
+    },
+    paymentamountlefttxt:{
+        flex:1,
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
+        color: Constants.COLOR_GREY_SHADED,
+        fontFamily:'Roboto-Medium',
+    },
+    paymentamountrighttxt:{
+        flex:1,
+        textAlign: 'right',
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
+        color: Constants.COLOR_GREY_SHADED,
+        fontFamily:'Roboto-Medium',
+        paddingRight:10,
+    },
+    paymenttotal:{
+        flex:1,
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
+        color: Constants.COLOR_GREEN,
+        textTransform:'uppercase',
+        fontFamily:'Roboto-Bold',
+    },
+    paymenttotalamount:{
+        flex:1,
+        textAlign: 'right',
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
+        color: Constants.COLOR_GREEN,
+        fontFamily:'Roboto-Bold',
+        paddingRight:10,
+    },
+    paymentmethod:{
+        flex:1,
+        backgroundColor:'#fff',
+        padding:20,
+        flexDirection:'column',
+    },
+    choosetext:{
+        textAlign:'center',
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
+        color: Constants.COLOR_GREEN,
+        fontFamily:'Roboto-Bold',
+    },
+    choosetype:{
+        flex:2,
+        flexDirection:'row',
+        marginVertical:20,
+    },
+    cashpickup:{
+        flex:1,
+        paddingVertical:15,
+        alignItems:'center',
+        borderRadius:4,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: '#4a4a4a' ,
+        marginRight:5,
+    },
+    cashpickuptxt:{
+        fontSize:Constants.FONT_SIZE_LARGE ,
+        color: '#4a4a4a',
+        fontFamily:'Roboto-Medium',  
+    },
+    onlinepay:{
+        flex:1,
+        paddingVertical:15,
+        alignItems:'center',
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: '#7bc145',
+        marginLeft:5,
+    },
+    onlinepaytxt:{
+        fontSize:Constants.FONT_SIZE_LARGE ,
+        color: Constants.COLOR_PRIMARY ,
+        fontFamily:'Roboto-Medium',
+    },
+    paymentmethodpaybtn:{
+        flex:1,
+    },
+    paybtn:{
+        backgroundColor:Constants.COLOR_GREEN,
+        borderRadius:20,
+        paddingVertical:12,
+        alignItems:'center',
+    },
+    paybtntxt:{
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
+        color: '#fff',
+        fontFamily:'Roboto-Medium',  
+    },
+
+    popmodule:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor: 'rgba(52, 52, 52, 0.8)',
+        paddingHorizontal:'5%',
+      },
+      popmain:{
+        backgroundColor:'#fff',
+        width:'100%',
+        padding:20,
+        borderRadius:6,
+        position:'relative',
+      },
+      popclose:{
+        position:'absolute',
+        right:0,
+        top:0,
+        padding:12,
+      },
+      popcloseimg:{
+        width:15,
+        height:15,
+      },
+      popbody:{
+        flexDirection:'column',
+        justifyContent:'center',
+        alignItems:'center',
+      },
+      popbodyimg:{
+        width:75,
+        height:75,
+      },
+      popbodytxt:{
+        color:Constants.COLOR_FOOTER_GREY,
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
+        fontFamily:'Roboto-Medium',
+        marginVertical:15,
+      },
+      popbtnwidth:{
+        paddingTop:10,
+        paddingBottom:10,
+        backgroundColor:Constants.COLOR_GREEN,
+        borderRadius:20,
+        width:100,
+      },
+      popgrnbtn:{
+          textAlign:'center',
+          color:Constants.COLOR_WHITE,
+      },
+
+
+      
+      popbodythanksimg:{
+        width:90,
+        height:90,
+        resizeMode:'contain',
+      },
+      popbodythankstxt:{
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
+        color:Constants.COLOR_FOOTER_GREY,
+        fontFamily:'Roboto-Medium', 
+        marginVertical:10,
+      },
+      popbodynotification:{
+        backgroundColor:Constants.COLOR_GREY,
+        padding:20,
+        borderRadius:4,
+        marginVertical:10,
+      },
+      popbodynotificationtxt:{
+        fontSize:Constants.FONT_SIZE_LARGE ,
+        color:Constants.COLOR_FOOTER_GREY,
+        fontFamily:'Roboto-Medium', 
+        textAlign:'center',
+      },
+
+
+})
+
+
 export {
     StyleHelpAndSupport,
     StyleTripHelpAndSupport,
@@ -2137,4 +2365,5 @@ export {
     StyleViewMap,
     styleDiscountVoucher,
     StyleMapView,
+    StylePaymentMethod,
 }
