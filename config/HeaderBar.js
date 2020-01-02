@@ -30,6 +30,7 @@ class HeaderBar extends React.Component {
     const isLogout = this.props.isLogout;
     const isMenu = this.props.isMenu;
   return (
+     <Header style={{backgroundColor:Constants.COLOR_PRIMARY, padding:0, margin:0, justifyContent:'center', alignItems:'center', alignContent:'center',}}>
      <Header style={{backgroundColor:Constants.COLOR_PRIMARY, justifyContent:'center', alignItems:'center'}}>
         <View style={{flex:10, flexDirection:'row',}}>
             <View style={{flex:1, justifyContent:'center', alignItems:'flex-start'}}>
@@ -164,11 +165,12 @@ headerIcon:{
 },
 headerTitle:{
   fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
-  fontWeight:'bold',
+  fontFamily: "Roboto-Bold",		
   textTransform:'uppercase',
   color:Constants.COLOR_WHITE,
   alignSelf:'center',
   textAlign:'center',
+  letterSpacing:0.3,
 },
 });
 export default HeaderBar;
