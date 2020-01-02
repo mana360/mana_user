@@ -72,24 +72,26 @@ const StyleHelpAndSupport = StyleSheet.create({
         fontSize: Constants.FONT_SIZE_LARGE,
     },
     buttonView: {
-        padding: 10,
         borderRadius: 25,
-        marginTop: 50,
-        marginBottom: 15,
-        marginHorizontal: 20,
+        marginTop:65,
+        width:'90%',
+        marginBottom:20,
+        alignSelf:'center',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Constants.COLOR_GREEN,
     },
     buttonText: {
         textAlign: 'center',
+        paddingVertical:10,
         color: Constants.COLOR_WHITE,
         fontSize: Constants.FONT_SIZE_LARGE,
         textTransform: 'uppercase',
     },
     modalView: {
         width: wp('80%'),
-        height: hp('35%'),
+        padding:5,
+        borderRadius:5,
         justifyContent: 'center',
         backgroundColor: Constants.COLOR_WHITE
     },
@@ -113,7 +115,7 @@ const StyleHelpAndSupport = StyleSheet.create({
         fontWeight: 'bold',
         textTransform: 'capitalize',
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
-        color: Constants.COLOR_GREY_LIGHT,
+        color: Constants.COLOR_GREY_DARK,
         marginVertical: 10,
     },
     modalButton: {
@@ -414,7 +416,6 @@ const StyleRateAndReview = StyleSheet.create({
     },
     modalView: {
         width: wp('80%'),
-        height: hp('35%'),
         justifyContent: 'center',
         backgroundColor: Constants.COLOR_WHITE
     },
@@ -437,7 +438,7 @@ const StyleRateAndReview = StyleSheet.create({
         fontWeight: 'bold',
         textTransform: 'capitalize',
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
-        color: Constants.COLOR_GREY_LIGHT,
+        color: Constants.COLOR_GREY_DARK,
         marginVertical: 10,
     },
     modalButton: {
@@ -497,8 +498,8 @@ const StyleViewCompletedDetail = StyleSheet.create({
     row: {
         flexDirection: 'row',
         width: '90%',
-        paddingTop: 20,
-        paddingBottom: 20,
+        paddingTop: 15,
+        paddingBottom: 15,
         alignSelf: 'center',
         borderBottomWidth: 1.5,
         borderBottomColor: Constants.COLOR_GREY
@@ -535,18 +536,19 @@ const StyleSignIn = StyleSheet.create({
         paddingRight: 15,
         paddingLeft: 15,
         justifyContent: 'center',
+        borderRadius:5,
         backgroundColor: Constants.COLOR_WHITE,
     },
     logoImage: {
         width: 150,
         height: 150,
         borderRadius: 75,
-        top: -65,
+        top: -85,
         alignSelf: 'center',
         position: 'absolute',
     },
     loginLabel: {
-        marginTop: "33%",
+        marginTop:80,
         alignSelf: 'center',
         color: 'black',
         fontWeight: 'bold',
@@ -555,7 +557,7 @@ const StyleSignIn = StyleSheet.create({
         color: Constants.COLOR_GREY_DARK
     },
     textInput_container: {
-        marginVertical: 15
+        marginVertical: 10
     },
     textInput_style: {
         borderWidth: 0.7,
@@ -1880,7 +1882,7 @@ const StyleSignUp = StyleSheet.create({
         alignSelf: 'center',
     },
     loginLabel: {
-        marginVertical:10,
+        marginVertical:5,
         alignSelf: 'center',
         color: 'black',
         fontWeight: 'bold',
@@ -1889,21 +1891,18 @@ const StyleSignUp = StyleSheet.create({
         color: Constants.COLOR_GREY_DARK
     },
     textInput_container: {
-        marginVertical:10
+        marginVertical:9
     },
     textInput_style: {
         borderWidth: 0.7,
         borderRadius: 50,
         paddingLeft: 25,
-        marginVertical: 3,
         borderColor: Constants.COLOR_GREY_LIGHT
     },
     labelBox: {
         zIndex: 1,
         left: 15,
-        paddingLeft: 2,
-        paddingRight: 2,
-        marginTop: -7,
+        marginTop: -10,
         marginLeft: "3%",
         position: 'absolute',
         flexDirection: 'row',
@@ -2095,9 +2094,209 @@ const styleDiscountVoucher = StyleSheet.create({
         color:Constants.COLOR_GREY_DARK,
     }
 })
+const StyleMyBooking = StyleSheet.create({
+    newBookingIcom:{
+        width:100,
+        height:70,
+        resizeMode:'stretch',
+        alignSelf:'center',
+    },
+    newBookingInstructionText:{
+        textAlign:'center',
+        marginVertical:15,
+        fontSize:Constants.FONT_SIZE_LARGE,
+        color:Constants.COLOR_GREY_DARK,
+    },
+    newBookingButtonView:{
+        width:160,
+        padding:10,
+        borderRadius:30,
+        alignSelf:'center',
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:Constants.COLOR_GREEN,
+    },
+    newBookingButtonText:{
+        textTransform:'uppercase',
+        color:Constants.COLOR_WHITE,
+        fontSize:Constants.FONT_SIZE__MEDIUM,
+    },
+    tab: {
+        backgroundColor: "rgba(92,167,108,1)",
+        borderRightWidth: 0.2,
+        borderRightColor: Constants.colorGreenDark,
+    },
+    tab_active: {
+        backgroundColor: "rgba(92,167,108,1)",
+        borderRightWidth: 0.2,
+        borderRightColor: Constants.colorGreenDark,
+    },
+    tab_text: {
+        fontSize: Constants.fontSizeExtraLarge,
+        color: Constants.COLOR_BLACK,
+    },
+    tab_active_text: {
+        color: Constants.COLOR_WHITE,
+        fontSize: Constants.fontSizeExtraLarge,
+    },
+    bookingRow:{
+        padding:0,
+        marginVertical:5,
+    },
+    bookingId:{
+        fontWeight:'bold',
+        textTransform:'uppercase',
+        color:Constants.COLOR_GREEN,
+        fontSize:Constants.FONT_SIZE__MEDIUM,
+    },
+    bookingStatus:{
+        textAlign:'right',
+        fontWeight:'bold',
+        textTransform:'uppercase',
+        fontSize:Constants.FONT_SIZE__MEDIUM,
+    },
+    labelText:{
+        fontWeight:'bold',
+        textTransform:'capitalize',
+        color:Constants.COLOR_GREY_DARK,
+        fontSize:Constants.FONT_SIZE_MEDIUM,
+    },
+    valueText:{
+        color:Constants.COLOR_GREY_DARK,
+        fontSize:Constants.FONT_SIZE_MEDIUM,
+    },
+})
+const StyleMyBookingDetails = StyleSheet.create({
+detailsRow:{
+    flex:2,
+    flexDirection:'row',
+    paddingTop:10,
+    paddingBottom:10,
+    paddingLeft:5,
+    marginVertical:5,
+    marginHorizontal:15,
+    borderBottomWidth:0.5,
+    borderBottomColor:"rgba(64,64,64,0.5)",
+},
+detailsKey:{
+    fontWeight:'bold',
+    color:Constants.COLOR_GREY_DARK,
+    fontSize:Constants.FONT_SIZE_MEDIUM,
+    textTransform:'capitalize',
+},
+detailsValue:{
+    color:Constants.COLOR_GREY_DARK,
+    fontSize:Constants.FONT_SIZE_MEDIUM,
+},
+buttionView:{
+    width:160,
+    padding:10,
+    borderRadius:40,
+    marginVertical:15,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:Constants.COLOR_GREEN,
+},
+buttonText:{
+    color:Constants.COLOR_WHITE,
+    textTransform:'uppercase',
+    fontSize:Constants.FONT_SIZE__MEDIUM,
+},
+infoView:{
+    position:'absolute',
+    zIndex:+1,
+    right:'5%',
+    top:'20%',
+    width:wp(35),
+},
+infoViewTitle:{
+    color:Constants.COLOR_GREY_DARK,
+    fontWeight:'bold',
+    textAlign:'center',
+    marginVertical:3,
+    fontSize:Constants.FONT_SIZE_SMALL,
+},
+infoViewDesc:{
+    textAlign:'center',
+    color:Constants.COLOR_GREY_DARK,
+    fontSize:Constants.FONT_SIZE_SMALL,
+},
+infoViewShape:{
+    position:'absolute',
+    top:-7,
+    right:-6,
+    width: 0,
+    height: 0,
+    marginTop:-1,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderRightWidth:15,
+    borderTopWidth:15,
+    borderRightColor: 'transparent',
+    borderTopColor:Constants.COLOR_WHITE,
+    transform: [ {rotate: '-45deg'}],
+},
+reasonView:{
+    padding:10,
+    borderRadius:3,    
+    justifyContent:'center',
+    backgroundColor:Constants.COLOR_WHITE,
+},
+reasonCloser:{
+    position:'absolute',
+    top:5,
+    right:8,
+    width:15,
+    height:15,    
+},
+reasonTitle:{
+    fontWeight:'bold',
+    textAlign:'center',
+    textTransform:'capitalize',
+    color:Constants.COLOR_GREEN,
+    fontSize:Constants.FONT_SIZE_LARGE,
+},
+reasonTextView:{
+    height:100,
+    maxHeight:100,
+    marginTop:10,
+    paddingLeft:5,
+    marginBottom:10,
+    marginHorizontal:8,
+    borderRadius:3,
+    borderWidth:0.5,
+    borderColor:"rgba(64,64,64,0.5)",
+},
+reasonText:{
+    fontSize:Constants.FONT_SIZE__MEDIUM,
+},
+reasonNote:{
+    marginVertical:10,
+    textAlign:'center',
+    fontWeight:'bold',
+    color:Constants.COLOR_RED,
+    fontSize:Constants.FONT_SIZE__SMALL,
+},
+reasonButtonView:{
+    width:'45%',
+    padding:10,
+    borderRadius:30,
+    marginVertical:8,
+    alignSelf:'center',
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:Constants.COLOR_GREEN,
+},
+reasonButtonText:{
+    textAlign:'center',
+    textTransform:'uppercase',
+    color:Constants.COLOR_WHITE,
+    fontSize:Constants.FONT_SIZE_MEDIUM,
+},
+})
 const StyleMapView = StyleSheet.create({
     MainContainer: {
-        height:'83%',
+        height:'85%',
         left: 0,
         right: 0,
     },
@@ -2342,6 +2541,8 @@ const StylePaymentMethod = StyleSheet.create({
 
 
 export {
+    StyleMyBookingDetails,
+    StyleMyBooking,
     StyleHelpAndSupport,
     StyleTripHelpAndSupport,
     StyleNotification,

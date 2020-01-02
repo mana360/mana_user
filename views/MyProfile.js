@@ -17,7 +17,7 @@ export default class MyProfile extends React.Component {
             new_password:'',
             confirm_password:'',
             password_visible: true,
-            screen_title: 'CompanyProfile',
+            screen_title: 'UserProfile',
             modalVisible_Changepassword: false,
             modalVisible_SavedMsg:false,
         }

@@ -16,7 +16,7 @@ export default class MapViews extends React.Component {
         let {navigation} = this.props
         let item =this.props.navigation.getParam('flag');
         return (
-        <View style={{flex:1}}>
+        <View style={{}}>
             <HeaderBar isBack={true} title="Map View" isLogout={true} navigation={navigation}/>
             <View style={StyleMapView.MainContainer}>
 

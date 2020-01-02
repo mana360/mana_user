@@ -176,7 +176,26 @@ const Constants = {
 
 
 
+    //--- udayraj
+    EXPECTED_PICKUP:"expected pickup",
+    TOTAL_PRICE:"total price",
+    DRIVER_NAME:"driver name",
+    DRIVER_NUMBER:"driver number",
+    BOOKING_ID:"booking id",
+    BOOKING_DATE_TIME:"booking date & time",
+    PICKUP_ADDRESS:"Pick Up Address",
+    PICKUP_INSTRUCTIONS:"Pick up instructions",
+    DROP_OF_ADDRESS:"Drop off Address",
+    TRUCK_TYPE:"truck type",
+    LOAD_CATEGORY:"Load category",
+    OTHER_SERVICES:"Other services",
+    TOTAL_PRICE:"Total price",
+    CURRENT_STATUS:"Current status",
+    SHARE_MY_RIDE:"share my ride",
+    CANCEL_ORDER:"cancel order",
+    VEHICLE_REG_NUMBER:"Vehicle reg number",
+    CANCEL_REASON:"cancel reason",
+    REASON:"reason",
 };
-
 
 export default Constants;
