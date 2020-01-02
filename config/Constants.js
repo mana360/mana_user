@@ -5,7 +5,8 @@ const Constants = {
     FONT_SIZE_SMALL: 10,
     FONT_SIZE__MEDIUM: 12,
     FONT_SIZE_LARGE: 14,
-    FONT_SIZE_EXTRA_LARGE: 16,
+    FONT_SIZE_EXTRA_MEDIUM: 18,
+    FONT_SIZE_EXTRA_LARGE: 20,
 
     //colors
     COLOR_GREEN_PROFILE: "rgba(96, 176, 115,1)",
@@ -41,6 +42,7 @@ const Constants = {
     CANCELTRIP: 'cancel trip',
     LiveGeoPin: "Live Geo Pin",
     Set:'Set',
+    NextAddress:'Next Address',
     APPLY: 'APPLY',
 
     //Label
@@ -164,6 +166,21 @@ const Constants = {
     CancellationPlicy:'Cancellation Policy',
     PaymentPolicy:'Payment Policy',
     Referralcode:'Referral Code',
+    PickUpAddress:'Pick Up Address',
+    DropOffAddress:'Drop Off Address',
+    PickUpDate:'Pick Up Date',
+    PickUpTime:'Pick Up Time',
+    Instructions:'Instructions',
+    DropOffAddress1:'Drop Off Address 1',
+    DropOffAddress2:'Drop Off Address 2',
+    Name:'Name',
+    ContactNumber:'Contact Number',
+    AdditionalContactNumber:'Additional Contact Number',
+    AddServices:'Add Services',
+    TotalPrice:'Total Price',
+    BookTrip:'Book Trip',
+    OtherServices:'Other Services',
+    GrandTotal:'Grand Total'
     WelcomeToMana360:'Wellcome to Mana360!!' ,
     RateCard:'Rate Card',
     Amount:'Amount',

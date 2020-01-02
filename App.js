@@ -36,6 +36,10 @@ import EditProfile from './views/EditProfile';
 import ForgotPassword from './views/ForgotPassword';
 import SetPassword from './views/SetPassword';
 import SignUp from './views/SignUp';
+import LocationDetails from './views/LocationDetails';
+import LoadCategory from './views/LoadCategory';
+import BookingSummary from './views/BookingSummary';
+
 import DiscountVoucher from './views/DiscountVoucher';
 import MyBookings from './views/MyBookings'
 import MyBookingDetails from './views/MyBookingDetails'
@@ -183,6 +187,19 @@ const AppNavigator1 = createStackNavigator({
       screen: SignUp,
       navigationOptions: () => ({ header: null })
     },
+    LocationDetails: {
+      screen: LocationDetails,
+      navigationOptions: () => ({ header: null })
+    },
+    LoadCategory: {
+      screen: LoadCategory,
+      navigationOptions: () => ({ header: null })
+    },
+    BookingSummary: {
+      screen: BookingSummary,
+      navigationOptions: () => ({ header: null })
+    },
+   
     DiscountVouchers: {
       screen: DiscountVouchers,
       navigationOptions: () => ({ header: null })
@@ -212,6 +229,6 @@ const AppNavigator1 = createStackNavigator({
 
 },
      {initialRouteName:"PaymentMethod"}
-  
+
 )
 export const AppNavigator = createAppContainer(AppNavigator1);
