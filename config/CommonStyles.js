@@ -1510,6 +1510,42 @@ const StyleCollectMyLoad = StyleSheet.create({
         fontSize: Constants.fontSizeLarge,
         color: Constants.COLOR_GREY_DARK,
     },
+    collWrapp:{
+        flex:1,
+    },
+    carouselWrapp:{      
+        flex: 1,
+        width:'100%',
+        
+    },   
+    bagContainer: {	
+        alignItems:'center',		
+        alignSelf:'center',       
+	},
+	bgLogoImg: {		
+		width:120,
+		height: 120,
+        resizeMode: 'contain',	
+        alignSelf:'center',
+    },
+    outerCircle: {	
+		alignItems:"center",	
+	},
+	innerCircle: {
+		borderRadius: 100,
+		width:155,
+		height: 155,
+		backgroundColor: '#fff', 
+	},
+	truckImg: {		
+		width:100,
+		height: 100,
+		resizeMode: 'contain',	
+		alignSelf: 'center',
+		flex: 1,
+	},
+   
+
 })
 const StyleMyProfile = StyleSheet.create({
     topCircle: {
@@ -2346,8 +2382,9 @@ const StyleViewMap = StyleSheet.create({
     mapbottbtn:{
        alignItems:'center',
        backgroundColor: Constants.COLOR_GREEN,
-       paddingVertical:10,
-       borderRadius:20,
+       paddingVertical:13,
+       borderRadius:50,
+       justifyContent:'center',
     },
     mapbottbtntxt:{
         color:Constants.COLOR_WHITE,
