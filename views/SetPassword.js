@@ -1,5 +1,5 @@
 /* screen -MANAPPCUS043
-    design by -mayur
+    design by -mayur s
  */
 import React from 'react';
 import { View, Text, TouchableOpacity, Image,Modal,TextInput } from 'react-native'
@@ -36,7 +36,7 @@ modal_setSuccessfully(){
                         style={{ width: 90, height: 90, marginVertical: 10, alignSelf: 'center' }}
 
                     />
-                    <Text style={[StyleMyProfile.col1Text, { textTransform: 'capitalize', alignSelf: 'center', fontSize: Constants.FONT_SIZE_EXTRA_LARGE }]}>{Constants.PasswordHasResetSuccessfully}</Text>
+                    <Text style={[StyleMyProfile.col1Text, {  alignSelf: 'center', fontSize: Constants.FONT_SIZE_EXTRA_LARGE }]}>{Constants.PasswordHasResetSuccessfully}</Text>
   
                     <TouchableOpacity style={[StyleMyProfile.ButtonView, { paddingHorizontal: 50, marginVertical:15 }]}
                         onPress={()=>{

@@ -1,6 +1,6 @@
 /* screen -MANAPPCUS036
-    design by -mayur
- */
+    design by -mayur s
+ */ 
 import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput } from 'react-native';
 import { StyleMyProfile } from '../config/CommonStyles';
@@ -17,7 +17,7 @@ export default class MyProfile extends React.Component {
             new_password:'',
             confirm_password:'',
             password_visible: true,
-            screen_title: 'CompanyProfile',
+            screen_title: 'UserProfile',
             modalVisible_Changepassword: false,
             modalVisible_SavedMsg:false,
         }
@@ -130,8 +130,6 @@ export default class MyProfile extends React.Component {
             </View>
         )
     }
-
-
     render() {
         let { navigation } = this.props
         return (

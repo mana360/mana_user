@@ -1,17 +1,19 @@
 /* screen -MANAPPCUS008
-    design by -mayur
+    design by -mayur s
  */
 import React, { Component } from 'react';
-import { View, Text, Image, TextInput, ScrollView, } from 'react-native';
+import { View, Text, Image, TextInput, ScrollView,TouchableOpacity,Modal } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { StyleViewCompletedDetail } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
+import Invoice from './InvoiceView';
 export default class ViewCompletedTripDetail extends React.Component {
     constructor() {
         super();
         this.state = {
+            invoiceModal_Visible:false
 
         }
     }
@@ -25,7 +27,9 @@ export default class ViewCompletedTripDetail extends React.Component {
             <View style={{ flex: 1 }}>
 
                 <HeaderBar title="VIEW COMPLETED TRIP DETAILS" isBack={true} isLogout={true} navigation={navigation} />
+                
                 <View style={{ flex: 1 }}>
+
                     <ScrollView style={{ width: '100%' }} bounces={false}>
 
                         <View style={{ marginBottom: 2 }}>
@@ -118,6 +122,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col2Text}>NO</Text>
                             </View>
                         </View>
+                       
                         <View style={StyleViewCompletedDetail.row}>
                             <View style={StyleViewCompletedDetail.col1}>
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.CargoHandlingCharges}</Text>
@@ -170,18 +175,34 @@ export default class ViewCompletedTripDetail extends React.Component {
                             <View style={[StyleViewCompletedDetail.col2, { flexDirection: 'row' }]}>
                                 <Text style={[StyleViewCompletedDetail.col2Text, { color: Constants.COLOR_GREEN, fontWeight: 'bold' }]}
                                 >Completed</Text>
-                                <Image source={require('../images/status_completed.png')}
-                                    style={{ width: 45, height: 45, marginLeft: '25%', top: -8 }}
-                                />
+                                <TouchableOpacity style={{marginLeft: '25%', top: -8}}
+                                        onPress={()=>{
+                                                this.setState({invoiceModal_Visible:true})
+                                        }}    
+                                >
+                                    <Image source={require('../images/status_completed.png')}
+                                        style={{ width: 45, height: 45, }}
+                                    />
+                                </TouchableOpacity>
                             </View>
                         </View>
 
-
-
                     </ScrollView>
+             
                 </View>
 
                 <FooterBar navigation={navigation} />
+               
+                <Modal
+                    animationType='fade'
+                    transparent={true}
+                    visible={this.state.invoiceModal_Visible}
+                >
+                    <Invoice clickCallback={() => {
+                        this.setState({ invoiceModal_Visible: false });
+                    }} />
+                </Modal>
+           
             </View>
         )
     }

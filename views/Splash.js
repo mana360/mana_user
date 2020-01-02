@@ -1,5 +1,5 @@
-/* screen -MANAPPCUS001
-    design by -mayur
+/* screen -MANAPPCUS001 
+    design by -mayur s
  */
 import React, { Component } from 'react';
 import {View,Image} from 'react-native'

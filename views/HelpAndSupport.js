@@ -1,5 +1,5 @@
 /* screen -MANAPPCUS002
-    design by -mayur
+    design by -mayur s
  */
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, Picker, TextInput, Modal } from 'react-native';
@@ -17,22 +17,22 @@ export default class HelpAndSupport extends React.Component {
             support_message: "",
             support_contact_number: "8866114477",
             modal_Visible: false,
-            isUser: false,
+            isUser:true,
 
         }
     }
     render() {
-        let IsTrucking = this.props.navigation.getParam('flag_truckBooking', false);
-        let IsWarehouse = this.props.navigation.getParam('flag_Warehouse', false);
-        let IsTruckingWarehouse = this.props.navigation.getParam('flag_truckingWarehouse', false);
+        let IsTrip = this.props.navigation.getParam('flag', false);
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, }}>
                 <HeaderBar title={this.state.isUser ? "Help & Support" : "Trip-Help & support"}
 
-                    isBack={true} isLogout={true} navigation={navigation} />
+                    isBack={true} isLogout={true} navigation={navigation}
+                />
 
                 <ScrollView bounces={false} style={{ width: wp('100%') }}>
+                   
                     <View style={{ flex: 1, backgroundColor: Constants.colorGrey }}>
 
                         <View style={{ flex: 8, flexDirection: 'row', height: 180, maxHeight: 180, backgroundColor: Constants.COLOR_WHITE }}>
@@ -65,22 +65,10 @@ export default class HelpAndSupport extends React.Component {
 
                         <View style={{ backgroundColor: Constants.COLOR_WHITE }}>
 
-                            <View style={this.state.isUser ? [{ paddingLeft: 45, marginTop: 15, }] : { display: 'none' }}>
+                            <View style={this.state.isUser ? { display: 'none' }:[{ paddingLeft: 45, marginTop: 15, }]}>
                                 <Text style={StyleTripHelpAndSupport.pickerTitle}>{Constants.Trip}</Text>
                                 <Text style={{ color: Constants.COLOR_GREY_LIGHT, marginVertical: 2 }}>{Constants.Nyc_Syc}</Text>
                             </View>
-
-                            <View style={this.state.isUser == IsWarehouse ? { display: 'none' } : [{ paddingLeft: 45, marginTop: 15, }]}>
-                                <Text style={StyleTripHelpAndSupport.pickerTitle}>{Constants.Trip}</Text>
-                                <Text style={{ color: Constants.COLOR_GREY_LIGHT, marginVertical: 2 }}>{Constants.Nyc_Syc}</Text>
-
-                            </View>
-                            {/* 
-                            <View style={this.state.isUser==IsTrucking? { display: 'none' } : [{ paddingLeft: 45, marginTop: 15, }]}>
-                                <Text style={StyleTripHelpAndSupport.pickerTitle}>{Constants.Trip}</Text>
-                                <Text style={{ color: Constants.COLOR_GREY_LIGHT, marginVertical: 2 }}>{Constants.Nyc_Syc}</Text>
-
-                            </View> */}
 
                             <View style={this.state.isUser ? [StyleHelpAndSupport.pickerView, { marginTop: 35 }] : [StyleHelpAndSupport.pickerView, { marginTop: 25 }]}>
                                 <View style={{ position: 'absolute', top: -15, left: 20, padding: 5, paddingLeft: 10, paddingRight: 10, backgroundColor: Constants.COLOR_WHITE, }}>
@@ -117,7 +105,7 @@ export default class HelpAndSupport extends React.Component {
                             <View style={this.state.isUser ? { display: 'none' } : StyleTripHelpAndSupport.bottomButtonView}>
                                 <TouchableOpacity style={StyleTripHelpAndSupport.bottomButtonlabel}
                                     onPress={() => {
-
+                                                this.props.navigation.pop();
                                     }}
                                 >
                                     <Text style={StyleTripHelpAndSupport.bottomButtonText}>{Constants.BACK}</Text>
@@ -147,7 +135,7 @@ export default class HelpAndSupport extends React.Component {
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
                         <View style={StyleHelpAndSupport.modalView}>
-                            <TouchableOpacity style={{ alignSelf: 'flex-end', top: 5, right: 10 }}
+                            <TouchableOpacity style={{ alignSelf: 'flex-end',top:10, right:10 }}
                                 onPress={() => {
                                     this.setState({ modal_Visible: false })
                                 }}

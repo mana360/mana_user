@@ -1,5 +1,5 @@
-/* screen -MANAPPCUS0017
-    design by -mayur
+/* screen -MANAPPCUS008
+    design by -mayur s
  */
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity } from 'react-native';
@@ -23,17 +23,21 @@ export default class ViewCurrentTrip extends React.Component {
     }
     render() {
         let { navigation } = this.props
+       
         return (
             <View style={{ flex: 1 }}>
 
                 <HeaderBar title="VIEW CURRENT TRIP" isBack={true} isLogout={true} navigation={navigation}/>
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%' }} bounces={false}>
+                     
                         <View style={{ marginBottom: 2 }}>
+
                             <View style={StyleViewCurrentTrip.topCircle} />
 
                             <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
-                                <TouchableOpacity style={{ marginTop: 45, }}
+
+                                <TouchableOpacity style={{ marginTop: 55, }}
                                     onPress={() => {
                                         return (
                                             this.setState({ invoiceModal_Visible: true })
@@ -47,9 +51,9 @@ export default class ViewCurrentTrip extends React.Component {
                                 <Image source={require('../images/current_trips.png')}
                                     style={StyleViewCurrentTrip.ImageCurrentTrip}
                                 />
-                                <TouchableOpacity style={{ marginTop: 45, }}
+                                <TouchableOpacity style={{ marginTop: 55, }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('HelpAndSupport', { flag_truckBooking: false })
+                                        this.props.navigation.navigate('HelpAndSupport', { flag: false })
                                     }}
                                 >
                                     <Image source={require('../images/support_icon.png')}
@@ -57,6 +61,7 @@ export default class ViewCurrentTrip extends React.Component {
                                     />
                                 </TouchableOpacity>
                             </View>
+                      
                         </View>
 
                         <Text style={StyleViewCurrentTrip.title}>NYC - SYS</Text>
@@ -136,7 +141,8 @@ export default class ViewCurrentTrip extends React.Component {
 
                         <TouchableOpacity style={StyleViewCurrentTrip.bottomButton}
                             onPress={() => {
-                                this.RBSheet.open();
+                                this.props.navigation.navigate('MapViews',{flag:'truck'})
+                                // this.RBSheet.open(); //delay msg
                             }}
                         >
                             <Image source={require('../images/live_geo_pin.png')}
@@ -146,6 +152,7 @@ export default class ViewCurrentTrip extends React.Component {
                         </TouchableOpacity>
 
                     </ScrollView>
+                   
                     <RBSheet
                         ref={ref => {
                             this.RBSheet = ref;
@@ -168,6 +175,7 @@ export default class ViewCurrentTrip extends React.Component {
                         }}>{Constants.WillCauseDelayBecauseOfSomeRoadBloc}</Text>
 
                     </RBSheet>
+              
                 </View>
 
                 <FooterBar navigation={navigation} />
@@ -181,7 +189,7 @@ export default class ViewCurrentTrip extends React.Component {
                         this.setState({ invoiceModal_Visible: false });
                     }} />
                 </Modal>
-
+           
             </View>
         )
     }

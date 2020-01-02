@@ -7,6 +7,7 @@ import { StackActions, NavigationActions } from 'react-navigation';
 import {Header} from 'native-base'
 import Constants from '../config/Constants'
 import Modal from "react-native-modal";
+
 class HeaderBar extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -27,8 +28,10 @@ class HeaderBar extends React.Component {
     const isBack= this.props.isBack;
     const isNotification = this.props.isNotification;
     const isLogout = this.props.isLogout;
+    const isMenu = this.props.isMenu;
   return (
      <Header style={{backgroundColor:Constants.COLOR_PRIMARY, padding:0, margin:0, justifyContent:'center', alignItems:'center', alignContent:'center',}}>
+     <Header style={{backgroundColor:Constants.COLOR_PRIMARY, justifyContent:'center', alignItems:'center'}}>
         <View style={{flex:10, flexDirection:'row',}}>
             <View style={{flex:1, justifyContent:'center', alignItems:'flex-start'}}>
                 <TouchableOpacity style={isBack ? {display:'flex', padding:10, paddingLeft:10, paddingRight:40,} : {display:'none'}}
@@ -36,6 +39,14 @@ class HeaderBar extends React.Component {
                 >
                   <Image
                     source={require('../images/back_white.png')}
+                    style={styles.headerIcon}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={isMenu ? {display:'flex', padding:10, paddingLeft:10, paddingRight:40,} : {display:'none'}}
+                  onPress={()=>{}}
+                >
+                  <Image
+                    source={require('../images/menu.png')}
                     style={styles.headerIcon}
                   />
                 </TouchableOpacity>
@@ -47,7 +58,7 @@ class HeaderBar extends React.Component {
 
             <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
                 <TouchableOpacity style={isNotification ? {display:'flex'} : {display:'none'}}
-                  onPress={()=>{this.props.navigation.navigate('Notifications')}}
+                  onPress={()=>{this.props.navigation.navigate('Notification')}}
                 >
                   <Image
                     source={require('../images/notification.png')}

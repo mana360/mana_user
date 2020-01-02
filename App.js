@@ -9,7 +9,7 @@ import Notification from './views/Notification';
 import RateAndReview from './views/RateAndReview';
 import ViewCompletedTripDetail from './views/ViewCompletedTripDetail';
 import SignIn from './views/Signin';
-import TermsAndCondition from './views/TermsAndCondition.';
+import TermsAndCondition from './views/TermsAndCondition';
 import Dashboard from './views/Dashboard';
 import TruckBooking from './views/TruckBooking';
 import CurrentTrip from './views/CurrentTrip';
@@ -36,10 +36,20 @@ import EditProfile from './views/EditProfile';
 import ForgotPassword from './views/ForgotPassword';
 import SetPassword from './views/SetPassword';
 import SignUp from './views/SignUp';
+<<<<<<< HEAD
 import LocationDetails from './views/LocationDetails';
 import LoadCategory from './views/LoadCategory';
 import BookingSummary from './views/BookingSummary';
 
+=======
+import DiscountVoucher from './views/DiscountVoucher';
+import MyBookings from './views/MyBookings'
+import MyBookingDetails from './views/MyBookingDetails'
+import DiscountVouchers from './views/DiscountVouchers';
+import ViewMap from './views/ViewMap';
+import MapViews from './views/MapView';
+import PaymentMethod from './views/PaymentMethod';
+>>>>>>> c58ff4997e5483544ceff796de7f9b5e7d8ed287
 
 console.disableYellowBox = true;
 
@@ -180,6 +190,7 @@ const AppNavigator1 = createStackNavigator({
       screen: SignUp,
       navigationOptions: () => ({ header: null })
     },
+<<<<<<< HEAD
     LocationDetails: {
       screen: LocationDetails,
       navigationOptions: () => ({ header: null })
@@ -194,5 +205,41 @@ const AppNavigator1 = createStackNavigator({
     },
 },
      {initialRouteName:"LoadCategory"}
+=======
+    DiscountVouchers: {
+      screen: DiscountVouchers,
+      navigationOptions: () => ({ header: null })
+    },
+    ViewMap: {
+      screen: ViewMap,
+      navigationOptions: () => ({ header: null })
+    },
+    MapViews: {
+      screen: MapViews,
+      navigationOptions: () => ({ header: null })
+    },
+
+PaymentMethod: {
+  screen: PaymentMethod,
+  navigationOptions: () => ({ header: null })
+},
+
+MyBookings:{
+  screen:MyBookings,
+  navigationOptions:()=>({header:null})
+},
+MyBookingDetails:{
+  screen:MyBookingDetails,
+  navigationOptions:()=>({header:null})
+},
+
+
+},
+     {initialRouteName:"PaymentMethod"}
+   
+
+
+
+>>>>>>> c58ff4997e5483544ceff796de7f9b5e7d8ed287
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

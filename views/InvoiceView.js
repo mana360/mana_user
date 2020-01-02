@@ -1,8 +1,8 @@
 /* screen -MANAPPCUS020
-    design by -mayur
+    design by -mayur s
  */
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ScrollView,Image } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { StyleInvoice } from '../config/CommonStyles';
 import Constants from '../config/Constants';
@@ -25,6 +25,7 @@ export default class Invoice extends React.Component {
             <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', }}>
                 <View style={[StyleInvoice.InvoiceModalView, {}]}>
                     <ScrollView>
+
                         <TouchableOpacity style={StyleInvoice.crossView}
                             onPress={() => {
                                 if (this.props.clickCallback != undefined) {
@@ -33,10 +34,11 @@ export default class Invoice extends React.Component {
                                 }
                             }}
                         >
-                            <Image source={require('../images/close.png')} 
-                                 style={{width:12,height:12,}}
-                           />
+                            <Image source={require('../images/close.png')}
+                                style={{ width: 12, height: 12, }}
+                            />
                         </TouchableOpacity>
+
                         <Text style={[StyleInvoice.InvoiceTitle, { alignSelf: 'center' }]}>{Constants.Invoice}</Text>
 
                         <View style={{ alignSelf: 'flex-end', flexDirection: 'column', paddingBottom: 15 }}>
@@ -99,6 +101,7 @@ export default class Invoice extends React.Component {
                                 <Text style={[StyleInvoice.invoiceLabel,]}>$176</Text>
                             </View>
                         </View>
+
                         <View style={StyleInvoice.InvoicebottomLine}>
                         </View>
 
@@ -129,6 +132,7 @@ export default class Invoice extends React.Component {
                             <Text style={[StyleInvoice.invoiceLabel,]}>{Constants.termsAndConditionMsg}</Text>
 
                         </View>
+
                         <TouchableOpacity style={StyleInvoice.buttonView}
                             onPress={() => {
                                 if (this.props.clickCallback != undefined) {
@@ -138,7 +142,9 @@ export default class Invoice extends React.Component {
                             }}>
                             <Text style={StyleInvoice.buttonText}>{Constants.DownloadInvoice}</Text>
                         </TouchableOpacity>
+
                     </ScrollView>
+
                 </View>
             </View>
         )

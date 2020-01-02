@@ -1,5 +1,5 @@
 /* screen -MANAPPCUS041
-    design by -mayur
+    design by -mayur s
  */
 import React from 'react';
 import { View, Text, TouchableOpacity, Image,Modal,TextInput } from 'react-native'
@@ -39,7 +39,10 @@ export default class ForgotPassword extends React.Component {
                         maxLength={4}
                         placeholder='0000'
                         onChangeText={(Text) => {
-                            this.setState({ OTP: Text })
+                            if(!isNaN(Text))
+                                this.setState({ OTP: Text })
+                            else
+                             this.setState({ OTP:'' })
                         }}
                     />
                     <TouchableOpacity style={{ alignSelf: 'center', marginTop: 15 }}>
@@ -61,7 +64,6 @@ export default class ForgotPassword extends React.Component {
                         <TouchableOpacity style={StyleForgotPassword.modalButtonView}
                             onPress={()=>{
                                 this.setState({modal_visible:false})
-                                this.props.navigation.navigate('CurrentTrip');
                             }}
                         >
                             <Text style={StyleForgotPassword.modalButtonLabel}>{Constants.BACK}</Text>
@@ -95,11 +97,20 @@ export default class ForgotPassword extends React.Component {
                             value={this.state.mobile_number}
                             keyboardType="number-pad"
                             maxLength={10}
-                            onChangeText={(text) => { this.setState({ mobile_number: text }) }}
+                            onChangeText={(text) => {
+                                if(!isNaN(text))
+                                    this.setState({ mobile_number: text }) 
+                                else
+                                this.setState({ mobile_number: '' }) 
+                            }}
                         />
                     </View>
                     <View style={{ bottom: 0, position: 'absolute', flexDirection: 'row', justifyContent: 'center', marginBottom: 20 }}>
-                        <TouchableOpacity style={StyleForgotPassword.ButtonView}>
+                        <TouchableOpacity style={StyleForgotPassword.ButtonView}
+                        onPress={()=>{
+                            this.props.navigation.pop();
+                        }}
+                        >
                             <Text style={StyleForgotPassword.buttonLabel}>{Constants.CANCEL}</Text>
                         </TouchableOpacity>
 
