@@ -31,7 +31,6 @@ class HeaderBar extends React.Component {
     const isMenu = this.props.isMenu;
   return (
      <Header style={{backgroundColor:Constants.COLOR_PRIMARY, padding:0, margin:0, justifyContent:'center', alignItems:'center', alignContent:'center',}}>
-     <Header style={{backgroundColor:Constants.COLOR_PRIMARY, justifyContent:'center', alignItems:'center'}}>
         <View style={{flex:10, flexDirection:'row',}}>
             <View style={{flex:1, justifyContent:'center', alignItems:'flex-start'}}>
                 <TouchableOpacity style={isBack ? {display:'flex', padding:10, paddingLeft:10, paddingRight:40,} : {display:'none'}}

@@ -5,6 +5,9 @@ import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, Modal,TextInput} from 'react-native';
 import { StyleCollectMyLoad } from '../config/CommonStyles';
 import Constants from '../config/Constants';
+import RBSheet from "react-native-raw-bottom-sheet";
+import Carousel  from "react-native-carousel";
+
 export default class CollectMyLoad extends React.Component {
     constructor() {
         super();
@@ -154,7 +157,7 @@ ReferAFriend(){
                         <Text style={StyleCollectMyLoad.descText}>fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
                         <TouchableOpacity style={StyleCollectMyLoad.button}
                             onPress={() => {
-                                alert('navigate to pml')
+                                this.RBSheet.open();
                             }}
                         >
                             <Text style={StyleCollectMyLoad.buttonLabel}>{Constants.ViewAll}</Text>
@@ -222,6 +225,7 @@ ReferAFriend(){
                   </View>
 
                 </View>
+               
                 <Modal
                 transparent={true}
                 visible={this.state.modalVisible_RateCard}
@@ -229,12 +233,48 @@ ReferAFriend(){
                 >
                    {this.RateCard()}
                 </Modal>
+               
                 <Modal
                 transparent={true}
                 visible={this.state.ModalVisible_referFriend}
                 animationType='fade'>
                     {this.ReferAFriend()}
                 </Modal>
+
+                <RBSheet
+                    ref={ref => {
+                    this.RBSheet = ref;
+                    }}
+                    height={300}
+                    duration={250}
+                    customStyles={{
+                    container: {
+                        borderTopLeftRadius: 50,
+                        borderTopRightRadius: 50,
+                        backgroundColor:'transparent,'
+                    }
+                    }}
+                >
+                    <View style={StyleCollectMyLoad.collWrapp }>
+                        <Carousel 
+                           indicatorAtBottom={false} 
+                        >
+                            <View style={StyleCollectMyLoad.carouselWrapp}>                          
+                               <View style={StyleCollectMyLoad.outerCircle}>
+                                    <View style={StyleCollectMyLoad.innerCircle}>
+                                        <Image style={StyleCollectMyLoad.truckImg}
+                                                    source={require('../images/truck_icon.png')} />
+                                    </View>
+                                </View>   
+                                                             
+                            </View>
+                            <View style={StyleCollectMyLoad.carouselWrapp}>
+                                <Text>Page 1</Text>
+                            </View>
+                        </Carousel>  
+                    </View>  
+                </RBSheet>            
+
             </View>
         )
     }
