@@ -36,12 +36,16 @@ import EditProfile from './views/EditProfile';
 import ForgotPassword from './views/ForgotPassword';
 import SetPassword from './views/SetPassword';
 import SignUp from './views/SignUp';
+import LocationDetails from './views/LocationDetails';
+import LoadCategory from './views/LoadCategory';
+import BookingSummary from './views/BookingSummary';
+import DiscountVoucher from './views/DiscountVoucher';
 import MyBookings from './views/MyBookings'
 import MyBookingDetails from './views/MyBookingDetails'
 import DiscountVouchers from './views/DiscountVouchers';
-import BookingSummary from './views/BookingSummary';
 import ViewMap from './views/ViewMap';
 import MapViews from './views/MapView';
+import PaymentMethod from './views/PaymentMethod';
 
 console.disableYellowBox = true;
 
@@ -182,12 +186,25 @@ const AppNavigator1 = createStackNavigator({
       screen: SignUp,
       navigationOptions: () => ({ header: null })
     },
-    DiscountVouchers: {
-      screen: DiscountVouchers,
+    LocationDetails: {
+      screen: LocationDetails,
+      navigationOptions: () => ({ header: null })
+    },
+    LoadCategory: {
+      screen: LoadCategory,
       navigationOptions: () => ({ header: null })
     },
     BookingSummary: {
       screen: BookingSummary,
+      navigationOptions: () => ({ header: null })
+    },
+   
+    DiscountVouchers: {
+      screen: DiscountVouchers,
+      navigationOptions: () => ({ header: null })
+    },
+    DiscountVoucher: {
+      screen: DiscountVoucher,
       navigationOptions: () => ({ header: null })
     },
     ViewMap: {
@@ -198,6 +215,11 @@ const AppNavigator1 = createStackNavigator({
       screen: MapViews,
       navigationOptions: () => ({ header: null })
     },
+    PaymentMethod: {
+      screen: PaymentMethod,
+      navigationOptions: () => ({ header: null })
+    },
+
     MyBookings:{
       screen:MyBookings,
       navigationOptions:()=>({header:null})
@@ -206,7 +228,9 @@ const AppNavigator1 = createStackNavigator({
       screen:MyBookingDetails,
       navigationOptions:()=>({header:null})
     },
+
+
 },
-     {initialRouteName:"MyBookings"}
+     {initialRouteName:"Splash"}
 )
 export const AppNavigator = createAppContainer(AppNavigator1);
