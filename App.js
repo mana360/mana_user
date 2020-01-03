@@ -36,7 +36,6 @@ import EditProfile from './views/EditProfile';
 import ForgotPassword from './views/ForgotPassword';
 import SetPassword from './views/SetPassword';
 import SignUp from './views/SignUp';
-import DiscountVoucher from './views/DiscountVoucher';
 import MyBookings from './views/MyBookings'
 import MyBookingDetails from './views/MyBookingDetails'
 import DiscountVouchers from './views/DiscountVouchers';
@@ -195,7 +194,6 @@ const AppNavigator1 = createStackNavigator({
       screen: ViewMap,
       navigationOptions: () => ({ header: null })
     },
-   
     MapViews: {
       screen: MapViews,
       navigationOptions: () => ({ header: null })
@@ -209,10 +207,6 @@ const AppNavigator1 = createStackNavigator({
       navigationOptions:()=>({header:null})
     },
 },
-<<<<<<< HEAD
-     {initialRouteName:"SignIn"}
-=======
      {initialRouteName:"MyBookings"}
->>>>>>> 98a20fba9a1d0e6fd44c7a2e27a4def366bb2f93
 )
 export const AppNavigator = createAppContainer(AppNavigator1);
