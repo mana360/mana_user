@@ -2,8 +2,8 @@
     design by -mayur s
  */
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, Modal,TextInput} from 'react-native';
-import { StyleCollectMyLoad } from '../config/CommonStyles';
+import { View, Text, Image, TouchableOpacity, Modal,TextInput,FlatList} from 'react-native';
+import { StyleCollectMyLoad, StyleLocationDetails } from '../config/CommonStyles';
 import Constants from '../config/Constants';
 import RBSheet from "react-native-raw-bottom-sheet";
 import Carousel  from "react-native-carousel";
@@ -14,7 +14,32 @@ export default class CollectMyLoad extends React.Component {
         this.state = {
             modalVisible_RateCard:false,
             ModalVisible_referFriend:false,
-
+            truckList:[
+                {                  
+                    src: require('../images/truck_icon.png'),
+                    truckTitle:"Choose Truck",
+                    truckWeight:"1 Ton", 
+                    truckDesp:"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+                    truckMaxWeight:"1 Ton",
+                    truckSize:"22 Meters"
+                },
+                {
+                    src: require('../images/truck_icon_one.png'),
+                    truckTitle:"Choose Truck",
+                    truckWeight:"1.5 Ton", 
+                    truckDesp:"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+                    truckMaxWeight:"1.5 Ton",
+                    truckSize:"32 Meters"
+                },
+                {
+                    src: require('../images/truck_icon_two.png'),
+                    truckTitle:"Choose Truck",
+                    truckWeight:"3 Ton", 
+                    truckDesp:"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+                    truckMaxWeight:"3 Ton",
+                    truckSize:"45 Meters"
+                }
+            ]                
         }
     }
 RateCard(){
@@ -247,32 +272,57 @@ ReferAFriend(){
                     ref={ref => {
                     this.RBSheet = ref;
                     }}
-                    height={300}
+                    height={600}
                     duration={250}
                     customStyles={{
                     container: {
                         borderTopLeftRadius: 50,
                         borderTopRightRadius: 50,
-                        backgroundColor:'transparent,'
+                        backgroundColor:'transparent',
                     }
                     }}
                 >
                     <View style={StyleCollectMyLoad.collWrapp }>
                         <Carousel 
-                           indicatorAtBottom={false} 
+                           indicatorAtBottom={true} 
+                           indicatorOffset={0}
+                           delay={5000} 
+                           loop={true}
+                           indicatorColor="#7bc145"                          
+                           indicatorSpace={15}
                         >
-                            <View style={StyleCollectMyLoad.carouselWrapp}>                          
-                               <View style={StyleCollectMyLoad.outerCircle}>
-                                    <View style={StyleCollectMyLoad.innerCircle}>
-                                        <Image style={StyleCollectMyLoad.truckImg}
-                                                    source={require('../images/truck_icon.png')} />
-                                    </View>
-                                </View>   
-                                                             
-                            </View>
-                            <View style={StyleCollectMyLoad.carouselWrapp}>
-                                <Text>Page 1</Text>
-                            </View>
+                            {
+                                        this.state.truckList.map((item)=>{
+                                            return(
+                                                <View style={StyleCollectMyLoad.carouselWrapp}>
+                                                    <View style={StyleCollectMyLoad.innpickTop}>
+                                                        <Image style={StyleCollectMyLoad.bgpickImg}
+                                                            source={require('../images/pickload_circle.png')}
+                                                        />
+                                                        <View style={StyleCollectMyLoad.outerCircle}>
+                                                            <View style={StyleCollectMyLoad.innerCircle}>
+                                                                <Image style={StyleCollectMyLoad.truckImg}
+                                                                    source={item.src} 
+                                                                />
+                                                            </View>
+                                                         </View>                                    
+                                                    </View>  
+                                                    <View style={StyleCollectMyLoad.whiteinnBox}>
+                                                        <Text style={StyleCollectMyLoad.chosetruckTxt}>{item.truckTitle}</Text>
+                                                        <Text style={StyleCollectMyLoad.weighTxt}>{item.truckWeight}</Text>
+                                                        <Text style={StyleCollectMyLoad.truckDetails}>{item.truckDesp}</Text>
+                                                        <View style={StyleCollectMyLoad.grayBox}>
+                                                            <Text style={[StyleCollectMyLoad.maxTxt, {marginBottom:6} ]}>Maximum Weight : {item.truckMaxWeight}</Text>
+                                                            <Text style={StyleCollectMyLoad.maxTxt}>Size : {item.truckSize}</Text>
+                                                        </View>
+                                                        <TouchableOpacity style={StyleCollectMyLoad.truckBtn}>
+                                                            <Text style={StyleCollectMyLoad.truckBtnText}>Select Truck</Text>
+                                                        </TouchableOpacity>
+                                                   </View>  
+                                               </View>
+                                            )
+                                        })
+                            }
                         </Carousel>  
                     </View>  
                 </RBSheet>            

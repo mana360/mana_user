@@ -1530,40 +1530,99 @@ const StyleCollectMyLoad = StyleSheet.create({
         color: Constants.COLOR_GREY_DARK,
     },
     collWrapp:{
+        flex:1,        
+        position:'relative',
+    },
+    carouselWrapp:{        
         flex:1,
     },
-    carouselWrapp:{      
-        flex: 1,
-        width:'100%',
-        
-    },   
-    bagContainer: {	
-        alignItems:'center',		
-        alignSelf:'center',       
-	},
-	bgLogoImg: {		
-		width:120,
-		height: 120,
-        resizeMode: 'contain',	
-        alignSelf:'center',
-    },
+    innpickTop:{
+        flex:1,
+        marginTop:0,
+        position:"relative",  
+        alignItems:"center",      
+    },    
+    bgpickImg: {
+		width: '100%',       
+        resizeMode:'contain',
+    },   	
     outerCircle: {	
-		alignItems:"center",	
+		position:'absolute',
+		left:0,
+		right:0,
+		top:15,
+        zIndex: 1,       
+        alignItems:"center",      
 	},
-	innerCircle: {
+    innerCircle: {
 		borderRadius: 100,
-		width:155,
-		height: 155,
-		backgroundColor: '#fff', 
+		width:125,
+		height: 125,
+        backgroundColor: '#fff', 
+        justifyContent:"center",        
 	},
-	truckImg: {		
-		width:100,
-		height: 100,
-		resizeMode: 'contain',	
-		alignSelf: 'center',
-		flex: 1,
+    truckImg: {		
+        width:90,
+        height:90,
+        zIndex:1,        
+        resizeMode:'contain',   
+        alignSelf:"center",        
+    },
+    whiteinnBox:{
+        backgroundColor:'#fff',
+        flex:1,
+        alignItems:"center",
+        paddingHorizontal:25,
+        marginTop:-285,
+    },
+    chosetruckTxt:{
+        textTransform:"uppercase",
+        fontFamily: "Roboto-Medium",
+        fontSize:Constants.FONT_SIZE_EXTRA_MEDIUM,
+        color:Constants.COLOR_GREEN,
+        marginTop:15,
+    },
+    weighTxt:{
+        fontFamily: "Roboto-Medium",
+        fontSize:Constants.FONT_SIZE_EXTRA_MEDIUM,
+        color:Constants.COLOR_GREEN_DARK,
+        marginTop:15,
+    },
+    truckDetails:{
+        fontFamily: "Roboto-Regular",
+        fontSize:Constants.FONT_SIZE_LARGE,
+        color:Constants.COLOR_GREEN_DARK,
+        marginTop:5,
+        textAlign:"center",
+    },
+    grayBox:{
+        backgroundColor:Constants.COLOR_GREY_DARK,
+        width:'100%',
+        borderRadius:6,
+        paddingVertical:20,      
+        alignItems:"center",
+        marginTop:25,
+        marginBottom:35,
+    },
+    maxTxt:{       
+        color:'#fff',
+        fontFamily: "Roboto-Medium",
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
+        textTransform:"uppercase",
+    },
+    truckBtn: {
+		backgroundColor: Constants.COLOR_GREEN,
+		borderRadius: 50,
+		padding:12,
+        alignItems:"center",       
+        width:'100%',
 	},
-   
+	truckBtnText: {
+		color: '#fff',
+		fontSize: 16,  	
+		textTransform:'uppercase',	
+		fontFamily: "Roboto-Medium",				
+    },
 
 })
 const StyleMyProfile = StyleSheet.create({
