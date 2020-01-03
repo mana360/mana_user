@@ -84,7 +84,7 @@ export default class TruckingWarehouseViewUpcomingTrip extends React.Component {
         return (
             <View style={{ flex: 1 }}>
 
-                <HeaderBar title="VIEW UPCOMING TRIP DETAILS" isBack={true} isLogout={true} navigation={navigation} />
+                <HeaderBar title="VIEW UPCOMING TRIP " isBack={true} isLogout={true} navigation={navigation} />
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%' }} bounces={false}>
                     
@@ -125,7 +125,7 @@ export default class TruckingWarehouseViewUpcomingTrip extends React.Component {
                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Telephonenumber}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>+56 4585965351</Text>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>+565965351</Text>
                             </View>
                         </View>
 
@@ -251,7 +251,7 @@ export default class TruckingWarehouseViewUpcomingTrip extends React.Component {
                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.SizeofgoodStored}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>38kg</Text>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>38 kg</Text>
                             </View>
                         </View>
 
@@ -260,7 +260,7 @@ export default class TruckingWarehouseViewUpcomingTrip extends React.Component {
                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Dimension}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>100*50*50</Text>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>100*50*50 inches</Text>
                             </View>
                         </View>
 
@@ -269,7 +269,7 @@ export default class TruckingWarehouseViewUpcomingTrip extends React.Component {
                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.VolumetricWeight}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>18kg</Text>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>18 kg</Text>
                             </View>
                         </View>
 

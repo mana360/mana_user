@@ -17,7 +17,7 @@ export default class MyProfile extends React.Component {
             new_password:'',
             confirm_password:'',
             password_visible: true,
-            screen_title: 'UserProfile',
+            screen_title: 'UserProofile',
             modalVisible_Changepassword: false,
             modalVisible_SavedMsg:false,
         }
@@ -168,13 +168,14 @@ export default class MyProfile extends React.Component {
                                     />
                                 </TouchableOpacity>
                             </View>
+                       
                         </View>
 
-                        <Text style={StyleMyProfile.label}>{this.state.screen_title}</Text>
+                        <Text style={StyleMyProfile.label}>Jimmy Dager</Text>
                         <View style={StyleMyProfile.bottomline}></View>
 
                         {
-                            this.state.screen_title == "UserProfile"
+                            this.state.screen_title == "UserProofile"
                                 ?
                                 <UserProfile navigation={navigation} />
                                 :

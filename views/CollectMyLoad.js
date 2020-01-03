@@ -78,7 +78,7 @@ ReferAFriend(){
     return(
         <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)', }}>
                 <View style={[StyleCollectMyLoad.modalCotainer, { width: '90%' }]}>
-                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10, paddingBottom: 20 }}
+                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10, }}
                         onPress={() => {
                             this.setState({ ModalVisible_referFriend: false })
                         }}
@@ -87,6 +87,8 @@ ReferAFriend(){
                             style={{ width: 15, height: 15 }}
                         />
                     </TouchableOpacity>
+                    <Text  style={StyleCollectMyLoad.modalReferText}>Refer a Friend</Text>
+                    <Text style={StyleCollectMyLoad.modalShareText}>{Constants.ShareAppUsing}</Text>
 
                     <View style={StyleCollectMyLoad.textInput_container}>
                         <View style={{ width: '75%', alignSelf: 'center', paddingLeft: 15 }}>

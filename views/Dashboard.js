@@ -36,7 +36,8 @@ export default class Dashboard extends React.Component {
                     </View>
                     <View style={StyleDashboard.col2}>
                         <Text style={[StyleDashboard.labelText2, { color: 'rgba(157, 58, 188,1)' }]}>{Constants.TruckBooking}</Text>
-                        <Text style={StyleDashboard.descText}>fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
+                        <Text style={StyleDashboard.descText}>fnsldfn fnsldfnf nfdsnflsnn fn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfn fnsldfn lorempipsom
+                        </Text>
                     </View>
                 </View>
 
@@ -47,7 +48,7 @@ export default class Dashboard extends React.Component {
                     </View>
                     <View style={StyleDashboard.col2}>
                         <Text style={[StyleDashboard.labelText2, { color: 'rgba(146, 188, 18,1)' }]}>{Constants.WarehouseService}</Text>
-                        <Text style={StyleDashboard.descText}>fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
+                        <Text style={StyleDashboard.descText}>fnsldfn dsfkfnf nfdsnflsnn fn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfn fnsldfn lorempipsom fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
                     </View>
                 </View>
 
@@ -58,7 +59,7 @@ export default class Dashboard extends React.Component {
                     </View>
                     <View style={StyleDashboard.col2}>
                         <Text style={[StyleDashboard.labelText2, { color: 'rgba(234, 68, 27,1)' }]}>{Constants.truckingwarehouse}</Text>
-                        <Text style={StyleDashboard.descText}>fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
+                        <Text style={StyleDashboard.descText}>mmfnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
                     </View>
                 </View>
 
@@ -69,7 +70,7 @@ export default class Dashboard extends React.Component {
                     </View>
                     <View style={StyleDashboard.col2}>
                         <Text style={[StyleDashboard.labelText2, { color: 'rgba(82, 173, 209,1)' }]}>{Constants.CollectMyLoad}</Text>
-                        <Text style={StyleDashboard.descText}>fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
+                        <Text style={StyleDashboard.descText}>fnsldfn fnsldfn fnsldfnf nfdsnflsnn fn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfn fnsldfn lorempipsom fnsldfn fnsldfn fnsldfn lorempipsom</Text>
                     </View>
                 </View>
 

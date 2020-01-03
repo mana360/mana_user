@@ -291,11 +291,13 @@ const StyleNotification = StyleSheet.create({
     col2: {
         flex: 8,
         alignContent: 'center',
-        paddingLeft: 15,
+        paddingLeft:15,
+        marginLeft:20
     },
     icon: {
-        width: 45,
-        height: 45,
+        width: 50,
+        height: 50,
+        marginLeft:5,
         resizeMode: 'stretch',
     },
     title: {
@@ -696,10 +698,11 @@ const StyleDashboard = StyleSheet.create({
         marginBottom: 15
     },
     row: {
-        marginBottom: 10,
-        flexDirection: 'row',
         borderBottomWidth: 1.3,
+        marginBottom: 10,
         paddingBottom: 10,
+        maxHeight:110,
+        flexDirection: 'row',
         justifyContent: "center",
         alignItems: 'center',
         backgroundColor: Constants.COLOR_WHITE,
@@ -876,11 +879,14 @@ const StyleCurrentTrip = StyleSheet.create({
     imageIcon: {
         width: 13,
         height: 13,
+        marginRight:3,
     },
     labeltext: {
         paddingLeft: 2,
         marginBottom: 8,
         fontWeight: 'bold',
+        textAlign:"center",
+        paddingBottom:2,
         textTransform: "capitalize",
         color: Constants.COLOR_GREY_DARK,
         fontSize: Constants.FONT_SIZE_SMALL,
@@ -1173,7 +1179,6 @@ const StyleViewUpcomingTrip = StyleSheet.create({
         borderRadius: 20,
     },
     cancelModalButtonText: {
-        fontWeight: 'bold',
         alignSelf: 'center',
         textTransform: "uppercase",
         color: Constants.COLOR_WHITE
@@ -1221,7 +1226,7 @@ const StyleUpcomingTrip = StyleSheet.create({
     imageIcon: {
         width: 13,
         height: 13,
-        paddingRight: 3,
+        marginRight:3,
     },
     labeltext: {
         paddingLeft: 2,
@@ -1459,6 +1464,19 @@ const StyleCollectMyLoad = StyleSheet.create({
     modalcol2: {
         width: '30%',
     },
+    modalShareText:{
+        paddingBottom:20,
+        alignSelf:'center',
+        fontWeight:'bold',
+        color:Constants.COLOR_GREY_DARK,
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE
+    },
+    modalReferText:{
+        paddingVertical:5,
+        alignSelf:'center',
+        color:Constants.COLOR_GREEN,
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE
+    },
     modalTittle: {
         paddingLeft: 18,
         paddingBottom: 10,
@@ -1663,6 +1681,7 @@ const StyleMyProfile = StyleSheet.create({
     },
     modalLabelText: {
         paddingLeft: 5,
+        fontWeight:'bold',
         textAlign: "center",
         textTransform: "capitalize",
         color: Constants.COLOR_GREY_DARK
@@ -1685,7 +1704,6 @@ const StyleMyProfile = StyleSheet.create({
     ButtonLabel: {
         paddingVertical: 10,
         textTransform: "uppercase",
-        fontWeight: "bold",
         color: Constants.COLOR_WHITE,
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE
     },
@@ -1763,6 +1781,7 @@ const StyleEditProfile = StyleSheet.create({
     },
     modalLabelText: {
         paddingLeft: 5,
+        fontWeight:'bold',
         textAlign: "center",
         textTransform: "capitalize",
         color: Constants.COLOR_GREY_DARK
@@ -1772,7 +1791,8 @@ const StyleEditProfile = StyleSheet.create({
         height: 17
     },
     TextInput: {
-        fontSize: Constants.FONT_SIZE_LARGE
+        fontSize: Constants.FONT_SIZE_LARGE,
+        color:Constants.COLOR_GREY_DARK
     },
     ButtonView: {
         width: '90%',
@@ -1835,20 +1855,27 @@ const StyleForgotPassword = StyleSheet.create({
     },
     ButtonView: {
         backgroundColor: Constants.COLOR_GREEN,
-        justifyContent: 'center',
+        borderRadius: 50,
         alignSelf: 'center',
+        width: '90%',
+        paddingVertical: 10,
+        position:"absolute",
+        bottom:15,
+
+    },
+    forgotButtonView:{
+        backgroundColor: Constants.COLOR_GREEN,
         borderRadius: 50,
         alignSelf: 'center',
         width: '40%',
-        marginLeft: 25,
         paddingVertical: 10,
+        marginHorizontal:15,
     },
     buttonLabel: {
         alignSelf: 'center',
         textTransform: "uppercase",
         color: Constants.COLOR_WHITE,
-        fontWeight: 'bold',
-        fontSize: Constants.fontSizeExtraLarge
+        fontSize: Constants.FONT_SIZE_LARGE
     },
     ModalView: {
         backgroundColor: Constants.COLOR_WHITE,
@@ -1878,6 +1905,7 @@ const StyleForgotPassword = StyleSheet.create({
         borderColor: Constants.COLOR_GREY_LIGHT,
     },
     resendText: {
+        fontWeight:"bold",
         alignSelf: 'center',
         textDecorationLine: "underline",
         color: Constants.COLOR_GREEN
@@ -1892,7 +1920,6 @@ const StyleForgotPassword = StyleSheet.create({
     modalButtonLabel: {
         textTransform: 'uppercase',
         color: Constants.COLOR_WHITE,
-        fontWeight: 'bold',
         paddingHorizontal: 35,
         paddingVertical: 10
     },
@@ -2104,27 +2131,6 @@ const StyleDiscountVouchers = StyleSheet.create({
         paddingVertical:2, 
         borderRadius:20,
         fontSize: Constants.FONT_SIZE__MEDIUM, 
-    }
-})
-const styleDiscountVoucher = StyleSheet.create({
-    titleView:{
-        borderBottomWidth:0.5,
-        marginBottom:25,
-        paddingBottom:10,
-        borderBottomColor:Constants.COLOR_GREY_LIGHT,
-        fontSize:Constants.FONT_SIZE_EXTRA_LARGE
-    },
-    title:{
-        textTransform:"uppercase",
-        color:Constants.COLOR_GREEN,
-        paddingLeft:5,
-        fontWeight:'bold'
-    },
-    discountText:{
-        fontSize:Constants.FONT_SIZE__MEDIUM,
-        color:Constants.COLOR_GREEN,
-        paddingLeft:5,
-
     }
 })
 const styleDiscountVoucher = StyleSheet.create({
@@ -2364,13 +2370,9 @@ const StyleMyBookingDetails = StyleSheet.create({
 const StyleMapView = StyleSheet.create({
     MainContainer: {
         flex: 1,
-        left: 0,
-        right: 0,
     },
     mapStyle: {
-        height: '100%',
-        left: 0,
-        right: 0,
+        flex:1,
     },
 })
 const StyleViewMap = StyleSheet.create({

@@ -28,7 +28,7 @@ export default class UserProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.FirstName}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>IBM</Text>
+                        <Text style={StyleMyProfile.col2Text}>Jimmy</Text>
                     </View>
                 </View>
 
@@ -40,7 +40,7 @@ export default class UserProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.LastName}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>PMO</Text>
+                        <Text style={StyleMyProfile.col2Text}>Dager</Text>
                     </View>
                 </View>
 
@@ -76,7 +76,7 @@ export default class UserProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.TelephoneNo}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>+45859625123</Text>
+                        <Text style={StyleMyProfile.col2Text}>459625123</Text>
                     </View>
                 </View>
 
@@ -88,7 +88,7 @@ export default class UserProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.SecondaryNo}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>+9145475651</Text>
+                        <Text style={StyleMyProfile.col2Text}>454565651</Text>
                     </View>
                 </View>
 

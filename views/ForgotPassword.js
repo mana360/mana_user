@@ -86,7 +86,7 @@ export default class ForgotPassword extends React.Component {
 
                     <View style={StyleForgotPassword.TextInputView}>
                         <View style={StyleForgotPassword.LabelView}>
-                            <Image source={require('../images/user_name.png')}
+                            <Image source={require('../images/mobile_number.png')}
                                 style={StyleForgotPassword.labelIcon}
                             />
                             <Text style={StyleForgotPassword.modalLabelText}>{Constants.MobileNumber}</Text>
@@ -94,6 +94,7 @@ export default class ForgotPassword extends React.Component {
                         <TextInput
                             placeholder="Enter Mobile Number"
                             style={StyleForgotPassword.TextInput}
+
                             value={this.state.mobile_number}
                             keyboardType="number-pad"
                             maxLength={10}
@@ -105,8 +106,8 @@ export default class ForgotPassword extends React.Component {
                             }}
                         />
                     </View>
-                    <View style={{ bottom: 0, position: 'absolute', flexDirection: 'row', justifyContent: 'center', marginBottom: 20 }}>
-                        <TouchableOpacity style={StyleForgotPassword.ButtonView}
+                    <View style={{ bottom: 0, position: 'absolute', flexDirection: 'row', justifyContent: 'center', marginBottom: 20,}}>
+                        <TouchableOpacity style={[StyleForgotPassword.forgotButtonView,{marginLeft:20}]}
                         onPress={()=>{
                             this.props.navigation.pop();
                         }}
@@ -114,7 +115,7 @@ export default class ForgotPassword extends React.Component {
                             <Text style={StyleForgotPassword.buttonLabel}>{Constants.CANCEL}</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={StyleForgotPassword.ButtonView}
+                        <TouchableOpacity style={[StyleForgotPassword.forgotButtonView,{}]}
                                    onPress={()=>{
                                     this.setState({modal_visible:true})
                             }}

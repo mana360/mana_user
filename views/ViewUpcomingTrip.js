@@ -124,7 +124,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Telephonenumber}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>+56 4585965351</Text>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>+56965351</Text>
                             </View>
                         </View>
 

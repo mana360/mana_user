@@ -16,15 +16,15 @@ export default class EditProfile extends React.Component {
             confirm_password: '',
             password_visible: true,
             screen_title: 'CompanyProfile',
-            first_name: '',
-            last_name: '',
-            company_name: '',
-            designation: '',
-            telephone_no: '',
-            secondary_no: '',
-            address: '',
-            email_id: '',
-            password: '',
+            first_name: 'Jimmy',
+            last_name: 'Dagger',
+            company_name: 'IBM',
+            designation: 'PMO',
+            telephone_no: '459625123',
+            secondary_no: '454565651',
+            address: 'NYC,1,235 Street',
+            email_id: 'bhj@gmail.com',
+            password: 'johnson',
             modalVisible_Changepassword: false,
             modalVisible_successMsg: false,
         }
@@ -141,7 +141,7 @@ export default class EditProfile extends React.Component {
         return (
             <View style={{ flex: 1 }}>
 
-                <HeaderBar title="EDIT profile" isBack={true} isLogout={true} navigation={navigation} />
+                <HeaderBar title="EDIT PROFILE" isBack={true} isLogout={true} navigation={navigation} />
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%', flex: 1 }} bounces={false}>
 
@@ -321,6 +321,7 @@ export default class EditProfile extends React.Component {
                                 <View style={{ flexDirection: "row", justifyContent: 'center', alignSelf: 'center' }}>
                                     <TextInput
                                         placeholder="Enter Password"
+                                        editable={false}
                                         style={[StyleEditProfile.TextInput, { width: '90%' }]}
                                         secureTextEntry={this.state.password_visible}
                                         value={this.state.password}

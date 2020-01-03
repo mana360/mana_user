@@ -94,8 +94,8 @@ modal_setSuccessfully(){
                         />
                     </View>
 
-                    <View style={{ bottom: 0, position: 'absolute', flexDirection: 'row', justifyContent: 'center', marginBottom: 20 }}>
-                        <TouchableOpacity style={[StyleForgotPassword.ButtonView,{width:'90%'}]}
+                    
+                        <TouchableOpacity style={[StyleForgotPassword.ButtonView,]}
                             onPress={()=>{
                                         this.setState({modal_visible:true})
                              }}  
@@ -103,7 +103,6 @@ modal_setSuccessfully(){
                             <Text style={StyleForgotPassword.buttonLabel}>{Constants.Set}</Text>
                         </TouchableOpacity>
 
-                    </View>
 
              </View>
                 

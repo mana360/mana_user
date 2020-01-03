@@ -23,7 +23,7 @@ export default class WarehouseServicesCurrentTrip extends React.Component {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
-                <HeaderBar title="CURRENT TRIP" isBack={true} isLogout={true} navigation={navigation} />
+                <HeaderBar title="CURRENT TRIPS" isBack={true} isLogout={true} navigation={navigation} />
                 <FlatList
                     style={{ marginVertical: 15 }}
                     numColumns={1}

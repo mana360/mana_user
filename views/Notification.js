@@ -13,25 +13,36 @@ export default class Notification extends React.Component{
         super();
         this.state = {
           dataSource:[
-            {id:12, status:"Trip 1 delay", desc:"Lorem ipsum dolor sit amet, consectetur ", dateTime:"10 May 2018 10:24 AM",},
-            {id:5, status:"New Alert", desc:"Lorem ipsum dolor sit amet, consectetur", dateTime:"10 May 2018 10:24 AM",}
-          ]
+            {id:12, status:"Trip 1 delay", desc:"Lorem ipsum dolor sit amet, consectetur ", dateTime:"10 May 2018 10:24 AM",isCompleted:'false'},
+            {id:5, status:"New Alert", desc:"Lorem ipsum dolor sit amet, consectetur", dateTime:"10 May 2018 10:24 AM",isCompleted:'fasle'},
+            {id:5, status:"Trip4 Completed-Rate your Trip", desc:"Lorem ipsum dolor sit amet, consectetur", dateTime:"10 May 2018 10:24 AM",isCompleted:'true'},
+
+          ],
+         
       }
     }
     render(){
         let {navigation} = this.props
         return(
             <View style={{flex:1,backgroundColor:Constants.COLOR_GREY}}>
-            <HeaderBar title="Notification" isBack={true} isLogout={true} navigation={navigation}/>
+            <HeaderBar title="Notifications" isBack={true} isLogout={true} navigation={navigation}/>
             <FlatList
                     style={{marginVertical:15}}
                     numColumns={1}
                     data={this.state.dataSource}
+                    extraData={this.state}
+                    keyExtractor={item=>item.id}
                     renderItem={({item},index)=>{
                   return(
-                       <TouchableOpacity  style={StyleNotification.row} onPress={()=>{alert(item.id)}}
+                       <TouchableOpacity  style={StyleNotification.row}
                                 onPress={()=>{
-                                    this.props.navigation.navigate('RateAndReview');
+                                    if(item.isCompleted=='true'){
+                                     this.props.navigation.navigate('RateAndReview');   
+                                    }
+                                    else
+                                    {
+                                    }
+
                                 }}
                        
                        >
@@ -56,8 +67,6 @@ export default class Notification extends React.Component{
                   </TouchableOpacity>
                  )
              }}
-             extraData={this.state}
-             keyExtractor={item=>item.id}
             />
       <FooterBar navigation={navigation}/>
         </View>

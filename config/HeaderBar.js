@@ -21,6 +21,7 @@ class HeaderBar extends React.Component {
     super(props)
     this.state={
       isLogoutModalVisible:false,
+      isSuccessLogoutModal:false,
     }
   }
   render(){
@@ -84,7 +85,18 @@ class HeaderBar extends React.Component {
           transparent={true}
         >
           <View style={styles.modalView}>
-              
+            <TouchableOpacity style={{ alignSelf: 'flex-end', }}
+                  onPress={() => {
+                      this.setState({ isLogoutModalVisible:false})
+                  }}
+              >
+                  <Image source={require('../images/close.png')}
+                      style={{ width: 15, height: 15 }}
+                  />
+              </TouchableOpacity>
+              <Image source={require('../images/logoutperson.png')}
+                style={{width:60,height:60,alignSelf:"center",paddingVertical:5}}
+              />
               <Text style={styles.modalTitle}>
                 Are you sure you want to sign out from the application?
               </Text>
@@ -102,13 +114,14 @@ class HeaderBar extends React.Component {
                       <Text style={styles.modalButtonText}>{Constants.YES}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.modalButtonView}
-                    onPress={()=>{this.setState({isLogoutModalVisible:false})}}
+                    onPress={()=>{this.setState({isLogoutModalVisible:false,isSuccessLogoutModal:true})}}
                   >
                       <Text style={styles.modalButtonText}>{Constants.NO}</Text>
                   </TouchableOpacity>
               </View>
           </View>
         </Modal>
+     
      </Header>
  );
  }

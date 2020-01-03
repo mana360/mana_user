@@ -85,7 +85,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
 
                         <View style={StyleViewCurrentTrip.row}>
                             <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedTimetonextstatus}</Text>
+                                <Text style={StyleViewCurrentTrip.col1Text}>Estimated time to next status update</Text>
                             </View>
                             <View style={StyleViewCurrentTrip.col2}>
                                 <Text style={StyleViewCurrentTrip.col2Text}>11:00PM</Text>
@@ -94,7 +94,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
 
                         <View style={StyleViewCurrentTrip.row}>
                             <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedTimeTocmpleteTrip}</Text>
+                                <Text style={StyleViewCurrentTrip.col1Text}>Estimated time to completion of trip</Text>
                             </View>
                             <View style={StyleViewCurrentTrip.col2}>
                                 <Text style={StyleViewCurrentTrip.col2Text}>11 PM</Text>
@@ -103,7 +103,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
 
                         <View style={StyleViewCurrentTrip.row}>
                             <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedDateTocmpleteTrip}</Text>
+                                <Text style={StyleViewCurrentTrip.col1Text}>Estimated Date for completion of trip</Text>
                             </View>
                             <View style={StyleViewCurrentTrip.col2}>
                                 <Text style={StyleViewCurrentTrip.col2Text}>11/12/2019</Text>
@@ -115,7 +115,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                 <Text style={StyleViewCurrentTrip.col1Text}>{Constants.DriverName}</Text>
                             </View>
                             <View style={StyleViewCurrentTrip.col2}>
-                                <Text style={StyleViewCurrentTrip.col2Text}>85968784455</Text>
+                                <Text style={StyleViewCurrentTrip.col2Text}>Amanda.P</Text>
                             </View>
                         </View>
 
