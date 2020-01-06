@@ -11,8 +11,8 @@ import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import Invoice from './InvoiceView';
 export default class ViewCurrentTrip extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             starCount: null,
             inputLabelTrip: '',

@@ -10,8 +10,8 @@ import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import constants from 'jest-haste-map/build/constants';
 export default class UpcomingTrip extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             dataSource: [
                 { id: 12, title: "Nyc-Syc", date: "27 May 2018", pickUpTime: "10:24 PM", dropUpTime: "11:00 AM" },

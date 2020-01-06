@@ -9,8 +9,8 @@ import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 export default class Notification extends React.Component{
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
           dataSource:[
             {id:12, status:"Trip 1 delay", desc:"Lorem ipsum dolor sit amet, consectetur ", dateTime:"10 May 2018 10:24 AM",isCompleted:'false'},

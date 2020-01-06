@@ -7,8 +7,8 @@ import HeaderBar from '../config/HeaderBar'
 import { StyleTermsAndCondition } from '../config/CommonStyles'
 import Constants from '../config/Constants'
 export default class TermsAndCondition extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       data: [
         { title: "Lorem ipsum dolor si amet, consectetur adipisicing", desc: "Lorem ipsum dolor si amet, consectetur adipisicing Lorem ipsum dolor si amet, consectetur adipisicing Lorem ipsum dolor si amet, consectetur adipisicing" },

@@ -7,8 +7,8 @@ import { StyleSignUp } from '../config/CommonStyles'
 import Constants from '../config/Constants';
 import { StackActions, NavigationActions } from 'react-navigation';
 export default class SignUp extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       mobile_number: '',
       password: '',

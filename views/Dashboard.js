@@ -14,8 +14,8 @@ import WarehouseServices from './WarehouseServices';
 import TruckingWarehouseServices from './TruckingWarehouseServices';
 import CollectMyLoad from './CollectMyLoad';
 export default class Dashboard extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             starCount: null,
             inputLabelTrip: '',

@@ -12,8 +12,8 @@ import HeaderBar from '../config/HeaderBar';
 import Invoice from './InvoiceView';
 import TripHelpAndSupport from './TripHelpAndSupport';
 export default class TruckingWarehouseCurrentTripDetails extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             starCount: null,
             inputLabelTrip: '',

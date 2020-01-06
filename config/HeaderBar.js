@@ -78,6 +78,7 @@ class HeaderBar extends React.Component {
                 </TouchableOpacity>
             </View>
         </View>
+
         <Modal
           isVisible={this.state.isLogoutModalVisible}
           animationIn={"fadeIn"}
@@ -103,12 +104,16 @@ class HeaderBar extends React.Component {
               <View style={{flexDirection:'row', marginVertical:5, padding:5, justifyContent:'center', alignItems:'center'}}>
                   <TouchableOpacity style={styles.modalButtonView}
                     onPress={()=>{
-                      this.setState({isLogoutModalVisible:false})
-                      this.props.navigation.dispatch(
-                        StackActions.reset({
-                        index: 0,
-                        actions: [NavigationActions.navigate({ routeName: 'SignIn'})],})
-                      )
+                      this.setState({isLogoutModalVisible:false,isSuccessLogoutModal:true})
+                      let setinter =setInterval(()=>{
+                        this.setState({isSuccessLogoutModal:false})
+                        this.props.navigation.dispatch(
+                          StackActions.reset({
+                          index: 0,
+                          actions: [NavigationActions.navigate({ routeName: 'SignIn'})],})
+                        )
+                      },3000);
+                      clearInterval(setinter);
                     }}
                   >
                       <Text style={styles.modalButtonText}>{Constants.YES}</Text>
@@ -122,6 +127,38 @@ class HeaderBar extends React.Component {
           </View>
         </Modal>
      
+        <Modal
+          isVisible={this.state.isSuccessLogoutModal}
+          animationIn={"fadeIn"}
+          animationOut={"fadeOut"}
+          transparent={true}
+        >
+          <View style={styles.modalView}>
+            <TouchableOpacity style={{ alignSelf: 'flex-end', }}
+                  onPress={() => {
+                      this.setState({ isLogoutModalVisible:false})
+                     
+                        this.props.navigation.dispatch(
+                          StackActions.reset({
+                          index: 0,
+                          actions: [NavigationActions.navigate({ routeName: 'SignIn'})],})
+                        )
+                                          
+                  }}
+              >
+                  <Image source={require('../images/close.png')}
+                      style={{ width: 15, height: 15 }}
+                  />
+              </TouchableOpacity>
+              <Image source={require('../images/sent_icon.png')}
+                style={{width:80,height:80,alignSelf:"center",paddingVertical:5}}
+              />
+              <Text style={[styles.modalTitle,{width:'90%', fontSize:Constants.FONT_SIZE_EXTRA_LARGE}]}>
+               You have logged out Successfully.
+              </Text>
+          </View>
+        </Modal>
+     
      </Header>
  );
  }
@@ -129,6 +166,7 @@ class HeaderBar extends React.Component {
 const styles = StyleSheet.create({
 modalView:{
   padding:10,
+  borderRadius:5,
   marginHorizontal:15,
   alignItems:'center',
   justifyContent:'center',

@@ -12,8 +12,8 @@ import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import StarRating from "react-native-star-rating";
 export default class TruckBooking extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             starCount: null,
             inputLabelTrip: '',

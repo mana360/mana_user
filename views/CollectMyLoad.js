@@ -9,8 +9,8 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import Carousel  from "react-native-carousel";
 
 export default class CollectMyLoad extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             modalVisible_RateCard:false,
             ModalVisible_referFriend:false,

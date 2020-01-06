@@ -10,8 +10,8 @@ import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import TruckingWarehouseServices from './TruckingWarehouseServices';
 export default class HelpAndSupport extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             support_subject: "Lorem ipsum",
             support_message: "",
