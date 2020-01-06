@@ -2122,28 +2122,25 @@ const StyleDiscountVouchers = StyleSheet.create({
     vourimg:{
         width:'100%',
         height:80,
-        resizeMode:'stretch', 
-        zIndex:-1,
+        resizeMode:'stretch',
     },
     vouchertxtbox:{
         position:'absolute',
-        top:10,
-        left:10,
-        zIndex:2,  
+        left:10, 
         flexDirection: 'row',
         justifyContent:'center',
         alignItems:'center',
     },
     voucerinnerimg:{
         flex:2,
-        height:45,
+        height:50,
         justifyContent:'center',
         alignItems:'center',
         resizeMode:'contain',
     },
     voucerinnertxt:{ 
         flex:7,
-        marginLeft:15,
+        marginLeft:20,
         flexDirection:'column',
         width:'100%',
     },
@@ -2689,7 +2686,7 @@ const StyleLocationDetails = StyleSheet.create({
 		borderRadius: 50,
 		borderWidth: 0.8,
 		height:45,
-		marginBottom: 35,  
+        marginBottom: 35,  
 	},
 	labelBoxNew: {	 
 		position:'absolute',
@@ -2759,7 +2756,7 @@ const StyleLocationDetails = StyleSheet.create({
 	},
 	logButtonText: {
 		color: '#fff',
-		fontSize: 18,  	
+		fontSize:Constants.FONT_SIZE_LARGE,  	
 		textTransform:'uppercase',	
 		fontFamily: "Roboto-Medium",				
     },
@@ -2840,9 +2837,8 @@ const StyleBookingSummary = StyleSheet.create({
     },
     booksumminnWrapp:{
         flex:1,
-        paddingLeft:25,
-        paddingRight:25,
-        paddingTop:36,
+        paddingHorizontal:25,
+        paddingVertical:36,
     },
     topBox:{
         flex:1,
@@ -2861,6 +2857,9 @@ const StyleBookingSummary = StyleSheet.create({
         fontSize:Constants.FONT_SIZE_EXTRA_MEDIUM,
         fontFamily: "Roboto-Medium",
     },
+
+
+
     priceBox:{
         flex:1,
         backgroundColor:Constants.COLOR_GREY,
@@ -2944,7 +2943,6 @@ const StyleBookingSummary = StyleSheet.create({
         width:'100%',
         height: 'auto',
         fontFamily: "Roboto-Light",	
-       
     },
     popCloseImg:{
         position:'absolute',
@@ -2984,6 +2982,162 @@ const StyleBookingSummary = StyleSheet.create({
         height:34,
     },
 })
+const StyleNewBookingSummary = StyleSheet.create({
+    booksumminnWrapp:{
+        flex:1,
+        paddingHorizontal:20,
+        paddingVertical:20,
+    },
+    topBox:{
+        flex:1,
+        backgroundColor:Constants.COLOR_GREY_DARK,
+        borderRadius:3,
+        marginBottom:30,
+    },
+    topinnBox:{
+        flex:1,
+        paddingVertical:20,
+        paddingHorizontal:18,
+        justifyContent:'center',
+    },
+    topinnTxt:{
+        color:Constants.COLOR_WHITE,
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
+        fontFamily: "Roboto-Medium",
+    },
+
+
+    priceBox:{
+        flex:1,
+        backgroundColor:Constants.COLOR_GREY,
+        paddingHorizontal:25,
+        paddingVertical:25,
+        marginBottom:15,
+    },
+    priceTxt:{
+        flex:1,
+        alignItems:'flex-start',
+        fontFamily: "Roboto-Medium",
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
+        color:Constants.COLOR_FOOTER_GREY,
+        letterSpacing:0.5,
+    },
+    priceVol:{
+        flex:1,
+        textAlign:'right',
+        alignItems:'flex-end',
+        fontFamily: "Roboto-Medium",
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
+        color:Constants.COLOR_FOOTER_GREY,
+        letterSpacing:0.5,
+    },
+    discntBtn:{
+        alignItems:'center',
+        flex:1,
+        marginTop:35,
+        marginBottom:40,
+    },
+    discntText:{
+        color: '#fff',
+		fontSize: Constants.FONT_SIZE__MEDIUM,  	
+		textTransform:'uppercase',	
+        fontFamily: "Roboto-Medium",	
+        backgroundColor: Constants.COLOR_GREEN,
+        borderRadius: 50,
+        paddingVertical:10,
+        paddingHorizontal:18,
+    },
+    modalpopupBox: {
+        flex:1,
+        backgroundColor:'rgba(0,0,0,0.6)',
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    modalinnBox: {
+        borderRadius:5,
+        width: wp('93%'),
+        height: hp('40'),
+        backgroundColor: Constants.COLOR_WHITE,
+        position:'relative',
+    },
+    serpopSec:{
+        paddingHorizontal:18,
+        paddingVertical:30,   
+        flex:1,    
+    },
+    othserTxt:{
+        fontFamily: "Roboto-Medium",	
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,  	
+        color: Constants.COLOR_GREY_DARK,
+        textTransform:"uppercase",
+        alignItems:'center',
+        textAlign:'center',
+        letterSpacing:0.3,
+        marginBottom:30,
+    },
+    inputboxDropDown: {
+	    backgroundColor: '#fff',  
+		borderColor: '#ccc',  
+		width:'100%',		
+		position:'relative',
+		borderRadius: 50,
+		borderWidth: 0.8,
+		height:50,
+        marginBottom: 28,  
+        paddingHorizontal:26,
+	},
+    dropInner:{
+        fontSize:14,
+        width:'100%',
+        height: 'auto',
+        fontFamily: "Roboto-Light",	
+    },
+    popCloseImg:{
+        position:'absolute',
+        right:25,
+        top:20,
+        width:26,
+        height:26,
+    },
+    otherServiceBox:{
+        flex:1, 
+        marginTop:-15,
+    },
+    otherTxtser:{
+        fontFamily: "Roboto-Medium",	
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,  	
+        color: Constants.COLOR_GREY_DARK,
+        marginBottom:10,
+    },
+    grayBox:{
+        flex:1,
+        flexDirection:'row',
+        backgroundColor:Constants.COLOR_GREY,
+        borderRadius:6,
+        paddingVertical:20,
+        paddingHorizontal:20,
+    },
+    ltSec:{
+        flex:8,       
+        justifyContent:'center',
+    },
+    rtSec:{
+        flex:2,       
+        alignItems:'flex-end',
+    },
+    removeImg:{
+        width:30,
+        height:30,
+    },
+    logButtonText: {
+		color: '#fff',
+		fontSize:Constants.FONT_SIZE_LARGE,  	
+		textTransform:'uppercase',	
+		fontFamily: "Roboto-Medium",				
+    },
+})
+
+
 
 export {
     StyleMyBookingDetails,
@@ -3015,4 +3169,5 @@ export {
     styleDiscountVoucher,
     StyleMapView,
     StylePaymentMethod,
+    StyleNewBookingSummary,
 }
