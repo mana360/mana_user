@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS043
+/* screen -MANAPPCUS043,44
     design by -mayur s
  */
 import React from 'react';
@@ -56,12 +56,11 @@ modal_setSuccessfully(){
         return (
             <View style={{ flex: 1, }}>
                 <HeaderBar title="Forgot Password" isBack={true} isLogout={true} navigation={navigation} />
+               
                 <View style={{ flex: 1 }}>
 
-                    
-                        <Text style={[StyleForgotPassword.textMsg,{marginTop:30,marginBottom:25}]}>{Constants.EnteredCodeIssuccessFullyVerified}</Text>
-                        <Text style={[StyleForgotPassword.modalTextMSg,{textTransform:"uppercase"}]}>{Constants.SetNewPassword}</Text>
-                    
+                    <Text style={[StyleForgotPassword.textMsg,{marginTop:30,marginBottom:25}]}>{Constants.EnteredCodeIssuccessFullyVerified}</Text>
+                    <Text style={[StyleForgotPassword.modalTextMSg,{textTransform:"uppercase"}]}>{Constants.SetNewPassword}</Text>
 
                     <View style={[StyleForgotPassword.TextInputView,{marginTop:5}]}>
                         <View style={StyleForgotPassword.LabelView}>
@@ -94,8 +93,9 @@ modal_setSuccessfully(){
                             onChangeText={(text) => { this.setState({ mobile_number: text }) }}
                         />
                     </View>
-                    <View style={{ bottom: 0, position: 'absolute', flexDirection: 'row', justifyContent: 'center', marginBottom: 20 }}>
-                        <TouchableOpacity style={[StyleForgotPassword.ButtonView,{width:'90%'}]}
+
+                    
+                        <TouchableOpacity style={[StyleForgotPassword.ButtonView,]}
                             onPress={()=>{
                                         this.setState({modal_visible:true})
                              }}  
@@ -103,15 +103,16 @@ modal_setSuccessfully(){
                             <Text style={StyleForgotPassword.buttonLabel}>{Constants.Set}</Text>
                         </TouchableOpacity>
 
-                    </View>
 
-                </View>
+             </View>
+                
                 <Modal
                     transparent={true}
                     visible={this.state.modal_visible}
                 >
                    {this.modal_setSuccessfully()}
                 </Modal>
+               
                 <FooterBar navigation={navigation} />
             </View>
         )

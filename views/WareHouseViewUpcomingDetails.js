@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS047
+/* screen -MANAPPCUS047,26,27
     design by -mayur s
  */
 import React, { Component } from 'react';
@@ -24,59 +24,59 @@ export default class WarehouseViewUpcomingDetail extends React.Component {
     delete_trip() {
         return (
             <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-                <View style={StyleViewUpcomingTrip.cancelModalView}>
-                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 5, right: 10, marginBottom: 5 }}
-                        onPress={() => {
-                            this.setState({ cancelModal_Visible: false });
+            <View style={StyleViewUpcomingTrip.cancelModalView}>
+                <TouchableOpacity style={{ alignSelf: 'flex-end', marginBottom: 5 }}
+                    onPress={() => {
+                        this.setState({ cancelModal_Visible: false })
+                    }}
+                >
+                    <Image source={require('../images/close.png')}
+                        style={{ width: 15, height: 15 }} />
+                </TouchableOpacity>
 
+                <Text style={[StyleViewUpcomingTrip.modalMsg,{marginBottom:10}]}>{Constants.Cancelleation_msg}</Text>
+                <Text style={[StyleViewUpcomingTrip.modalMsg,{marginBottom:10}]}>{Constants.cancellation_msgDelete}</Text>
+
+                <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 10 }}>
+                    <TouchableOpacity style={StyleViewUpcomingTrip.cancelModalButton}
+                        onPress={() => {
+                            this.setState({ isSuccesfull: true, })
                         }}
                     >
-                        <Image source={require('../images/close.png')}
-                            style={{ width: 15, height: 15 }} />
+                        <Text style={StyleViewUpcomingTrip.cancelModalButtonText}>{Constants.YES}</Text>
                     </TouchableOpacity>
-
-                    <Text style={StyleViewUpcomingTrip.modalMsg}>{Constants.Cancelleation_msg}</Text>
-                    <Text style={StyleViewUpcomingTrip.modalMsg}>{Constants.cancellation_msgDelete}</Text>
-
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 10 }}>
-                        <TouchableOpacity style={StyleViewUpcomingTrip.cancelModalButton}
-                            onPress={() => {
-                                this.setState({ isSuccesfull: true })
-                            }}
-                        >
-                            <Text style={StyleViewUpcomingTrip.cancelModalButtonText}>{Constants.YES}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={StyleViewUpcomingTrip.cancelModalButton}
-                            onPress={() => {
-                                this.setState({ cancelModal_Visible: false })
-                            }}>
-                            <Text style={StyleViewUpcomingTrip.cancelModalButtonText}>{Constants.NO}</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity style={StyleViewUpcomingTrip.cancelModalButton}
+                        onPress={() => {
+                            this.setState({ cancelModal_Visible: false })
+                        }}>
+                        <Text style={StyleViewUpcomingTrip.cancelModalButtonText}>{Constants.NO}</Text>
+                    </TouchableOpacity>
                 </View>
+         
             </View>
+        </View>
         )
     }
     TripCancelledSuccessfully() {
         return (
             <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-                <View style={StyleViewUpcomingTrip.cancelModalView}>
-                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 5, right: 10 }}
-                        onPress={() => {
-                            this.setState({ cancelModal_Visible: false });
-                            this.props.navigation.goBack();
-                        }}
-                    >
-                        <Image source={require('../images/close.png')}
-                            style={{ width: 15, height: 15 }} />
-                    </TouchableOpacity>
-                    <Image style={{ width: 80, height: 80, alignSelf: 'center', marginVertical: 5 }}
-                        source={require('../images/sent_icon.png')}
-                    />
-                    <Text style={[StyleViewUpcomingTrip.modalMsg, { marginTop: 5 }]}>{Constants.TripCanceledSuccessfully}</Text>
-                    <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 5 }]}>{Constants.checkYourregisteredEmailIdPeneltyInfo}</Text>
-                </View>
+            <View style={StyleViewUpcomingTrip.cancelModalView}>
+                <TouchableOpacity style={{ alignSelf: 'flex-end',marginBottom:5}}
+                    onPress={() => {
+                        this.setState({ cancelModal_Visible: false });
+                        this.props.navigation.goBack();
+                    }}
+                >
+                    <Image source={require('../images/close.png')}
+                        style={{ width: 15, height: 15 }} />
+                </TouchableOpacity>
+                <Image style={{ width: 80, height: 80, alignSelf: 'center', marginVertical: 5 }}
+                    source={require('../images/sent_icon.png')}
+                />
+                <Text style={[StyleViewUpcomingTrip.modalMsg, { marginTop: 5 }]}>{Constants.TripCanceledSuccessfully}</Text>
+                <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 10 }]}>{Constants.checkYourregisteredEmailIdPeneltyInfo}</Text>
             </View>
+        </View>
         )
 
     }
@@ -88,6 +88,7 @@ export default class WarehouseViewUpcomingDetail extends React.Component {
                 <HeaderBar title="VIEW UPCOMING TRIP DETAILS" isBack={true} isLogout={true} navigation={navigation} />
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%' }} bounces={false}>
+                       
                         <View style={{ marginBottom: 2 }}>
                             <View style={StyleViewUpcomingTrip.topCircle} />
 
@@ -108,6 +109,7 @@ export default class WarehouseViewUpcomingDetail extends React.Component {
                             </View>
 
                         </View>
+                       
                         <Text style={StyleViewUpcomingTrip.title}>PVR</Text>
                         <View style={StyleViewUpcomingTrip.bottomLine}></View>
 
@@ -125,7 +127,7 @@ export default class WarehouseViewUpcomingDetail extends React.Component {
                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Telephonenumber}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>+56 4585965351</Text>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>+565965351</Text>
                             </View>
                         </View>
 

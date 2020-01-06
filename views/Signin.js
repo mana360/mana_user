@@ -42,6 +42,7 @@ export default class SignIn extends Component {
             <TextInput placeholder='Enter Mobile Number'
               style={StyleSignIn.textInput_style}
               keyboardType="number-pads"
+              maxLength={10}
               value={this.state.mobile_number}
               onChangeText={(newText) => {
                 if (!isNaN(newText))

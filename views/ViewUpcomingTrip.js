@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS019
+/* screen -MANAPPCUS019,20,21,22
     design by -mayur s
  */
 import React, { Component } from 'react';
@@ -26,7 +26,7 @@ export default class ViewUpcomingTrip extends React.Component {
         return (
             <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                 <View style={StyleViewUpcomingTrip.cancelModalView}>
-                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 5, right: 10, marginBottom: 5 }}
+                    <TouchableOpacity style={{ alignSelf: 'flex-end', marginBottom: 5 }}
                         onPress={() => {
                             this.setState({ cancelModal_Visible: false })
                         }}
@@ -35,8 +35,8 @@ export default class ViewUpcomingTrip extends React.Component {
                             style={{ width: 15, height: 15 }} />
                     </TouchableOpacity>
 
-                    <Text style={StyleViewUpcomingTrip.modalMsg}>{Constants.Cancelleation_msg}</Text>
-                    <Text style={StyleViewUpcomingTrip.modalMsg}>{Constants.cancellation_msgDelete}</Text>
+                    <Text style={[StyleViewUpcomingTrip.modalMsg,{marginBottom:10}]}>{Constants.Cancelleation_msg}</Text>
+                    <Text style={[StyleViewUpcomingTrip.modalMsg,{marginBottom:10}]}>{Constants.cancellation_msgDelete}</Text>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 10 }}>
                         <TouchableOpacity style={StyleViewUpcomingTrip.cancelModalButton}
@@ -53,6 +53,7 @@ export default class ViewUpcomingTrip extends React.Component {
                             <Text style={StyleViewUpcomingTrip.cancelModalButtonText}>{Constants.NO}</Text>
                         </TouchableOpacity>
                     </View>
+             
                 </View>
             </View>
         )
@@ -61,7 +62,7 @@ export default class ViewUpcomingTrip extends React.Component {
         return (
             <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                 <View style={StyleViewUpcomingTrip.cancelModalView}>
-                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 5, right: 10 }}
+                    <TouchableOpacity style={{ alignSelf: 'flex-end',marginBottom:5}}
                         onPress={() => {
                             this.setState({ cancelModal_Visible: false });
                             this.props.navigation.goBack();
@@ -123,7 +124,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Telephonenumber}</Text>
                             </View>
                             <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>+56 4585965351</Text>
+                                <Text style={StyleViewUpcomingTrip.col2Text}>+56965351</Text>
                             </View>
                         </View>
 
@@ -273,6 +274,7 @@ export default class ViewUpcomingTrip extends React.Component {
                         this.setState({ invoiceModal_Visible: false });
                     }} />
                 </Modal>
+          
             </View>
         )
     }

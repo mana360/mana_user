@@ -28,7 +28,7 @@ export default class CurrentTrip extends React.Component {
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
                 <HeaderBar 
-                    title="Current Trip"
+                    title="Current Trips"
                     isBack={true} isLogout={true} navigation={navigation} />
                 <FlatList
                     style={{ marginVertical: 15 }}

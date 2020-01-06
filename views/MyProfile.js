@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS036
+/* screen -MANAPPCUS036,36-1,37
     design by -mayur s
  */ 
 import React from 'react';
@@ -17,7 +17,7 @@ export default class MyProfile extends React.Component {
             new_password:'',
             confirm_password:'',
             password_visible: true,
-            screen_title: 'UserProfile',
+            screen_title: 'UserProofile',
             modalVisible_Changepassword: false,
             modalVisible_SavedMsg:false,
         }
@@ -142,7 +142,7 @@ export default class MyProfile extends React.Component {
                         <View style={{ marginBottom: 2 }}>
                             <View style={StyleMyProfile.topCircle} />
 
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems:'center'}}>
                                 <TouchableOpacity style={StyleMyProfile.sideImageView}
                                     onPress={() => {
                                         this.setState({ modalVisible_Changepassword: true })
@@ -152,20 +152,7 @@ export default class MyProfile extends React.Component {
                                         style={StyleMyProfile.sideImage}
                                     />
                                 </TouchableOpacity>
-                                <Modal
-                                    visible={this.state.modalVisible_Changepassword}
-                                    animationType='fade'
-                                    transparent={true}
-                                >
-                                    {this.Modal_ChangePassword()}
-                                </Modal>
-                                <Modal
-                                    visible={this.state.modalVisible_SavedMsg}
-                                    animationType='fade'
-                                    transparent={true}
-                                >
-                                    {this.Modal_chnagesSaveSuccessFully()}
-                                </Modal>
+                              
 
                                 <Image source={require('../images/Profile_pic.png')}
                                     style={StyleMyProfile.ProfileImage}
@@ -181,13 +168,14 @@ export default class MyProfile extends React.Component {
                                     />
                                 </TouchableOpacity>
                             </View>
+                       
                         </View>
 
-                        <Text style={StyleMyProfile.label}>{this.state.screen_title}</Text>
+                        <Text style={StyleMyProfile.label}>Jimmy Dager</Text>
                         <View style={StyleMyProfile.bottomline}></View>
 
                         {
-                            this.state.screen_title == "UserProfile"
+                            this.state.screen_title == "UserProofile"
                                 ?
                                 <UserProfile navigation={navigation} />
                                 :
@@ -203,6 +191,20 @@ export default class MyProfile extends React.Component {
                 </View>
 
                 <FooterBar navigation={navigation} />
+                <Modal
+                                    visible={this.state.modalVisible_Changepassword}
+                                    animationType='fade'
+                                    transparent={true}
+                                >
+                                    {this.Modal_ChangePassword()}
+                                </Modal>
+                <Modal
+                    visible={this.state.modalVisible_SavedMsg}
+                    animationType='fade'
+                    transparent={true}
+                >
+                    {this.Modal_chnagesSaveSuccessFully()}
+                </Modal>
             </View>
         )
     }

@@ -1,17 +1,45 @@
-/* screen -MANAPPCUS048
+/* screen -MANAPPCUS048,57,58,60
     design by -mayur s
  */
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, Modal,TextInput} from 'react-native';
-import { StyleCollectMyLoad } from '../config/CommonStyles';
+import { View, Text, Image, TouchableOpacity, Modal,TextInput,FlatList} from 'react-native';
+import { StyleCollectMyLoad, StyleLocationDetails } from '../config/CommonStyles';
 import Constants from '../config/Constants';
+import RBSheet from "react-native-raw-bottom-sheet";
+import Carousel  from "react-native-carousel";
+
 export default class CollectMyLoad extends React.Component {
     constructor() {
         super();
         this.state = {
             modalVisible_RateCard:false,
             ModalVisible_referFriend:false,
-
+            truckList:[
+                {                  
+                    src: require('../images/truck_icon.png'),
+                    truckTitle:"Choose Truck",
+                    truckWeight:"1 Ton", 
+                    truckDesp:"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+                    truckMaxWeight:"1 Ton",
+                    truckSize:"22 Meters"
+                },
+                {
+                    src: require('../images/truck_icon_one.png'),
+                    truckTitle:"Choose Truck",
+                    truckWeight:"1.5 Ton", 
+                    truckDesp:"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+                    truckMaxWeight:"1.5 Ton",
+                    truckSize:"32 Meters"
+                },
+                {
+                    src: require('../images/truck_icon_two.png'),
+                    truckTitle:"Choose Truck",
+                    truckWeight:"3 Ton", 
+                    truckDesp:"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+                    truckMaxWeight:"3 Ton",
+                    truckSize:"45 Meters"
+                }
+            ]                
         }
     }
 RateCard(){
@@ -75,7 +103,7 @@ ReferAFriend(){
     return(
         <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)', }}>
                 <View style={[StyleCollectMyLoad.modalCotainer, { width: '90%' }]}>
-                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10, paddingBottom: 20 }}
+                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10, }}
                         onPress={() => {
                             this.setState({ ModalVisible_referFriend: false })
                         }}
@@ -84,6 +112,8 @@ ReferAFriend(){
                             style={{ width: 15, height: 15 }}
                         />
                     </TouchableOpacity>
+                    <Text  style={StyleCollectMyLoad.modalReferText}>Refer a Friend</Text>
+                    <Text style={StyleCollectMyLoad.modalShareText}>{Constants.ShareAppUsing}</Text>
 
                     <View style={StyleCollectMyLoad.textInput_container}>
                         <View style={{ width: '75%', alignSelf: 'center', paddingLeft: 15 }}>
@@ -113,7 +143,7 @@ ReferAFriend(){
                         <View style={{ width: '75%', alignSelf: 'center', paddingLeft: 15 }}>
                             <View style={StyleCollectMyLoad.labelBox}>
                                 <Image style={StyleCollectMyLoad.LabelBoxIcon}
-                                    source={require('../images/email_id.png')} />
+                                    source={require('../images/mobile_number.png')} />
                                 <Text style={StyleCollectMyLoad.labelBoxText}>{Constants.MobileNumber}</Text>
                             </View>
                             <TextInput placeholder='Enter Mobile Number'
@@ -154,7 +184,7 @@ ReferAFriend(){
                         <Text style={StyleCollectMyLoad.descText}>fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
                         <TouchableOpacity style={StyleCollectMyLoad.button}
                             onPress={() => {
-                                alert('navigate to pml')
+                                this.RBSheet.open();
                             }}
                         >
                             <Text style={StyleCollectMyLoad.buttonLabel}>{Constants.ViewAll}</Text>
@@ -222,6 +252,7 @@ ReferAFriend(){
                   </View>
 
                 </View>
+               
                 <Modal
                 transparent={true}
                 visible={this.state.modalVisible_RateCard}
@@ -229,12 +260,73 @@ ReferAFriend(){
                 >
                    {this.RateCard()}
                 </Modal>
+               
                 <Modal
                 transparent={true}
                 visible={this.state.ModalVisible_referFriend}
                 animationType='fade'>
                     {this.ReferAFriend()}
                 </Modal>
+
+                <RBSheet
+                    ref={ref => {
+                    this.RBSheet = ref;
+                    }}
+                    height={600}
+                    duration={250}
+                    customStyles={{
+                    container: {
+                        borderTopLeftRadius: 50,
+                        borderTopRightRadius: 50,
+                        backgroundColor:'transparent',
+                    }
+                    }}
+                >
+                    <View style={StyleCollectMyLoad.collWrapp }>
+                        <Carousel 
+                           indicatorAtBottom={true} 
+                           indicatorOffset={0}
+                           delay={5000} 
+                           loop={true}
+                           indicatorColor="#7bc145"                          
+                           indicatorSpace={15}
+                        >
+                            {
+                                        this.state.truckList.map((item)=>{
+                                            return(
+                                                <View style={StyleCollectMyLoad.carouselWrapp}>
+                                                    <View style={StyleCollectMyLoad.innpickTop}>
+                                                        <Image style={StyleCollectMyLoad.bgpickImg}
+                                                            source={require('../images/pickload_circle.png')}
+                                                        />
+                                                        <View style={StyleCollectMyLoad.outerCircle}>
+                                                            <View style={StyleCollectMyLoad.innerCircle}>
+                                                                <Image style={StyleCollectMyLoad.truckImg}
+                                                                    source={item.src} 
+                                                                />
+                                                            </View>
+                                                         </View>                                    
+                                                    </View>  
+                                                    <View style={StyleCollectMyLoad.whiteinnBox}>
+                                                        <Text style={StyleCollectMyLoad.chosetruckTxt}>{item.truckTitle}</Text>
+                                                        <Text style={StyleCollectMyLoad.weighTxt}>{item.truckWeight}</Text>
+                                                        <Text style={StyleCollectMyLoad.truckDetails}>{item.truckDesp}</Text>
+                                                        <View style={StyleCollectMyLoad.grayBox}>
+                                                            <Text style={[StyleCollectMyLoad.maxTxt, {marginBottom:6} ]}>Maximum Weight : {item.truckMaxWeight}</Text>
+                                                            <Text style={StyleCollectMyLoad.maxTxt}>Size : {item.truckSize}</Text>
+                                                        </View>
+                                                        <TouchableOpacity style={StyleCollectMyLoad.truckBtn}>
+                                                            <Text style={StyleCollectMyLoad.truckBtnText}>Select Truck</Text>
+                                                        </TouchableOpacity>
+                                                   </View>  
+                                               </View>
+                                            )
+                                        })
+                            }
+                        </Carousel>  
+                    </View>  
+                </RBSheet>            
+
             </View>
         )
     }

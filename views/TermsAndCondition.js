@@ -1,4 +1,4 @@
-/* screen -MANAPPCUS0011
+/* screen -MANAPPCUS0011,53,54,55,59,
     design by -mayur s
  */
 import React, { Component } from 'react';
@@ -37,6 +37,10 @@ export default class TermsAndCondition extends Component {
             flag=="PaymentPolicy"
             ?
             "Payment Policy"
+            :
+            flag=="AboutUs"
+            ?
+            "About Us"
             : null
           }
            isBack={true} isLogout={true} navigation={navigation} />

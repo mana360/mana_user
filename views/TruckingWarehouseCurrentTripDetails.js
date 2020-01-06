@@ -35,8 +35,8 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                             <View style={StyleViewCurrentTrip.topCircle}>
                             </View>
 
-                                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                    <TouchableOpacity style={{marginTop:55}}
+                                <View style={{ flexDirection: 'row', justifyContent: 'center',alignItems:'center' }}>
+                                    <TouchableOpacity style={{marginTop:25}}
                                         onPress={()=>{
                                             this.setState({invoiceModal_Visible:true})
                                         }}
@@ -50,7 +50,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                         style={StyleViewCurrentTrip.ImageCurrentTrip}
                                     />
                                     
-                                    <TouchableOpacity style={{marginTop:55}}
+                                    <TouchableOpacity style={{marginTop:25}}
                                         onPress={()=>{
                                                 this.props.navigation.navigate('HelpAndSupport',{flag:false});
                                         }}
@@ -85,7 +85,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
 
                         <View style={StyleViewCurrentTrip.row}>
                             <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedTimetonextstatus}</Text>
+                                <Text style={StyleViewCurrentTrip.col1Text}>Estimated time to next status update</Text>
                             </View>
                             <View style={StyleViewCurrentTrip.col2}>
                                 <Text style={StyleViewCurrentTrip.col2Text}>11:00PM</Text>
@@ -94,7 +94,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
 
                         <View style={StyleViewCurrentTrip.row}>
                             <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedTimeTocmpleteTrip}</Text>
+                                <Text style={StyleViewCurrentTrip.col1Text}>Estimated time to completion of trip</Text>
                             </View>
                             <View style={StyleViewCurrentTrip.col2}>
                                 <Text style={StyleViewCurrentTrip.col2Text}>11 PM</Text>
@@ -103,7 +103,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
 
                         <View style={StyleViewCurrentTrip.row}>
                             <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedDateTocmpleteTrip}</Text>
+                                <Text style={StyleViewCurrentTrip.col1Text}>Estimated Date for completion of trip</Text>
                             </View>
                             <View style={StyleViewCurrentTrip.col2}>
                                 <Text style={StyleViewCurrentTrip.col2Text}>11/12/2019</Text>
@@ -115,7 +115,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                 <Text style={StyleViewCurrentTrip.col1Text}>{Constants.DriverName}</Text>
                             </View>
                             <View style={StyleViewCurrentTrip.col2}>
-                                <Text style={StyleViewCurrentTrip.col2Text}>85968784455</Text>
+                                <Text style={StyleViewCurrentTrip.col2Text}>Amanda.P</Text>
                             </View>
                         </View>
 
@@ -176,7 +176,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                 <Text style={StyleViewCurrentTrip.col1Text}>{Constants.CargoType}</Text>
                             </View>
                             <View style={StyleViewCurrentTrip.col2}>
-                                <Text style={StyleViewCurrentTrip.col2Text}>75848596</Text>
+                                <Text style={StyleViewCurrentTrip.col2Text}>Cargo type 1</Text>
                             </View>
                         </View>
 
@@ -185,7 +185,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                 <Text style={StyleViewCurrentTrip.col1Text}>{Constants.StorageType}</Text>
                             </View>
                             <View style={StyleViewCurrentTrip.col2}>
-                                <Text style={StyleViewCurrentTrip.col2Text}>Refrigirator</Text>
+                                <Text style={StyleViewCurrentTrip.col2Text}>Refrigerator</Text>
                             </View>
                         </View>
 
@@ -248,16 +248,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                 <Text style={StyleViewCurrentTrip.col1Text}>{Constants.Dimension}</Text>
                             </View>
                             <View style={StyleViewCurrentTrip.col2}>
-                                <Text style={StyleViewCurrentTrip.col2Text}>100*50*50</Text>
-                            </View>
-                        </View>
-                        
-                        <View style={StyleViewCurrentTrip.row}>
-                            <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.Dimension}</Text>
-                            </View>
-                            <View style={StyleViewCurrentTrip.col2}>
-                                <Text style={StyleViewCurrentTrip.col2Text}>100*50*50</Text>
+                                <Text style={StyleViewCurrentTrip.col2Text}>100*50*50 Inches</Text>
                             </View>
                         </View>
 
