@@ -6,7 +6,7 @@ const Constants = {
     FONT_SIZE__MEDIUM: 12,
     FONT_SIZE_LARGE: 14,
     FONT_SIZE_EXTRA_MEDIUM: 18,
-    FONT_SIZE_EXTRA_LARGE: 20,
+    FONT_SIZE_EXTRA_LARGE: 16,
 
     //colors
     COLOR_GREEN_PROFILE: "rgba(96, 176, 115,1)",
@@ -180,8 +180,8 @@ const Constants = {
     TotalPrice:'Total Price',
     BookTrip:'Book Trip',
     OtherServices:'Other Services',
-    GrandTotal:'Grand Total'
-    WelcomeToMana360:'Wellcome to Mana360!!' ,
+    GrandTotal:'Grand Total',
+    WelcomeToMana360:'Wellcome to Mana360!!',
     RateCard:'Rate Card',
     Amount:'Amount',
     SmallLessthan:'Small(Less than 1 kg)',

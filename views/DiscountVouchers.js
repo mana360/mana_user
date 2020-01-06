@@ -48,7 +48,8 @@ getVouchers(item) {
                             <Text style={StyleDiscountVouchers.voucerdate}>Valid Upto {item.voucherdate}</Text>
                             <Text style={StyleDiscountVouchers.voucerdiscount}>({item.discountpercentage} Discount) </Text>
                         </View>
-                        <TouchableOpacity onPress={this._onPressButton}>
+                        <TouchableOpacity onPress={()=>{
+                           this.props.navigation.navigate('NewBookingSummary')}}>
                             <View style={StyleDiscountVouchers.voucerbtn}>
                                 <Text style={StyleDiscountVouchers.voucerapplybtn}>{Constants.APPLY}</Text>
                             </View>

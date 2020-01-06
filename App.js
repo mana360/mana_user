@@ -39,7 +39,7 @@ import SignUp from './views/SignUp';
 import LocationDetails from './views/LocationDetails';
 import LoadCategory from './views/LoadCategory';
 import BookingSummary from './views/BookingSummary';
-
+import NewBookingSummary from './views/NewBookingSummary';
 import DiscountVoucher from './views/DiscountVoucher';
 import MyBookings from './views/MyBookings'
 import MyBookingDetails from './views/MyBookingDetails'
@@ -225,10 +225,14 @@ const AppNavigator1 = createStackNavigator({
       screen:MyBookingDetails,
       navigationOptions:()=>({header:null})
     },
+    NewBookingSummary:{
+      screen:NewBookingSummary,
+      navigationOptions:()=>({header:null})
+    },
 
 
 },
-     {initialRouteName:"PaymentMethod"}
+     {initialRouteName:"DiscountVouchers"}
 
 )
 export const AppNavigator = createAppContainer(AppNavigator1);
