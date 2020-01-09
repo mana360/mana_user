@@ -59,12 +59,16 @@ export default class SignUp extends Component {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
         <Image style={StyleSignUp.bgImage} source={require('../images/Splash_screen.jpg')} />
+       
+           <View style={this.state.referalRadio_button ? [StyleSignUp.loginBox, { marginTop:50 }] : StyleSignUp.loginBox}>
 
-        <View style={this.state.referalRadio_button ? [StyleSignUp.loginBox, { marginTop: 50 }] : StyleSignUp.loginBox}>
+           <View style={StyleSignUp.LogoImageView}>
+              <Image style={{width:'100%',height:'46%', marginLeft:0.5,bottom:0,position:'absolute',zIndex:-1,resizeMode:"stretch"}}
+                  source={require('../images/circle.png')}/>
+              <Image style={StyleSignUp.logoImage}
+                  source={require('../images/logo_in_circle.png')}/>
+           </View>
 
-          <Image style={StyleSignUp.logoImage}
-            source={require('../images/AppLauncher.png')}
-          />
           <Text style={StyleSignUp.loginLabel}>{Constants.SignUp}</Text>
 
           <View style={StyleSignUp.textInput_container}>
@@ -130,7 +134,7 @@ export default class SignUp extends Component {
               <Text style={StyleSignUp.labelBoxText}>{Constants.Referralcode}</Text>
             </View>
             <TextInput placeholder='Enter Referral Code'
-              style={{ marginLeft: 25 }}
+              style={{ marginLeft: 25 ,height:45}}
               value={this.state.referral_code}
               onChangeText={(newtext) => { this.setState({ referral_code: newtext }) }} />
           </View>
@@ -183,27 +187,28 @@ export default class SignUp extends Component {
           </View>
 
           <TouchableOpacity
-            disabled={this.state.policyRadio_button ? false : true}
-            onPress={() => {
-              this.setState({ modalVisible_welcome: true })
-              this.timer = setInterval(() => {
-                this.setState({ modalVisible_welcome: false })
-                clearInterval(this.timer)
-                this.props.navigation.dispatch(
-                  StackActions.reset({
-                    index: 0,
-                    actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
-                  }))
-              }
-                , 3000);
+            style={this.state.policyRadio_button ? StyleSignUp.loginButton : [StyleSignUp.loginButton, { backgroundColor: Constants.COLOR_GREY_LIGHT }]}
+              disabled={this.state.policyRadio_button ? false : true}
+              onPress={() => {
+                this.setState({ modalVisible_welcome: true })
+                this.timer = setInterval(() => {
+                  this.setState({ modalVisible_welcome: false })
+                  clearInterval(this.timer)
+                  this.props.navigation.dispatch(
+                      StackActions.reset({
+                        index: 0,
+                        actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
+                      }))
+                  }
+                    , 3000);
 
-            }}
-            style={this.state.policyRadio_button ? StyleSignUp.loginButton : [StyleSignUp.loginButton, { backgroundColor: Constants.COLOR_GREY_LIGHT }]}>
+              }}
+            >
             <Text style={StyleSignUp.Login_buttonText}>{Constants.SignUp}</Text>
           </TouchableOpacity>
 
         </View>
-
+       
         <TouchableOpacity style={StyleSignUp.memberButton}
           onPress={() => {
             this.props.navigation.navigate('SignIn')

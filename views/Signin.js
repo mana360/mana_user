@@ -27,10 +27,14 @@ export default class SignIn extends Component {
 
         <Image style={StyleSignIn.bgImage} source={require('../images/Splash_screen.jpg')} />
         <View style={StyleSignIn.loginBox}>
-
-          <Image style={StyleSignIn.logoImage}
-            source={require('../images/AppLauncher.png')}
+        <View style={StyleSignIn.LogoImageView}>
+        <Image style={{width:'100%',height:'46%', marginLeft:0.5,bottom:0,position:'absolute',zIndex:-1,resizeMode:"stretch"}}
+            source={require('../images/circle.png')}
           />
+          <Image style={StyleSignIn.logoImage}
+            source={require('../images/logo_in_circle.png')}
+          />
+          </View>
           <Text style={StyleSignIn.loginLabel}>{Constants.SignIn}</Text>
 
           <View style={StyleSignIn.textInput_container}>
@@ -67,13 +71,14 @@ export default class SignIn extends Component {
               onChangeText={(newtext) => { this.setState({ password: newtext }) }} />
           </View>
 
-          <TouchableOpacity onPress={() => {
-            this.props.navigation.dispatch(
-              StackActions.reset({
-                index: 0,
-                actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
-              }))
-          }}
+          <TouchableOpacity 
+            onPress={() => {
+                this.props.navigation.dispatch(
+                  StackActions.reset({
+                    index: 0,
+                    actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
+                  }))
+                }}
             style={StyleSignIn.loginButton}>
             <Text style={StyleSignIn.Login_buttonText}>{Constants.SignIn}</Text>
           </TouchableOpacity>

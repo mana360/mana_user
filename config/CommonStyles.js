@@ -542,16 +542,23 @@ const StyleSignIn = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: Constants.COLOR_WHITE,
     },
-    logoImage: {
-        width: 150,
-        height: 150,
-        borderRadius: 75,
-        top: -85,
-        alignSelf: 'center',
+    LogoImageView:{
+        borderRadius:85,
+        top:-95, 
+        height:170,
+        width:'58%',
+        justifyContent:'center',
+        alignSelf:'center',
         position: 'absolute',
     },
+    logoImage: {
+        width: 158,
+        top:1,
+        height: 158,
+        alignSelf: 'center',
+    },
     loginLabel: {
-        marginTop: 80,
+        marginTop:85,
         alignSelf: 'center',
         color: 'black',
         fontWeight: 'bold',
@@ -607,7 +614,7 @@ const StyleSignIn = StyleSheet.create({
         fontWeight: 'bold',
     },
     forgotButton: {
-        marginTop: 20,
+        marginTop: 15,
         marginBottom: 25,
     },
     forgotLabel: {
@@ -617,7 +624,7 @@ const StyleSignIn = StyleSheet.create({
     },
     memberButton: {
         position: 'absolute',
-        bottom: 25,
+        bottom: 20,
         alignSelf: 'center',
     },
     memberLabel: {
@@ -1994,19 +2001,30 @@ const StyleSignUp = StyleSheet.create({
     loginBox: {
         marginHorizontal: 15,
         padding: 15,
+        borderRadius:5,
         marginTop: 15,
         justifyContent: 'center',
         backgroundColor: Constants.COLOR_WHITE,
     },
+    LogoImageView:{
+        position:'absolute',
+        borderRadius:85,
+        top:-95,
+        height:170,
+        width:'57%',
+        justifyContent:'center',
+        alignItems:'center',
+        alignSelf:'center',
+    },
     logoImage: {
-        width: 140,
-        height: 140,
-        borderRadius: 75,
-        marginTop: -95,
+        width: 158,
+        height: 158,
+        top:1,
         alignSelf: 'center',
     },
     loginLabel: {
-        marginVertical: 5,
+        marginTop:65,
+        marginBottom:5,
         alignSelf: 'center',
         color: 'black',
         fontWeight: 'bold',
@@ -2018,6 +2036,7 @@ const StyleSignUp = StyleSheet.create({
         marginVertical: 9
     },
     textInput_style: {
+        height:45,
         borderWidth: 0.7,
         borderRadius: 50,
         paddingLeft: 25,
@@ -2047,7 +2066,6 @@ const StyleSignUp = StyleSheet.create({
     loginButton: {
         width: wp('80%'),
         borderRadius: 50,
-        marginTop: 10,
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
