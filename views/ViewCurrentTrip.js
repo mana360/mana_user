@@ -158,7 +158,7 @@ export default class ViewCurrentTrip extends React.Component {
                             this.RBSheet = ref;
                         }}
                         height={200}
-                        duration={1}
+                        duration={1000}
 
                         customStyles={{
                             container: {
