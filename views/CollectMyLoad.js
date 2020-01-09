@@ -170,7 +170,7 @@ ReferAFriend(){
     )
 }
     render() {
-        let { navigation } = this.props
+        let { navigation } = this.props;   
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
 
@@ -201,8 +201,8 @@ ReferAFriend(){
                         <Text style={[StyleCollectMyLoad.labelText2]}>{Constants.MyBooking}</Text>
                         <Text style={StyleCollectMyLoad.descText}>fnsldfn fnsldfn fnsldfnfnsldfnfnsldfnfnsldfn fnsldfn fnsldfn lorempipsom</Text>
                         <TouchableOpacity style={StyleCollectMyLoad.button}
-                            onPress={() => {
-                                alert('navigate to pml')
+                            onPress={()=>{
+                                this.props.navigation.navigate('MyBookings')
                             }}
                         >
                             <Text style={StyleCollectMyLoad.buttonLabel}>{Constants.ViewAll}</Text>
@@ -315,7 +315,12 @@ ReferAFriend(){
                                                             <Text style={[StyleCollectMyLoad.maxTxt, {marginBottom:6} ]}>Maximum Weight : {item.truckMaxWeight}</Text>
                                                             <Text style={StyleCollectMyLoad.maxTxt}>Size : {item.truckSize}</Text>
                                                         </View>
-                                                        <TouchableOpacity style={StyleCollectMyLoad.truckBtn}>
+                                                        <TouchableOpacity 
+                                                            onPress={() =>{
+                                                                this.props.navigation.navigate('LocationDetails')
+                                                            this.RBSheet.close();
+                                                            }}
+                                                            style={StyleCollectMyLoad.truckBtn}>
                                                             <Text style={StyleCollectMyLoad.truckBtnText}>Select Truck</Text>
                                                         </TouchableOpacity>
                                                    </View>  

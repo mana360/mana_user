@@ -160,6 +160,7 @@ export default class BookingSummary extends React.Component{
                                         placeholderTextColor="#a4a4a4"
                                         style={StyleLocationDetails.inputBox} />
                                     </View>   
+
                                     <View style={[StyleBookingSummary.otherServiceBox, {display: "none"} ]}>
                                         <Text style={StyleBookingSummary.otherTxtser}>Other Services</Text>
                                         <View style={StyleBookingSummary.grayBox}>
@@ -188,8 +189,15 @@ export default class BookingSummary extends React.Component{
                                         <View style={StyleBookingSummary.modalpopupBox}>
                                             <View style={StyleBookingSummary.modalinnBox}>                                               
                                                  
-                                                 <Image style={StyleBookingSummary.popCloseImg}
-                                                        source={require('../images/close.png')} />
+                                            <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
+                                                    onPress={()=>{
+                                                        this.setState({modalVisible:false})
+                                                }}
+                                            >
+                                            <Image source={require('../images/close.png')}
+                                                style={{ width: 15, height: 15 }}
+                                            />
+                                            </TouchableOpacity>
                                                 <View style={StyleBookingSummary.serpopSec}> 
                                                     <Text style={StyleBookingSummary.othserTxt}>Other Services</Text>  
                                                     <View style={StyleBookingSummary.inputboxDropDown}>
@@ -248,7 +256,10 @@ export default class BookingSummary extends React.Component{
                                                             containerStyle = {StyleBookingSummary.dropdown}
                                                         />
                                                     </View> 
-                                                    <TouchableOpacity  
+                                                        <TouchableOpacity  
+                                                            onPress={()=>{
+                                                                this.setState({modalVisible:false})
+                                                        }}
                                                         style={[StyleLocationDetails.logButton, {marginTop:0, marginBottom:0,} ]}>
                                                         <Text style={StyleLocationDetails.logButtonText}>{Constants.SUBMIT}</Text>
                                                     </TouchableOpacity> 
@@ -276,10 +287,20 @@ export default class BookingSummary extends React.Component{
                                     </View>
                                    
                                 </View>            
-                                <TouchableOpacity style={StyleBookingSummary.discntBtn}>
+                                <TouchableOpacity 
+                                     onPress={()=>{
+                                        this.props.navigation.navigate('DiscountVouchers')
+                                    }}
+                                    style={StyleBookingSummary.discntBtn}
+                                >
                                     <Text style={StyleBookingSummary.discntText}>Apply Discount</Text>
                                 </TouchableOpacity>    
-                                <TouchableOpacity style={[StyleLocationDetails.logButton, {marginTop:0, marginHorizontal:25,} ]}>
+                                <TouchableOpacity 
+                                    onPress={()=>{
+                                        this.props.navigation.navigate('PaymentMethod')
+                                    }}
+                                    style={[StyleLocationDetails.logButton, {marginTop:0, marginHorizontal:25,} ]}
+                                >
                                     <Text style={StyleLocationDetails.logButtonText}>{Constants.BookTrip}</Text>
                                 </TouchableOpacity>   
 

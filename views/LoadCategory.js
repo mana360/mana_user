@@ -4,7 +4,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image, ScrollView, Picker, TextInput, Modal} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {StyleLoadCategory} from '../config/CommonStyles';
+import {StyleLoadCategory,StyleLocationDetails} from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
@@ -129,6 +129,15 @@ export default class LoadCategory extends React.Component{
                                         </View>
                                     </View>
                                 </TouchableOpacity>   
+
+                                <TouchableOpacity 
+                                     onPress={() =>{
+                                        this.props.navigation.navigate('BookingSummary')
+                                     }}
+                                    style={StyleLocationDetails.logButton}
+                                >
+                                    <Text style={StyleLocationDetails.logButtonText}>{Constants.Next}</Text>
+                                </TouchableOpacity>
 
                             </View>                        
                         </View>

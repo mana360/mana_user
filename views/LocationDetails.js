@@ -21,7 +21,7 @@ export default class LocationDetails extends React.Component{
     }
     render(){
         
-        let {navigation} = this.props
+        let { navigation } = this.props;   
         return(
             <View style={{flex:1,}}>
                 
@@ -49,8 +49,14 @@ export default class LocationDetails extends React.Component{
                                             }
                                         }
                                         style={StyleLocationDetails.inputBox} />
-                                    <Image style={StyleLocationDetails.labelIconLoc}
-							            	source={require('../images/address.png')} />
+                                        <TouchableOpacity 
+                                                style={{ position:"absolute",right:16,top:12,}}
+                                                onPress={() =>{
+                                                this.props.navigation.navigate('ViewMap')
+                                            }}>
+                                            <Image style={{width:20, height:20,}}
+                                                   source={require('../images/address.png')} />
+                                        </TouchableOpacity>    
                                 </View>
                                 <View style={StyleLocationDetails.inputContainer}>
                                     <View style={StyleLocationDetails.labelBoxNew}>
@@ -121,7 +127,12 @@ export default class LocationDetails extends React.Component{
                                         placeholderTextColor={'#a4a4a4'}                                        
                                     />
                                 </View>
-                                <TouchableOpacity style={StyleLocationDetails.logButton}>
+                                <TouchableOpacity 
+                                     onPress={() =>{
+                                        this.props.navigation.navigate('LoadCategory')
+                                     }}
+                                    style={StyleLocationDetails.logButton}
+                                >
                                     <Text style={StyleLocationDetails.logButtonText}>{Constants.Next}</Text>
                                 </TouchableOpacity>
                             

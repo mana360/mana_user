@@ -1,5 +1,5 @@
 /* screen -MANAPPCUS0014,15,23,28,48
-    design by -mayur
+    design by -mayur s
  */
 import React from 'react';
 import { View, Image, ScrollView, Text, TouchableOpacity } from 'react-native';

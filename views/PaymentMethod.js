@@ -109,7 +109,12 @@ export default class PaymentMethod extends React.Component{
                     >
                     <View style={StylePaymentMethod.popmodule}>
                         <View style={StylePaymentMethod.popmain}>
-                            <TouchableHighlight style={StylePaymentMethod.popclose} onPress={() => {this.secondmodalVisible(false);}} >
+                            <TouchableHighlight 
+                                style={StylePaymentMethod.popclose} 
+                                onPress={() => {this.secondmodalVisible(false);
+                                    this.props.navigation.navigate('Dashboard')
+                                }}
+                            >
                                 <Image style={StylePaymentMethod.popcloseimg} source={require('../images/close.png')}></Image>
                             </TouchableHighlight>
 

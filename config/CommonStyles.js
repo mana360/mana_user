@@ -2926,14 +2926,12 @@ const StyleBookingSummary = StyleSheet.create({
     modalinnBox: {
         borderRadius:5,
         width: wp('93%'),
-        height: hp('40'),
         backgroundColor: Constants.COLOR_WHITE,
         position:'relative',
     },
     serpopSec:{
         paddingHorizontal:18,
-        paddingVertical:30,   
-        flex:1,    
+        paddingVertical:30,          
     },
     othserTxt:{
         fontFamily: "Roboto-Medium",	
