@@ -35,7 +35,7 @@ export default class SignUp extends Component {
                 this.props.navigation.dispatch(
                   StackActions.reset({
                     index: 0,
-                    actions: [NavigationActions.navigate({ routeName: 'ProfileSetUp' })],
+                    actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
                   }))
               }}
             >
@@ -183,16 +183,16 @@ export default class SignUp extends Component {
               disabled={this.state.policyRadio_button ? false : true}
               onPress={() => {
                 this.setState({ modalVisible_welcome: true })
-                this.timer = setInterval(() => {
-                  this.setState({ modalVisible_welcome: false })
-                  clearInterval(this.timer)
-                  this.props.navigation.dispatch(
-                      StackActions.reset({
-                        index: 0,
-                        actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
-                      }))
-                  }
-                    , 3000);
+               
+                // this.timer = setInterval(() => {
+                //   clearInterval(this.timer)
+                //   this.props.navigation.dispatch(
+                //       StackActions.reset({
+                //         index: 0,
+                //         actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
+                //       }))
+                //   }
+                //     , 1000);
 
               }}
             >

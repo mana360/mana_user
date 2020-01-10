@@ -194,7 +194,7 @@ const Constants = {
     BookTrip:'Book Trip',
     OtherServices:'Other Services',
     GrandTotal:'Grand Total',
-    WelcomeToMana360:'Wellcome to Mana360!!',
+    WelcomeToMana360:'Welcome to Mana360!!',
     RateCard:'Rate Card',
     Amount:'Amount',
     SmallLessthan:'Small(Less than 1 kg)',

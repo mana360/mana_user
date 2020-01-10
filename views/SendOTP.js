@@ -36,7 +36,7 @@ verifyOTP() {
                         />
                     </TouchableOpacity>
                     <Text style={StyleSendOtp.modalTextMSg}>{Constants.VerificationCode}</Text>
-                    <Text style={{ color: Constants.COLOR_GREY_SHADED, alignSelf: 'center' }}>{Constants.EnterOTP}</Text>
+                    <Text style={{ color: Constants.COLOR_GREY_SHADED, alignSelf: 'center' }}>Enter the OTP sent to your mobile number</Text>
                     <TextInput style={StyleSendOtp.ModaltextInput}
                         value={this.state.OTP}
                         keyboardType="number-pad"
