@@ -73,11 +73,7 @@ export default class SignIn extends Component {
 
           <TouchableOpacity 
             onPress={() => {
-                this.props.navigation.dispatch(
-                  StackActions.reset({
-                    index: 0,
-                    actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
-                  }))
+              this.props.navigation.navigate('SendOTP');
                 }}
             style={StyleSignIn.loginButton}>
             <Text style={StyleSignIn.Login_buttonText}>{Constants.SignIn}</Text>

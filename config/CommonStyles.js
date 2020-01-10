@@ -3152,8 +3152,150 @@ const StyleNewBookingSummary = StyleSheet.create({
 		fontFamily: "Roboto-Medium",				
     },
 })
+const StyleSetUpProfile = StyleSheet.create({
+   
+    TextInputView: {
+        paddingLeft: 20,
+        borderWidth: 0.8,
+        width: wp('90%'),
+        height: 50,
+        alignSelf: 'center',
+        borderRadius: 50,
+        marginVertical:15,
+        justifyContent: 'center',
+        borderColor: Constants.COLOR_GREY_DARK,
+        backgroundColor: Constants.COLOR_WHITE,
+    },
+    LabelView: {
+        flexDirection: 'row',
+        position: 'absolute',
+        zIndex: 1,
+        flexDirection:'row',
+        marginLeft: '7%',
+        top: '-22%',
+        justifyContent: 'center',
+        alignItems: "center",
+        backgroundColor: Constants.COLOR_WHITE
+    },
+    modalLabelText: {
+        paddingLeft:2,
+        fontWeight:'bold',
+        textAlign: "center",
+        textTransform: "capitalize",
+        color: Constants.COLOR_GREY_DARK
+    },
+    ButtonView:{
+        backgroundColor:Constants.COLOR_GREEN,
+        justifyContent:'center',
+        alignItems:'center',
+        width:"90%",
+        marginVertical:10,
+        alignSelf:'center',
+        borderRadius:50,
 
+      },
+    ButtonTextBottom:{
+        color:Constants.COLOR_WHITE,
+        paddingVertical:10,
+        fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
+        textTransform:"uppercase"
+    },
+    modalView: {
+        width: wp('80%'),
+        padding: 5,
+        borderRadius: 5,
+        justifyContent: 'center',
+        backgroundColor: Constants.COLOR_WHITE
+    },
+    leftCross_View: {
+        alignSelf: 'flex-end',
+    },
+    leftCrossText: {
+        right: 10,
+        top: 1,
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        color: Constants.COLOR_GREY_LIGHT,
 
+    },
+    modalImage: {
+        alignSelf: 'center',
+        width: 100,
+        height: 100,
+    },
+    modalMsg: {
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        color: Constants.COLOR_GREY_DARK,
+        marginVertical: 10,
+    },
+    modalButton: {
+        width: '40%',
+        borderRadius: 50,
+        backgroundColor: Constants.COLOR_GREEN,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        marginVertical: 10,
+    },
+    modalButtonText: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        alignSelf: 'center',
+        color: Constants.COLOR_WHITE,
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        fontWeight: 'bold',
+        textTransform: 'uppercase'
+    },
+})
+const StyleSendOtp =StyleSheet.create({
+    ModalView: {
+        backgroundColor: Constants.COLOR_WHITE,
+        width: wp('90%'),
+        alignSelf: 'center',
+        borderRadius: 5,
+        justifyContent: 'center',
+    },
+    modalTextMSg: {
+        alignSelf: 'center',
+        color: Constants.COLOR_GREEN,
+        fontWeight: "bold",
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
+        marginTop: 15,
+        marginBottom: 25,
+    },
+    ModaltextInput: {
+        width: wp('60%'),
+        borderWidth: 1,
+        borderRadius: 5,
+        letterSpacing: 15,
+        marginVertical: '4%',
+        textAlign: 'center',
+        borderStyle: 'dashed',
+        alignSelf: 'center',
+        backgroundColor: Constants.COLOR_GREY,
+        borderColor: Constants.COLOR_GREY_LIGHT,
+    },
+    resendText: {
+        fontWeight:"bold",
+        alignSelf: 'center',
+        textDecorationLine: "underline",
+        color: Constants.COLOR_GREEN
+    },
+    modalButtonView: {
+        backgroundColor: Constants.COLOR_GREEN,
+        borderRadius: 20,
+        marginVertical:10,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 10
+    },
+    modalButtonLabel: {
+        textTransform: 'uppercase',
+        color: Constants.COLOR_WHITE,
+        paddingHorizontal: 35,
+        paddingVertical: 10
+    },
+})
 
 export {
     StyleMyBookingDetails,
@@ -3186,4 +3328,6 @@ export {
     StyleMapView,
     StylePaymentMethod,
     StyleNewBookingSummary,
+    StyleSetUpProfile,
+    StyleSendOtp,
 }

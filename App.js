@@ -47,6 +47,8 @@ import DiscountVouchers from './views/DiscountVouchers';
 import ViewMap from './views/ViewMap';
 import MapViews from './views/MapView';
 import PaymentMethod from './views/PaymentMethod';
+import ProfileSetUp from './views/ProfileSetUp';
+import SendOTP from './views/SendOTP';
 
 console.disableYellowBox = true;
 
@@ -235,10 +237,16 @@ const AppNavigator1 = createStackNavigator({
       screen:NewBookingSummary,
       navigationOptions:()=>({header:null})
     },
-
-
+    ProfileSetUp:{
+      screen:ProfileSetUp,
+      navigationOptions:()=>({header:null})
+    },
+    SendOTP:{
+      screen:SendOTP,
+      navigationOptions:()=>({header:null})
+    },
 },
-    {initialRouteName:"Splash"} 
+    {initialRouteName:"ProfileSetUp"} 
 
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

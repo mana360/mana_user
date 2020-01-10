@@ -35,7 +35,7 @@ export default class SignUp extends Component {
                 this.props.navigation.dispatch(
                   StackActions.reset({
                     index: 0,
-                    actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
+                    actions: [NavigationActions.navigate({ routeName: 'ProfileSetUp' })],
                   }))
               }}
             >
@@ -140,7 +140,6 @@ export default class SignUp extends Component {
           </View>
 
           <View style={[StyleSignUp.policyView,]}>
-
             <TouchableOpacity
               onPress={() => {
                 this.setState({ policyRadio_button: !this.state.policyRadio_button })
@@ -149,9 +148,7 @@ export default class SignUp extends Component {
               <Image source={this.state.policyRadio_button ? require('../images/radio_buttons_selected.png') : require('../images/radio_buttons.png')}
                 style={StyleSignUp.policyImage} />
             </TouchableOpacity>
-
             <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}>{Constants.IagreeTo}</Text>
-
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('TermsAndCondition', { flag: 'TermsAndCondition' })
@@ -159,32 +156,27 @@ export default class SignUp extends Component {
             >
               <Text style={StyleSignUp.PolicyLabel}>{Constants.TermsAndConditions}</Text>
             </TouchableOpacity>
-
             <Text style={{ color: Constants.COLOR_GREY_DARK }}>,</Text>
           </View>
-
-          <View style={[{ paddingLeft: 42, flexDirection: 'row', marginBottom: 10 }]}>
-
-            <TouchableOpacity
+         
+         <View style={[{ paddingLeft: 42, flexDirection: 'row', marginBottom: 10 }]}>
+          <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('TermsAndCondition', { flag: 'CancellationPolicy' })
               }}
-            >
+          >
               <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy}</Text>
-            </TouchableOpacity>
-
-            <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}> & </Text>
-
-            <TouchableOpacity
+          </TouchableOpacity>
+          <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}> & </Text>
+          <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('TermsAndCondition', { flag: 'PaymentPolicy' })
               }}
 
-            >
+          >
               <Text style={StyleSignUp.PolicyLabel}>{Constants.PaymentPolicy}</Text>
-            </TouchableOpacity>
-
-          </View>
+          </TouchableOpacity>
+        </View>
 
           <TouchableOpacity
             style={this.state.policyRadio_button ? StyleSignUp.loginButton : [StyleSignUp.loginButton, { backgroundColor: Constants.COLOR_GREY_LIGHT }]}
@@ -197,7 +189,7 @@ export default class SignUp extends Component {
                   this.props.navigation.dispatch(
                       StackActions.reset({
                         index: 0,
-                        actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
+                        actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
                       }))
                   }
                     , 3000);
