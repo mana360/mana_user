@@ -238,7 +238,7 @@ const AppNavigator1 = createStackNavigator({
 
 
 },
-    {initialRouteName:"BookingSummary"} 
+    {initialRouteName:"Splash"} 
 
 )
 export const AppNavigator = createAppContainer(AppNavigator1);
