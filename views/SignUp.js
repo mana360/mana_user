@@ -87,11 +87,30 @@ export default class SignUp extends Component {
                   this.setState({ mobile_number: newText })
                 else
                   this.setState({ mobile_number: '' })
-
               }}
             />
           </View>
 
+          <View style={StyleSignUp.textInput_container}>
+            <View style={StyleSignUp.labelBox}>
+              <Image style={StyleSignUp.LabelBoxIcon}
+                source={require('../images/mobile_number.png')} />
+              <Text style={StyleSignUp.labelBoxText}>{Constants.Name}</Text>
+            </View>
+            <TextInput placeholder='Enter Mobile Number'
+              style={StyleSignUp.textInput_style}
+              keyboardType='number-pad'
+              maxLength={10}
+              value={this.state.mobile_number}
+              onChangeText={(newText) => {
+                if (!isNaN(newText))
+                  this.setState({ mobile_number: newText })
+                else
+                  this.setState({ mobile_number: '' })
+              }}
+            />
+          </View>
+         
           <View style={StyleSignUp.textInput_container}>
             <View style={StyleSignUp.labelBox}>
               <Image style={StyleSignUp.LabelBoxIcon} source={require('../images/password.png')} />

@@ -17,7 +17,7 @@ export default class HelpAndSupport extends React.Component {
             support_message: "",
             support_contact_number: "8866114477",
             modal_Visible: false,
-            isUser:true,
+            isUser:false,  //help and suport(user)=true ,trip help and support(company)=false
 
         }
     }

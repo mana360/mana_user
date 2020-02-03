@@ -1092,6 +1092,31 @@ const StyleViewUpcomingTrip = StyleSheet.create({
         fontSize: Constants.FONT_SIZE_LARGE,
         color: Constants.COLOR_GREY_DARK,
     },
+    tab: {
+        backgroundColor: Constants.COLOR_FOOTER_GREY,
+        borderRightWidth: 0.2,
+        borderRightWidth:1,
+        borderLeftWidth:1,
+        borderColor:'white',
+        borderRightColor: Constants.COLOR_WHITE,
+    },
+    tab_active: {
+        borderRightWidth:2,
+        borderColor:'white',
+        backgroundColor: Constants.COLOR_GREEN_PROFILE,
+        borderRightWidth: 0.2,
+        borderRightColor: Constants.COLOR_WHITE,
+    },
+    tab_text: {
+        fontSize: 12,
+        textAlign:'center',
+        color: Constants.COLOR_WHITE,
+    },
+    tab_active_text: {
+        textAlign:'center',
+        color: Constants.COLOR_WHITE,
+        fontSize: 12,
+    },
     bottomButton: {
         paddingHorizontal: 25,
         flexDirection: 'row',

@@ -17,7 +17,7 @@ export default class MyProfile extends React.Component {
             new_password:'',
             confirm_password:'',
             password_visible: true,
-            screen_title: 'UserProofile',
+            screen_title: 'UserProfile',
             modalVisible_Changepassword: false,
             modalVisible_SavedMsg:false,
         }
@@ -175,7 +175,7 @@ export default class MyProfile extends React.Component {
                         <View style={StyleMyProfile.bottomline}></View>
 
                         {
-                            this.state.screen_title == "UserProofile"
+                            this.state.screen_title == "UserProfile"
                                 ?
                                 <UserProfile navigation={navigation} />
                                 :

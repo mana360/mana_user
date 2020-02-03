@@ -18,24 +18,28 @@ export default class ViewCurrentTrip extends React.Component {
             inputLabelTrip: '',
             reviewTrip: '',
             modal_Visible: false,
+            live_geopin: false,
             invoiceModal_Visible: false,
+            truck_data: [
+                { title: 'NYC - SYS', current_status: 'On Route to destinatio', estimate_timetocmplte: '11 PM', estimate_datetocmplete: '11/03/2019', driver_name: 'Amanda.P', driver_no: '+56 7845145142', Partner_name: 'Uric', partner_no: '+56 745895612' }
+            ]
         }
     }
     render() {
         let { navigation } = this.props
-       
+
         return (
             <View style={{ flex: 1 }}>
 
-                <HeaderBar title="VIEW CURRENT TRIP" isBack={true} isLogout={true} navigation={navigation}/>
+                <HeaderBar title="VIEW CURRENT TRIP" isBack={true} isLogout={true} navigation={navigation} />
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%' }} bounces={false}>
-                     
+
                         <View style={{ marginBottom: 2 }}>
 
                             <View style={StyleViewCurrentTrip.topCircle} />
 
-                            <View style={{ flexDirection: 'row', justifyContent: 'center',alignItems:"center" }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
 
                                 <TouchableOpacity style={{ marginTop: 25, }}
                                     onPress={() => {
@@ -61,104 +65,122 @@ export default class ViewCurrentTrip extends React.Component {
                                     />
                                 </TouchableOpacity>
                             </View>
-                      
+
                         </View>
 
-                        <Text style={StyleViewCurrentTrip.title}>NYC - SYS</Text>
-                        <View style={StyleViewCurrentTrip.bottomLine}></View>
+                        {this.state.truck_data.map((result) => {
+                            return (
+                                <View>
+                                    <Text style={StyleViewCurrentTrip.title}>NYC - SYS</Text>
+                                    <View style={StyleViewCurrentTrip.bottomLine}></View>
 
-                        <View style={StyleViewCurrentTrip.row}>
-                            <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.CurrentStatus}</Text>
-                            </View>
-                            <View style={StyleViewCurrentTrip.col2}>
-                                <Text style={StyleViewCurrentTrip.col2Text}>On Route to destination</Text>
-                            </View>
+                                    <View style={StyleViewCurrentTrip.row}>
+                                        <View style={StyleViewCurrentTrip.col1}>
+                                            <Text style={StyleViewCurrentTrip.col1Text}>{Constants.CurrentStatus}</Text>
+                                        </View>
+                                        <View style={StyleViewCurrentTrip.col2}>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.current_status}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={StyleViewCurrentTrip.row}>
+                                        <View style={StyleViewCurrentTrip.col1}>
+                                            <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedTimeTocmpleteTrip}</Text>
+                                        </View>
+                                        <View style={StyleViewCurrentTrip.col2}>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.estimate_timetocmplte}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={StyleViewCurrentTrip.row}>
+                                        <View style={StyleViewCurrentTrip.col1}>
+                                            <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedDateTocmpleteTrip}</Text>
+                                        </View>
+                                        <View style={StyleViewCurrentTrip.col2}>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.estimate_datetocmplete}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={StyleViewCurrentTrip.row}>
+                                        <View style={StyleViewCurrentTrip.col1}>
+                                            <Text style={StyleViewCurrentTrip.col1Text}>{Constants.DriverName}</Text>
+                                        </View>
+                                        <View style={StyleViewCurrentTrip.col2}>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.driver_name}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={StyleViewCurrentTrip.row}>
+                                        <View style={StyleViewCurrentTrip.col1}>
+                                            <Text style={StyleViewCurrentTrip.col1Text}>{Constants.ContactNo}</Text>
+                                        </View>
+                                        <View style={StyleViewCurrentTrip.col2}>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.driver_no}</Text>
+                                            <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}>
+                                                <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+
+                                    <View style={StyleViewCurrentTrip.row}>
+                                        <View style={StyleViewCurrentTrip.col1}>
+                                            <Text style={StyleViewCurrentTrip.col1Text}>{Constants.Partnername}</Text>
+                                        </View>
+                                        <View style={StyleViewCurrentTrip.col2}>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.Partner_name}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={StyleViewCurrentTrip.row}>
+                                        <View style={StyleViewCurrentTrip.col1}>
+                                            <Text style={StyleViewCurrentTrip.col1Text}>{Constants.Partnername}</Text>
+                                        </View>
+                                        <View style={StyleViewCurrentTrip.col2}>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.partner_no}</Text>
+                                            <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}>
+                                                <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+
+                                </View>
+                            )
+                        })}
+
+                        {/* buttom button */}
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
+
+                            <TouchableOpacity style={[StyleViewCurrentTrip.bottomButton, { marginRight: 15, width: '40%' }]}
+                                onPress={() => {
+                                    if (this.state.live_geopin == true)
+                                        this.props.navigation.navigate('MapViews', { flag: 'truck' })
+                                    else
+                                        this.RBSheet.open(); //delay msg
+                                }}
+                            >
+                                <Image source={require('../images/live_geo_pin.png')}
+                                    style={StyleViewCurrentTrip.buttonIcon}
+                                />
+                                <Text style={StyleViewCurrentTrip.buttonText}>{Constants.LiveGeoPin}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[StyleViewCurrentTrip.bottomButton, { width: '40%' }]}
+                                onPress={() => {
+
+                                }}
+                            >
+
+                                <Text style={StyleViewCurrentTrip.buttonText}>{Constants.ViewMore}</Text>
+                            </TouchableOpacity>
                         </View>
-
-                        <View style={StyleViewCurrentTrip.row}>
-                            <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedTimetonextstatus}</Text>
-                            </View>
-                            <View style={StyleViewCurrentTrip.col2}>
-                                <Text style={StyleViewCurrentTrip.col2Text}>10:50 PM</Text>
-                            </View>
-                        </View>
-
-                        <View style={StyleViewCurrentTrip.row}>
-                            <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedTimeTocmpleteTrip}</Text>
-                            </View>
-                            <View style={StyleViewCurrentTrip.col2}>
-                                <Text style={StyleViewCurrentTrip.col2Text}>11 PM</Text>
-                            </View>
-                        </View>
-
-                        <View style={StyleViewCurrentTrip.row}>
-                            <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedDateTocmpleteTrip}</Text>
-                            </View>
-                            <View style={StyleViewCurrentTrip.col2}>
-                                <Text style={StyleViewCurrentTrip.col2Text}>11/03/2019</Text>
-                            </View>
-                        </View>
-
-                        <View style={StyleViewCurrentTrip.row}>
-                            <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.DriverName}</Text>
-                            </View>
-                            <View style={StyleViewCurrentTrip.col2}>
-                                <Text style={StyleViewCurrentTrip.col2Text}>Amanda.P</Text>
-                            </View>
-                        </View>
-
-                        <View style={StyleViewCurrentTrip.row}>
-                            <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.ContactNo}</Text>
-                            </View>
-                            <View style={StyleViewCurrentTrip.col2}>
-                                <Text style={StyleViewCurrentTrip.col2Text}>524786918</Text>
-                            </View>
-                        </View>
-
-                        <View style={StyleViewCurrentTrip.row}>
-                            <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.Partnername}</Text>
-                            </View>
-                            <View style={StyleViewCurrentTrip.col2}>
-                                <Text style={StyleViewCurrentTrip.col2Text}>Uric</Text>
-                            </View>
-                        </View>
-
-                        <View style={StyleViewCurrentTrip.row}>
-                            <View style={StyleViewCurrentTrip.col1}>
-                                <Text style={StyleViewCurrentTrip.col1Text}>{Constants.ContactNo}</Text>
-                            </View>
-                            <View style={StyleViewCurrentTrip.col2}>
-                                <Text style={StyleViewCurrentTrip.col2Text}>75848596</Text>
-                            </View>
-                        </View>
-
-                        <TouchableOpacity style={StyleViewCurrentTrip.bottomButton}
-                            onPress={() => {
-                                this.props.navigation.navigate('MapViews',{flag:'truck'})
-                                // this.RBSheet.open(); //delay msg
-                            }}
-                        >
-                            <Image source={require('../images/live_geo_pin.png')}
-                                style={StyleViewCurrentTrip.buttonIcon}
-                            />
-                            <Text style={StyleViewCurrentTrip.buttonText}>{Constants.LiveGeoPin}</Text>
-                        </TouchableOpacity>
 
                     </ScrollView>
-                   
+
                     <RBSheet
                         ref={ref => {
                             this.RBSheet = ref;
                         }}
                         height={200}
-                        duration={1000}
+                        duration={300}
 
                         customStyles={{
                             container: {
@@ -175,7 +197,7 @@ export default class ViewCurrentTrip extends React.Component {
                         }}>{Constants.WillCauseDelayBecauseOfSomeRoadBloc}</Text>
 
                     </RBSheet>
-              
+
                 </View>
 
                 <FooterBar navigation={navigation} />
@@ -189,7 +211,7 @@ export default class ViewCurrentTrip extends React.Component {
                         this.setState({ invoiceModal_Visible: false });
                     }} />
                 </Modal>
-           
+
             </View>
         )
     }
