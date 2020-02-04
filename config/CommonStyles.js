@@ -1110,10 +1110,12 @@ const StyleViewUpcomingTrip = StyleSheet.create({
     tab_text: {
         fontSize: 12,
         textAlign:'center',
+        textTransform:'uppercase',
         color: Constants.COLOR_WHITE,
     },
     tab_active_text: {
         textAlign:'center',
+        textTransform:'uppercase',
         color: Constants.COLOR_WHITE,
         fontSize: 12,
     },

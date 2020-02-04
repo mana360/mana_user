@@ -3,13 +3,13 @@
  */
 import React, { Component } from 'react';
 import { View, Text, Image, ScrollView, Modal, TouchableOpacity, TouchableHighlightBase, TouchableOpacityBase } from 'react-native';
-import { StyleViewUpcomingTrip, StyleUpcomingTrip } from '../config/CommonStyles';
+import { StyleViewUpcomingTrip, StyleViewCurrentTrip } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import Invoice from './InvoiceView';
 import { Tabs, Tab } from "native-base";
-
+import Splash from './Splash'
 export default class ViewUpcomingTrip extends React.Component {
     constructor(props) {
         super(props);
@@ -21,14 +21,7 @@ export default class ViewUpcomingTrip extends React.Component {
             cancelModal_Visible: false,
             isSuccesfull: false,
             Profile_data: [{ partnerName: 'ABC Service' }],
-            truckData: [
-                {
-                    booking_id: '1001', status: 'Not yet  Started', partner_name: 'ABC Service', contact_number: '+56 784520141',
-                    dateOF_pickUp: '11/04/2019', pickup_time: '11.00 AM', pickup_location: '275 N Marr Road,CA', destination_location: 'Block no 2,Jackson street', arrival_date: '11/04/2019', arrivalTime: '12.00 AM', truck_name: '407 TATA', mid_point1: 'Lorem ipsome', truckID: '1010',
-                    cargo_type: 'Cargo Type 1', cargo_description: 'Lorem ipsomeLorem ipsomeLorem ipsomeLorem ', cargo_handling: 'Yes', numberUsers: '2', quantity: '10', cargo_insurance: 'Yes', dimensions: '10*50*50', Volumetric_weight: '200kg', valueof_load: 'R 200',
-                    recursing_requirement:'Yes',costOf_recurring:'R 100',cargoHandling_cost:'R 100',service_frquency:'Daily',insurance_rate:'R 500',trip_amount:'R 850',discount:'10'
-                }
-            ]
+
         }
     }
     delete_trip() {
@@ -91,7 +84,10 @@ export default class ViewUpcomingTrip extends React.Component {
 
     }
     render() {
-        let { navigation } = this.props
+        const { navigation } = this.props
+        const serviceData = navigation.getParam('item');
+        const service_name = navigation.getParam('flag');// 1=truking ,2=warehouse,3=warehousetrucking
+
         return (
             <View style={{ flex: 1 }}>
                 <HeaderBar title="VIEW UPCOMING TRIP" isBack={true} isLogout={true} navigation={navigation} />
@@ -102,17 +98,36 @@ export default class ViewUpcomingTrip extends React.Component {
                         <View style={{ marginBottom: 2 }}>
                             <View style={StyleViewUpcomingTrip.topCircle} />
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                <TouchableOpacity style={[StyleViewUpcomingTrip.imageSideView, { marginBottom: -30, marginLeft: -80, marginRight: 10 }]}
+                                <TouchableOpacity style={{ marginTop: 25, }}
                                     onPress={() => {
-                                        this.setState({ invoiceModal_Visible: true });
-                                    }} >
+                                        return (
+                                            this.setState({ invoiceModal_Visible: true })
+                                        )
+                                    }}
+                                >
                                     <Image source={require('../images/invoice_details.png')}
-                                        style={StyleViewUpcomingTrip.sideImage}
+                                        style={StyleViewCurrentTrip.sideImage} />
+                                </TouchableOpacity>
+
+                                <Image source={
+                                        service_name=='1'
+                                        ?require('../images/current_trips.png')
+                                        :service_name=='2'
+                                        ?require('../images/WarehouseServices_copy.png')
+                                        :null
+                                    }
+
+                                    style={service_name == '1' ? [StyleViewCurrentTrip.ImageCurrentTrip, { marginRight: 95 }] : StyleViewCurrentTrip.ImageCurrentTrip}
+                                />
+                                <TouchableOpacity style={{ marginTop: 25, }}
+                                    onPress={() => {
+                                        this.props.navigation.navigate('HelpAndSupport', { flag: false })
+                                    }}
+                                >
+                                    <Image source={require('../images/support_icon.png')}
+                                        style={service_name == '1' ? { display: 'none' } : StyleViewCurrentTrip.sideImage}
                                     />
                                 </TouchableOpacity>
-                                <Image source={require('../images/current_trips.png')}
-                                    style={StyleViewUpcomingTrip.ImageCurrentTrip}
-                                />
                             </View>
                         </View>
 
@@ -120,326 +135,442 @@ export default class ViewUpcomingTrip extends React.Component {
                         <View style={StyleViewUpcomingTrip.bottomLine}></View>
 
 
-                        <View style={StyleViewUpcomingTrip.row}>
-                            <View style={StyleViewUpcomingTrip.col1}>
-                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.BookingId}</Text>
-                            </View>
-                            <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>1001</Text>
-                            </View>
-                        </View>
-
-                        <View style={StyleViewUpcomingTrip.row}>
-                            <View style={StyleViewUpcomingTrip.col1}>
-                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Status}</Text>
-                            </View>
-                            <View style={StyleViewUpcomingTrip.col2}>
-                                <Text style={StyleViewUpcomingTrip.col2Text}>Not yet Started</Text>
-                            </View>
-                        </View>
-
-                        {this.state.truckData.map((result) => {
+                        {serviceData.map((result) => {
                             return (
-                                <Tabs
-                                initialPage={0}
-                                style={{borderRightWidth:1,borderColor:'white'}}
-                                tabBarUnderlineStyle={{backgroundColor:Constants.COLOR_GREEN_PROFILE,height:0,width:'90%'}}
-                                >
-                                    <Tab heading='PARTNER DETAILS' 
-                                         tabStyle={StyleViewUpcomingTrip.tab}
-                                         activeTabStyle={StyleViewUpcomingTrip.tab_active}
-                                         textStyle={StyleViewUpcomingTrip.tab_text}
-                                         activeTextStyle={StyleViewUpcomingTrip.tab_active_text}
-                                         style={{ marginBottom: 50 }}>
+                                <View>
 
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PartnerName}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.partner_name}</Text>
-                                            </View>
+                                    <View style={StyleViewUpcomingTrip.row}>
+                                        <View style={StyleViewUpcomingTrip.col1}>
+                                            <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.BookingId}</Text>
                                         </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.ContactNumber}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.contact_number}</Text>
-                                            </View>
+                                        <View style={StyleViewUpcomingTrip.col2}>
+                                            <Text style={StyleViewUpcomingTrip.col2Text}>1001</Text>
                                         </View>
-                                    </Tab>
+                                    </View>
 
-                                    <Tab heading='TRUCK TRIP DETAILS'
-                                    
-                                          tabStyle={StyleViewUpcomingTrip.tab}
-                                          activeTabStyle={StyleViewUpcomingTrip.tab_active}
-                                          textStyle={StyleViewUpcomingTrip.tab_text}
-                                          activeTextStyle={StyleViewUpcomingTrip.tab_active_text}
+                                    <View style={StyleViewUpcomingTrip.row}>
+                                        <View style={StyleViewUpcomingTrip.col1}>
+                                            <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Status}</Text>
+                                        </View>
+                                        <View style={StyleViewUpcomingTrip.col2}>
+                                            <Text style={StyleViewUpcomingTrip.col2Text}>Not yet Started</Text>
+                                        </View>
+                                    </View>
+
+                                    <Tabs
+                                        initialPage={4}
+                                        style={{ borderRightWidth: 1, borderColor: 'white' }}
+                                        tabBarUnderlineStyle={{ backgroundColor: Constants.COLOR_GREEN_PROFILE, height: 0, width: '90%' }}
                                     >
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DateOfPickUp}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.dateOF_pickUp}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpTime}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.pickup_time}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpLocation}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.pickup_location}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DestinationLocation}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.destination_location}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AarrivalDate}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.arrival_date}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AarrivalTime}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.arrivalTime}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TruckName}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.truck_name}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DriverDEtails}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <TouchableOpacity>
-                                                    <Text style={[StyleViewUpcomingTrip.col2Text, { color: Constants.COLOR_GREEN, textDecorationLine: 'underline' }]}>View</Text>
-                                                </TouchableOpacity>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.MidPoint1}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.mid_point1}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TruckId}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.truckID}</Text>
-                                            </View>
-                                        </View>
-
-                                    </Tab>
-
-                                    <Tab heading='GOODS DETAILS'
-                                            tabStyle={StyleViewUpcomingTrip.tab}
-                                            activeTabStyle={StyleViewUpcomingTrip.tab_active}
-                                            textStyle={StyleViewUpcomingTrip.tab_text}
-                                            activeTextStyle={StyleViewUpcomingTrip.tab_active_text}   
-                                    >
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoType}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargo_type}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoDesc}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargo_description}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoHandling}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargo_handling}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.NumberOfUSer}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.numberUsers}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Quantity}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.quantity}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoInssurance}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargo_insurance}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Dimension}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.dimensions}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.VolumetricWeight}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.Volumetric_weight}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.ValueOfLload}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.valueof_load}</Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>Image</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Image source={require('../images/generator.jpeg')} style={{
-                                                    width: 100, height: 100, resizeMode: 'stretch', borderWidth: 2, borderColor: Constants.COLOR_GREY_LIGHT
-                                                    , padding: 15
-                                                }} />
-                                            </View>
-                                        </View>
-
-                                    </Tab>
-
-                                    <Tab heading='PAYMENT DETAILS'
+                                        <Tab heading='PARTNER DETAILS'
                                             tabStyle={StyleViewUpcomingTrip.tab}
                                             activeTabStyle={StyleViewUpcomingTrip.tab_active}
                                             textStyle={StyleViewUpcomingTrip.tab_text}
                                             activeTextStyle={StyleViewUpcomingTrip.tab_active_text}
-                                    >
-                                     
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.RecurringRequirement}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.dateOF_pickUp}</Text>
-                                            </View>
-                                        </View>
+                                            >
 
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CostOfRecurring}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.costOf_recurring}</Text>
-                                            </View>
-                                        </View>
 
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoHandlingcost}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargoHandling_cost}</Text>
-                                            </View>
-                                        </View>
 
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Service_Frequency}</Text>
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PartnerName}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.partner_name}</Text>
+                                                </View>
                                             </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.service_frquency}</Text>
-                                            </View>
-                                        </View>
 
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.InsuranceRate}</Text>
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.ContactNumber}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.contact_number}</Text>
+                                                </View>
                                             </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.insurance_rate}</Text>
-                                            </View>
-                                        </View>
 
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                            <View style={StyleViewUpcomingTrip.col1}>
-                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Discount}</Text>
-                                            </View>
-                                            <View style={StyleViewUpcomingTrip.col2}>
-                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.discount}</Text>
-                                            </View>
-                                        </View>
+                                        </Tab>
 
-                                    </Tab>
-                             
-                                </Tabs>
+                                        <Tab heading='TRUCK TRIP DETAILS'
 
+                                            tabStyle={service_name == '1' ? StyleViewUpcomingTrip.tab : { display: 'none' }}
+                                            activeTabStyle={service_name == '1' ? StyleViewUpcomingTrip.tab_active : { display: 'none' }}
+                                            textStyle={StyleViewUpcomingTrip.tab_text}
+                                            activeTextStyle={StyleViewUpcomingTrip.tab_active_text}
+                                        >
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DateOfPickUp}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.dateOF_pickUp}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpTime}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.pickup_time}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpLocation}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.pickup_location}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DestinationLocation}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.destination_location}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AarrivalDate}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.arrival_date}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AarrivalTime}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.arrivalTime}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TruckName}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.truck_name}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DriverDEtails}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <TouchableOpacity>
+                                                        <Text style={[StyleViewUpcomingTrip.col2Text, { color: Constants.COLOR_GREEN, textDecorationLine: 'underline' }]}>View</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.MidPoint1}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.mid_point1}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TruckId}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.truckID}</Text>
+                                                </View>
+                                            </View>
+
+                                        </Tab>
+
+                                        <Tab heading='GOODS DETAILS'
+                                            tabStyle={StyleViewUpcomingTrip.tab}
+                                            activeTabStyle={StyleViewUpcomingTrip.tab_active}
+                                            textStyle={StyleViewUpcomingTrip.tab_text}
+                                            activeTextStyle={StyleViewUpcomingTrip.tab_active_text}
+                                        >
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoType}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargo_type}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoDesc}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargo_description}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoHandling}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargo_handling}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.NumberOfUSer}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.numberUsers}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Quantity}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.quantity}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoInssurance}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargo_insurance}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Dimension}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.dimensions}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.VolumetricWeight}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.Volumetric_weight}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.ValueOfLload}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.valueof_load}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>Image</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Image source={require('../images/generator.jpeg')} style={{
+                                                        width: 100, height: 100, resizeMode: 'stretch', borderWidth: 2, borderColor: Constants.COLOR_GREY_LIGHT
+                                                        , padding: 15
+                                                    }} />
+                                                </View>
+                                            </View>
+
+                                        </Tab>
+
+                                        <Tab heading='Warehouse details'
+
+                                            tabStyle={service_name == '2' ? StyleViewUpcomingTrip.tab : { display: 'none' }}
+                                            activeTabStyle={service_name == '2' ? StyleViewUpcomingTrip.tab_active : { display: 'none' }}
+                                            textStyle={StyleViewUpcomingTrip.tab_text}
+                                            activeTextStyle={StyleViewUpcomingTrip.tab_active_text}
+                                        >
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.WarehouseId}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.warehouse_id}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.WarehoueType}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.warehouse_type}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.StorageType}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.storage_type}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CostPerSqm}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.costPer_sqm}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.warehouseLocation}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.warehouse_location}</Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DurationStorage}</Text>
+                                                </View>
+                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.duration_ofstorage}</Text>
+                                                </View>
+                                            </View>
+
+
+
+                                        </Tab>
+
+                                        <Tab heading='PAYMENT DETAILS'
+                                            tabStyle={StyleViewUpcomingTrip.tab}
+                                            activeTabStyle={StyleViewUpcomingTrip.tab_active}
+                                            textStyle={StyleViewUpcomingTrip.tab_text}
+                                            activeTextStyle={StyleViewUpcomingTrip.tab_active_text}
+                                        >
+                                            {/*payment details for truking*/}
+                                            <View style={service_name == '1' ? { flex: 1 } : { display: 'none' }}>
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.RecurringRequirement}</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.dateOF_pickUp}</Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CostOfRecurring}</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.costOf_recurring}</Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoHandlingcost}</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargoHandling_cost}</Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Service_Frequency}</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.service_frquency}</Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.InsuranceRate}</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.insurance_rate}</Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Discount}</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.discount}</Text>
+                                                    </View>
+                                                </View>
+                                            </View>
+
+                                            {/*payment details for warehouse */}
+                                            <View style={service_name == '2' ? { } : { display: 'none' }}>
+                                              
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoHandlingcost}</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargoHandling_cost}</Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.InsuranceRate}</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.insurance_rate}</Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Discount}</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.discount}</Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TotalAmount}</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.total_amount}</Text>
+                                                    </View>
+                                                </View>
+
+                                            </View>
+
+
+                                        </Tab>
+
+                                    </Tabs>
+
+                                </View>
                             )
                         })}
 

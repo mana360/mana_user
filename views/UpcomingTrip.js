@@ -17,6 +17,15 @@ export default class UpcomingTrip extends React.Component {
                 { id: 12, title: "Nyc-Syc", date: "27 May 2018", pickUpTime: "10:24 PM", dropUpTime: "11:00 AM" },
                 { id: 15, title: "Nyc Sys", date: "27 May 2018", pickUpTime: "10:24 PM", dropUpTime: "11:00 AM" },
                 { id: 16, title: "Nyc 3chruch", date: "27 May 2018", pickUpTime: "10:24 PM", dropUpTime: "11:00 AM" },
+            ],
+
+            truckData: [
+                {
+                    booking_id: '1001', status: 'Not yet  Started', partner_name: 'ABC Service', contact_number: '+56 784520141',
+                    dateOF_pickUp: '11/04/2019', pickup_time: '11.00 AM', pickup_location: '275 N Marr Road,CA', destination_location: 'Block no 2,Jackson street', arrival_date: '11/04/2019', arrivalTime: '12.00 AM', truck_name: '407 TATA', mid_point1: 'Lorem ipsome', truckID: '1010',
+                    cargo_type: 'Cargo Type 1', cargo_description: 'Lorem ipsomeLorem ipsomeLorem ipsomeLorem ', cargo_handling: 'Yes', numberUsers: '2', quantity: '10', cargo_insurance: 'Yes', dimensions: '10*50*50', Volumetric_weight: '200kg', valueof_load: 'R 200',
+                    recursing_requirement: 'Yes', costOf_recurring: 'R 100', cargoHandling_cost: 'R 100', service_frquency: 'Daily', insurance_rate: 'R 500', trip_amount: 'R 850', discount: '10'
+                }
             ]
         }
     }
@@ -32,7 +41,7 @@ export default class UpcomingTrip extends React.Component {
                     renderItem={({ item }, index) => {
                         return (
                             <TouchableOpacity style={StyleUpcomingTrip.row} onPress={() => {
-                                this.props.navigation.navigate('ViewUpcomingTrip');
+                                this.props.navigation.navigate('ViewUpcomingTrip',{item:this.state.truckData,flag:1},);
                             }}>
 
                                 <View style={StyleUpcomingTrip.col1}>
