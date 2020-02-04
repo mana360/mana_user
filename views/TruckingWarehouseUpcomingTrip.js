@@ -12,10 +12,19 @@ export default class TruckingWarehouseUpcomingTrip extends React.Component {
         super(props);
         this.state = {
             dataSource: [
-                { id: 12, title: "Nyc-Syc", date: "27 May 2018", pickUpTime: "10:24 PM", dropUpTime: "11:00 AM" },
+                { id: 13, title: "Nyc-Syc", date: "27 May 2018", pickUpTime: "10:24 PM", dropUpTime: "11:00 AM" },
                 { id: 15, title: "Nyc Sys", date: "27 May 2018", pickUpTime: "10:24 PM", dropUpTime: "11:00 AM" },
                 { id: 16, title: "Nyc 3chruch", date: "27 May 2018", pickUpTime: "10:24 PM", dropUpTime: "11:00 AM" },
-            ]
+            ],
+            warehouseTrucking_data:[
+                {
+                   title:'PVR service', booking_id: '1851', status: 'Not yet started', partner_name: 'ABC Service', contact_number: '+56 784520141',
+                    cargo_type: 'Cargo Type 1', cargo_description: 'Lorem ipsomeLorem ipsomeLorem ipsomeLorem ', cargo_handling: 'Yes', numberUsers: '2', quantity: '10', cargo_insurance: 'Yes', dimensions: '10*50*50', Volumetric_weight: '200kg', valueof_load: 'R 200',
+                    dateOF_pickUp: '11/04/2019', pickup_time: '11.00 AM', pickup_location: '275 N Marr Road,CA', destination_location: 'Block no 2,Jackson street', arrival_date: '11/04/2019', arrivalTime: '12.00 AM', truck_name: '407 TATA', mid_point1: 'Lorem ipsome', truckID: '1010',
+                    warehouse_id:'1234',warehouse_type:'Public',storage_type:'Refregirator',costPer_sqm:'R 35',warehouse_location:'Street 45,Lane2',duration_ofstorage:'11/09/2019 to 15/10/2020',
+                    recursing_requirement: 'Yes', costOf_recurring: 'R 100', cargoHandling_cost: 'R 100', service_frquency: 'Daily', insurance_rate: 'R 500', discount: '10',trip_amount:'R 500'
+                }
+              ]
         }
     }
     render() {
@@ -31,7 +40,7 @@ export default class TruckingWarehouseUpcomingTrip extends React.Component {
                         return (
                             <TouchableOpacity style={StyleUpcomingTrip.row}
                                 onPress={() => {
-                                    this.props.navigation.navigate('TruckingWarehouseViewUpcomingTrip')
+                                    this.props.navigation.navigate('ViewUpcomingTrip',{item:this.state.warehouseTrucking_data,flag_upcoming_Trip:3},)
                                 }}
                             >
                                 <View style={StyleUpcomingTrip.col1}>
