@@ -2,15 +2,12 @@
     design by -mayur s
  */
 import React, { Component } from 'react';
-import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity } from 'react-native';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity ,Linking,Platform} from 'react-native';
 import { StyleViewCurrentTrip, StyleCurrentTrip } from '../config/CommonStyles';
-import RBSheet from "react-native-raw-bottom-sheet";
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import Invoice from './InvoiceView';
-import TripHelpAndSupport from './TripHelpAndSupport';
 export default class TruckingWarehouseCurrentTripDetails extends React.Component {
     constructor(props) {
         super(props);
@@ -20,9 +17,34 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
             reviewTrip: '',
             modal_Visible: false,
             invoiceModal_Visible: false,
-            Truckwarehouse_data: [{ title: 'NYC - SYS', partnername: 'ABC Services', TelephoneNumber: '+56 89232021', Estimated_timetocomplete: '11 PM', estimated_datetocomplete: '11/12/2019', Driver_name: 'Amanda.P', phone_number: '+56 4521241512', }]
+            Truckwarehouse_data: [{ title: 'NYC - SYS', partnername: 'ABC Services', TelephoneNumber: '+56 89232021', Estimated_timetocomplete: '11 PM', estimated_datetocomplete: '11/12/2019', Driver_name: 'Amanda.P', phone_number: '+56 4521241512', }],
+
+            warehouseTrucking_data: [
+                {
+                    title: 'PVR service', booking_id: '1851', status: 'Not yet started', partner_name: 'ABC Service', contact_number: '+56 784520141',
+                    cargo_type: 'Cargo Type 1', cargo_description: 'Lorem ipsomeLorem ipsomeLorem ipsomeLorem ', cargo_handling: 'Yes', numberUsers: '2', quantity: '10', cargo_insurance: 'Yes', dimensions: '10*50*50', Volumetric_weight: '200kg', valueof_load: 'R 200',
+                    dateOF_pickUp: '11/04/2019', pickup_time: '11.00 AM', pickup_location: '275 N Marr Road,CA', destination_location: 'Block no 2,Jackson street', arrival_date: '11/04/2019', arrivalTime: '12.00 AM', truck_name: '407 TATA', mid_point1: 'Lorem ipsome', truckID: '1010',
+                    warehouse_id: '1234', warehouse_type: 'Public', storage_type: 'Refregirator', costPer_sqm: 'R 35', warehouse_location: 'Street 45,Lane2', duration_ofstorage: '11/09/2019 to 15/10/2020',
+                    recursing_requirement: 'Yes', costOf_recurring: 'R 100', cargoHandling_cost: 'R 100', service_frquency: 'Daily', insurance_rate: 'R 500', discount: '10', trip_amount: 'R 500'
+                }
+            ]
         }
     }
+
+
+    dialCall = () => {
+
+        let phoneNumber = '';
+
+        if (Platform.OS === 'android') {
+            phoneNumber = 'tel:${1234567890}';
+        }
+        else {
+            phoneNumber = 'telprompt:${1234567890}';
+        }
+
+        Linking.openURL(phoneNumber);
+    };
     render() {
         let { navigation } = this.props
         return (
@@ -121,7 +143,11 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
                                             <Text style={StyleViewCurrentTrip.col2Text}>{result.phone_number}</Text>
-                                            <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}>
+                                            <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}
+                                            onPress={()=>{
+                                                this.dialCall();
+                                            }}
+                                            >
                                                 <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
                                             </TouchableOpacity>
                                         </View>
@@ -147,7 +173,11 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                             )
                         })}
 
-                        <TouchableOpacity style={{ backgroundColor: Constants.COLOR_GREEN, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', width: '50%', marginVertical: 25, borderRadius: 50 }}>
+                        <TouchableOpacity style={{ backgroundColor: Constants.COLOR_GREEN, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', width: '50%', marginVertical: 25, borderRadius: 50 }}
+                            onPress={() => {
+                                this.props.navigation.navigate('ViewCurrentTripAll', { item: this.state.warehouseTrucking_data, flag_CurrentTrip: 3 })
+                            }}
+                        >
                             <Text style={{ color: Constants.COLOR_WHITE, paddingVertical: 10, fontSize: Constants.FONT_SIZE_EXTRA_LARGE }}>View More</Text>
                         </TouchableOpacity>
                     </ScrollView>

@@ -49,6 +49,9 @@ import MapViews from './views/MapView';
 import PaymentMethod from './views/PaymentMethod';
 import ProfileSetUp from './views/ProfileSetUp';
 import SendOTP from './views/SendOTP';
+import ViewCurrentTripAll from './views/ViewcurrentTrip_all';
+
+
 
 console.disableYellowBox = true;
 
@@ -243,6 +246,10 @@ const AppNavigator1 = createStackNavigator({
     },
     SendOTP:{
       screen:SendOTP,
+      navigationOptions:()=>({header:null})
+    },
+    ViewCurrentTripAll:{
+      screen:ViewCurrentTripAll,
       navigationOptions:()=>({header:null})
     },
 },

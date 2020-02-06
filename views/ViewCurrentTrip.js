@@ -2,8 +2,7 @@
     design by -mayur s
  */
 import React, { Component } from 'react';
-import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity } from 'react-native';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity,Linking,Platform } from 'react-native';
 import { StyleViewCurrentTrip, StyleCurrentTrip } from '../config/CommonStyles';
 import RBSheet from "react-native-raw-bottom-sheet";
 import FooterBar from '../config/FooterBar';
@@ -22,9 +21,31 @@ export default class ViewCurrentTrip extends React.Component {
             invoiceModal_Visible: false,
             truck_data: [
                 { title: 'NYC - SYS', current_status: 'On Route to destinatio', estimate_timetocmplte: '11 PM', estimate_datetocmplete: '11/03/2019', driver_name: 'Amanda.P', driver_no: '+56 7845145142', Partner_name: 'Uric', partner_no: '+56 745895612' }
-            ]
+            ],
+            truckData: [
+                {
+                    title:'Church gate2 -SYC', booking_id: '1001', status: 'Not yet  Started', partner_name: 'ABC Service', contact_number: '+56 784520141',
+                    dateOF_pickUp: '11/04/2019', pickup_time: '11.00 AM', pickup_location: '275 N Marr Road,CA', destination_location: 'Block no 2,Jackson street', arrival_date: '11/04/2019', arrivalTime: '12.00 AM', truck_name: '407 TATA', mid_point1: 'Lorem ipsome', truckID: '1010',
+                    cargo_type: 'Cargo Type 1', cargo_description: 'Lorem ipsomeLorem ipsomeLorem ipsomeLorem ', cargo_handling: 'Yes', numberUsers: '2', quantity: '10', cargo_insurance: 'Yes', dimensions: '10*50*50', Volumetric_weight: '200kg', valueof_load: 'R 200',
+                    recursing_requirement: 'Yes', costOf_recurring: 'R 100', cargoHandling_cost: 'R 100', service_frquency: 'Daily', insurance_rate: 'R 500', trip_amount: 'R 850', discount: '10'
+                }
+            ],
         }
     }
+
+    dialCall = () => {
+ 
+        let phoneNumber = '';
+     
+        if (Platform.OS === 'android') {
+          phoneNumber = 'tel:${1234567890}';
+        }
+        else {
+          phoneNumber = 'telprompt:${1234567890}';
+        }
+     
+        Linking.openURL(phoneNumber);
+      };
     render() {
         let { navigation } = this.props
 
@@ -116,7 +137,11 @@ export default class ViewCurrentTrip extends React.Component {
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
                                             <Text style={StyleViewCurrentTrip.col2Text}>{result.driver_no}</Text>
-                                            <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}>
+                                            <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}
+                                             onPress={()=>{
+                                                this.dialCall();
+                                            }}
+                                            >
                                                 <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
                                             </TouchableOpacity>
                                         </View>
@@ -137,7 +162,11 @@ export default class ViewCurrentTrip extends React.Component {
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
                                             <Text style={StyleViewCurrentTrip.col2Text}>{result.partner_no}</Text>
-                                            <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}>
+                                            <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}
+                                               onPress={()=>{
+                                                   this.dialCall();
+                                               }}
+                                            >
                                                 <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
                                             </TouchableOpacity>
                                         </View>
@@ -165,7 +194,7 @@ export default class ViewCurrentTrip extends React.Component {
                             </TouchableOpacity>
                             <TouchableOpacity style={[StyleViewCurrentTrip.bottomButton, { width: '40%' }]}
                                 onPress={() => {
-
+                                        this.props.navigation.navigate('ViewCurrentTripAll',{item:this.state.truckData,flag_CurrentTrip:1})
                                 }}
                             >
 
