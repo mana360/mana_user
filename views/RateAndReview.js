@@ -13,16 +13,13 @@ export default class RateAndReview extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            starCount: null,
+            starCount: 3,
             inputLabelTrip: '',
             reviewTrip: '',
             modal_Visible: false,
         }
     }
-    onStarRatingPress(rating) {
-        this.setState({ starCount: rating })
 
-    }
     render() {
         let { navigation } = this.props
         return (
@@ -63,7 +60,7 @@ export default class RateAndReview extends React.Component {
                                     containerStyle={{ width: 150, marginTop: 10, marginLeft: '12%' }}
                                     rating={this.state.starCount}
                                     selectedStar={(rating) => {
-                                        this.onStarRatingPress(rating)
+                                        this.setState({ starCount: rating })
                                     }}
 
                                 />

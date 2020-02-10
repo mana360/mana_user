@@ -14,7 +14,6 @@ export default class ViewCompletedTripDetail extends React.Component {
         super(props);
         this.state = {
             invoiceModal_Visible:false
-
         }
     }
     onStarRatingPress(rating) {
@@ -119,7 +118,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.CargoHandling}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>NO</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>No</Text>
                             </View>
                         </View>
                        
@@ -128,7 +127,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.CargoHandlingCharges}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>11:00 AM</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>NA</Text>
                             </View>
                         </View>
 

@@ -27,43 +27,41 @@ export default class Notification extends React.Component{
             <View style={{flex:1,backgroundColor:Constants.COLOR_GREY}}>
             <HeaderBar title="Notifications" isBack={true} isLogout={true} navigation={navigation}/>
             <FlatList
-                    style={{marginVertical:15}}
-                    numColumns={1}
-                    data={this.state.dataSource}
-                    extraData={this.state}
-                    keyExtractor={item=>item.id}
-                    renderItem={({item},index)=>{
+                style={{marginVertical:15}}
+                numColumns={1}
+                data={this.state.dataSource}
+                extraData={this.state}
+                keyExtractor={index=>index.toString()}
+                renderItem={({item},index)=>{
                   return(
                        <TouchableOpacity  style={StyleNotification.row}
                                 onPress={()=>{
                                     if(item.isCompleted=='true'){
-                                     this.props.navigation.navigate('RateAndReview');   
+                                     this.props.navigation.navigate('RateAndReview',{notif_id:item.id});   
                                     }
-                                    else
-                                    {
-                                    }
-
                                 }}
-                       
                        >
-                      <View style={StyleNotification.col1}>
-                        <Image
-                            source={require('../images/notification-icon.png')}
-                            style={StyleNotification.icon}
-                        />
-                      </View>
-                      <View style={StyleNotification.col2}>
-                          <Text style={StyleNotification.title}>{item.status} </Text>
-                          <Text style={StyleNotification.desc}>{item.desc}
-                          </Text>
-                          <Text style={StyleNotification.dateTime}>{item.dateTime}</Text>
-                      </View>
-                      <View style={StyleNotification.col1}>
-                          <Image
-                              source={require('../images/forward_icon.png')}
-                              style={StyleNotification.arrow}
-                          />
-                      </View>
+                        <View style={StyleNotification.col1}>
+                            <Image
+                                source={require('../images/notification-icon.png')}
+                                style={StyleNotification.icon}
+                            />
+                        </View>
+
+                        <View style={StyleNotification.col2}>
+                            <Text style={StyleNotification.title}>{item.status} </Text>
+                            <Text style={StyleNotification.desc}>{item.desc}
+                            </Text>
+                            <Text style={StyleNotification.dateTime}>{item.dateTime}</Text>
+                        </View>
+                        
+                        <View style={StyleNotification.col1}>
+                            <Image
+                                source={require('../images/forward_icon.png')}
+                                style={StyleNotification.arrow}
+                            />
+                        </View>
+                  
                   </TouchableOpacity>
                  )
              }}

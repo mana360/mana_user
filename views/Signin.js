@@ -10,8 +10,8 @@ export default class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mobile_number: '',
-      password: ''
+      input_mobile_number: '',
+      input_password: ''
     }
   }
   static navigationOptions = ({ navigation }) => {
@@ -27,14 +27,16 @@ export default class SignIn extends Component {
 
         <Image style={StyleSignIn.bgImage} source={require('../images/Splash_screen.jpg')} />
         <View style={StyleSignIn.loginBox}>
-        <View style={StyleSignIn.LogoImageView}>
-        <Image style={{width:'100%',height:'46%', marginLeft:0.5,bottom:0,position:'absolute',zIndex:-1,resizeMode:"stretch"}}
-            source={require('../images/circle.png')}
-          />
-          <Image style={StyleSignIn.logoImage}
-            source={require('../images/logo_in_circle.png')}
-          />
+
+          <View style={StyleSignIn.LogoImageView}>
+            <Image style={{width:'100%',height:'46%', marginLeft:0.5,bottom:0,position:'absolute',zIndex:-1,resizeMode:"stretch"}}
+                source={require('../images/circle.png')}
+              />
+              <Image style={StyleSignIn.logoImage}
+                source={require('../images/logo_in_circle.png')}
+              />
           </View>
+
           <Text style={StyleSignIn.loginLabel}>{Constants.SignIn}</Text>
 
           <View style={StyleSignIn.textInput_container}>
@@ -45,14 +47,14 @@ export default class SignIn extends Component {
             </View>
             <TextInput placeholder='Enter Mobile Number'
               style={StyleSignIn.textInput_style}
-              keyboardType="number-pads"
+              keyboardType="number-pad"
               maxLength={10}
-              value={this.state.mobile_number}
+              value={this.state.input_mobile_number}
               onChangeText={(newText) => {
                 if (!isNaN(newText))
-                  this.setState({ mobile_number: newText })
+                  this.setState({ input_mobile_number: newText })
                 else
-                  this.setState({ mobile_number: '' })
+                  this.setState({ input_mobile_number: '' })
 
               }}
             />
@@ -64,21 +66,18 @@ export default class SignIn extends Component {
               <Text style={StyleSignIn.labelBoxText}>{Constants.Password}</Text>
             </View>
 
-            <TextInput placeholder='Enter Password'
+            <TextInput placeholder='*************'
               secureTextEntry={true}
               style={StyleSignIn.textInput_style}
-              value={this.state.password}
-              onChangeText={(newtext) => { this.setState({ password: newtext }) }} />
+              value={this.state.input_password}
+              onChangeText={(newtext) => { this.setState({ input_password: newtext }) }} />
           </View>
 
           <TouchableOpacity 
-            onPress={() => {
-              this.props.navigation.navigate('SendOTP');
-                }}
+            onPress={() => {this.props.navigation.navigate('SendOTP');}}
             style={StyleSignIn.loginButton}>
-            <Text style={StyleSignIn.Login_buttonText}>{Constants.SignIn}</Text>
+              <Text style={StyleSignIn.Login_buttonText}>{Constants.SignIn}</Text>
           </TouchableOpacity>
-
 
           <TouchableOpacity
             onPress={() => { this.props.navigation.navigate('ForgotPassword') }}

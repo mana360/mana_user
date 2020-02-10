@@ -20,7 +20,7 @@ export default class TermsAndCondition extends Component {
   }
   render() {
     let { navigation } = this.props;
-    let flag = this.props.navigation.getParam('flag');
+    let flag = this.props.navigation.getParam('flag', false);
 
     return (
       <View style={{ flex: 1, backgroundColor: Constants.colorGrey }}>
@@ -41,7 +41,7 @@ export default class TermsAndCondition extends Component {
             flag=="AboutUs"
             ?
             "About Us"
-            : null
+            :  "Terms & Conditions"
           }
            isBack={true} isLogout={true} navigation={navigation} />
         <FlatList
