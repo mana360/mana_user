@@ -13,6 +13,7 @@ import TruckBooking from './TruckBooking';
 import WarehouseServices from './WarehouseServices';
 import TruckingWarehouseServices from './TruckingWarehouseServices';
 import CollectMyLoad from './CollectMyLoad';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 export default class Dashboard extends React.Component {
     constructor(props) {
         super(props);
@@ -21,19 +22,38 @@ export default class Dashboard extends React.Component {
             inputLabelTrip: '',
             reviewTrip: '',
             modal_Visible: false,
-            screen_title: 'Dashboard'
+            screen_title: 'Dashboard',
+            fill1:"90",
         }
     }
 
     getDashboard() {
         return (
             <View>
-
                 <View style={StyleDashboard.row}>
+                  
                     <View style={StyleDashboard.col1}>
-                        <Image source={require('../images/Warehouse_Services.png')}
-                            style={StyleDashboard.image} />
+                        {/* <Image source={require('../images/Warehouse_Services.png')}
+                            style={StyleDashboard.image} /> */}
+                            <AnimatedCircularProgress
+                                size={90}
+                                width={10}
+                                fill={this.state.fill1}
+                                rotation="90"
+                                lineCap="round"
+                                duration={1200}
+                                tintColor="#CD18EE"
+                                backgroundColor="#E8E8E8">
+                                    {
+                                        (fill) => (
+                                        <Text style={{color:'#CD18EE'}}>
+                                            { this.state.fill1 }
+                                        </Text>
+                                        )
+                                    }
+                                </AnimatedCircularProgress>
                     </View>
+                  
                     <View style={StyleDashboard.col2}>
                         <Text style={[StyleDashboard.labelText2, { color: 'rgba(157, 58, 188,1)' }]}>{Constants.TruckBooking}</Text>
                         <Text style={StyleDashboard.descText}>fnsldfn fnsldfnf nfdsnflsnn fn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfn fnsldfn lorempipsom
