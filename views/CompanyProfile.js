@@ -1,6 +1,6 @@
 
 /* screen -MANAPPCUS002
-    design by -mayur ss
+    design by -mayur s
  */
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native';

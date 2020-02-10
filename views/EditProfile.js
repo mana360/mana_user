@@ -318,6 +318,7 @@ export default class EditProfile extends React.Component {
                                     />
                                     <Text style={StyleEditProfile.modalLabelText}>{Constants.Password}</Text>
                                 </View>
+
                                 <View style={{ flexDirection: "row", justifyContent: 'center', alignSelf: 'center' }}>
                                     <TextInput
                                         placeholder="Enter Password"
@@ -337,6 +338,7 @@ export default class EditProfile extends React.Component {
                                         />
                                     </TouchableOpacity>
                                 </View>
+                                
                             </View>
 
                             <TouchableOpacity style={StyleEditProfile.ButtonView}
