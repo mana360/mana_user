@@ -29,8 +29,6 @@ import TruckingWarehouseCurrentTripDetails from './views/TruckingWarehouseCurren
 import TruckingWarehouseUpcomingTrip from './views/TruckingWarehouseUpcomingTrip';
 import TruckingWarehouseViewUpcomingTrip from './views/TruckingWarehouseViewUpcomingTrip';
 import CollectMyLoad from './views/CollectMyLoad';
-import CompanyMyProfile from './views/CompanyProfile';
-import UserProfile from './views/UserProfile';
 import MyProfile from './views/MyProfile';
 import EditProfile from './views/EditProfile';
 import ForgotPassword from './views/ForgotPassword';
@@ -168,14 +166,6 @@ const AppNavigator1 = createStackNavigator({
       screen: DiscountVoucher,
       navigationOptions: () => ({ header: null })
     },
-    CompanyProfile: {
-      screen: CompanyMyProfile,
-      navigationOptions: () => ({ header: null })
-    },
-    UserProfile: {
-      screen: UserProfile,
-      navigationOptions: () => ({ header: null })
-    },
     MyProfile: {
       screen: MyProfile,
       navigationOptions: () => ({ header: null })
@@ -253,7 +243,7 @@ const AppNavigator1 = createStackNavigator({
       navigationOptions:()=>({header:null})
     },
 },
-    {initialRouteName:"Dashboard"} 
+    {initialRouteName:"EditProfile"} 
 
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

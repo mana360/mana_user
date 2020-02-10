@@ -1,14 +1,13 @@
-/* screen -MANAPPCUS036,36-1,37
+/* screen -MANAPPCUS108,36,37
     design by -mayur s
  */
 import React from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput, FlatList } from 'react-native';
 import { StyleMyProfile } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import HeaderBar from '../config/HeaderBar';
-import CompanyMyProfile from './CompanyProfile';
-import UserProfile from './UserProfile';
 import Constants from '../config/Constants';
+
 export default class MyProfile extends React.Component {
     constructor(props) {
         super(props);
@@ -17,16 +16,28 @@ export default class MyProfile extends React.Component {
             new_password: '',
             confirm_password: '',
             password_visible: true,
-            screen_title: 'CompanyProfile', //CompanyProfile,UserProfile
+            screen_title: 'UserProfile', //CompanyProfile,UserProfile
             modalVisible_Changepassword: false,
             modalVisible_SavedMsg: false,
             password_visible: true,
+            companyProfile_data: [
+                { title: 'IBM', company_name: 'IBM', company_contactPerson: 'PMO', company_contactPositiion: 'PMO', company_telephoneNo: '+56 1245521425', email: 'ibmn@ibm.com', address: 'NYC,Lane 345,street 2.', city: 'Johnasburg', province: 'AAA', zipcode: '4561258' }
+            ],
+            userProfileData: [
+                { title: "Jimmy Dager", first_name: 'Jimmy123', last_name: 'Dager', title_1: 'Mr', telephone_no: '+56 454567874651', rsa_id: '4561323784251', street_address: 'NYC,Lane 345,street2', province: 'AAA', city: 'johnsburg', zipcode: '442301', email: 'vty2@gkml.com' }
+            ],
+            userProfile_image: [
+                { image_name: "", image_path: require('../images/Profile_pic.png') },
+                { image_name: "", image_path: require('../images/Trucking+Warehouse.png') },
+                { image_name: "", image_path: require('../images/upload_normal.png') },
+                { image_name: "", image_path: require('../images/truck_icon.png') },
+            ]
         }
     }
 
     company_Profile() {
         return (
-            <View style={{}}>
+            <View style={{ flex: 1 }}>
 
                 <View style={StyleMyProfile.row}>
                     <View style={StyleMyProfile.col1}>
@@ -36,7 +47,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.CompanyName}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>IBM</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].company_name}</Text>
                     </View>
                 </View>
 
@@ -48,7 +59,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.CompanyContactPerson}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>PMO</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].company_contactPerson}</Text>
                     </View>
                 </View>
 
@@ -60,7 +71,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.CompanyContactPosition}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>PMO</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].company_contactPositiion}</Text>
                     </View>
                 </View>
 
@@ -72,7 +83,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.CompanyTelephonenumber}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>+45859625123</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].company_telephoneNo}</Text>
                     </View>
                 </View>
 
@@ -81,10 +92,10 @@ export default class MyProfile extends React.Component {
                         <Image source={require('../images/email_id.png')}
                             style={StyleMyProfile.Icon}
                         />
-                        <Text style={StyleMyProfile.col1Text}>{Constants.Email}</Text>
+                        <Text style={StyleMyProfile.col1Text}>{Constants.EmailAddress}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>ghj@gmail.com</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].email}</Text>
                     </View>
                 </View>
 
@@ -93,10 +104,10 @@ export default class MyProfile extends React.Component {
                         <Image source={require('../images/address.png')}
                             style={StyleMyProfile.Icon}
                         />
-                        <Text style={StyleMyProfile.col1Text}>{Constants.Address}</Text>
+                        <Text style={StyleMyProfile.col1Text}>{Constants.StreetAddress}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>NYC,1,235 Street</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].address}</Text>
                     </View>
                 </View>
 
@@ -108,7 +119,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.City}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>FGDHJAS</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].city}</Text>
                     </View>
                 </View>
 
@@ -120,36 +131,22 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.SelectProvince}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>AAA</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].province}</Text>
                     </View>
                 </View>
 
                 <View style={StyleMyProfile.row}>
                     <View style={StyleMyProfile.col1}>
-                        <Image source={require('../images/password.png')}
+                        <Image source={require('../images/address.png')}
                             style={StyleMyProfile.Icon}
                         />
-                        <Text style={StyleMyProfile.col1Text}>{Constants.Password}</Text>
+                        <Text style={StyleMyProfile.col1Text}>{Constants.ZipCode}</Text>
                     </View>
-                    <View style={[StyleMyProfile.col2, {}]}>
-                        <TextInput secureTextEntry={this.state.password_visible}
-                            editable={false}
-                            value="johnson"
-                            maxLength={8}
-                            style={{ width: 130, letterSpacing: 2, fontSize: Constants.FONT_SIZE_LARGE }}
-
-                        />
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.setState({ password_visible: !this.state.password_visible })
-                            }}
-                        >
-                            <Image source={this.state.password_visible ? require('../images/hide_pass.png') : require('../images/show_pass.png')}
-                                style={[StyleMyProfile.Icon, { marginLeft: 5 }]}
-                            />
-                        </TouchableOpacity>
+                    <View style={StyleMyProfile.col2}>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].zipcode}</Text>
                     </View>
                 </View>
+
 
             </View>
 
@@ -168,7 +165,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.FirstName}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>Jimmy</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].first_name}</Text>
                     </View>
                 </View>
 
@@ -180,31 +177,19 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.LastName}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>Dager</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].last_name}</Text>
                     </View>
                 </View>
 
                 <View style={StyleMyProfile.row}>
                     <View style={StyleMyProfile.col1}>
-                        <Image source={require('../images/company_name.png')}
+                        <Image source={require('../images/person.png')}
                             style={StyleMyProfile.Icon}
                         />
-                        <Text style={StyleMyProfile.col1Text}>{Constants.CompanyName}</Text>
+                        <Text style={StyleMyProfile.col1Text}>{Constants.Title}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>IBM</Text>
-                    </View>
-                </View>
-
-                <View style={StyleMyProfile.row}>
-                    <View style={StyleMyProfile.col1}>
-                        <Image source={require('../images/designation.png')}
-                            style={StyleMyProfile.Icon}
-                        />
-                        <Text style={StyleMyProfile.col1Text}>{Constants.Designation}</Text>
-                    </View>
-                    <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>PMO</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].title_1}</Text>
                     </View>
                 </View>
 
@@ -216,19 +201,60 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.TelephoneNo}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>459625123</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].telephone_no}</Text>
                     </View>
+                </View>
+
+                <View style={[StyleMyProfile.row, { borderBottomWidth: 0, }]}>
+                    <View style={StyleMyProfile.col1}>
+                        <Image source={require('../images/designation.png')}
+                            style={StyleMyProfile.Icon}
+                        />
+                        <Text style={StyleMyProfile.col1Text}>{Constants.RSAIDPassNO}</Text>
+                    </View>
+                    <View style={StyleMyProfile.col2}>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].rsa_id}</Text>
+                    </View>
+                </View>
+
+                <View style={[StyleMyProfile.row, { flexDirection: "column" }]}>
+                    <Text style={[StyleMyProfile.col1Text, {}]}>Document Images</Text>
+                    <FlatList
+                        numColumns={1}
+                        horizontal={true}
+                        style={{ marginLeft: 15, marginVertical: 10 }}
+                        data={this.state.userProfile_image}
+                        extraData={this.state}
+                        keyExtractor={(item) => { item.id }}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <View style={{ width: 55, height: 55, marginHorizontal: 5, justifyContent: 'center', alignItems: 'center', borderRadius: 100, }}>
+                                    <TouchableOpacity style={{ position: 'absolute', bottom: 1, zIndex: 1, right: 0, }}
+                                        onPress={() => {
+                                            this.delete_image(index);
+                                        }}
+                                    >
+                                        <Image source={require('../images/remove.png')} style={{ width: 18, height: 18, borderWidth: 1.5, borderColor: 'white', borderRadius: 100 }} />
+                                    </TouchableOpacity>
+                                    <Image style={{ width: 55, height: 55, alignSelf: 'center', borderRadius: 100 }} source={item.image_path} />
+                                </View>
+                            )
+                        }}
+                    />
+
+
+
                 </View>
 
                 <View style={StyleMyProfile.row}>
                     <View style={StyleMyProfile.col1}>
-                        <Image source={require('../images/mobile_number.png')}
+                        <Image source={require('../images/address.png')}
                             style={StyleMyProfile.Icon}
                         />
-                        <Text style={StyleMyProfile.col1Text}>{Constants.SecondaryNo}</Text>
+                        <Text style={StyleMyProfile.col1Text}>{Constants.StreetAddress}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>454565651</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].street_address}</Text>
                     </View>
                 </View>
 
@@ -237,10 +263,34 @@ export default class MyProfile extends React.Component {
                         <Image source={require('../images/address.png')}
                             style={StyleMyProfile.Icon}
                         />
-                        <Text style={StyleMyProfile.col1Text}>{Constants.Address}</Text>
+                        <Text style={StyleMyProfile.col1Text}>{Constants.SelectProvince}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>NYC,1,235 Street</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].province}</Text>
+                    </View>
+                </View>
+
+                <View style={StyleMyProfile.row}>
+                    <View style={StyleMyProfile.col1}>
+                        <Image source={require('../images/address.png')}
+                            style={StyleMyProfile.Icon}
+                        />
+                        <Text style={StyleMyProfile.col1Text}>{Constants.SelectCity}</Text>
+                    </View>
+                    <View style={StyleMyProfile.col2}>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].city}</Text>
+                    </View>
+                </View>
+
+                <View style={StyleMyProfile.row}>
+                    <View style={StyleMyProfile.col1}>
+                        <Image source={require('../images/address.png')}
+                            style={StyleMyProfile.Icon}
+                        />
+                        <Text style={StyleMyProfile.col1Text}>{Constants.ZipCode}</Text>
+                    </View>
+                    <View style={StyleMyProfile.col2}>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].zipcode}</Text>
                     </View>
                 </View>
 
@@ -249,50 +299,25 @@ export default class MyProfile extends React.Component {
                         <Image source={require('../images/email_id.png')}
                             style={StyleMyProfile.Icon}
                         />
-                        <Text style={StyleMyProfile.col1Text}>{Constants.Email}</Text>
+                        <Text style={StyleMyProfile.col1Text}>{Constants.EmailAddress}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>bhj@gmail.com</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].email}</Text>
                     </View>
-                </View>
-
-                <View style={[StyleMyProfile.row, { borderBottomWidth: 0 }]}>
-
-                    <View style={StyleMyProfile.col1}>
-                        <Image source={require('../images/password.png')}
-                            style={StyleMyProfile.Icon}
-                        />
-                        <Text style={StyleMyProfile.col1Text}>{Constants.Password}</Text>
-                    </View>
-
-                    <View style={[StyleMyProfile.col2,]}>
-                        <TextInput secureTextEntry={this.state.password_visible}
-                            editable={false}
-                            value="johnson"
-
-                            style={{ width: 130, letterSpacing: 2, fontSize: Constants.FONT_SIZE_LARGE }}
-
-                        />
-
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.setState({ password_visible: !this.state.password_visible })
-                            }}
-                        >
-                            <Image source={this.state.password_visible ? require('../images/hide_pass.png') : require('../images/show_pass.png')}
-                                style={[StyleMyProfile.Icon, { marginLeft: 5 }]}
-                            />
-                        </TouchableOpacity>
-
-                    </View>
-
                 </View>
 
             </View>
 
         )
     }
+    delete_image(position) {
 
+        var temparray = this.state.userProfile_image
+
+        temparray.splice(position, 1);
+        this.setState({ userProfile_image: temparray })
+
+    }
     Modal_ChangePassword() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
@@ -443,7 +468,7 @@ export default class MyProfile extends React.Component {
 
                         </View>
 
-                        <Text style={StyleMyProfile.label}>Jimmy Dager</Text>
+                        <Text style={StyleMyProfile.label}>{this.state.screen_title == 'UserProfile' ? this.state.userProfileData[0].title : this.state.companyProfile_data[0].title}</Text>
                         <View style={StyleMyProfile.bottomline}></View>
 
                         {
@@ -453,12 +478,14 @@ export default class MyProfile extends React.Component {
                                 :
                                 this.state.screen_title == "CompanyProfile"
                                     ?
-                                   this.company_Profile()
+                                    this.company_Profile()
                                     :
                                     null
                         }
 
-
+                        <TouchableOpacity style={StyleMyProfile.UpdateBtn_view}>
+                            <Text style={StyleMyProfile.UpdateBtn_text}>Change Password</Text>
+                        </TouchableOpacity>
                     </ScrollView>
                 </View>
 

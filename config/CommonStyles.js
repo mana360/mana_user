@@ -1800,6 +1800,21 @@ const StyleMyProfile = StyleSheet.create({
         color: Constants.COLOR_WHITE,
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE
     },
+    UpdateBtn_view:{
+        backgroundColor:Constants.COLOR_GREEN,
+        width:'90%',
+        alignSelf:'center',
+        borderRadius:50,
+        marginVertical:25,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    UpdateBtn_text:{
+        textTransform:'uppercase',
+        color:Constants.COLOR_WHITE,
+        paddingVertical:12,
+        fontSize:Constants.FONT_SIZE_LARGE
+    }
 })
 const StyleEditProfile = StyleSheet.create({
     topCircle: {
