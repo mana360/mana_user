@@ -2,7 +2,7 @@
     design by -mayur s
  */
 import React from 'react';
-import { View, Image, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { View, Image, ScrollView, Text, TouchableOpacity,FlatList } from 'react-native';
 import { Card, CardItem } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
 import { StyleDashboard } from '../config/CommonStyles';
@@ -24,75 +24,67 @@ export default class Dashboard extends React.Component {
             modal_Visible: false,
             screen_title: 'Dashboard',
             fill1:"90",
+            dashboardData:[
+                {title:"Truck Bookings",       desc:"Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent:"60"},
+                {title:"Warehouse Services",   desc:"Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent:"35"},
+                {title:"Trucking + Warehouse", desc:"Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent:"25"},
+                {title:"Collect My Load",      desc:"Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent:"70"},
+            ],
         }
     }
 
     getDashboard() {
         return (
             <View>
-                <View style={StyleDashboard.row}>
-                  
-                    <View style={StyleDashboard.col1}>
-                        {/* <Image source={require('../images/Warehouse_Services.png')}
-                            style={StyleDashboard.image} /> */}
-                            <AnimatedCircularProgress
-                                size={90}
-                                width={10}
-                                fill={this.state.fill1}
-                                rotation="90"
-                                lineCap="round"
-                                duration={1200}
-                                tintColor="#CD18EE"
-                                backgroundColor="#E8E8E8">
-                                    {
-                                        (fill) => (
-                                        <Text style={{color:'#CD18EE'}}>
-                                            { this.state.fill1 }
-                                        </Text>
-                                        )
+                <FlatList
+                    data={this.state.dashboardData}
+                    extraData={this.state}
+                    keyExtractor={(index)=>index.toString()}
+                    numColumns={1}
+                    renderItem={
+                        ({item,index})=>
+
+                        <View style={StyleDashboard.row}>  
+                        
+                            <View style={StyleDashboard.col1}>
+                        
+                                <AnimatedCircularProgress
+                                    size={90}
+                                    width={10}
+                                    fill={item.percent}
+                                    rotation="90"
+                                    lineCap="round"
+                                    duration={1200}
+                                    tintColor={
+                                        index%4==0 ? "#CD18EE" :
+                                        index%4==1 ? "#9ABD08" :
+                                        index%5==2 ? "#FA4009" :
+                                        index%4==3 ? "#57C9EB" : null
                                     }
+                                    backgroundColor="#E8E8E8">
+                                    { (fill) => ( <Text style={{color:
+                                        index%4==0 ? "#CD18EE" :
+                                        index%4==1 ? "#9ABD08" :
+                                        index%5==2 ? "#FA4009" :
+                                        index%4==3 ? "#57C9EB" : null
+                                    }}> { item.percent } </Text>) }
                                 </AnimatedCircularProgress>
-                    </View>
-                  
-                    <View style={StyleDashboard.col2}>
-                        <Text style={[StyleDashboard.labelText2, { color: 'rgba(157, 58, 188,1)' }]}>{Constants.TruckBooking}</Text>
-                        <Text style={StyleDashboard.descText}>fnsldfn fnsldfnf nfdsnflsnn fn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfn fnsldfn lorempipsom
-                        </Text>
-                    </View>
-                </View>
+                        
+                            </View>
+                            
+                            <View style={StyleDashboard.col2}>
+                                <Text style={[StyleDashboard.labelText2, { color: 
+                                        index%4==0 ? "#CD18EE" :
+                                        index%4==1 ? "#9ABD08" :
+                                        index%5==2 ? "#FA4009" :
+                                        index%4==3 ? "#57C9EB" : null                                
+                                 }]}>{item.title}</Text>
+                                <Text style={StyleDashboard.descText}>{item.desc}</Text>
+                            </View>
 
-                <View style={StyleDashboard.row}>
-                    <View style={StyleDashboard.col1}>
-                        <Image source={require('../images/Warehouse_Services.png')}
-                            style={StyleDashboard.image} />
-                    </View>
-                    <View style={StyleDashboard.col2}>
-                        <Text style={[StyleDashboard.labelText2, { color: 'rgba(146, 188, 18,1)' }]}>{Constants.WarehouseService}</Text>
-                        <Text style={StyleDashboard.descText}>fnsldfn dsfkfnf nfdsnflsnn fn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfn fnsldfn lorempipsom fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
-                    </View>
-                </View>
-
-                <View style={StyleDashboard.row}>
-                    <View style={StyleDashboard.col1}>
-                        <Image source={require('../images/Warehouse_Services.png')}
-                            style={StyleDashboard.image} />
-                    </View>
-                    <View style={StyleDashboard.col2}>
-                        <Text style={[StyleDashboard.labelText2, { color: 'rgba(234, 68, 27,1)' }]}>{Constants.truckingwarehouse}</Text>
-                        <Text style={StyleDashboard.descText}>mmfnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
-                    </View>
-                </View>
-
-                <View style={[StyleDashboard.row]}>
-                    <View style={StyleDashboard.col1}>
-                        <Image source={require('../images/Warehouse_Services.png')}
-                            style={StyleDashboard.image} />
-                    </View>
-                    <View style={StyleDashboard.col2}>
-                        <Text style={[StyleDashboard.labelText2, { color: 'rgba(82, 173, 209,1)' }]}>{Constants.CollectMyLoad}</Text>
-                        <Text style={StyleDashboard.descText}>fnsldfn fnsldfn fnsldfnf nfdsnflsnn fn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfnsldfn ffnsldfn ffnsldfn ffnsldfn fnsldfn fnsldfn lorempipsom fnsldfn fnsldfn fnsldfn lorempipsom</Text>
-                    </View>
-                </View>
+                        </View>
+                    }
+                />
 
             </View>
         )
