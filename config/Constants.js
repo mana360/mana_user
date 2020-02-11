@@ -46,6 +46,7 @@ const Constants = {
     APPLY: 'APPLY',
 
     //Label
+    AlreadyRegistered:'Already \n Registered? Login',
     CurrentTrip: 'current trips',
     Date: 'date',
     Invoice: 'invoice',
@@ -215,6 +216,7 @@ const Constants = {
     ContactNumber:'Contact Number',
     AdditionalContactNumber:'Additional Contact Number',
     ProfileSetUPDoneSuccessFul:"Profile setup done Successfully.",
+    YouwillRevicefromourSupportTeam:"You will receive an \n acknowledgement once your profile \n is verified from our Support team ",
     AddServices:'Add Services',
     TotalPrice:'Total Price',
     BookTrip:'Book Trip',

@@ -46,13 +46,7 @@ export default class EditProfile extends React.Component {
 
         }
     }
-    onValueChange_province(value) {
-        this.setState({ user_province: value })
-    }
-
-    onValueChange_city(value) {
-        this.setState({ user_city: value })
-    }
+ 
 
     company_Profile() {
         return (
@@ -168,7 +162,7 @@ export default class EditProfile extends React.Component {
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_DARK }}
                         selectedValue={this.state.company_province}
-                        onValueChange={this.onValueChange_province.bind(this)}
+                        onValueChange={(value)=>{this.setState({company_province:value})}}
                     >
                         <Picker.Item label='select Province' value='1' />
                         <Picker.Item label='CA' value='2' />
@@ -188,7 +182,7 @@ export default class EditProfile extends React.Component {
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_DARK }}
                         selectedValue={this.state.company_city}
-                        onValueChange={this.onValueChange_city.bind(this)}
+                        onValueChange={(value)=>{this.setState({company_city:value})}}
                     >
                         <Picker.Item label='select City' value='1' />
                         <Picker.Item label='CA' value='2' />
@@ -365,7 +359,7 @@ export default class EditProfile extends React.Component {
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_DARK }}
                         selectedValue={this.state.user_province}
-                        onValueChange={this.onValueChange_province.bind(this)}
+                        onValueChange={(value)=>{this.setState({user_province:value})}}
                     >
                         <Picker.Item label='select Province' value='1' />
                         <Picker.Item label='CA' value='2' />
@@ -385,7 +379,7 @@ export default class EditProfile extends React.Component {
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_DARK }}
                         selectedValue={this.state.user_city}
-                        onValueChange={this.onValueChange_city.bind(this)}
+                        onValueChange={(value)=>{this.setState({user_city:value})}}
                     >
                         <Picker.Item label='select City' value='1' />
                         <Picker.Item label='CA' value='2' />

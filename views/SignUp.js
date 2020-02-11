@@ -60,10 +60,10 @@ export default class SignUp extends Component {
 
         <Image style={StyleSignUp.bgImage} source={require('../images/Splash_screen.jpg')} />
        
-           <View style={this.state.referalRadio_button ? [StyleSignUp.loginBox, { marginTop:50 }] : StyleSignUp.loginBox}>
+           <View style={this.state.referalRadio_button ? [StyleSignUp.loginBox, { marginTop:10 }] : StyleSignUp.loginBox}>
 
            <View style={StyleSignUp.LogoImageView}>
-              <Image style={{width:'100%',height:'46%', marginLeft:0.5,bottom:0,position:'absolute',zIndex:-1,resizeMode:"stretch"}}
+              <Image style={{width:162,height:63, marginLeft:0.5,bottom:0,position:'absolute',zIndex:-1,resizeMode:"stretch"}}
                   source={require('../images/circle.png')}/>
               <Image style={StyleSignUp.logoImage}
                   source={require('../images/logo_in_circle.png')}/>

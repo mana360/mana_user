@@ -13,7 +13,11 @@ export default class ViewCompletedTripDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            invoiceModal_Visible:false
+            invoiceModal_Visible:false,
+            truck_data:[
+                {title:"Chruch gate2-SYS",partner_name:"ABC Services",telephone_no:"+565564521",dateof_pickup:"11/04/2019",pickup_time:"1.00 AM",arrival_time:'05.00 AM',pickup_location:"275 N Marr Road,CA",destination_location:"NYC Lane 345,street 2",cargo_type:"CArgo Type 1",cargo_handling:"No",
+                cargohandling_charged:"NA",recuring_requirement:"Yes",costof_recurring:"US $34",frequency:"weekly",costof_truckingservice:"US $345",status:"Completed"}
+            ]
         }
     }
     onStarRatingPress(rating) {
@@ -38,7 +42,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                             />
                         </View>
 
-                        <Text style={StyleViewCompletedDetail.label}>Chruch gate2-SYS</Text>
+                        <Text style={StyleViewCompletedDetail.label}>{this.state.truck_data[0].title}</Text>
                         <View style={StyleViewCompletedDetail.bottomline}></View>
 
                         <View style={StyleViewCompletedDetail.row}>
@@ -46,7 +50,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.PartnerName}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>ABC Services</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>{this.state.truck_data[0].partner_name}</Text>
                             </View>
                         </View>
 
@@ -55,7 +59,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.Telephonenumber}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>+567894654</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>{this.state.truck_data[0].telephone_no}</Text>
                             </View>
                         </View>
 
@@ -64,7 +68,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.DateOfPickUp}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>11/04/2019</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>{this.state.truck_data[0].dateof_pickup}</Text>
                             </View>
                         </View>
 
@@ -73,7 +77,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.PickUpTime}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>11:00 AM</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>{this.state.truck_data[0].pickup_time}</Text>
                             </View>
                         </View>
 
@@ -82,7 +86,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.ArrivalTime}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>05:00 AM</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>{this.state.truck_data[0].arrival_time}</Text>
                             </View>
                         </View>
 
@@ -91,7 +95,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.PickUpLocation}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>275 N Mar Road,CA</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>{this.state.truck_data[0].pickup_location}</Text>
                             </View>
                         </View>
 
@@ -100,7 +104,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.DestinationLocation}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>NYC,Lane 35,street2.</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>{this.state.truck_data[0].destination_location}</Text>
                             </View>
                         </View>
 
@@ -109,7 +113,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.CargoType}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>Cargo Type 1</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>{this.state.truck_data[0].cargo_type}</Text>
                             </View>
                         </View>
 
@@ -118,7 +122,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.CargoHandling}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>No</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>{this.state.truck_data[0].cargo_handling}</Text>
                             </View>
                         </View>
                        
@@ -127,7 +131,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.CargoHandlingCharges}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>NA</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>{this.state.truck_data[0].cargohandling_charged}</Text>
                             </View>
                         </View>
 
@@ -136,7 +140,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.RecurringRequirement}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>Yes</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>{this.state.truck_data[0].recuring_requirement}</Text>
                             </View>
                         </View>
 
@@ -145,7 +149,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.CostOfRecurring}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>Us $35</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>{this.state.truck_data[0].costof_recurring}</Text>
                             </View>
                         </View>
 
@@ -154,7 +158,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.frequency}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>Weekly</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>{this.state.truck_data[0].frequency}</Text>
                             </View>
                         </View>
 
@@ -163,7 +167,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                                 <Text style={StyleViewCompletedDetail.col1Text}>{Constants.CostOfTruckingService}</Text>
                             </View>
                             <View style={StyleViewCompletedDetail.col2}>
-                                <Text style={StyleViewCompletedDetail.col2Text}>US $452</Text>
+                                <Text style={StyleViewCompletedDetail.col2Text}>{this.state.truck_data[0].costof_truckingservice}</Text>
                             </View>
                         </View>
 
@@ -173,7 +177,7 @@ export default class ViewCompletedTripDetail extends React.Component {
                             </View>
                             <View style={[StyleViewCompletedDetail.col2, { flexDirection: 'row' }]}>
                                 <Text style={[StyleViewCompletedDetail.col2Text, { color: Constants.COLOR_GREEN, fontWeight: 'bold' }]}
-                                >Completed</Text>
+                                >{this.state.truck_data[0].status}</Text>
                                 <TouchableOpacity style={{marginLeft: '25%', top: -8}}
                                         onPress={()=>{
                                                 this.setState({invoiceModal_Visible:true})

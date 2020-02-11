@@ -21,7 +21,7 @@ export default class HelpAndSupport extends React.Component {
             support_contact_number: "",
             support_email:"jim.d@abc.com",
             modal_Visible: false,
-            isUser:true,  //help and suport(user)=true ,trip help and support(company)=false
+            isUser:false,  //help and suport(user)=true ,trip help and support(company)=false
         }
     }
     sendMessage(){
@@ -38,7 +38,7 @@ export default class HelpAndSupport extends React.Component {
                    
                     <View style={{ flex: 1, backgroundColor: Constants.colorGrey }}>
 
-                        <View style={{ flex: 8, flexDirection: 'row', height: 180, maxHeight: 180, backgroundColor: Constants.COLOR_WHITE }}>
+                        <View style={{ flex: 8, flexDirection: 'row', height: 180,marginBottom:15, maxHeight: 180, backgroundColor: Constants.COLOR_WHITE }}>
                             
                             <View style={{ flex: 3, justifyContent: 'center', alignItems: 'flex-end', marginLeft: 10 }}>
                                 <Image

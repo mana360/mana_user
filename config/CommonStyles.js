@@ -2041,7 +2041,6 @@ const StyleSignUp = StyleSheet.create({
         resizeMode: 'stretch',
     },
     loginBox: {
-        marginHorizontal: 15,
         padding: 15,
         borderRadius:5,
         marginTop: 15,
@@ -2051,7 +2050,7 @@ const StyleSignUp = StyleSheet.create({
     LogoImageView:{
         position:'absolute',
         borderRadius:85,
-        top:-95,
+        top:-110,
         height:170,
         width:'57%',
         justifyContent:'center',
@@ -2065,7 +2064,7 @@ const StyleSignUp = StyleSheet.create({
         alignSelf: 'center',
     },
     loginLabel: {
-        marginTop:65,
+        marginTop:50,
         marginBottom:5,
         alignSelf: 'center',
         color: 'black',
@@ -3230,7 +3229,7 @@ const StyleSetUpProfile = StyleSheet.create({
         backgroundColor:Constants.COLOR_GREEN,
         justifyContent:'center',
         alignItems:'center',
-        width:"90%",
+        width:"43%",
         marginVertical:10,
         alignSelf:'center',
         borderRadius:50,
@@ -3238,8 +3237,7 @@ const StyleSetUpProfile = StyleSheet.create({
       },
     ButtonTextBottom:{
         color:Constants.COLOR_WHITE,
-        paddingVertical:10,
-        fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
+        textAlign:'center',
         textTransform:"uppercase"
     },
     modalView: {
@@ -3261,12 +3259,13 @@ const StyleSetUpProfile = StyleSheet.create({
     },
     modalImage: {
         alignSelf: 'center',
-        width: 100,
-        height: 100,
+        width: 70,
+        height: 70,
     },
     modalMsg: {
         alignSelf: 'center',
         fontWeight: 'bold',
+        textAlign:"center",
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
         color: Constants.COLOR_GREY_DARK,
         marginVertical: 10,
