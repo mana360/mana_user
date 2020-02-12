@@ -1,6 +1,10 @@
 /* screen -MANAPPCUS047,26,27
     design by -mayur s
- */
+ 
+    DONT USED THIS FILE
+ 
+    */
+
 import React, { Component } from 'react';
 import { View, Text, Image, ScrollView, Modal, TouchableOpacity, } from 'react-native';
 import { StyleViewUpcomingTrip, } from '../config/CommonStyles';

@@ -14,7 +14,7 @@ export default class EditProfile extends React.Component {
         this.state = {
             modalVisible_Changepassword: false,
             modalVisible_successMsg: false,
-            screen_title: 'company_profile',//user_profile,company_profile
+            screen_title: 'user_profile',//user_profile,company_profile
             current_password: '',
             new_password: '',
             confirm_password: '',

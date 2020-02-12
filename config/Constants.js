@@ -134,7 +134,7 @@ const Constants = {
     Cancelleation_msg: 'Cancellation of trip will cause you with the penalty cost.',
     cancellation_msgDelete: "Are you sure you want to delete the trip?",
     TripCanceledSuccessfully: 'Trip Cancelled Successfully.',
-    checkYourregisteredEmailIdPeneltyInfo: 'Check your registered email ID for penalty information.',
+    checkYourregisteredEmailIdPeneltyInfo: 'Check your registered email ID for \n penalty information.',
     Duration: 'Duration',
     TelephoneNo: 'Telephone No.',
     StorageType: 'Storage Type',

@@ -1,5 +1,7 @@
 /* screen -MANAPPCUS032,33,34
     design by -mayur s
+    
+    DONT USED THIS FILE
  */
 import React from 'react';
 import { View, Text, Image, ScrollView, Modal, TouchableOpacity, } from 'react-native';
