@@ -471,6 +471,7 @@ export default class ProfileSetUp extends React.Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <TouchableOpacity style={[StyleSetUpProfile.ButtonView, { marginRight: 15, paddingHorizontal: 8, paddingVertical: 5 }]}
                                     onPress={() => {
+                                        this.props.navigation.navigate('SignIn')
                                     }}
                                 >
                                     <Text style={[StyleSetUpProfile.ButtonTextBottom, { fontSize: Constants.FONT_SIZE__MEDIUM }]}>{Constants.AlreadyRegistered}</Text>

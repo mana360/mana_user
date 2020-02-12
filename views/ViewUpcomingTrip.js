@@ -526,8 +526,8 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
                                                                 <Text style={StyleViewUpcomingTrip.col2Text}>{result.warehouse_location}</Text>
-                                                                <TouchableOpacity style={{ position: 'absolute', right: 5, alignSelf: 'center' }}>
-                                                                    <Image style={{ width: 30, height: 30, }} source={require('../images/location_1.png')} />
+                                                                <TouchableOpacity style={service_name=='3'?{display:'none'}:{ position: 'absolute', right: 5, alignSelf: 'center' }}>
+                                                                    <Image style={{ width: 25, height: 25, }} source={require('../images/location_1.png')} />
                                                                 </TouchableOpacity>
                                                             </View>
                                                         </View>
@@ -665,7 +665,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.RecurringRequirement}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.dateOF_pickUp}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.recursing_requirement}</Text>
                                                             </View>
                                                         </View>
 

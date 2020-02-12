@@ -158,7 +158,7 @@ export default class ViewCurrentTrip extends React.Component {
 
                                     <View style={StyleViewCurrentTrip.row}>
                                         <View style={StyleViewCurrentTrip.col1}>
-                                            <Text style={StyleViewCurrentTrip.col1Text}>{Constants.Partnername}</Text>
+                                            <Text style={StyleViewCurrentTrip.col1Text}>{Constants.ContactNo}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
                                             <Text style={StyleViewCurrentTrip.col2Text}>{result.partner_no}</Text>

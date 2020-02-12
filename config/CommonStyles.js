@@ -535,6 +535,7 @@ const StyleSignIn = StyleSheet.create({
         resizeMode: 'stretch',
     },
     loginBox: {
+        marginTop:15,
         width: wp('90%'),
         paddingRight: 15,
         paddingLeft: 15,
@@ -567,7 +568,7 @@ const StyleSignIn = StyleSheet.create({
         color: Constants.COLOR_GREY_DARK
     },
     textInput_container: {
-        marginVertical: 10
+        marginVertical: 7
     },
     textInput_style: {
         borderWidth: 0.7,
@@ -604,7 +605,7 @@ const StyleSignIn = StyleSheet.create({
         borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 15,
+        marginVertical: 5,
         backgroundColor: Constants.COLOR_GREEN,
     },
     Login_buttonText: {
@@ -614,8 +615,7 @@ const StyleSignIn = StyleSheet.create({
         fontWeight: 'bold',
     },
     forgotButton: {
-        marginTop: 15,
-        marginBottom: 25,
+        marginVertical:12
     },
     forgotLabel: {
         alignSelf: 'center',
@@ -1196,7 +1196,7 @@ const StyleViewUpcomingTrip = StyleSheet.create({
     },
     modalMsg: {
         width: wp('80%'),
-        fontSize: Constants.FONT_SIZE_LARGE,
+        fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
         color: Constants.COLOR_GREY_DARK,
         fontWeight: "bold",
         textAlign: "center",
@@ -2058,9 +2058,9 @@ const StyleSignUp = StyleSheet.create({
         alignSelf:'center',
     },
     logoImage: {
-        width: 158,
-        height: 158,
-        top:1,
+        width: 140,
+        height: 140,
+        top:10,
         alignSelf: 'center',
     },
     loginLabel: {

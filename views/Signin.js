@@ -67,7 +67,7 @@ export default class SignIn extends Component {
               <Text style={StyleSignIn.labelBoxText}>{Constants.Password}</Text>
             </View>
 
-            <TextInput placeholder='*************'
+            <TextInput placeholder="Enter Password"
               secureTextEntry={true}
               style={StyleSignIn.textInput_style}
               value={this.state.input_password}
@@ -76,7 +76,7 @@ export default class SignIn extends Component {
 
           {/* policies start here */}
           <View>
-            <View style={[StyleSignUp.policyView,]}>
+            <View style={[StyleSignUp.policyView,{marginVertical:3}]}>
               <TouchableOpacity
                 onPress={() => {
                   this.setState({ policyRadio_button: !this.state.policyRadio_button })

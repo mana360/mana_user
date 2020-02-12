@@ -59,11 +59,10 @@ export default class SignUp extends Component {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
         <Image style={StyleSignUp.bgImage} source={require('../images/Splash_screen.jpg')} />
-       
-           <View style={this.state.referalRadio_button ? [StyleSignUp.loginBox, { marginTop:10 }] : StyleSignUp.loginBox}>
+           <View style={this.state.referalRadio_button ? [StyleSignUp.loginBox, { marginTop:50 }] : StyleSignUp.loginBox}>
 
            <View style={StyleSignUp.LogoImageView}>
-              <Image style={{width:162,height:63, marginLeft:0.5,bottom:0,position:'absolute',zIndex:-1,resizeMode:"stretch"}}
+              <Image style={{width:148,height:62, marginLeft:0.5,bottom:0,position:'absolute',zIndex:-1,resizeMode:"stretch"}}
                   source={require('../images/circle.png')}/>
               <Image style={StyleSignUp.logoImage}
                   source={require('../images/logo_in_circle.png')}/>
@@ -76,26 +75,6 @@ export default class SignUp extends Component {
               <Image style={StyleSignUp.LabelBoxIcon}
                 source={require('../images/mobile_number.png')} />
               <Text style={StyleSignUp.labelBoxText}>{Constants.MobileNumber}</Text>
-            </View>
-            <TextInput placeholder='Enter Mobile Number'
-              style={StyleSignUp.textInput_style}
-              keyboardType='number-pad'
-              maxLength={10}
-              value={this.state.mobile_number}
-              onChangeText={(newText) => {
-                if (!isNaN(newText))
-                  this.setState({ mobile_number: newText })
-                else
-                  this.setState({ mobile_number: '' })
-              }}
-            />
-          </View>
-
-          <View style={StyleSignUp.textInput_container}>
-            <View style={StyleSignUp.labelBox}>
-              <Image style={StyleSignUp.LabelBoxIcon}
-                source={require('../images/mobile_number.png')} />
-              <Text style={StyleSignUp.labelBoxText}>{Constants.Name}</Text>
             </View>
             <TextInput placeholder='Enter Mobile Number'
               style={StyleSignUp.textInput_style}
@@ -219,7 +198,6 @@ export default class SignUp extends Component {
           </TouchableOpacity>
 
         </View>
-       
         <TouchableOpacity style={StyleSignUp.memberButton}
           onPress={() => {
             this.props.navigation.navigate('SignIn')
