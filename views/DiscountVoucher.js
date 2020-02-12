@@ -13,10 +13,8 @@ export default class DiscountVoucher extends React.Component {
         this.state = {
             dataSource: [
                 { 'title': 'REFERNEW', 'discount': '10', 'Validity': '30/09/2019' },
-                { 'title': 'REFERNEW', 'discount': '10', 'Validity': '30/09/2019' },
-                { 'title': 'REFERNEW', 'discount': '10', 'Validity': '30/09/2019' },
-
-
+                { 'title': 'REFER10', ' discount': '10', 'Validity': '30/08/2019' },
+                { 'title': 'NEWREFER', 'discount': '10', 'Validity': '09/08/2019' },
             ]
         }
     }
@@ -29,12 +27,14 @@ export default class DiscountVoucher extends React.Component {
                     data={this.state.dataSource}
                     extraData={this.state}
                     keyExtractor={(index) => { index.toString() }}
+                    numColumns={1}
                     style={{ marginVertical:20 }}
                     bounces={false}
                     renderItem={({ item }) => {
                         return (
                             <View style={{marginVertical:13,paddingBottom:5,justifyContent:"center", }}>
-                             <Image source={require('../images/voucher.png')}
+                             
+                                <Image source={require('../images/voucher.png')}
                                  style={styleDiscountVoucher.bgImage} />
                              
                                 <View style={{ flexDirection: "row", flex: 10,marginVertical:5,justifyContent:'center',alignItems:'center',alignSelf:'center'}}>
@@ -46,25 +46,26 @@ export default class DiscountVoucher extends React.Component {
                                     </View>
 
                                     <View style={{ flex: 8, justifyContent: 'center',}}>
+
                                         <View style={styleDiscountVoucher.titleView}>
                                             <Text style={styleDiscountVoucher.title}>{item.title}</Text>
                                         </View>
-                                        <View style={{ flexDirection: 'row',alignSelf:'center' }}>
+                                    
+                                        <View style={{ flexDirection: 'row',  marginLeft:30,}}>
                                             <Text style={styleDiscountVoucher.discountText}>({item.discount}% Discount)</Text>
                                             <Text style={styleDiscountVoucher.validityDate}>Valid upto {item.Validity}</Text>
                                         </View>
+                                    
                                     </View>
 
                                     </View>
+                                    
                                 </View>
                         )
                     }}
-
                 >
                 </FlatList>
-
                 <FooterBar navigation={navigation} />
-
             </View>
 
         )

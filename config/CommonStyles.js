@@ -2275,11 +2275,13 @@ const styleDiscountVoucher = StyleSheet.create({
     discountText: {
         fontSize: Constants.FONT_SIZE__MEDIUM,
         color: Constants.COLOR_GREEN,
+        width:'43%',
     },
     validityDate: {
         fontSize: Constants.FONT_SIZE__MEDIUM,
         paddingLeft: 10,
         color: Constants.COLOR_GREY_DARK,
+        width:'50%',
     }
 })
 const StyleMyBooking = StyleSheet.create({
@@ -2763,6 +2765,7 @@ const StyleLocationDetails = StyleSheet.create({
 		fontFamily: "Roboto-Medium",			
 	},
 	inputBox: {
+        width:'85%',
 		color: '#a4a4a4',
 		fontSize: Constants.FONT_SIZE_LARGE,
 		paddingLeft:26,
@@ -2773,15 +2776,15 @@ const StyleLocationDetails = StyleSheet.create({
     nextAddrBtn: {
 		backgroundColor: Constants.COLOR_GREEN,
 		borderRadius: 50,
-		padding:12,
+        padding:7,
+        width:120,
         alignSelf:"flex-end",
-        alignItems:"center",	
-        width:164,
-        marginBottom:35,
+        alignItems:"center",
+        marginBottom:20,
 	},
 	nextAddrBtnText: {
 		color: '#fff',
-		fontSize: 16,  	
+		fontSize: 12,
 		textTransform:'uppercase',	
         fontFamily: "Roboto-Medium",
     },
@@ -2811,7 +2814,7 @@ const StyleLocationDetails = StyleSheet.create({
 		padding:12,
         alignItems:"center",
         marginTop:30,
-        marginBottom:35,
+        marginBottom:25,
 	},
 	logButtonText: {
 		color: '#fff',

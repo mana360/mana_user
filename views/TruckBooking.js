@@ -1,16 +1,12 @@
 /* screen -MANAPPCUS0015
     design by -mayur s
+    redesign by Udayraj
  */
 import React, { Component } from 'react';
-import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity } from 'react-native';
-import { Card, CardItem } from "native-base";
-import LinearGradient from "react-native-linear-gradient";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import { StyleTruckBooking } from '../config/CommonStyles';
-import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
-import HeaderBar from '../config/HeaderBar';
-import StarRating from "react-native-star-rating";
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 export default class TruckBooking extends React.Component {
     constructor(props) {
         super(props);
@@ -19,7 +15,11 @@ export default class TruckBooking extends React.Component {
             inputLabelTrip: '',
             reviewTrip: '',
             modal_Visible: false,
-            booking_status: 1
+            booking_status: 1,
+            truckBookingData:[
+                {title:"Current Trips",  type:"current",  desc:"fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent:28},
+                {title:"Upcoming Trips", type:"upcoming",  desc:"fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent:13},
+            ],
         }
     }
     onStarRatingPress(rating) {
@@ -30,45 +30,48 @@ export default class TruckBooking extends React.Component {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
-                <View style={{ flex: 1 }}>
+                <FlatList
+                    data={this.state.truckBookingData}
+                    extraData={this.state}
+                    keyExtractor={(index)=>{index.toString()}}
+                    numColumns={1}
+                    renderItem={
+                        ({item, index})=>
+                            <View style={{ flex: 1 }}>
+                                <View style={StyleTruckBooking.row}>
+                                    <View style={StyleTruckBooking.col1}>
+                                    <AnimatedCircularProgress
+                                        size={90}
+                                        width={10}
+                                        fill={item.percent}
+                                        rotation="90"
+                                        lineCap="round"
+                                        duration={1200}
+                                        tintColor="#9ABD08"
+                                        backgroundColor="#E8E8E8">
+                                        { (fill) => ( <Text style={{color:"#9ABD08"}}> { item.percent } </Text>) }
+                                    </AnimatedCircularProgress>
+                                    </View>
+                                    <View style={StyleTruckBooking.col2}>
+                                        <Text style={[StyleTruckBooking.labelText2]}>{item.title}</Text>
+                                        <Text style={StyleTruckBooking.descText}> {item.desc} </Text>
+                                        <TouchableOpacity style={StyleTruckBooking.button}
+                                            onPress={() => {
+                                                item.type=="current" 
+                                                ?
+                                                this.props.navigation.navigate('CurrentTrip')
+                                                :
+                                                this.props.navigation.navigate('UpcomingTrip')
+                                            }}
+                                        >
+                                            <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
 
-                    <View style={StyleTruckBooking.row}>
-                        <View style={StyleTruckBooking.col1}>
-                            <Image source={require('../images/Warehouse_Services.png')}
-                                style={StyleTruckBooking.image} />
-                        </View>
-                        <View style={StyleTruckBooking.col2}>
-                            <Text style={[StyleTruckBooking.labelText2]}>{Constants.CurrentTrip}</Text>
-                            <Text style={StyleTruckBooking.descText}>fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
-                            <TouchableOpacity style={StyleTruckBooking.button}
-                                onPress={() => {
-                                    this.props.navigation.navigate('CurrentTrip');
-                                }}
-                            >
-                                <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-
-                    <View style={StyleTruckBooking.row}>
-                        <View style={StyleTruckBooking.col1}>
-                            <Image source={require('../images/Warehouse_Services.png')}
-                                style={StyleTruckBooking.image} />
-                        </View>
-                        <View style={StyleTruckBooking.col2}>
-                            <Text style={[StyleTruckBooking.labelText2]}>{Constants.UpcomingTrip}</Text>
-                            <Text style={StyleTruckBooking.descText}>fnsldfn fnsldfn fnsldfnfnsldfnfnsldfnfnsldfn fnsldfn fnsldfn lorempipsom</Text>
-                            <TouchableOpacity style={StyleTruckBooking.button}
-                                onPress={() => {
-                                    this.props.navigation.navigate('UpcomingTrip');
-                                }}
-                            >
-                                <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-
-                </View>
+                    }
+                />
             </View>
         )
     }

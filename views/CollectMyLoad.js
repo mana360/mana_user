@@ -3,10 +3,11 @@
  */
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, Modal,TextInput,FlatList} from 'react-native';
-import { StyleCollectMyLoad, StyleLocationDetails } from '../config/CommonStyles';
+import { StyleCollectMyLoad, StyleLocationDetails,StyleTruckBooking} from '../config/CommonStyles';
 import Constants from '../config/Constants';
 import RBSheet from "react-native-raw-bottom-sheet";
 import Carousel  from "react-native-carousel";
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 export default class CollectMyLoad extends React.Component {
     constructor(props) {
@@ -21,7 +22,8 @@ export default class CollectMyLoad extends React.Component {
                     truckWeight:"1 Ton", 
                     truckDesp:"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
                     truckMaxWeight:"1 Ton",
-                    truckSize:"22 Meters"
+                    truckLength:20,
+                    truckWidth:10,
                 },
                 {
                     src: require('../images/truck_icon_one.png'),
@@ -29,7 +31,8 @@ export default class CollectMyLoad extends React.Component {
                     truckWeight:"1.5 Ton", 
                     truckDesp:"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
                     truckMaxWeight:"1.5 Ton",
-                    truckSize:"32 Meters"
+                    truckLength:20,
+                    truckWidth:"10S",
                 },
                 {
                     src: require('../images/truck_icon_two.png'),
@@ -37,9 +40,14 @@ export default class CollectMyLoad extends React.Component {
                     truckWeight:"3 Ton", 
                     truckDesp:"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
                     truckMaxWeight:"3 Ton",
-                    truckSize:"45 Meters"
+                    truckLength:20,
+                    truckWidth:10,
                 }
-            ]                
+            ],
+            collectMyLoadData:[
+                {title:"New Booking", type:"new", desc:"fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent:45},
+                {title:"My Booking",  type:"my",  desc:"fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent:70},
+            ],               
         }
     }
 RateCard(){
@@ -174,41 +182,46 @@ ReferAFriend(){
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
 
-                <View style={StyleCollectMyLoad.row}>
-                    <View style={StyleCollectMyLoad.col1}>
-                        <Image source={require('../images/Warehouse_Services.png')}
-                            style={StyleCollectMyLoad.image} />
-                    </View>
-                    <View style={StyleCollectMyLoad.col2}>
-                        <Text style={[StyleCollectMyLoad.labelText2]}>{Constants.NewBooking}</Text>
-                        <Text style={StyleCollectMyLoad.descText}>fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom</Text>
-                        <TouchableOpacity style={StyleCollectMyLoad.button}
-                            onPress={() => {
-                                this.RBSheet.open();
-                            }}
-                        >
-                            <Text style={StyleCollectMyLoad.buttonLabel}>{Constants.ViewAll}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                <FlatList
+                    data={this.state.collectMyLoadData}
+                    extraData={this.state}
+                    keyExtractor={(index)=>{index.toString()}}
+                    numColumns={1}
+                    renderItem={
+                        ({item, index})=>
+                            <View style={StyleTruckBooking.row}>
+                                 <View style={StyleTruckBooking.col1}>
+                                     <AnimatedCircularProgress
+                                        size={90}
+                                        width={10}
+                                        fill={item.percent}
+                                        rotation="90"
+                                        lineCap="round"
+                                        duration={1200}
+                                        tintColor="#9ABD08"
+                                        backgroundColor="#E8E8E8">
+                                        { (fill) => ( <Text style={{color:"#9ABD08"}}> { item.percent } </Text>) }
+                                    </AnimatedCircularProgress>
 
-                <View style={StyleCollectMyLoad.row}>
-                    <View style={StyleCollectMyLoad.col1}>
-                        <Image source={require('../images/Warehouse_Services.png')}
-                            style={StyleCollectMyLoad.image} />
-                    </View>
-                    <View style={StyleCollectMyLoad.col2}>
-                        <Text style={[StyleCollectMyLoad.labelText2]}>{Constants.MyBooking}</Text>
-                        <Text style={StyleCollectMyLoad.descText}>fnsldfn fnsldfn fnsldfnfnsldfnfnsldfnfnsldfn fnsldfn fnsldfn lorempipsom</Text>
-                        <TouchableOpacity style={StyleCollectMyLoad.button}
-                            onPress={()=>{
-                                this.props.navigation.navigate('MyBookings')
-                            }}
-                        >
-                            <Text style={StyleCollectMyLoad.buttonLabel}>{Constants.ViewAll}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                                </View>
+                                <View style={StyleTruckBooking.col2}>
+                                     <Text style={[StyleTruckBooking.labelText2]}>{item.title}</Text>
+                                     <Text style={StyleTruckBooking.descText}>{item.desc}</Text>
+                                     <TouchableOpacity style={StyleTruckBooking.button}
+                                              onPress={()=>{
+                                                  item.type=="new"
+                                                  ?
+                                                  this.RBSheet.open()
+                                                  :
+                                                  this.props.navigation.navigate('MyBookings')
+                                              }} 
+                                    >
+                                           <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>
+                                     </TouchableOpacity>
+                                </View>
+                            </View>
+                    }
+                />
 
                 <View style={StyleCollectMyLoad.ServicesView}>
 
@@ -313,7 +326,7 @@ ReferAFriend(){
                                                         <Text style={StyleCollectMyLoad.truckDetails}>{item.truckDesp}</Text>
                                                         <View style={StyleCollectMyLoad.grayBox}>
                                                             <Text style={[StyleCollectMyLoad.maxTxt, {marginBottom:6} ]}>Maximum Weight : {item.truckMaxWeight}</Text>
-                                                            <Text style={StyleCollectMyLoad.maxTxt}>Size : {item.truckSize}</Text>
+                                                            <Text style={StyleCollectMyLoad.maxTxt}>Size : LENGTH {item.truckLength} * WIDTH {item.truckWidth}</Text>
                                                         </View>
                                                         <TouchableOpacity 
                                                             onPress={() =>{
