@@ -2223,6 +2223,8 @@ const StyleDiscountVouchers = StyleSheet.create({
     voucervaiddiscount: {
         flexDirection: 'column',
         flex: 1,
+        justifyContent:'center',
+        alignItems:'center',
     },
     voucerdate: {
         color: Constants.COLOR_BLACK_LIGHT,
@@ -2591,6 +2593,7 @@ const StylePaymentMethod = StyleSheet.create({
         backgroundColor:'#fff',
         padding:20,
         flexDirection:'column',
+        marginTop:60,
     },
     choosetext:{
         textAlign:'center',
@@ -2611,7 +2614,7 @@ const StylePaymentMethod = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 1,
         borderColor: '#4a4a4a' ,
-        marginRight:5,
+        marginHorizontal:5,
     },
     cashpickuptxt:{
         fontSize:Constants.FONT_SIZE_LARGE ,
@@ -2625,7 +2628,7 @@ const StylePaymentMethod = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 1,
         borderColor: '#7bc145',
-        marginLeft:5,
+        marginHorizontal:5,
     },
     onlinepaytxt:{
         fontSize:Constants.FONT_SIZE_LARGE ,
@@ -2744,12 +2747,14 @@ const StyleLocationDetails = StyleSheet.create({
         paddingRight:25,
         paddingTop:36,
     },
-    labelIconLoc: {
-        width: 20,
-        height: 20,	
+    iconView:{
         position:"absolute",
         right:16,
         top:12,
+    },
+    labelIconLoc: {
+        width: 20,
+        height: 20,
 	},
     inputContainer: {
 	    backgroundColor: '#fff',  
@@ -2778,7 +2783,7 @@ const StyleLocationDetails = StyleSheet.create({
 	},
 	inputBox: {
         width:'85%',
-		color: '#a4a4a4',
+		color: 'rgba(64,64,64,0.8)',
 		fontSize: Constants.FONT_SIZE_LARGE,
 		paddingLeft:26,
 		paddingRight:38,
@@ -2825,8 +2830,7 @@ const StyleLocationDetails = StyleSheet.create({
 		borderRadius: 50,
 		padding:12,
         alignItems:"center",
-        marginTop:30,
-        marginBottom:25,
+        marginVertical:20,
 	},
 	logButtonText: {
 		color: '#fff',
@@ -2932,30 +2936,26 @@ const StyleBookingSummary = StyleSheet.create({
         fontFamily: "Roboto-Medium",
     },
 
-
-
     priceBox:{
-        flex:1,
         backgroundColor:Constants.COLOR_GREY,
-        paddingHorizontal:25,
-        paddingVertical:26,
+        padding:5,
+        paddingBottom:15,
+        justifyContent:'center',
+        alignItems:'center',
     },
     priceTxt:{
-        flex:3,
-        alignItems:'flex-start',
+        width:'75%',
+        paddingTop:7,
         fontFamily: "Roboto-Medium",
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
         color:Constants.COLOR_FOOTER_GREY,
-        letterSpacing:0.5,
     },
     priceVol:{
-        flex:8,
-        textAlign:'right',
-        alignItems:'flex-end',
+        width:'20%',
+        paddingTop:7,
         fontFamily: "Roboto-Medium",
-        fontSize:22,
+        fontSize:20,
         color:Constants.COLOR_FOOTER_GREY,
-        letterSpacing:0.5,
     },
     discntBtn:{
         alignItems:'center',
@@ -3034,24 +3034,21 @@ const StyleBookingSummary = StyleSheet.create({
         marginBottom:10,
     },
     grayBox:{
-        flex:1,
         flexDirection:'row',
         backgroundColor:Constants.COLOR_GREY,
         borderRadius:6,
-        paddingVertical:25,
-        paddingHorizontal:20,
+        padding:15,
     },
     ltSec:{
-        flex:8,       
         justifyContent:'center',
     },
     rtSec:{
-        flex:2,       
         alignItems:'flex-end',
     },
     removeImg:{
-        width:34,
-        height:34,
+        width:25,
+        height:25,
+        marginLeft:15,
     },
 })
 const StyleNewBookingSummary = StyleSheet.create({

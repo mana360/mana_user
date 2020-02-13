@@ -15,6 +15,7 @@ export default class PaymentMethod extends React.Component {
     constructor() {
         super();
         this.state = {
+<<<<<<< HEAD
 
             support_subject: "Lorem ipsum",
             support_message: "",
@@ -26,6 +27,11 @@ export default class PaymentMethod extends React.Component {
             modalVisible: false,
             secondmodalVisible: false,
 
+=======
+          modalVisible: false,
+          secondmodalVisible: false,
+          payment_method:"",    // cash or online
+>>>>>>> 4a40e1697e984e1aa7f2f2b70dbc7a411c3da1d2
         }
     }
 
@@ -36,6 +42,7 @@ export default class PaymentMethod extends React.Component {
         this.setState({ modalVisible: false });
         this.setState({ secondmodalVisible: visible });
     }
+<<<<<<< HEAD
     render() {
 
         let { navigation } = this.props
@@ -43,41 +50,89 @@ export default class PaymentMethod extends React.Component {
             <View style={{ flex: 1, }}>
                 <HeaderBar title="Payment Method" isBack={true} isPaymentBack={true} isNotification={true} navigation={navigation} />
                 <ScrollView bounces={false} style={{ width: wp('100%'), }}>
+=======
+    render(){
+        
+        let {navigation} = this.props
+        return(
+            <View style={{flex:1,}}>
+                
+                <HeaderBar title="Payment Method" isBack={true} isLogout={true} navigation={navigation}/>
+                
+                <ScrollView bounces={false} style={{width:wp('100%'),}}>
+                
+>>>>>>> 4a40e1697e984e1aa7f2f2b70dbc7a411c3da1d2
                     <View style={StylePaymentMethod.paymentamount}>
+                
                         <View style={StylePaymentMethod.paymentamounttxt}>
                             <Text style={StylePaymentMethod.paymentamountlefttxt}>Total Price</Text>
                             <Text style={StylePaymentMethod.paymentamountrighttxt}>R 445</Text>
                         </View>
+                
                         <View style={StylePaymentMethod.paymentamounttxt}>
                             <Text style={StylePaymentMethod.paymentamountlefttxt}>Other Services</Text>
                             <Text style={StylePaymentMethod.paymentamountrighttxt}>R 55</Text>
                         </View>
+                
                         <View style={StylePaymentMethod.paymentamounttxt}>
                             <Text style={StylePaymentMethod.paymentamountlefttxt}>Discount Voucher</Text>
                             <Text style={StylePaymentMethod.paymentamountrighttxt}>-  R 10</Text>
                         </View>
+<<<<<<< HEAD
                         <View style={[StylePaymentMethod.paymentamounttxt, { borderBottomWidth: 0, }]}>
+=======
+                
+                        <View style={[StylePaymentMethod.paymentamounttxt,{borderBottomWidth: 0, }]}>
+>>>>>>> 4a40e1697e984e1aa7f2f2b70dbc7a411c3da1d2
                             <Text style={StylePaymentMethod.paymenttotal}>Grand Total</Text>
                             <Text style={StylePaymentMethod.paymenttotalamount}>R 490</Text>
                         </View>
+                    
                     </View>
+
                     <View style={StylePaymentMethod.paymentmethod}>
+<<<<<<< HEAD
                         <Text style={StylePaymentMethod.choosetext}>CHOOSE YOUR PAYMENT METHOD </Text>
+=======
+
+                        <Text style={StylePaymentMethod.choosetext}>CHOOSE YOUR PAYMENT METHOD </Text>   
+                
+>>>>>>> 4a40e1697e984e1aa7f2f2b70dbc7a411c3da1d2
                         <View style={StylePaymentMethod.choosetype}>
-                            <TouchableOpacity style={StylePaymentMethod.cashpickup} onPress={this.onPress}>
-                                <Text style={StylePaymentMethod.cashpickuptxt}>Cash On Pick Up</Text>
+
+                            <TouchableOpacity style={ this.state.payment_method=="cash" ? StylePaymentMethod.onlinepay : StylePaymentMethod.cashpickup}
+                                onPress={()=>{this.setState({payment_method:"cash"})}}>
+                                <Text style={ this.state.payment_method=="cash" ? StylePaymentMethod.onlinepaytxt : StylePaymentMethod.cashpickuptxt}>Cash On Pick Up</Text>
                             </TouchableOpacity>
+<<<<<<< HEAD
                             <TouchableOpacity style={StylePaymentMethod.onlinepay} onPress={() => { this.setModalVisible(true); }} underlayColor='#fff'>
                                 <Text style={StylePaymentMethod.onlinepaytxt}>Online Payment </Text>
+=======
+
+                            <TouchableOpacity style={ this.state.payment_method=="online" ? StylePaymentMethod.onlinepay : StylePaymentMethod.cashpickup}
+                                onPress={()=>{this.setState({payment_method:"online",})}}>
+                                <Text style={ this.state.payment_method=="online" ? StylePaymentMethod.onlinepaytxt : StylePaymentMethod.cashpickuptxt}>Online Payment </Text>
+>>>>>>> 4a40e1697e984e1aa7f2f2b70dbc7a411c3da1d2
                             </TouchableOpacity>
+
                         </View>
+
                         <View style={StylePaymentMethod.paymentmethodpaybtn}>
-                            <TouchableOpacity onPress={this.onPress} style={StylePaymentMethod.paybtn} >
+                            <TouchableOpacity style={StylePaymentMethod.paybtn}
+                                onPress={()=>{this.setState({ modalVisible:true})}}
+                            >
                                 <Text style={StylePaymentMethod.paybtntxt}>Pay</Text>
                             </TouchableOpacity>
+<<<<<<< HEAD
                         </View>
+=======
+                        </View>       
+                
+>>>>>>> 4a40e1697e984e1aa7f2f2b70dbc7a411c3da1d2
                     </View>
+                
                 </ScrollView>
+
                 {/* PaymentGetway */}
                 <Modal
                     animationType="fade"
@@ -103,8 +158,7 @@ export default class PaymentMethod extends React.Component {
                         </View>
                     </View>
                 </Modal>
-                {/* PaymentGetway */}
-                {/* Pay */}
+
                 <Modal
                     animationType="fade"
                     transparent={true}
@@ -112,11 +166,18 @@ export default class PaymentMethod extends React.Component {
                 >
                     <View style={StylePaymentMethod.popmodule}>
                         <View style={StylePaymentMethod.popmain}>
+<<<<<<< HEAD
                             <TouchableHighlight
                                 style={StylePaymentMethod.popclose}
                                 onPress={() => {
                                     this.secondmodalVisible(false);
                                     this.props.navigation.navigate('Dashboard')
+=======
+                            <TouchableHighlight 
+                                style={StylePaymentMethod.popclose} 
+                                onPress={() => {this.secondmodalVisible(false);
+                                    //this.props.navigation.navigate('Dashboard')
+>>>>>>> 4a40e1697e984e1aa7f2f2b70dbc7a411c3da1d2
                                 }}
                             >
                                 <Image style={StylePaymentMethod.popcloseimg} source={require('../images/close.png')}></Image>
@@ -141,9 +202,13 @@ export default class PaymentMethod extends React.Component {
                 </Modal>
                 {/* pay */}
 
+<<<<<<< HEAD
                 {/* modal_cancel ----- mayur s*/}
            
                 <FooterBar navigation={navigation} />
+=======
+                <FooterBar navigation={navigation}/>
+>>>>>>> 4a40e1697e984e1aa7f2f2b70dbc7a411c3da1d2
 
             </View>
         )
