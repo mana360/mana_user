@@ -1,5 +1,6 @@
 /* screen -MANAPPCUS071
     design by -Sameer 
+    redesign by Udayraj
  */
 import React from 'react';
 import {View, Text, TouchableOpacity, Image, ScrollView, Picker, TextInput, Modal, FlatList, ImageBackground, } from 'react-native';
@@ -19,22 +20,22 @@ constructor (props) {
             {
                 vouchername: 'refernew',
                 voucherdate: '30/09/2019',
-                discountpercentage: '10%',
+                discountpercentage: 10,
             },
             {
                 vouchername: 'refer15',
                 voucherdate: '01/09/2019',
-                discountpercentage: '15%',
+                discountpercentage: 15,
             },
             {
                 vouchername: 'refer20',
                 voucherdate: '31/11/2019',
-                discountpercentage: '20%',
+                discountpercentage: 20,
             },
         ]
     }
 }
-getVouchers(item) {
+getVouchers(item, isOrder) {
     return (
          
         <View style={StyleDiscountVouchers.voucherbgimg}>
@@ -45,11 +46,16 @@ getVouchers(item) {
                     <Text style={StyleDiscountVouchers.voucerinntxthead}>{item.vouchername}</Text>
                     <View style={StyleDiscountVouchers.voucervaiddiscountbtn}>
                         <View style={StyleDiscountVouchers.voucervaiddiscount}>
-                            <Text style={StyleDiscountVouchers.voucerdate}>Valid Upto {item.voucherdate}</Text>
-                            <Text style={StyleDiscountVouchers.voucerdiscount}>({item.discountpercentage} Discount) </Text>
+                            <Text style={ isOrder? StyleDiscountVouchers.voucerdate :[StyleDiscountVouchers.voucerdate,{ display:'none'}]}>Valid Upto {item.voucherdate}</Text>
+                            <Text style={StyleDiscountVouchers.voucerdiscount}>({item.discountpercentage} Discount)% </Text>
                         </View>
-                        <TouchableOpacity onPress={()=>{
-                           this.props.navigation.navigate('NewBookingSummary')}}>
+                        <Text style={ isOrder? {display:'none'} :[StyleDiscountVouchers.voucerdate,{marginTop:5}]}>Valid Upto {item.voucherdate}</Text>
+                        <TouchableOpacity 
+                            style={ isOrder ? {display:'flex'} : {display:'none'}}
+                            onPress={()=>{
+                            this.props.navigation.pop();
+                            this.props.navigation.state.params.getAmount(item.discountpercentage)
+                        }}>
                             <View style={StyleDiscountVouchers.voucerbtn}>
                                 <Text style={StyleDiscountVouchers.voucerapplybtn}>{Constants.APPLY}</Text>
                             </View>
@@ -61,7 +67,8 @@ getVouchers(item) {
     )
 }
     render(){
-        let {navigation} = this.props
+        let {navigation} = this.props;
+        let isOrder = this.props.navigation.getParam('isOrder',false)
         return(
             <View style={{flex:1,}}>
                 {/* Header Start */ }
@@ -76,7 +83,7 @@ getVouchers(item) {
                         numColumns={1}
                         renderItem={
                             ({item})=>
-                            this.getVouchers(item)
+                            this.getVouchers(item,isOrder)
                         }
                     />
                 </View>
