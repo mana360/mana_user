@@ -153,7 +153,7 @@ export default class PaymentMethod extends React.Component {
                 </Modal>
                 {/* pay */}
 
-                {/* modal_cancel ----- mayur s*/}
+         
            
                 <FooterBar navigation={navigation} />
 

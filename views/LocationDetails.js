@@ -5,6 +5,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity, Image, ScrollView, DatePickerAndroid, TimePickerAndroid, TextInput} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {StyleLocationDetails} from '../config/CommonStyles';
+import {  Picker} from "native-base";
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
@@ -202,10 +203,26 @@ async openTimer(){
                                         placeholderTextColor={'#a4a4a4'}                                        
                                     />
                                 </View>
+
+                                <View style={[StyleLocationDetails.inputContainer,]}>
+                                    <View style={StyleLocationDetails.labelBoxNew}>
+                                        <Text style={[StyleLocationDetails.labelTextNew,{textTransform:'capitalize'}]}>{Constants.LOAD_CATEGORY}</Text>
+                                    </View>
+                                 <Picker
+                                 mode='dropdown'
+                                 style={{color:Constants.COLOR_GREY_DARK,width:'95%',alignSelf:'center',paddingVertical:20}}
+                                 >
+                                     <Picker.Item label='Select Load Category' value='default'/>
+                                     <Picker.Item label='Household' value='key1'/>
+                                     <Picker.Item label='Other' value='key2'/>
+
+                                 </Picker>
+                                 
+                                </View>
                                 
                                 <TouchableOpacity 
                                      onPress={() =>{
-                                        this.props.navigation.navigate('LoadCategory')
+                                        this.props.navigation.navigate('BookingSummary')
                                      }}
                                     style={StyleLocationDetails.logButton}
                                 >

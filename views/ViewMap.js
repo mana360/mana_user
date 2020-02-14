@@ -45,37 +45,9 @@ export default class ViewMap extends React.Component{
                   />
             </MapView>
           </View>
-          <RBSheet
-            ref={ref => {
-              this.RBSheet = ref;
-            }}
-            height={150}
-            duration={250}
-            customStyles={{
-              container: {
-                borderTopLeftRadius: 50,
-                borderTopRightRadius: 50,
-              }
-            }}
-            >
-            <View style={StyleViewMap.viewmaprbs }>
-              <View style={StyleViewMap.maplocationtxt}>
-                <View style={StyleViewMap.mapimgwid}>
-                  <Image style={StyleViewMap.mapimg} source={require('../images/address.png')} />
-                </View> 
-                <View style={StyleViewMap.maptxtwid}>
-                  <Text style={StyleViewMap.maptxt}>{Constants.Lorem}</Text> 
-                </View> 
-              </View>
-              <View style={StyleViewMap.maplocationbtn}>
-                <TouchableOpacity onPress={this._onPressButton}>
-                  <View style={StyleViewMap.mapbottbtn}>
-                    <Text style={StyleViewMap.mapbottbtntxt}>select</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>  
-            </View>  
-          </RBSheet>
+         
+         
+        
           {/* Main Body Close */}
           {/* Footer Start */}
           <FooterBar navigation={navigation}/>
