@@ -19,7 +19,6 @@ export default class MyProfile extends React.Component {
             screen_title: 'UserProfile', //CompanyProfile,UserProfile
             modalVisible_Changepassword: false,
             modalVisible_SavedMsg: false,
-            password_visible: true,
             companyProfile_data: [
                 { title: 'IBM', company_name: 'IBM', company_contactPerson: 'PMO', company_contactPositiion: 'PMO', company_telephoneNo: '+56 1245521425', email: 'ibmn@ibm.com', address: 'NYC,Lane 345,street 2.', city: 'Johnasburg', province: 'AAA', zipcode: '4561258' }
             ],
@@ -146,7 +145,6 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].zipcode}</Text>
                     </View>
                 </View>
-
 
             </View>
 
@@ -310,6 +308,7 @@ export default class MyProfile extends React.Component {
 
         )
     }
+
     delete_image(position) {
 
         var temparray = this.state.userProfile_image
@@ -318,6 +317,7 @@ export default class MyProfile extends React.Component {
         this.setState({ userProfile_image: temparray })
 
     }
+
     Modal_ChangePassword() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
@@ -483,7 +483,11 @@ export default class MyProfile extends React.Component {
                                     null
                         }
 
-                        <TouchableOpacity style={StyleMyProfile.UpdateBtn_view}>
+                        <TouchableOpacity style={StyleMyProfile.UpdateBtn_view}
+                         onPress={()=>{
+                             this.setState({modalVisible_Changepassword:true})
+                         }}
+                        >
                             <Text style={StyleMyProfile.UpdateBtn_text}>Change Password</Text>
                         </TouchableOpacity>
                     </ScrollView>

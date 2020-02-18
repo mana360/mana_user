@@ -119,8 +119,8 @@ export default class SignIn extends Component {
 
           <TouchableOpacity
             disabled={!this.state.policyRadio_button}
-            onPress={() => { this.props.navigation.navigate('SendOTP'); }}
-            style={StyleSignIn.loginButton}>
+            onPress={() => { this.props.navigation.navigate('Dashboard'); }}
+            style={this.state.policyRadio_button?StyleSignIn.loginButton:[StyleSignIn.loginButton,{backgroundColor:Constants.COLOR_GREY_LIGHT}]}>
             <Text style={StyleSignIn.Login_buttonText}>{Constants.SignIn}</Text>
           </TouchableOpacity>
 

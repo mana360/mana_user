@@ -3,8 +3,9 @@ Screen-Id : MANAPPCUS090-1,90-3,90
 @author :mayur s
 */
 import React, { Component } from "react";
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, Modal } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, Modal, FlatList } from "react-native";
 import HeaderBar from "../config/HeaderBar";
+import ImagePicker from "react-native-image-picker";
 import { Picker } from "native-base";
 import Constants from '../config/Constants';
 import { StyleSetUpProfile, StyleSignUp } from '../config/CommonStyles';
@@ -20,6 +21,8 @@ export default class ProfileSetUp extends React.Component {
             user_title: '',
             user_telephoneNumber: '',
             user_rsaPassport: '',
+            user_img_arry: [],
+            user_filename: '',
             user_address: '',
             user_email: '',
             user_streetAddress: '',
@@ -33,6 +36,8 @@ export default class ProfileSetUp extends React.Component {
             company_contactPosition: '',
             company_telephoneNo: '',
             company_emailId: '',
+            company_img_arry: [],
+            company_fileName: '',
             company_streetAddress: '',
             company_City: '',
             company_Province: '',
@@ -43,6 +48,65 @@ export default class ProfileSetUp extends React.Component {
         }
     }
 
+    OpenImagePicker() {
+        if (this.state.user_img_arry.length < 4 || this.state.company_img_arry.length < 4) {
+            ImagePicker.showImagePicker(this.options, (response) => {
+                console.log('response==', response);
+                if (response.didCancel) {
+                    console.log('User cancelled image picker');
+                } else if (response.error) {
+                    console.log('ImagePicker Error: ', response.error);
+                } else if (response.customButton) {
+                    console.log('User tapped custom button: ', response.customButton);
+                } else {
+                    const source = { uri: response.uri };
+                    console.log('response-->', source);
+                    this.setState({ user_filename: source })
+                    this.uploadImage(response.uri);
+                }
+
+            })
+        } else {
+            alert('maximum 4 image selected');
+
+        }
+    }
+    uploadImage(uri) {
+        if (this.state.customerType == 'Individual') {
+            let temp_arry = this.state.user_img_arry;
+            temp_arry.push({ uri: uri });
+            this.setState({ user_img_arry: temp_arry })
+           
+        } else {
+            let temp_arry = this.state.company_img_arry;
+            temp_arry.push({ uri: uri });
+            this.setState({ company_img_arry: temp_arry })
+        }
+    }
+
+    options = {
+        title: 'Select Image',
+        customButtons: [
+            { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+        ],
+        storageOptions: {
+            skipBackup: true,
+            path: 'images',
+        },
+    };
+
+    Pop_UploadImageArray(position) {
+        if (this.state.customerType == 'Individual') {
+            let temp_arry = this.state.user_img_arry;
+            temp_arry.splice(position, 1);
+            this.setState({ user_img_arry: temp_arry });
+        }
+        else {
+            let temp_arry = this.state.company_img_arry;
+            temp_arry.splice(position, 1);
+            this.setState({ company_img_arry: temp_arry });
+        }
+    }
 
     CompanyProfile() {
         return (
@@ -74,20 +138,52 @@ export default class ProfileSetUp extends React.Component {
                         onChangeText={(text) => { this.setState({ company_contactPerson: text }) }}
                     />
                 </View>
+                <View>
 
-                <View style={StyleSetUpProfile.TextInputView}>
-                    <View style={StyleSetUpProfile.LabelView}>
-                        <Text style={StyleSetUpProfile.modalLabelText}>{Constants.CompanyContactPosition}</Text>
-                        <Text style={{ color: 'red' }}>*</Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={StyleSetUpProfile.TextInputView}>
+                            <View style={StyleSetUpProfile.LabelView}>
+                                <Text style={StyleSetUpProfile.modalLabelText}>{Constants.CompanyContactPosition}</Text>
+                                <Text style={{ color: 'red' }}>*</Text>
+                            </View>
+                            <TextInput
+                                placeholder="Enter Position Name"
+                                style={StyleSetUpProfile.TextInput}
+                                value={this.state.company_contactPosition}
+                                onChangeText={(text) => { this.setState({ company_contactPosition: text }) }}
+                            />
+                        </View>
+                        {/* if required image upload in company profile,make TextInputView width small */}
+                        {/* <TouchableOpacity style={this.state.customerType == 'Company' ? {} : { paddingLeft: 10 }}
+                            onPress={() => {
+                                this.OpenImagePicker();
+                            }}
+                        >
+                            <Image style={{ width: 40, height: 40, }}
+                                source={require('../images/Upload_file.png')} />
+                        </TouchableOpacity> */}
                     </View>
-                    <TextInput
-                        placeholder="Enter Position Name"
-                        style={StyleSetUpProfile.TextInput}
-                        value={this.state.company_contactPosition}
-                        onChangeText={(text) => { this.setState({ company_contactPosition: text }) }}
+                    <FlatList
+                        data={this.state.company_img_arry}
+                        extraData={this.state}
+                        horizontal={true}
+                        style={{ marginLeft: 25 }}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <View style={{ width: 65, height: 65, borderRadius: 5, }}>
+                                    <TouchableOpacity onPress={() => { this.Pop_UploadImageArray(index); }}
+                                        style={{ position: 'absolute', alignSelf: 'flex-end', right: 8, top: 8, width: 15, height: 15, zIndex: 1, borderRadius: 100, justifyContent: 'center' }}>
+                                        <Image style={{ width: 12, height: 12, paddingBottom: 2, borderRadius: 50, borderWidth: 0.5, borderColor: 'white' }} source={require('../images/remove.png')} />
+                                    </TouchableOpacity>
+                                    <Image source={{ uri: item.uri }}
+                                        style={{ width: 50, height: 50, borderRadius: 5, margin: 5 }}
+                                    />
+                                </View>
+                            )
+                        }}
                     />
                 </View>
-
                 <View style={StyleSetUpProfile.TextInputView}>
                     <View style={StyleSetUpProfile.LabelView}>
                         <Text style={StyleSetUpProfile.modalLabelText}>{Constants.CompanyTelephonenumber}</Text>
@@ -115,7 +211,8 @@ export default class ProfileSetUp extends React.Component {
                 </View>
 
                 <Text style={{ color: Constants.COLOR_GREEN, fontWeight: "bold", textTransform: 'uppercase', paddingLeft: 45, marginVertical: 10 }}>
-                    {Constants.CompanyAddress}</Text>
+                    {Constants.CompanyAddress}
+                </Text>
 
                 <View style={StyleSetUpProfile.TextInputView}>
                     <View style={StyleSetUpProfile.LabelView}>
@@ -260,25 +357,52 @@ export default class ProfileSetUp extends React.Component {
                         onChangeText={(text) => { this.setState({ user_telephoneNumber: text }) }}
                     />
                 </View>
+                <View>
+                    <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={[StyleSetUpProfile.TextInputView, { width: '74%' }]}>
+                            <View style={StyleSetUpProfile.LabelView}>
+                                <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.RSAIDPassport}</Text>
+                                <Text style={{ color: 'red' }}>*</Text>
+                            </View>
+                            <TextInput
+                                placeholder="Enter Number"
+                                style={StyleSetUpProfile.TextInput}
+                                value={this.state.user_rsaPassport}
+                                onChangeText={(text) => { this.setState({ user_rsaPassport: text }) }}
+                            />
 
-                <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
-                    <View style={[StyleSetUpProfile.TextInputView, { width: '74%' }]}>
-                        <View style={StyleSetUpProfile.LabelView}>
-                            <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.RSAIDPassport}</Text>
-                            <Text style={{ color: 'red' }}>*</Text>
                         </View>
-                        <TextInput
-                            placeholder="Enter Number"
-                            style={StyleSetUpProfile.TextInput}
-                            value={this.state.user_rsaPassport}
-                            onChangeText={(text) => { this.setState({ user_rsaPassport: text }) }}
-                        />
 
+                        <TouchableOpacity style={{ paddingLeft: 10 }}
+                            onPress={() => {
+                                this.OpenImagePicker();
+                            }}
+                        >
+                            <Image style={{ width: 40, height: 40, }}
+                                source={require('../images/Upload_file.png')} />
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{ paddingLeft: 10 }}>
-                        <Image style={{ width: 40, height: 40, }}
-                            source={require('../images/Upload_file.png')} />
-                    </TouchableOpacity>
+
+                    <FlatList
+                        data={this.state.user_img_arry}
+                        extraData={this.state}
+                        horizontal={true}
+                        style={{ marginLeft: 25 }}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <View style={{ width: 65, height: 65, borderRadius: 5, }}>
+                                    <TouchableOpacity onPress={() => { this.Pop_UploadImageArray(index); }}
+                                        style={{ position: 'absolute', alignSelf: 'flex-end', right: 8, top: 8, width: 15, height: 15, zIndex: 1, borderRadius: 100, justifyContent: 'center' }}>
+                                        <Image style={{ width: 12, height: 12, paddingBottom: 2, borderRadius: 50, borderWidth: 0.5, borderColor: 'white' }} source={require('../images/remove.png')} />
+                                    </TouchableOpacity>
+                                    <Image source={{ uri: item.uri }}
+                                        style={{ width: 50, height: 50, borderRadius: 5, margin: 5 }}
+                                    />
+                                </View>
+                            )
+                        }}
+                    />
                 </View>
 
                 <View style={StyleSetUpProfile.TextInputView}>
@@ -477,7 +601,7 @@ export default class ProfileSetUp extends React.Component {
                                     <Text style={[StyleSetUpProfile.ButtonTextBottom, { fontSize: Constants.FONT_SIZE__MEDIUM }]}>{Constants.AlreadyRegistered}</Text>
                                 </TouchableOpacity>
 
-                                <TouchableOpacity style={[StyleSetUpProfile.ButtonView, { paddingVertical: 10 }]} disabled={!this.state.policyRadio_button}
+                                <TouchableOpacity style={this.state.policyRadio_button ? [StyleSetUpProfile.ButtonView, { paddingVertical: 10 }] : [StyleSetUpProfile.ButtonView, { paddingVertical: 10, backgroundColor: Constants.COLOR_GREY_LIGHT }]} disabled={!this.state.policyRadio_button}
                                     onPress={() => {
                                         this.setState({ Modal_visible: true })
 
