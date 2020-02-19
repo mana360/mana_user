@@ -29,7 +29,13 @@ export default class MapViews extends React.Component {
   //   this.RBSheet.open()
   // }
 
-
+  marker_setLocation(){
+    return(
+      <View>
+        
+      </View>
+    )
+  }
   getmarker_direction(origin,destination,GOOGLE_MAPS_APIKEY) {
     return (
       <View>
@@ -86,6 +92,7 @@ export default class MapViews extends React.Component {
 
   }
   render() {
+    const location_detail=this.props.navigation.getParam('flag_location')
     const origin = { latitude: this.state.co_ordinate[0].latitude, longitude: this.state.co_ordinate[0].longitude, };
     const destination = { latitude: this.state.co_ordinate[1].latitude, longitude: this.state.co_ordinate[1].longitude, };
     const GOOGLE_MAPS_APIKEY = 'AIzaSyDaIta3GbvS-cK3Y8vagU7h6RhuHmGBlPI';

@@ -241,7 +241,7 @@ const AppNavigator1 = createStackNavigator({
       navigationOptions:()=>({header:null})
     }, 
 },
-    {initialRouteName:"LocationDetails"}
+    {initialRouteName:"Splash"}
 
 )
 export const AppNavigator = createAppContainer(AppNavigator1);

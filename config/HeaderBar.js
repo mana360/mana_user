@@ -37,8 +37,9 @@ class HeaderBar extends React.Component {
   handleBackPress() {
     if (this.props.isPaymentBack) {
       this.setState({ isPaymentBackModalVisible: true });
+      return true
     }
-    return true
+     //return true
   }
   render() {
     const title = this.props.title;

@@ -133,7 +133,7 @@ export default class LocationDetails extends React.Component {
                                 <TouchableOpacity
                                     style={{ position: "absolute", right: 20, top: 12, }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('ViewMap')
+                                        this.props.navigation.navigate('MapViews',{flag_location:'Location_details'})
                                     }}>
                                     <Image style={{ width: 20, height: 20, }}
                                         source={require('../images/address.png')} />
