@@ -49,8 +49,6 @@ export default class MapViews extends React.Component {
           coordinate={origin}
           description={this.state.co_ordinate[0].desc}
           title={this.state.co_ordinate[0].title}
-
-
         />
 
         <Marker

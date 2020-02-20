@@ -459,7 +459,11 @@ export default class ViewUpcomingTripAll extends React.Component {
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
                                                             <Text style={StyleViewUpcomingTrip.col2Text}>{result.warehouse_location}</Text>
-                                                            <TouchableOpacity style={{ position: 'absolute', right: 5, alignSelf: 'center' }}>
+                                                            <TouchableOpacity style={{ position: 'absolute', right: 5, alignSelf: 'center' }}
+                                                                onPress={()=>{
+                                                                    this.props.navigation.navigate('MapViews',{})
+                                                                }}
+                                                            >
                                                                 <Image style={{ width: 25, height: 25, }} source={require('../images/location_1.png')} />
                                                             </TouchableOpacity>
                                                         </View>
