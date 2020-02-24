@@ -182,7 +182,7 @@ export default class ViewCurrentTrip extends React.Component {
                             <TouchableOpacity style={[StyleViewCurrentTrip.bottomButton, { marginRight: 15, width: '40%' }]}
                                 onPress={() => {
                                     if (this.state.live_geopin == true)
-                                        this.props.navigation.navigate('MapViews', { flag_map: 'truck' })
+                                        this.props.navigation.navigate('MapViews', { flag_map: 'marker_direction' })
                                     else
                                         this.RBSheet.open(); //delay msg
                                 }}

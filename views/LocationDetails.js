@@ -20,7 +20,7 @@ export default class LocationDetails extends React.Component {
             pick_up_address: "",
             drop_off_address: "",
             drop_off_address_1: "",
-            add_nextAddress:'',
+            add_nextAddress: '',
             pickup_date: "",
             pickup_time: "",
             load_category: '',
@@ -73,6 +73,9 @@ export default class LocationDetails extends React.Component {
         const selectedTime = `${hour}:${minute} ${am_pm}`;
         this.setState({ pickup_time: selectedTime })
     }
+    getMapInfo(resp) {
+        console.log("RESP AALA RE ====>" + resp.results[1].formatted_address);
+    }
     render() {
 
         let { navigation } = this.props;
@@ -88,7 +91,7 @@ export default class LocationDetails extends React.Component {
                     <View style={{ flex: 1, backgroundColor: Constants.COLOR_WHITE }}>
                         <View style={StyleLocationDetails.locationWrapp}>
 
-                            <View style={ StyleLocationDetails.inputContainer }>
+                            <View style={StyleLocationDetails.inputContainer}>
 
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.PickUpAddress}</Text>
@@ -107,8 +110,14 @@ export default class LocationDetails extends React.Component {
                                 <TouchableOpacity
                                     style={{ position: "absolute", right: 20, top: 12, }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('ViewMap')
-                                    }}>
+                                        this.props.navigation.navigate('MapViews', {
+                                            flag_location: 'Location_details' , callBack: (resp) => {
+                                                this.setState({ pick_up_address: resp.results[1].formatted_address })
+                                                console.log('ikda bhi ala '+ resp.results[1].formatted_address)
+                                            }
+                                        })
+                                    }
+                                    }>
                                     <Image style={{ width: 20, height: 20, }}
                                         source={require('../images/address.png')} />
                                 </TouchableOpacity>
@@ -116,7 +125,7 @@ export default class LocationDetails extends React.Component {
                             </View>
 
 
-                            <View style={this.state.add_nextAddress=='1'?[StyleLocationDetails.inputContainer, {marginBottom: 20,width:'94%'}]:[StyleLocationDetails.inputContainer, { marginBottom: 20 }]}>
+                            <View style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 20, width: '94%' }] : [StyleLocationDetails.inputContainer, { marginBottom: 20 }]}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.DropOffAddress}</Text>
                                 </View>
@@ -133,8 +142,16 @@ export default class LocationDetails extends React.Component {
                                 <TouchableOpacity
                                     style={{ position: "absolute", right: 20, top: 12, }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('MapViews',{flag_location:'Location_details'})
-                                    }}>
+                                        this.props.navigation.navigate('MapViews', {
+                                            flag_location: 'Location_details' , callBack: (resp) => {
+                    
+                                                
+                                                this.setState({ drop_off_address: resp.results[1].formatted_address })
+                                                console.log('ikda bhi ala '+ resp.results[1].formatted_address)
+                                            }
+                                        })
+                                    }
+                                    }>
                                     <Image style={{ width: 20, height: 20, }}
                                         source={require('../images/address.png')} />
                                 </TouchableOpacity>
@@ -142,14 +159,14 @@ export default class LocationDetails extends React.Component {
                             </View>
 
                             <TouchableOpacity
-                                style={this.state.add_nextAddress=='1'?{position: "absolute", right: 10, top: '17%',}:{display:"none"}}
+                                style={this.state.add_nextAddress == '1' ? { position: "absolute", right: 10, top: '17%', } : { display: "none" }}
                                 onPress={() => { this.setState({ add_nextAddress: "" }) }}>
-                                <Image style={{ width: 25, height: 25,}}
+                                <Image style={{ width: 25, height: 25, }}
                                     source={require('../images/remove.png')} />
-                                    
+
                             </TouchableOpacity>
 
-                            <View style={this.state.add_nextAddress=='1'?[StyleLocationDetails.inputContainer, { marginBottom: 20 }]:{display:'none'}}>
+                            <View style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 20 }] : { display: 'none' }}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.DropOffAddress}</Text>
                                 </View>
@@ -162,12 +179,18 @@ export default class LocationDetails extends React.Component {
                                             this.setState({ drop_off_address_1: value })
                                         }
                                     }
-                                    style={[StyleLocationDetails.inputBox,{marginLeft:25}]} />
+                                    style={[StyleLocationDetails.inputBox, { marginLeft: 15 }]} />
                                 <TouchableOpacity
                                     style={{ position: "absolute", right: 20, top: 12, }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('MapViews',{flag_location:'Location_details'})
-                                    }}>
+                                        this.props.navigation.navigate('MapViews', {
+                                            flag_location: 'Location_details' , callBack: (resp) => {
+                                                this.setState({drop_off_address_1: resp.results[1].formatted_address })
+                                                console.log('ikda bhi ala '+ resp.results[1].formatted_address)
+                                            }
+                                        })
+                                    }
+                                    }>
                                     <Image style={{ width: 20, height: 20, }}
                                         source={require('../images/address.png')} />
                                 </TouchableOpacity>
@@ -175,11 +198,10 @@ export default class LocationDetails extends React.Component {
                             </View>
 
 
-
                             <TouchableOpacity style={StyleLocationDetails.nextAddrBtn}
-                            onPress={()=>{
-                                this.setState({add_nextAddress:1})
-                            }}
+                                onPress={() => {
+                                    this.setState({ add_nextAddress: 1 })
+                                }}
                             >
                                 <Text style={StyleLocationDetails.nextAddrBtnText}>{Constants.NextAddress}</Text>
                             </TouchableOpacity>
@@ -241,8 +263,8 @@ export default class LocationDetails extends React.Component {
                                     mode='dropdown'
                                     style={{ color: Constants.COLOR_GREY_DARK, width: '95%', alignSelf: 'center', paddingVertical: 20 }}
                                     selectedValue={this.state.load_category}
-                                    onValueChange={(value)=>{
-                                        this.setState({load_category:value})
+                                    onValueChange={(value) => {
+                                        this.setState({ load_category: value })
                                     }}
                                 >
                                     <Picker.Item label='Select Load Category' value='default' />
