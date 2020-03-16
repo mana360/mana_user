@@ -6,6 +6,7 @@ import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { StyleSignIn, StyleSignUp } from '../config/CommonStyles'
 import Constants from '../config/Constants';
 import { StackActions, NavigationActions } from 'react-navigation';
+import {Loader,getAllLangContent} from '../config/ApiClient';
 export default class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +14,7 @@ export default class SignIn extends Component {
       input_mobile_number: '',
       input_password: '',
       policyRadio_button: false,
+      isLoading:false,
     }
   }
   static navigationOptions = ({ navigation }) => {
@@ -20,6 +22,21 @@ export default class SignIn extends Component {
       header: null,
     };
   };
+
+  //just to test api call need to change later 
+  componentDidMount(){
+    this.setState({isLoading:true})
+
+    getAllLangContent({language:'en'}).then((responseData)=>{
+      this.setState({isLoading:false})
+      if(responseData.status==1){
+        console.log("data from api :- "+JSON.stringify(responseData))
+      }
+      // else{
+      //   this.setState({isErrorVisible:true})
+      // }
+    });
+  }
 
   render() {
     return (

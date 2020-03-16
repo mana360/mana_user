@@ -1,6 +1,8 @@
 import { Dimensions, Platform } from 'react-native';
 
 const Constants = {
+
+    BASE_URL :"https://php.exceptionaire.tk/Development/filedone_devnew/api/",
     //fonts
     FONT_SIZE_SMALL: 10,
     FONT_SIZE__MEDIUM: 12,
