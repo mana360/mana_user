@@ -182,15 +182,15 @@ export default class SignUp extends Component {
               onPress={() => {
                 this.setState({ modalVisible_welcome: true })
                
-                // this.timer = setInterval(() => {
-                //   clearInterval(this.timer)
-                //   this.props.navigation.dispatch(
-                //       StackActions.reset({
-                //         index: 0,
-                //         actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
-                //       }))
-                //   }
-                //     , 1000);
+                this.timer = setInterval(() => {
+                  clearInterval(this.timer)
+                  this.props.navigation.dispatch(
+                      StackActions.reset({
+                        index: 0,
+                        actions: [NavigationActions.navigate({ routeName: 'ProfileSetUp' })],
+                      }))
+                  }
+                    , 1000);
 
               }}
             >

@@ -1,6 +1,5 @@
 import {createAppContainer} from 'react-navigation'
 import {createStackNavigator} from 'react-navigation-stack'
-
 import Home from './views/Home'
 import Splash from './views/Splash'
 import HelpAndSupport from './views/HelpAndSupport';
@@ -48,7 +47,6 @@ import PaymentMethod from './views/PaymentMethod';
 import ProfileSetUp from './views/ProfileSetUp';
 import SendOTP from './views/SendOTP';
 import ViewCurrentTripAll from './views/ViewcurrentTrip_all';
-
 
 
 console.disableYellowBox = true;
@@ -241,7 +239,7 @@ const AppNavigator1 = createStackNavigator({
     ViewCurrentTripAll:{
       screen:ViewCurrentTripAll,
       navigationOptions:()=>({header:null})
-    },
+    }, 
 },
     {initialRouteName:"Splash"}
 

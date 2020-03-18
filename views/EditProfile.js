@@ -2,9 +2,10 @@
     design by -mayur s
  */
 import React from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput,FlatList } from 'react-native';
 import { StyleEditProfile, StyleMyProfile } from '../config/CommonStyles';
 import { Picker } from "native-base";
+import ImagePicker from "react-native-image-picker";
 import FooterBar from '../config/FooterBar';
 import HeaderBar from '../config/HeaderBar';
 import Constants from '../config/Constants';
@@ -14,7 +15,7 @@ export default class EditProfile extends React.Component {
         this.state = {
             modalVisible_Changepassword: false,
             modalVisible_successMsg: false,
-            screen_title: 'user_profile',//user_profile,company_profile
+            screen_title: 'company_profile',//user_profile,company_profile
             current_password: '',
             new_password: '',
             confirm_password: '',
@@ -23,6 +24,7 @@ export default class EditProfile extends React.Component {
             last_name: 'Dagger',
             title: 'Mr',
             user_rsa_id: '545632102',
+            user_img_arry: [],
             user_address: 'NYC,Lane 345,street2.',
             user_province: '',
             user_city: '',
@@ -46,7 +48,52 @@ export default class EditProfile extends React.Component {
 
         }
     }
- 
+    OpenImagePicker() {
+        if (this.state.user_img_arry.length < 4) {
+            ImagePicker.showImagePicker(this.options, (response) => {
+                console.log('response==', response);
+                if (response.didCancel) {
+                    console.log('User cancelled image picker');
+                } else if (response.error) {
+                    console.log('ImagePicker Error: ', response.error);
+                } else if (response.customButton) {
+                    console.log('User tapped custom button: ', response.customButton);
+                } else {
+                    const source = { uri: response.uri };
+                    console.log('response-->', source);
+                    this.setState({ user_filename: source })
+                    this.uploadImage(response.uri);
+                }
+
+            })
+        } else {
+            alert('maximum 4 image selected');
+
+        }
+    }
+    uploadImage(uri) {
+        let temp_arry = this.state.user_img_arry;
+        temp_arry.push({ uri: uri });
+        this.setState({ user_img_arry: temp_arry })
+    }
+
+    options = {
+        title: 'Select Image',
+        customButtons: [
+            { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+        ],
+        storageOptions: {
+            skipBackup: true,
+            path: 'images',
+        },
+    };
+
+    Pop_UploadImageArray(position) {
+        let temp_arry = this.state.user_img_arry;
+        temp_arry.splice(position, 1);
+        this.setState({ user_img_arry: temp_arry });
+
+    }
 
     company_Profile() {
         return (
@@ -162,7 +209,7 @@ export default class EditProfile extends React.Component {
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_DARK }}
                         selectedValue={this.state.company_province}
-                        onValueChange={(value)=>{this.setState({company_province:value})}}
+                        onValueChange={(value) => { this.setState({ company_province: value }) }}
                     >
                         <Picker.Item label='select Province' value='1' />
                         <Picker.Item label='CA' value='2' />
@@ -182,7 +229,7 @@ export default class EditProfile extends React.Component {
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_DARK }}
                         selectedValue={this.state.company_city}
-                        onValueChange={(value)=>{this.setState({company_city:value})}}
+                        onValueChange={(value) => { this.setState({ company_city: value }) }}
                     >
                         <Picker.Item label='select City' value='1' />
                         <Picker.Item label='CA' value='2' />
@@ -313,24 +360,52 @@ export default class EditProfile extends React.Component {
                     />
                 </View>
 
-                <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
-                    <View style={[StyleEditProfile.TextInputView, { width: '68%' }]}>
-                        <View style={StyleEditProfile.LabelView}>
-                            <Image source={require('../images/designation.png')}
-                                style={StyleEditProfile.labelIcon}
+                <View style={{ flexDirection: 'column',justifyContent:'center',}}>
+                    <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={[StyleEditProfile.TextInputView, { width: '68%' }]}>
+                            <View style={StyleEditProfile.LabelView}>
+                                <Image source={require('../images/designation.png')}
+                                    style={StyleEditProfile.labelIcon}
+                                />
+                                <Text style={StyleEditProfile.modalLabelText}>{Constants.RSAIDPassNO}</Text>
+                            </View>
+                            <TextInput
+                                placeholder="Enter Company Name"
+                                style={[StyleEditProfile.TextInput]}
+                                value={this.state.user_rsa_id}
+                                onChangeText={(text) => { this.setState({ rsa_id: text }) }}
                             />
-                            <Text style={StyleEditProfile.modalLabelText}>{Constants.RSAIDPassNO}</Text>
                         </View>
-                        <TextInput
-                            placeholder="Enter Company Name"
-                            style={[StyleEditProfile.TextInput]}
-                            value={this.state.user_rsa_id}
-                            onChangeText={(text) => { this.setState({ rsa_id: text }) }}
-                        />
+                        <TouchableOpacity style={{ marginLeft: 10, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', marginBottom: 18 }}
+                        onPress={()=>{
+                            this.OpenImagePicker();
+                        }}
+                        >
+                            <Image source={require('../images/add.png')} style={{ width: 55, height: 55, alignSelf: 'center' }} />
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{ marginLeft: 10, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', marginBottom: 18 }}>
-                        <Image source={require('../images/add.png')} style={{ width: 55, height: 55, alignSelf: 'center' }} />
-                    </TouchableOpacity>
+                
+                    <FlatList
+                        data={this.state.user_img_arry}
+                        extraData={this.state}
+                        horizontal={true}
+                        style={{ marginLeft: 25,marginBottom:10 }}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <View style={{ width: 65, height: 65, borderRadius: 5, }}>
+                                    <TouchableOpacity onPress={() => { this.Pop_UploadImageArray(index); }}
+                                        style={{ position: 'absolute', alignSelf: 'flex-end', right: 8, top: 8, width: 15, height: 15, zIndex: 1, borderRadius: 100, justifyContent: 'center' }}>
+                                        <Image style={{ width: 12, height: 12, paddingBottom: 2, borderRadius: 50, borderWidth: 0.5, borderColor: 'white' }} source={require('../images/remove.png')} />
+                                    </TouchableOpacity>
+                                    <Image source={{ uri: item.uri }}
+                                        style={{ width: 50, height: 50, borderRadius: 5, margin: 5 }}
+                                    />
+                                </View>
+                            )
+                        }}
+                    />
+
                 </View>
 
                 <View style={StyleEditProfile.TextInputView}>
@@ -359,7 +434,7 @@ export default class EditProfile extends React.Component {
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_DARK }}
                         selectedValue={this.state.user_province}
-                        onValueChange={(value)=>{this.setState({user_province:value})}}
+                        onValueChange={(value) => { this.setState({ user_province: value }) }}
                     >
                         <Picker.Item label='select Province' value='1' />
                         <Picker.Item label='CA' value='2' />
@@ -379,7 +454,7 @@ export default class EditProfile extends React.Component {
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_DARK }}
                         selectedValue={this.state.user_city}
-                        onValueChange={(value)=>{this.setState({user_city:value})}}
+                        onValueChange={(value) => { this.setState({ user_city: value }) }}
                     >
                         <Picker.Item label='select City' value='1' />
                         <Picker.Item label='CA' value='2' />
@@ -582,7 +657,7 @@ export default class EditProfile extends React.Component {
                                     />
                                 </TouchableOpacity>
 
-                                <Image source={this.state.screen_title=='user_profile'?require('../images/Profile_pic.png'):require('../images/ibm.jpeg')}
+                                <Image source={this.state.screen_title == 'user_profile' ? require('../images/Profile_pic.png') : require('../images/ibm.jpeg')}
                                     style={StyleEditProfile.ProfileImage}
                                 />
 
@@ -632,6 +707,7 @@ export default class EditProfile extends React.Component {
                 </View>
 
                 <FooterBar navigation={navigation} />
+
                 <Modal
                     visible={this.state.modalVisible_Changepassword}
                     animationType='fade'
@@ -639,6 +715,7 @@ export default class EditProfile extends React.Component {
                 >
                     {this.Modal_ChangePassword()}
                 </Modal>
+
                 <Modal
                     visible={this.state.modalVisible_successMsg}
                     animationType='fade'
@@ -649,5 +726,6 @@ export default class EditProfile extends React.Component {
 
             </View>
         )
+
     }
 }

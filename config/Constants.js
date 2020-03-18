@@ -1,6 +1,8 @@
 import { Dimensions, Platform } from 'react-native';
 
 const Constants = {
+
+    BASE_URL :"https://php.exceptionaire.tk/Development/filedone_devnew/api/",
     //fonts
     FONT_SIZE_SMALL: 10,
     FONT_SIZE__MEDIUM: 12,
@@ -69,6 +71,9 @@ const Constants = {
     AarrivalDate:'Arrival Date',
     AarrivalTime:'Arrival Time',
     TruckName:'Truck Name',
+    TruckRegistrationNo:'Truck Registrtion \n Number',
+    TruckInsurance:'Truck Insurance',
+    TruckColor:'Truck colour',
     CostOfTruckingService: 'Cost of Trucking Service',
     CargoType: 'Cargo Type',
     CargoDesc: 'Cargo Description',
@@ -191,7 +196,8 @@ const Constants = {
     MobileNumber:'Mobile Number',
     KindlyEnteryourRegisteredMobNo:'Kindly enter your registered \n Mobile Number to receive Verification code',
     VerificationCode:'Verification code (OTP)',
-    ResendCode:'ResendCode',
+    ResendCode:'Resend Code',
+    Resend_OTP:'Resend OTP',
     EnterOTP:'Enter OTP',
     EnteredCodeIssuccessFullyVerified:'Entered code is successfully verified',
     SetNewPassword:'set new password',
@@ -237,9 +243,11 @@ const Constants = {
 
     //--- udayraj
     EXPECTED_PICKUP:"expected pickup",
+    PICKUP_DATE_TIME:'PickUp Date & Time',
     TOTAL_PRICE:"total price",
     DRIVER_NAME:"driver name",
     DRIVER_NUMBER:"driver number",
+    DRIVER_ALTERNATE_NUMBER:"driver alternate \n number",
     BOOKING_ID:"booking id",
     BOOKING_DATE_TIME:"booking date & time",
     PICKUP_ADDRESS:"Pick Up Address",

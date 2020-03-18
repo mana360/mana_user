@@ -2589,6 +2589,7 @@ const StylePaymentMethod = StyleSheet.create({
     },
     paymentmethod:{
         flex:1,
+        marginTop:80,
         backgroundColor:'#fff',
         padding:20,
         flexDirection:'column',
@@ -2699,9 +2700,20 @@ const StylePaymentMethod = StyleSheet.create({
           textAlign:'center',
           color:Constants.COLOR_WHITE,
       },
-
-
-      
+      modal_cancleBtn:{
+        width:'40%',
+        backgroundColor:Constants.COLOR_GREEN,
+        alignSelf:'center',
+        borderRadius:50,
+        justifyContent:'center',
+        alignItems:'center',
+        marginVertical:10,
+      },
+      modal_cancleBtntext:{
+          color:Constants.COLOR_WHITE,
+          paddingVertical:10,
+          fontSize:Constants.FONT_SIZE_EXTRA_LARGE
+      },
       popbodythanksimg:{
         width:90,
         height:90,

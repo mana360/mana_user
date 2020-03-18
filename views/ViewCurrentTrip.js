@@ -17,7 +17,7 @@ export default class ViewCurrentTrip extends React.Component {
             inputLabelTrip: '',
             reviewTrip: '',
             modal_Visible: false,
-            live_geopin: false,
+            live_geopin: true,//true=Map,false=delay rbsheet 
             invoiceModal_Visible: false,
             truck_data: [
                 { title: 'NYC - SYS', current_status: 'On Route to destinatio', estimate_timetocmplte: '11 PM', estimate_datetocmplete: '11/03/2019', driver_name: 'Amanda.P', driver_no: '+56 7845145142', Partner_name: 'Uric', partner_no: '+56 745895612' }
@@ -182,7 +182,7 @@ export default class ViewCurrentTrip extends React.Component {
                             <TouchableOpacity style={[StyleViewCurrentTrip.bottomButton, { marginRight: 15, width: '40%' }]}
                                 onPress={() => {
                                     if (this.state.live_geopin == true)
-                                        this.props.navigation.navigate('MapViews', { flag: 'truck' })
+                                        this.props.navigation.navigate('MapViews', { flag_map: 'marker_direction' })
                                     else
                                         this.RBSheet.open(); //delay msg
                                 }}
