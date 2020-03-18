@@ -4,7 +4,6 @@ import {Spinner} from 'native-base';
 import Constants from '../config/Constants';
 import {getUserData} from '../config/AppSharedPrefrence';
 
-
 export const Loader =({isLoading}) =>{
   return(
     <Modal
@@ -115,136 +114,45 @@ const createFormData = (body) => {
       Object.keys(body).forEach(key => {
       data.append(key, body[key]);
       });
+
+     
+
       return data;
   };
 
-  //this function is just to test api call in app need to change later 
-  export function getAllLangContent(params){
-  let apiCall=  callApi('POST', 'get_lang_content', params,'')
+export function register (params){
+  let apiCall=  callApi('POST', 'register', params,'')
   return apiCall
 }
 
-//https://php.exceptionaire.tk/Development/filedone_devnew/api/get_lang_content
+export function login (params){
 
-// export function register (params){
-//   let apiCall=  callApi('POST', 'register', params,'')
-//   return apiCall
-// }
+  let apiCall=  callApi('POST', Constants.LOGIN, params,'')
+  return apiCall
+}
 
-// export function login (params){
+export async function getFaq(params){
+  let userToken = ''
+      await getUserData((value)=>{
+        userToken=value
+      })
+  let apiCall = callApi('POST', Constants.FAQ, params, userToken)
+  return apiCall
+}
 
-//   let apiCall=  callApi('POST', Constants.LOGIN, params,'')
-//   return apiCall
-// }
+export async function  samplePostMethod(params){
+      let userToken = ''
+      await getUserData((value)=>{
+        userToken=value
+      })
+      return callApi('POST', Constants.LOGOUT, params, userToken)
+ }
 
+export async function sampleGetMethod(){
+      let data = ''
+      await getUserData((value)=>{
+        data=value
 
-
-// export async function  uploadImageToServer(params){
-//       let userToken = ''
-//       await getUserData((value)=>{
-//         userToken=value
-//       })
-//       return callApi('POST', Constants.LOGOUT, params, userToken)
-//  }
-
-// export async function logoutUser(params){
-//       let userToken = ''
-//       await getUserData((value)=>{
-//         userToken=value
-//       })
-//       return callApi('GET', Constants.LOGOUT, {}, userToken)
-//     }
-
-// export async function getNotifications(){
-//       let data = ''
-//       await getUserData((value)=>{
-//         data=value
-
-//       })
-//       return callApi('GET', Constants.NOTIFICATIONS, {}, data)
-// }
-
-
-
-// export  function resetPassword(params){
- 
-//   let apiCall = callApi('POST', Constants.RESETPASSWORD, params, params.token)
-//   return apiCall
-// }
-
-// export async function forgotPassword(params){
-//   let apiCall = callApi('POST', Constants.FORGOTPASSWORD, params, '')
-//   return apiCall
-// }
-
-// export async function checkOtp(params){
-//   let userToken=''
-//   await getUserData((value)=>{
-//     userToken=value
-//   })
-//   let apiCall = callApi('POST', Constants.CHECKOTP, params, userToken)
-//   return apiCall
-// }
-
-
-// export async function getProfilePage(){
-//   let userToken=''
-//   await getUserData((value)=>{
-//     userToken=value
-//   })
-//   let apiCall = callApi('GET', Constants.USERPROFILE, '', userToken)
-//   return apiCall
-// }
-
-// export async function updateImages(params){
-//   let userToken=''
-//   await getUserData((value)=>{
-//     userToken=value
-//   })
-//   console.log(JSON.stringify(userToken))
-//   let apiCall = callFormDataApi('POST', Constants.UPDATEUSERIMAGES, params, userToken)
-//   return apiCall
-// }
-
-// export async function updateProfile(params){
-//   let userToken=''
-//   await getUserData((value)=>{
-//     userToken=value
-//   })
-//   let apiCall = callApi('POST', Constants.UPDATEPROFILE, params, userToken)
-//   return apiCall
-// }
-
-
-// export function getSupport(){
-//   let apiCall = callApi('GET', Constants.SUPPORT, {}, '')
-//   return apiCall 
-// }
-
-// export async function submitSupport(params){
-//   let userToken=''
-//   await getUserData((value)=>{
-//     userToken=value
-//   })
-//   let apiCall = callApi('POST', Constants.SUPPORTSUBMIT, params, userToken)
-//   return apiCall
-// }
-
-// export async function changePassword(params){
-//   let userToken=''
-//   await getUserData((value)=>{
-//     userToken=value
-//   })
-//   let apiCall = callApi('POST', Constants.CHANGEPASSWORD, params, userToken)
-//   return apiCall
-// }
-
-
-// export async function resendOTP(params){
-//   let userToken=''
-//   await getUserData((value)=>{
-//     userToken=value
-//   })
-//   let apiCall = callApi('POST', Constants.RESENDOTP, params, userToken)
-//   return apiCall
-// }
+      })
+      return callApi('GET', Constants.NOTIFICATIONS, {}, data)
+}
