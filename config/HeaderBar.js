@@ -8,6 +8,7 @@ import { Header } from 'native-base'
 import { StylePaymentMethod } from '../config/CommonStyles';
 import Constants from '../config/Constants'
 import Modal from "react-native-modal";
+import { clearAllData } from './AppSharedPreference';
 
 class HeaderBar extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -141,6 +142,7 @@ class HeaderBar extends React.Component {
                 onPress={() => {
                   this.setState({ isLogoutModalVisible: false, isSuccessLogoutModal: true })
                   let setinter = setInterval(() => {
+                    clearAllData()
                     this.setState({ isSuccessLogoutModal: false })
                     clearInterval(setinter);
                     this.props.navigation.dispatch(
