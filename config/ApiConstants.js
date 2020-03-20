@@ -10,6 +10,7 @@ export default ApiConstants = {
     users: 'users?',
     //POST EXAMPLE
     login: 'customer/login',
+    getNotifications:"customer/getNotifications",
 
 
 
