@@ -8,6 +8,7 @@ import Constants from '../config/Constants';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { MainPresenter } from '../config/MainPresenter'
 import ApiConstants from '../config/ApiConstants';
+import { setUserData, getFirebaseToken } from '../config/AppSharedPreference';
 export default class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -38,11 +39,20 @@ export default class SignIn extends Component {
     //   // }
     // });
   }
-  onResponse(apiConstant, data) {
+  async onResponse(apiConstant, data) {
     switch (apiConstant) {
       case ApiConstants.login: {
 
-        console.log("sign in=> " + JSON.stringify(data))
+        if (data.status) {
+          await setUserData(data.userData)
+          this.props.navigation.dispatch(
+            StackActions.reset({
+              index: 0,
+              actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
+            }))
+        } else {
+          alert(data.message)
+        }
 
         break;
       }
@@ -151,18 +161,7 @@ export default class SignIn extends Component {
 
           <TouchableOpacity
             disabled={!this.state.policyRadio_button}
-            onPress={() => {
-              // this.props.navigation.navigate('Dashboard'); 
-              let params = {
-                "username": "yogita.p@exceptionaire.co",
-                "password": "abc@1232",
-                "device_type": "2",
-                "device_token": "device3",
-                "app_version": "1",
-              }
-              this.presenter.callPostApi(ApiConstants.login, params, true);
-              
-            }}
+            onPress={() => { this.onSignInClick() }}
             style={this.state.policyRadio_button ? StyleSignIn.loginButton : [StyleSignIn.loginButton, { backgroundColor: Constants.COLOR_GREY_LIGHT }]}>
             <Text style={StyleSignIn.Login_buttonText}>{Constants.SignIn}</Text>
           </TouchableOpacity>
@@ -186,5 +185,52 @@ export default class SignIn extends Component {
 
       </View>
     )
+  }
+  async onSignInClick() {
+
+    // this.props.navigation.navigate('Dashboard'); 
+   /*  let params = {
+      "username": "yogita.p@exceptionaire.co",
+      "password": "abc@1232",
+      "device_type": "2",
+      "device_token": "device3",
+      "app_version": "1",
+    } */
+     if (!this.isValid()) {
+       return
+     }
+     let fbToken=await getFirebaseToken()
+     let params = {
+       "username": this.state.input_mobile_number,
+       "password": this.state.input_password,
+       "device_type": "2",
+       "device_token": fbToken==null ?'no-token':fbToken ,
+       "app_version": "1"
+     }
+    this.presenter.callPostApi(ApiConstants.login, params, true);
+
+  }
+  isValid() {
+    if (this.state.input_mobile_number.length == 0) {
+      alert("Please enter mobile number")
+      return false
+    }
+    if (this.state.input_mobile_number.length < 9 || this.state.input_mobile_number.length > 13) {
+      console.log(this.state.input_mobile_number)
+      alert("Please enter valid mobile number")
+      return false
+    }
+
+    if (this.state.input_password.length == 0) {
+      alert("Please enter Password")
+      return false
+    }
+    if (this.state.input_password.length < 8 || this.state.input_password.length > 16) {
+      alert("password must be greater than 8 character & less than 16 character")
+      return false
+    }
+
+
+    return true;
   }
 }

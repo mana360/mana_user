@@ -8,6 +8,8 @@
 import AsyncStorage from '@react-native-community/async-storage';
 /* ----------Storage Key Constants------------ */
 const AUTH_TOKEN = "auth_token"
+const USER_DATA = "user_data"
+const FIREBASE_TOKEN="firebase_token"
 
 
 /* ----------EOF Storage Key Constants------------ */
@@ -21,10 +23,26 @@ export async function getAuthToken() {
     return value
 }
 export async function setAuthToken(value, callback = undefined) {
-    let returnValue = await _setData(AUTH_TOKEN, value, callback)
-    return returnValue;
+     await _setData(AUTH_TOKEN, value, callback)
+}
+export async function getUserData(){
+    let value= await _getData(USER_DATA)
+    return value
 }
 
+export async function setUserData(userObj){
+    await setAuthToken(userObj.access_token)
+    await _setData(USER_DATA,JSON.stringify(userObj))
+}
+
+export async function setFirebaseToken(token){
+    await _setData(FIREBASE_TOKEN,token)
+}
+
+export async function getFirebaseToken(){
+    let value= await _getData(FIREBASE_TOKEN)
+    return value
+}
 
 export async function clearAllData(callback = undefined) {
     await AsyncStorage.clear((e) => {

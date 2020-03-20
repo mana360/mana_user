@@ -11,7 +11,7 @@ import { View, Text, Modal, ActivityIndicator } from 'react-native'
 import Constants from './Constants';
 import ApiConstants from './ApiConstants';
 import NetInfo from "@react-native-community/netinfo";
-import { getAuthToken } from '../config/AppSharedPreference'
+import { getAuthToken, clearAllData } from '../config/AppSharedPreference'
 
 
 export class MainPresenter extends React.Component {
@@ -35,9 +35,9 @@ export class MainPresenter extends React.Component {
             try {
                 return it.json()
 
-            }catch(e){
+            } catch (e) {
                 this._logging(it)
-                console.log("json parse error = >"+e)
+                console.log("json parse error = >" + e)
             }
         })
             .then(it => this._setResponse(apiConstant, it))
@@ -57,7 +57,15 @@ export class MainPresenter extends React.Component {
         let token = await getAuthToken()
         let options = this._getOptions('GET', token)
         this._requestLogging(URL, options)
-        fetch(URL, options).then(it => it.json())
+        fetch(URL, options).then(it => {
+            try {
+                return it.json()
+            } catch (e) {
+                this._logging(it)
+                console.log("json parse error = >" + e)
+            }
+
+        }, (e) => { console.log(e) })
             .then(it => this._setResponse(apiConstant, it))
             .catch(e => console.error(e))
             .finally(() => { this._stopLoader() })
@@ -79,7 +87,7 @@ export class MainPresenter extends React.Component {
             },
             body: _createFormData(apiConstant, params)
         }
-        fetch(URL, options).then(it => it.json())
+        fetch(URL, options).then(it => it.json(), (e) => { console.log(e) })
             .then(it => this._setResponse(apiConstant, it))
             .catch(e => console.error(e))
             .finally(() => { this._stopLoader() })
@@ -117,9 +125,9 @@ export class MainPresenter extends React.Component {
         return {
             method: method,
             headers: {
-                Accept: 'application/json',
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                Authorization: authToken
+                'Authorization': authToken
             },
             body: body ? JSON.stringify(body) : undefined
         }
@@ -140,7 +148,19 @@ export class MainPresenter extends React.Component {
             this._logging(`Response : ${JSON.stringify(data)} \n`)
             this._logging(`---------EOF API RESPONSE-------------\n`)
         } catch (e) {
+            this._logging(`---------API RESPONSE------------- \n`)
+            this._logging(`API NAME : ${apiConstant} \n`)
+            this._logging(`Response : ${data} \n`)
+            this._logging(`---------EOF API RESPONSE-------------\n`)
             console.log(e)
+            data = {}
+        }
+        if (data.status_code && data.status_code == "203") {
+            if (this.props.navigation) {
+                clearAllData()
+                this.props.navigation.navigate('SignIn');
+            }
+            return
         }
         if (this.props.onResponse) {
             this.props.onResponse(apiConstant, data)
