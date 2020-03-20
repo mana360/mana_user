@@ -80,10 +80,14 @@ export default class SignIn extends Component {
               maxLength={10}
               value={this.state.input_mobile_number}
               onChangeText={(newText) => {
-                if (!isNaN(newText))
+                if (!isNaN(newText)){
+
                   this.setState({ input_mobile_number: newText })
-                else
-                  this.setState({ input_mobile_number: '' })
+                }
+                else{
+
+                  this.setState({ input_mobile_number: '' });
+                }
 
               }}
             />
