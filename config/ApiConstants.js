@@ -9,7 +9,7 @@ export default ApiConstants = {
     //GET EXAMPLE
     users: 'users?',
     //POST EXAMPLE
-    login: 'login',
+    login: 'customer/login',
 
 
 

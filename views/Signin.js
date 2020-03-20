@@ -6,7 +6,8 @@ import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { StyleSignIn, StyleSignUp } from '../config/CommonStyles'
 import Constants from '../config/Constants';
 import { StackActions, NavigationActions } from 'react-navigation';
-import {Loader,getAllLangContent} from '../config/ApiClient';
+import { MainPresenter } from '../config/MainPresenter'
+import ApiConstants from '../config/ApiConstants';
 export default class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +15,7 @@ export default class SignIn extends Component {
       input_mobile_number: '',
       input_password: '',
       policyRadio_button: false,
-      isLoading:false,
+      isLoading: false,
     }
   }
   static navigationOptions = ({ navigation }) => {
@@ -24,25 +25,35 @@ export default class SignIn extends Component {
   };
 
   //just to test api call need to change later 
-  componentDidMount(){
-    this.setState({isLoading:true})
+  componentDidMount() {
+    this.setState({ isLoading: true })
 
-    getAllLangContent({language:'en'}).then((responseData)=>{
-      this.setState({isLoading:false})
-      if(responseData.status==1){
-        console.log("data from api :- "+JSON.stringify(responseData))
-      }
-      // else{
-      //   this.setState({isErrorVisible:true})
-      // }
-    });
+    // getAllLangContent({ language: 'en' }).then((responseData) => {
+    //   this.setState({ isLoading: false })
+    //   if (responseData.status == 1) {
+    //     console.log("data from api :- " + JSON.stringify(responseData))
+    //   }
+    //   // else{
+    //   //   this.setState({isErrorVisible:true})
+    //   // }
+    // });
   }
+  onResponse(apiConstant, data) {
+    switch (apiConstant) {
+      case ApiConstants.login: {
 
+        console.log("sign in=> " + JSON.stringify(data))
+
+        break;
+      }
+    }
+
+  }
   render() {
     return (
 
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-
+        <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
         <Image style={StyleSignIn.bgImage} source={require('../images/Splash_screen.jpg')} />
         <View style={StyleSignIn.loginBox}>
 
@@ -93,7 +104,7 @@ export default class SignIn extends Component {
 
           {/* policies start here */}
           <View>
-            <View style={[StyleSignUp.policyView,{marginVertical:3}]}>
+            <View style={[StyleSignUp.policyView, { marginVertical: 3 }]}>
               <TouchableOpacity
                 onPress={() => {
                   this.setState({ policyRadio_button: !this.state.policyRadio_button })
@@ -136,8 +147,19 @@ export default class SignIn extends Component {
 
           <TouchableOpacity
             disabled={!this.state.policyRadio_button}
-            onPress={() => { this.props.navigation.navigate('Dashboard'); }}
-            style={this.state.policyRadio_button?StyleSignIn.loginButton:[StyleSignIn.loginButton,{backgroundColor:Constants.COLOR_GREY_LIGHT}]}>
+            onPress={() => {
+              // this.props.navigation.navigate('Dashboard'); 
+              let params = {
+                "username": "yogita.p@exceptionaire.co",
+                "password": "abc@1232",
+                "device_type": "2",
+                "device_token": "device3",
+                "app_version": "1",
+              }
+              this.presenter.callPostApi(ApiConstants.login, params, true);
+              
+            }}
+            style={this.state.policyRadio_button ? StyleSignIn.loginButton : [StyleSignIn.loginButton, { backgroundColor: Constants.COLOR_GREY_LIGHT }]}>
             <Text style={StyleSignIn.Login_buttonText}>{Constants.SignIn}</Text>
           </TouchableOpacity>
 

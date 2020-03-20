@@ -28,10 +28,18 @@ export class MainPresenter extends React.Component {
         this._initLoader(loader)
 
         let URL = this.BASE_URL + apiConstant
-        let token= await getAuthToken()
+        let token = await getAuthToken()
         let options = this._getOptions('POST', token, params)
         this._requestLogging(URL, options)
-        fetch(URL, options).then(it => it.json())
+        fetch(URL, options).then(it => {
+            try {
+                return it.json()
+
+            }catch(e){
+                this._logging(it)
+                console.log("json parse error = >"+e)
+            }
+        })
             .then(it => this._setResponse(apiConstant, it))
             .catch(e => console.error(e))
             .finally(() => { this._stopLoader() })
@@ -46,8 +54,8 @@ export class MainPresenter extends React.Component {
 
         this._initLoader(loader)
         let URL = this.BASE_URL + apiConstant + queryParams
-        let token= await getAuthToken()
-        let options = this._getOptions('GET',token)
+        let token = await getAuthToken()
+        let options = this._getOptions('GET', token)
         this._requestLogging(URL, options)
         fetch(URL, options).then(it => it.json())
             .then(it => this._setResponse(apiConstant, it))
