@@ -13,7 +13,8 @@ export default ApiConstants = {
 
 
 
-    /* ----------DEV 2------------- */
+    /* ----------Udayraj------------- */
+    logout:'logout?',
 
 
     /* ----------DEV 3------------- */
