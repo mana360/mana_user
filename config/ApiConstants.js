@@ -11,7 +11,7 @@ export default ApiConstants = {
     //POST EXAMPLE
     login: 'customer/login',
     getNotifications:"customer/getNotifications",
-
+    readNotification:"customer/readNotification",
 
 
     /* ----------DEV 2------------- */
