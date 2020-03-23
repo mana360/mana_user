@@ -12,6 +12,7 @@ export default ApiConstants = {
     login: 'customer/login',
     getNotifications:"customer/getNotifications",
     readNotification:"customer/readNotification",
+    getVouchers:"customer/getVouchers",
 
 
     /* ----------Udayraj------------- */
