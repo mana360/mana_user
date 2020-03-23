@@ -8,7 +8,9 @@ import { Header } from 'native-base'
 import { StylePaymentMethod } from '../config/CommonStyles';
 import Constants from '../config/Constants'
 import Modal from "react-native-modal";
-import { clearAllData } from './AppSharedPreference';
+import ApiConstants from './ApiConstants';
+import {MainPresenter} from './MainPresenter';
+import {clearAllData} from './AppSharedPreference';
 
 class HeaderBar extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -42,6 +44,35 @@ class HeaderBar extends React.Component {
     }
      //return true
   }
+
+  onResponse(apiConstant, data) {
+    switch (apiConstant) {
+      case ApiConstants.logout: {
+          console.log("logoutn=> " + JSON.stringify(data))
+          if(data.status){
+              // log out success
+              clearAllData()
+
+              this.setState({ isLogoutModalVisible: false, isSuccessLogoutModal: true })
+              let setinter = setInterval(() => {
+                  this.setState({ isSuccessLogoutModal: false })
+                  clearInterval(setinter);
+                  this.props.navigation.dispatch(
+                    StackActions.reset({
+                    index: 0,
+                    actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
+                  })
+                )
+              }, 2000);
+          }else{
+              // log out failed
+              alert(data.message)
+          }
+        break;
+      }
+    }
+  }
+
   render() {
     const title = this.props.title;
     const isBack = this.props.isBack;
@@ -52,7 +83,7 @@ class HeaderBar extends React.Component {
     return (
       <Header style={{ backgroundColor: Constants.COLOR_PRIMARY, padding: 0, margin: 0, justifyContent: 'center', alignItems: 'center', alignContent: 'center', }}>
         <View style={{ flex: 10, flexDirection: 'row', }}>
-
+          <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-start' }}>
             <TouchableOpacity style={isBack ? { display: 'flex', padding: 10, paddingLeft: 10, paddingRight: 40, } : { display: 'none' }}
               onPress={() => {
@@ -140,6 +171,9 @@ class HeaderBar extends React.Component {
 
               <TouchableOpacity style={styles.modalButtonView}
                 onPress={() => {
+<<<<<<< HEAD
+                  this.presenter.callGetApi(ApiConstants.logout, {}, true);
+=======
                   this.setState({ isLogoutModalVisible: false, isSuccessLogoutModal: true })
                   let setinter = setInterval(() => {
                     clearAllData()
@@ -152,6 +186,7 @@ class HeaderBar extends React.Component {
                       })
                     )
                   }, 2000);
+>>>>>>> 6891ec592de6e8752faa9d3271ef218af4377ca5
                 }}
               >
                 <Text style={styles.modalButtonText}>{Constants.YES}</Text>
@@ -229,7 +264,6 @@ class HeaderBar extends React.Component {
 
           </View>
         </Modal>
-
 
       </Header>
     );

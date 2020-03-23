@@ -14,7 +14,8 @@ export default ApiConstants = {
     readNotification:"customer/readNotification",
 
 
-    /* ----------DEV 2------------- */
+    /* ----------Udayraj------------- */
+    logout:'logout?',
 
 
     /* ----------DEV 3------------- */
