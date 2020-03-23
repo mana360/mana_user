@@ -85,7 +85,7 @@ export class MainPresenter extends React.Component {
             headers: {
                 Authorization: authToken
             },
-            body: _createFormData(apiConstant, params)
+            body: this._createFormData(apiConstant, params)
         }
         fetch(URL, options).then(it => it.json(), (e) => { console.log(e) })
             .then(it => this._setResponse(apiConstant, it))
@@ -107,7 +107,7 @@ export class MainPresenter extends React.Component {
 
 
         switch (apiConstant) {
-            case ApiConstants.example: {
+            case ApiConstants.updateProfilePic: {
                 data.append("profile_image", {
                     name: photo.fileName,
                     type: photo.type,

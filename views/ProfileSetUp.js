@@ -1,6 +1,7 @@
 /*
 Screen-Id : MANAPPCUS090-1,90-3,90
 @author :mayur s
+API : Udayraj (provinceList, cityList)
 */
 import React, { Component } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, Modal, FlatList } from "react-native";
@@ -9,7 +10,11 @@ import ImagePicker from "react-native-image-picker";
 import { Picker } from "native-base";
 import Constants from '../config/Constants';
 import { StyleSetUpProfile, StyleSignUp } from '../config/CommonStyles';
+import ApiConstants from '../config/ApiConstants';
+import {MainPresenter} from '../config/MainPresenter';
+
 export default class ProfileSetUp extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -44,6 +49,13 @@ export default class ProfileSetUp extends React.Component {
             company_zipCode: '',
             company_password: '',
             company_confirmPass: '',
+
+            provinceList:[],
+            isProvinceListFilled:0,
+
+
+            cityList:[],
+            isCityListFilled:0,
 
         }
     }
@@ -234,10 +246,26 @@ export default class ProfileSetUp extends React.Component {
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_LIGHT }}
                         selectedValue={this.state.company_Province}
-                        onValueChange={() => this.setState({ company_Province })}
+                        onValueChange={
+                            (value, index) => {
+                                console.log("value ===>"+value)
+                                this.setState({ company_Province : value })
+                                this.state.provinceList.map((item)=>{
+                                    if(value == item.name){
+                                        this.getCityList(item.state_id)
+                                    }
+                                })
+                            }
+                        }
                     >
-                        <Picker.Item label="Selct Province" value="Province" />
-                        <Picker.Item label="Province" value="Province" />
+                        <Picker.Item label="Select Province" value="Province" />
+                        {
+                            this.state.isProvinceListFilled==1
+                            ?
+                            this.state.provinceList.map((item) =>
+                            <Picker.Item key={item.state_id} label={"" + item.name} value={item.name} />)
+                            : null
+                        }
                     </Picker>
                 </View>
 
@@ -248,11 +276,26 @@ export default class ProfileSetUp extends React.Component {
                     <Picker
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_LIGHT }}
-                        selectedValue={this.state.company_Province}
-                        onValueChange={(value) => { this.setState({ company_Province: value }) }}
+                        selectedValue={this.state.company_City}
+                        onValueChange={
+                            (value, index) => {
+                                this.setState({ company_City : value })
+                                this.state.cityList.map((item)=>{
+                                    if(value == item.name){
+                                        // city id
+                                    }
+                                })
+                            }
+                        }
                     >
-                        <Picker.Item label="Selct city" value="city" />
-                        <Picker.Item label="pune" value="city" />
+                        <Picker.Item label="Select city" value="-1" />
+                        {
+                            this.state.isCityListFilled==1
+                            ?
+                            this.state.cityList.map((item) =>
+                            <Picker.Item key={item.city_id} label={"" + item.name} value={item.name} />)
+                            : null
+                        }
                     </Picker>
 
                 </View>
@@ -451,10 +494,27 @@ export default class ProfileSetUp extends React.Component {
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_LIGHT }}
                         selectedValue={this.state.user_Province}
-                        onValueChange={(value) => this.setState({ user_Province: value })}
+                        onValueChange={
+                            (value, index) => {
+                                this.setState({ user_Province : value })
+                                this.state.provinceList.map((item, index)=>{
+                                    if(value == item.name){
+                                        //fetching country_id
+                                        //this.setState({user_Province_id : item.state_id})
+                                        this.getCityList(item.state_id)
+                                    }
+                                })
+                            }
+                        }
                     >
-                        <Picker.Item label="Selct Province" />
-                        <Picker.Item label="pune" value="Province" />
+                        <Picker.Item label="Select Province" value="-1"/>
+                        {
+                            this.state.isProvinceListFilled==1
+                            ?
+                            this.state.provinceList.map((item, index) =>
+                            <Picker.Item key={item.state_id} label={"" + item.name} value={item.name} />)
+                            : null
+                        }
                     </Picker>
                 </View>
 
@@ -469,7 +529,13 @@ export default class ProfileSetUp extends React.Component {
                         onValueChange={(value) => this.setState({ user_City: value })}
                     >
                         <Picker.Item label="Selct city" value="city" />
-                        <Picker.Item label="pune" value="city" />
+                        {
+                            this.state.isCityListFilled==1
+                            ?
+                            this.state.cityList.map((item, index) =>
+                            <Picker.Item key={item.city_id} label={"" + item.name} value={item.name} />)
+                            : null
+                        }
                     </Picker>
                 </View>
 
@@ -516,11 +582,42 @@ export default class ProfileSetUp extends React.Component {
 
     }
 
+    componentDidMount(){
+        this.getProvinceList()
+    }
+
+    async getProvinceList(){
+       await this.presenter.callPostApi(ApiConstants.provinceList, {country_id:1}, true);
+    }
+
+    getCityList(state_id){
+        let params = {
+            "state_id": state_id
+        }
+        this.presenter.callPostApi(ApiConstants.cityList, params, true);
+    }
+
+    onResponse(apiConstant, data) {
+        switch (apiConstant) {
+          case ApiConstants.provinceList: {
+              console.log("country List => " + JSON.stringify(data))
+              this.setState({provinceList : data.stateList, isProvinceListFilled:1})
+            break;
+          }
+          case ApiConstants.cityList:{
+              console.log("country List => " + JSON.stringify(data))
+              this.setState({cityList: data.cityList, isCityListFilled:1})
+              break;
+          }
+        }
+      }
+    
     render() {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1 }}>
                 <HeaderBar isBack={true} title="Profile setup" isLogout={true} navigation={navigation} />
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
                 <ScrollView style={{ width: '100%', marginVertical: 20 }}
                     bounces={false}
                 >

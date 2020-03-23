@@ -15,7 +15,10 @@ export default ApiConstants = {
 
 
     /* ----------Udayraj------------- */
-    logout:'logout?',
+    logout:'customer/logout?',
+    provinceList:'customer/stateList',
+    cityList:'customer/cityList',
+    updateProfilePic:'customer/updateProfilePic',
 
 
     /* ----------DEV 3------------- */
