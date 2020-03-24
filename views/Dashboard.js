@@ -2,7 +2,7 @@
     design by -mayur s
  */
 import React from 'react';
-import { View, Image, ScrollView, Text, TouchableOpacity,FlatList } from 'react-native';
+import { View, Image, ScrollView, Text, TouchableOpacity, FlatList } from 'react-native';
 import { Card, CardItem } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
 import { StyleDashboard } from '../config/CommonStyles';
@@ -14,6 +14,8 @@ import WarehouseServices from './WarehouseServices';
 import TruckingWarehouseServices from './TruckingWarehouseServices';
 import CollectMyLoad from './CollectMyLoad';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { MainPresenter } from '../config/MainPresenter'
+import ApiConstants from '../config/ApiConstants';
 export default class Dashboard extends React.Component {
     constructor(props) {
         super(props);
@@ -23,66 +25,132 @@ export default class Dashboard extends React.Component {
             reviewTrip: '',
             modal_Visible: false,
             screen_title: 'Dashboard',
-            fill1:"90",
-            dashboardData:[
-                {title:"Truck Bookings",       desc:"Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent:"60"},
-                {title:"Warehouse Services",   desc:"Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent:"35"},
-                {title:"Trucking + Warehouse", desc:"Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent:"25"},
-                {title:"Collect My Load",      desc:"Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent:"70"},
+            fill1: "90",
+            dashboard_data: [
+                // { title: "Truck Bookings", desc: "Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent: "60" },
+                // { title: "Warehouse Services", desc: "Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent: "35" },
+                // { title: "Trucking + Warehouse", desc: "Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent: "25" },
+                // { title: "Collect My Load", desc: "Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent: "70" },
             ],
         }
     }
+    componentDidMount() {
+        this.presenter.callGetApi(ApiConstants.getDashboardData, "", true)
 
+    }
+    onResponse(apiConstant, data) {
+        switch (apiConstant) {
+            case ApiConstants.getDashboardData:
+                if (data.status) {
+                    data.truck_booking
+                    data.warehouse_booking
+                    data.truck_warehouse_booking
+                    data.cml_booking
+                    data.referral_content
+                    let localArray = []
+                    if (data && data.dashboard_data && data.dashboard_data.truck_booking) {
+                        let truck_booking = data.dashboard_data.truck_booking
+                        localArray.push({
+                            id: "truck_booking",
+                            title: "Truck Bookings",
+                            current_trips: truck_booking.current_trips ? truck_booking.current_trips : 0,
+                            upcoming_trips: truck_booking.upcoming_trips ? truck_booking.upcoming_trips : 0,
+                            desc: data.dashboard_data.referral_content
+                        })
+                    }
+                    if (data && data.dashboard_data && data.dashboard_data.warehouse_booking) {
+                        let warehouse_booking = data.dashboard_data.warehouse_booking
+                        localArray.push({
+                            id: "warehouse_booking",
+                            title: "Warehouse Services",
+                            current_trips: warehouse_booking.current_trips ? warehouse_booking.current_trips : 0,
+                            upcoming_trips: warehouse_booking.upcoming_trips ? warehouse_booking.upcoming_trips : 0,
+                            desc: data.dashboard_data.referral_content
+                        })
+                    }
+                    if (data && data.dashboard_data && data.dashboard_data.truck_warehouse_booking) {
+                        let truck_warehouse_booking = data.dashboard_data.truck_warehouse_booking
+                        localArray.push({
+                            id: "truck_warehouse_booking",
+                            title: "Trucking + Warehouse",
+                            current_trips: truck_warehouse_booking.current_trips ? truck_warehouse_booking.current_trips : 0,
+                            upcoming_trips: truck_warehouse_booking.upcoming_trips ? truck_warehouse_booking.upcoming_trips : 0,
+                            desc: data.dashboard_data.referral_content
+                        })
+                    }
+                    if (data && data.dashboard_data && data.dashboard_data.cml_booking) {
+                        let cml_booking = data.dashboard_data.cml_booking
+                        localArray.push({
+                            id: "cml_booking",
+                            title: "Collect My Load",
+                            current_trips: cml_booking.current_trips ? cml_booking.current_trips : 0,
+                            upcoming_trips: cml_booking.upcoming_trips ? cml_booking.upcoming_trips : 0,
+                            desc: data.dashboard_data.referral_content
+                        })
+                    }
+                    console.log(localArray)
+                    this.setState({
+                        dashboard_data: localArray
+                    })
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
     getDashboard() {
         return (
             <View>
                 <FlatList
-                    data={this.state.dashboardData}
+                    data={this.state.dashboard_data}
                     extraData={this.state}
-                    keyExtractor={(index)=>index.toString()}
+                    keyExtractor={(index) => index.toString()}
                     numColumns={1}
                     renderItem={
-                        ({item,index})=>
+                        ({ item, index }) =>
 
-                        <View style={StyleDashboard.row}>  
-                        
-                            <View style={StyleDashboard.col1}>
-                        
-                                <AnimatedCircularProgress
-                                    size={90}
-                                    width={10}
-                                    fill={item.percent}
-                                    rotation="90"
-                                    lineCap="round"
-                                    duration={1200}
-                                    tintColor={
-                                        index%4==0 ? "#CD18EE" :
-                                        index%4==1 ? "#9ABD08" :
-                                        index%5==2 ? "#FA4009" :
-                                        index%4==3 ? "#57C9EB" : null
-                                    }
-                                    backgroundColor="#E8E8E8">
-                                    { (fill) => ( <Text style={{color:
-                                        index%4==0 ? "#CD18EE" :
-                                        index%4==1 ? "#9ABD08" :
-                                        index%5==2 ? "#FA4009" :
-                                        index%4==3 ? "#57C9EB" : null
-                                    }}> { item.percent } </Text>) }
-                                </AnimatedCircularProgress>
-                        
-                            </View>
-                            
-                            <View style={StyleDashboard.col2}>
-                                <Text style={[StyleDashboard.labelText2, { color: 
-                                        index%4==0 ? "#CD18EE" :
-                                        index%4==1 ? "#9ABD08" :
-                                        index%5==2 ? "#FA4009" :
-                                        index%4==3 ? "#57C9EB" : null                                
-                                 }]}>{item.title}</Text>
-                                <Text style={StyleDashboard.descText}>{item.desc}</Text>
-                            </View>
+                            <View style={StyleDashboard.row}>
 
-                        </View>
+                                <View style={StyleDashboard.col1}>
+
+                                    <AnimatedCircularProgress
+                                        size={90}
+                                        width={10}
+                                        fill={item.current_trips}
+                                        rotation="0"
+                                        lineCap="round"
+                                        duration={1200}
+                                        tintColor={
+                                            index % 4 == 0 ? "#CD18EE" :
+                                                index % 4 == 1 ? "#9ABD08" :
+                                                    index % 5 == 2 ? "#FA4009" :
+                                                        index % 4 == 3 ? "#57C9EB" : null
+                                        }
+                                        backgroundColor="#E8E8E8">
+                                        {(fill) => (<Text style={{
+                                            color:
+                                                index % 4 == 0 ? "#CD18EE" :
+                                                    index % 4 == 1 ? "#9ABD08" :
+                                                        index % 5 == 2 ? "#FA4009" :
+                                                            index % 4 == 3 ? "#57C9EB" : null
+                                        }}> {item.current_trips} </Text>)}
+                                    </AnimatedCircularProgress>
+
+                                </View>
+
+                                <View style={StyleDashboard.col2}>
+                                    <Text style={[StyleDashboard.labelText2, {
+                                        color:
+                                            index % 4 == 0 ? "#CD18EE" :
+                                                index % 4 == 1 ? "#9ABD08" :
+                                                    index % 5 == 2 ? "#FA4009" :
+                                                        index % 4 == 3 ? "#57C9EB" : null
+                                    }]}>{item.title}</Text>
+                                    <Text style={StyleDashboard.descText}>{item.desc}</Text>
+                                </View>
+
+                            </View>
                     }
                 />
 
@@ -94,6 +162,7 @@ export default class Dashboard extends React.Component {
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
                 <HeaderBar title={this.state.screen_title} isLogout={true} navigation={navigation} />
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
                 <View style={{ flex: 1, justifyContent: 'center', }}>
                     <ScrollView bounces={false}>
                         <View style={StyleDashboard.topCircle}>
@@ -177,22 +246,22 @@ export default class Dashboard extends React.Component {
                                     this.getDashboard()
                                     :
                                     this.state.screen_title == "Truck Bookings"
-                                    ?
-                                    <TruckBooking navigation={navigation} />
-                                    :
-                                    this.state.screen_title == "Warehouse Services"
-                                    ?
-                                    <WarehouseServices navigation={navigation} />
-                                    :
-                                    this.state.screen_title == "Trucking Warehouse Services"
-                                    ?
-                                    <TruckingWarehouseServices navigation={navigation} />
-                                    :
-                                    this.state.screen_title == "Pick My Load"
-                                    ?
-                                    <CollectMyLoad navigation={navigation} />
-                                    :
-                                    null
+                                        ?
+                                        <TruckBooking navigation={navigation} data= {this.state.dashboard_data[0]}/>
+                                        :
+                                        this.state.screen_title == "Warehouse Services"
+                                            ?
+                                            <WarehouseServices navigation={navigation} data= {this.state.dashboard_data[1]}/>
+                                            :
+                                            this.state.screen_title == "Trucking Warehouse Services"
+                                                ?
+                                                <TruckingWarehouseServices navigation={navigation} data= {this.state.dashboard_data[2]}/>
+                                                :
+                                                this.state.screen_title == "Pick My Load"
+                                                    ?
+                                                    <CollectMyLoad navigation={navigation} data= {this.state.dashboard_data[3]}/>
+                                                    :
+                                                    null
                             }
                         </View>
 

@@ -13,6 +13,7 @@ export default ApiConstants = {
     getNotifications:"customer/getNotifications",
     readNotification:"customer/readNotification",
     getVouchers:"customer/getVouchers",
+    getDashboardData:"customer/getDashboardData",
 
 
     /* ----------Udayraj------------- */
@@ -25,4 +26,10 @@ export default ApiConstants = {
 
 
     /* ----------DEV 3------------- */
-}
+    forgotPassword:"customer/forgotPassword",
+    verifyOTP:"customer/verifyOTP",
+    resendOTP:"customer/resendOTP",
+    register:"customer/register",
+
+
+} 

@@ -6,6 +6,7 @@ import { View, Text, Image, TouchableOpacity, TextInput, Modal, ScrollView } fro
 import { StyleSignUp } from '../config/CommonStyles'
 import Constants from '../config/Constants';
 import { StackActions, NavigationActions } from 'react-navigation';
+import { MainPresenter } from '../config/MainPresenter';
 export default class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -54,9 +55,40 @@ export default class SignUp extends Component {
       </View>
     )
   }
+   onResponse(apiConstant, data) {
+    switch (apiConstant) {
+      case ApiConstants.register: {
+        if (data.status) {  
+  
+          setTimeout(()=>{
+            this.setState({Modal_welcome:true});
+          },2000)
+          this.setState({Modal_welcome:false});
+        this.props.navigation.navigate('ProfileSetUp')
+        } else {
+          alert(data.message)
+        }
+      }
+
+        break;
+      }
+    }
+
+  
+
+  
+onClickSignup(){
+  let params = {
+    "mobile_no":this.state.mobile_number,
+    "password":this.state.confirm_password
+  }
+ this.presenter.callPostApi(ApiConstants.register, params, true);
+}
+
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
 
         <Image style={StyleSignUp.bgImage} source={require('../images/Splash_screen.jpg')} />
            <View style={this.state.referalRadio_button ? [StyleSignUp.loginBox, { marginTop:50 }] : StyleSignUp.loginBox}>
@@ -180,18 +212,7 @@ export default class SignUp extends Component {
             style={this.state.policyRadio_button ? StyleSignUp.loginButton : [StyleSignUp.loginButton, { backgroundColor: Constants.COLOR_GREY_LIGHT }]}
               disabled={this.state.policyRadio_button ? false : true}
               onPress={() => {
-                this.setState({ modalVisible_welcome: true })
-               
-                this.timer = setInterval(() => {
-                  clearInterval(this.timer)
-                  this.props.navigation.dispatch(
-                      StackActions.reset({
-                        index: 0,
-                        actions: [NavigationActions.navigate({ routeName: 'ProfileSetUp' })],
-                      }))
-                  }
-                    , 1000);
-
+                this.onClickSignup();
               }}
             >
             <Text style={StyleSignUp.Login_buttonText}>{Constants.SignUp}</Text>
@@ -200,7 +221,7 @@ export default class SignUp extends Component {
         </View>
         <TouchableOpacity style={StyleSignUp.memberButton}
           onPress={() => {
-            this.props.navigation.navigate('SignIn')
+            this.props.navigation.navigate('SignIn');
           }}
 
         >

@@ -25,6 +25,8 @@ export default class TermsAndCondition extends Component {
     return (
       <View style={{ flex: 1, backgroundColor: Constants.colorGrey }}>
         <HeaderBar
+        isLogout
+        isBack={true}
           title={
             flag=="TermsAndCondition"
             ?
