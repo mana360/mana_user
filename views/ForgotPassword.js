@@ -18,21 +18,32 @@ export default class ForgotPassword extends React.Component {
             mobile_number: '',
             modal_visible:false,
             user_id:"",
-            OTP:''
+            OTP:'',
+            access_token:"",
         }
     }
+
+    onClickSubmit(){
+        let params = {
+          "mobile_no":this.state.mobile_number,
+        }
+       this.presenter.callPostApi(ApiConstants.forgotPassword, params, true);
+    }
+
     async resend_OTP(){
-        await setAuthToken();
+        await setAuthToken(this.state.access_token);
         let params = {
             "user_id":this.state.user_id,
+            "mobile_otp":this.state.OTP,
           }
          this.presenter.callPostApi(ApiConstants.resendOTP, params, true); 
     }
-    verifyOTP(){
+   async verifyOTP(){
+        await setAuthToken(this.state.access_token);
         let params = {
             "mobile_otp":this.state.OTP,
           }
-         this.presenter.callPostApi(ApiConstants.forgotPassword, params, true);   
+         this.presenter.callPostApi(ApiConstants.verifyOTP, params, true);   
     }
 
 async onResponse(apiConstant,data){
@@ -40,23 +51,25 @@ switch (apiConstant) {
     case ApiConstants.forgotPassword:{
         if(data.status){    
        console.log(data.status);
-       this.setState({user_id:data.user_id,modal_visible:true});
+       this.setState({modal_visible:true,user_id:data.user_id,access_token:data.access_token});
+       console.log(data.access_token)
         }else{
             alert(data.message);
         }
     }  
 case ApiConstants.resendOTP:{
     if(data.status){
-        console.log(data.status)
+        console.log(data.status);
     }else{
 alert(data.message);
     }
 }
     case ApiConstants.verifyOTP:{
         if(data.status){
-            console.log(data.status);
+            alert(data.status);
 this.setState({modal_visible:false});
 this.props.navigation.navigate("SetPassword");
+
         }else{
             alert(data.message);
         }
@@ -64,12 +77,7 @@ this.props.navigation.navigate("SetPassword");
         break;
 }
 }
- onSubmit(){
-    let params = {
-      "mobile_no":this.state.mobile_number,
-    }
-   this.presenter.callPostApi(ApiConstants.forgotPassword, params, true);
-}
+
 
  modal_verifyOTP() {
         return (
@@ -90,7 +98,7 @@ this.props.navigation.navigate("SetPassword");
                         value={this.state.OTP}
                         keyboardType="number-pad"
                         maxLength={6}
-                        placeholder='0000'
+                        placeholder='000000'
                         onChangeText={(Text) => {
                             if(!isNaN(Text))
                                 this.setState({ OTP: Text })
@@ -174,7 +182,7 @@ this.props.navigation.navigate("SetPassword");
 
                         <TouchableOpacity style={[StyleForgotPassword.forgotButtonView,{}]}
                                    onPress={()=>{
-                                       this.onSubmit();
+                                       this.onClickSubmit();
                                     
                             }}
                         >

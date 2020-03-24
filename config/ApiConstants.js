@@ -26,5 +26,7 @@ export default ApiConstants = {
     forgotPassword:"customer/forgotPassword",
     verifyOTP:"customer/verifyOTP",
     resendOTP:"customer/resendOTP",
-    
+    register:"customer/register",
+
+
 } 
