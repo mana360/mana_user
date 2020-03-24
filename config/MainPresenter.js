@@ -85,7 +85,7 @@ export class MainPresenter extends React.Component {
             headers: {
                 Authorization: authToken
             },
-            body: _createFormData(apiConstant, params)
+            body: this._createFormData(apiConstant, params)
         }
         fetch(URL, options).then(it => it.json(), (e) => { console.log(e) })
             .then(it => this._setResponse(apiConstant, it))
@@ -107,7 +107,7 @@ export class MainPresenter extends React.Component {
 
 
         switch (apiConstant) {
-            case ApiConstants.example: {
+            case ApiConstants.updateProfilePic: {
                 data.append("profile_image", {
                     name: photo.fileName,
                     type: photo.type,
@@ -155,7 +155,7 @@ export class MainPresenter extends React.Component {
             console.log(e)
             data = {}
         }
-        if (data.status_code && data.status_code == "203") {
+        if (data && data.status_code && data.status_code == "203") {
             if (this.props.navigation) {
                 clearAllData()
                 this.props.navigation.navigate('SignIn');
@@ -163,7 +163,7 @@ export class MainPresenter extends React.Component {
             return
         }
         if (this.props.onResponse) {
-            this.props.onResponse(apiConstant, data)
+            this.props.onResponse(apiConstant, data?data:{})
         } else {
             alert('No \'onResponse\' callback register for api call')
         }

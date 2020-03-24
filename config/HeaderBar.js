@@ -48,7 +48,7 @@ class HeaderBar extends React.Component {
   onResponse(apiConstant, data) {
     switch (apiConstant) {
       case ApiConstants.logout: {
-          console.log("logoutn=> " + JSON.stringify(data))
+          console.log("logout => " + JSON.stringify(data))
           if(data.status){
               // log out success
               clearAllData()
@@ -66,6 +66,7 @@ class HeaderBar extends React.Component {
               }, 2000);
           }else{
               // log out failed
+              this.setState({isLogoutModalVisible:false})
               alert(data.message)
           }
         break;
@@ -184,6 +185,7 @@ class HeaderBar extends React.Component {
                       })
                     )
                   }, 2000);
+                  this.presenter.callGetApi(ApiConstants.logout, "", true);
                 }}
               >
                 <Text style={styles.modalButtonText}>{Constants.YES}</Text>

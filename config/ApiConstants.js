@@ -11,11 +11,15 @@ export default ApiConstants = {
     //POST EXAMPLE
     login: 'customer/login',
     getNotifications:"customer/getNotifications",
-
+    readNotification:"customer/readNotification",
+    getVouchers:"customer/getVouchers",
 
 
     /* ----------Udayraj------------- */
-    logout:'logout?',
+    logout:'customer/logout?',
+    provinceList:'customer/stateList',
+    cityList:'customer/cityList',
+    updateProfilePic:'customer/updateProfilePic',
 
 
     /* ----------DEV 3------------- */
