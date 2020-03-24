@@ -1,6 +1,7 @@
 /*
     screen no :- MANAPPCUS0 80,82,83,84,85,86,88,89
     design by :  Udayraj
+    api by    :  Udayraj
  */
 import React from 'react'
 import { View, Text, Image, TouchableOpacity, TouchableWithoutFeedback, ScrollView, FlatList, TextInput, } from 'react-native'
@@ -10,8 +11,11 @@ import FooterBar from '../config/FooterBar'
 import { StyleMyBookingDetails } from '../config/CommonStyles'
 import { Card, CardItem } from 'native-base'
 import Modal from "react-native-modal";
+import {MainPresenter} from '../config/MainPresenter';
+import ApiConstants from '../config/ApiConstants';
 
 export default class MyBookingDetails extends React.Component {
+
     constructor(props) {
         super(props)
         this.state = {
@@ -20,6 +24,8 @@ export default class MyBookingDetails extends React.Component {
             isReasonModalvisible: false,
             reasonText: "",
             reasonSubmit: false,
+
+            truck_booking_details:[],
         }
     }
     cancelOrder() {
@@ -77,6 +83,28 @@ export default class MyBookingDetails extends React.Component {
 
         )
     }
+    componentDidMount(){
+        this.getTruckBookingDetails()
+    }
+
+    async getTruckBookingDetails(){
+        let params ={
+            'booking_id' :1,
+            'service_type_id':1,
+        }
+        await this.presenter.callPostApi(ApiConstants.getBookingDetails, params, true);
+    }
+
+    onResponse(apiConstant, data) {
+        switch (apiConstant) {
+          case ApiConstants.getBookingDetails: {
+              console.log("booking list => " + JSON.stringify(data))
+              this.setState({truck_booking_details : data.truck_booking_details})
+            break;
+          }
+        }
+      }
+
     render() {
         let { navigation } = this.props
         let book_item = this.props.navigation.getParam('book_item')
@@ -84,7 +112,7 @@ export default class MyBookingDetails extends React.Component {
             <View style={{ flex: 1, }}>
 
                 <HeaderBar isBack={true} title="my bookings" isNotification={true} navigation={navigation} />
-
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
                 <ScrollView bounces={false} style={{ width: '100%', paddingTop: 15, paddingBottom: 15, }}>
 
                     <View style={StyleMyBookingDetails.detailsRow}>

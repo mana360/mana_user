@@ -694,7 +694,7 @@ export default class EditProfile extends React.Component {
     }
 
     componentDidMount(){
-        //this.getProvinceList()
+        this.getProvinceList()
     }
 
     async getProvinceList(){

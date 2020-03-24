@@ -20,6 +20,8 @@ export default ApiConstants = {
     provinceList:'customer/stateList',
     cityList:'customer/cityList',
     updateProfilePic:'customer/updateProfilePic',
+    getSupportSubject:'customer/getSupportSubject',
+    getBookingDetails:'customer/getBookingDetails',
 
 
     /* ----------DEV 3------------- */
