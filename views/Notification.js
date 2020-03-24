@@ -10,16 +10,26 @@ import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import { MainPresenter } from '../config/MainPresenter'
 import ApiConstants from '../config/ApiConstants';
+import moment from 'moment'
 export default class Notification extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            noNotificationTextVisibility:false,
+            noNotificationTextVisibility: false,
             dataSource: [
-                { id: 12, status: "Trip 1 delay", desc: "Lorem ipsum dolor sit amet, consectetur ", dateTime: "10 May 2018 10:24 AM", isCompleted: 'false' },
-                { id: 5, status: "New Alert", desc: "Lorem ipsum dolor sit amet, consectetur", dateTime: "10 May 2018 10:24 AM", isCompleted: 'fasle' },
-                { id: 1, status: "Trip4 Completed-Rate your Trip", desc: "Lorem ipsum dolor sit amet, consectetur", dateTime: "10 May 2018 10:24 AM", isCompleted: 'true' },
-
+                /* /**     
+                        server response
+                *    {
+                            "notification_id": 1,
+                            "notification_type": 1,
+                            "title": "test notification",
+                            "message": "test message",
+                            "datetime": "2019-11-20 14:43:38",
+                            "read_status": 1
+                        },
+                        //previous demo
+                        { id: 12, status: "Trip 1 delay", desc: "Lorem ipsum dolor sit amet, consectetur ", datetime: "10 May 2018 10:24 AM", isCompleted: 'false' },
+                 */
             ],
 
         }
@@ -35,12 +45,12 @@ export default class Notification extends React.Component {
                     if (data.notification_list && data.notification_list.length != 0) {
                         this.setState({
                             dataSource: data.notification_list,
-                            noNotificationTextVisibility:false
+                            noNotificationTextVisibility: false
                         })
                     } else {
                         this.setState({
                             dataSource: [],
-                            noNotificationTextVisibility:true
+                            noNotificationTextVisibility: true
                         })
                         // alert(data.message)
                     }
@@ -58,9 +68,9 @@ export default class Notification extends React.Component {
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
                 <HeaderBar title="Notifications" isBack={true} isLogout={true} navigation={navigation} />
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
-                <Text style={{flex:1,textAlignVertical:'center',textAlign:'center',display:this.state.noNotificationTextVisibility?'flex':'none'}}>No New Notification</Text>
+                <Text style={{ flex: 1, textAlignVertical: 'center', textAlign: 'center', display: this.state.noNotificationTextVisibility ? 'flex' : 'none' }}>No New Notification</Text>
                 <FlatList
-                    style={{ marginVertical: 15,display:!this.state.noNotificationTextVisibility?'flex':'none' }}
+                    style={{ marginVertical: 15, display: !this.state.noNotificationTextVisibility ? 'flex' : 'none' }}
                     numColumns={1}
                     data={this.state.dataSource}
                     extraData={this.state}
@@ -71,6 +81,8 @@ export default class Notification extends React.Component {
                                 onPress={() => {
                                     if (item.isCompleted == 'true') {
                                         this.props.navigation.navigate('RateAndReview', { notif_id: item.id });
+                                    } else if (item.read_status != '1') {
+                                        this.callMarkAsReadApi(item.notification_id)
                                     }
                                 }}
                             >
@@ -82,10 +94,10 @@ export default class Notification extends React.Component {
                                 </View>
 
                                 <View style={StyleNotification.col2}>
-                                    <Text style={StyleNotification.title}>{item.status} </Text>
-                                    <Text style={StyleNotification.desc}>{item.desc}
+                                    <Text style={StyleNotification.title}>{item.title} </Text>
+                                    <Text style={StyleNotification.desc}>{item.message}
                                     </Text>
-                                    <Text style={StyleNotification.dateTime}>{item.dateTime}</Text>
+                                    <Text style={StyleNotification.dateTime}>{moment(item.datetime).format("DD MMM YYYY hh:mm:A")}</Text>
                                 </View>
 
                                 <View style={StyleNotification.col1}>
@@ -102,5 +114,10 @@ export default class Notification extends React.Component {
                 <FooterBar navigation={navigation} />
             </View>
         )
+    }
+    callMarkAsReadApi(notification_id) {
+        this.presenter.callPostApi(ApiConstants.readNotification, {
+            notification_id: notification_id
+        })
     }
 }

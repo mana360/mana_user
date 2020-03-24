@@ -155,7 +155,7 @@ export class MainPresenter extends React.Component {
             console.log(e)
             data = {}
         }
-        if (data.status_code && data.status_code == "203") {
+        if (data && data.status_code && data.status_code == "203") {
             if (this.props.navigation) {
                 clearAllData()
                 this.props.navigation.navigate('SignIn');
@@ -163,7 +163,7 @@ export class MainPresenter extends React.Component {
             return
         }
         if (this.props.onResponse) {
-            this.props.onResponse(apiConstant, data)
+            this.props.onResponse(apiConstant, data?data:{})
         } else {
             alert('No \'onResponse\' callback register for api call')
         }
