@@ -19,4 +19,8 @@ export default ApiConstants = {
 
 
     /* ----------DEV 3------------- */
-}
+    forgotPassword:"customer/forgotPassword",
+    verifyOTP:"customer/verifyOTP",
+    resendOTP:"customer/resendOTP",
+    
+} 

@@ -8,15 +8,68 @@ import Constants from '../config/Constants';
 import FooterBar from '../config/FooterBar';
 import HeaderBar from '../config/HeaderBar';
 import { StackActions, NavigationActions } from 'react-navigation';
+import ApiConstants from '../config/ApiConstants';
+import { setUserData, setAuthToken } from '../config/AppSharedPreference';
+import { MainPresenter } from '../config/MainPresenter';
 export default class ForgotPassword extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             mobile_number: '',
             modal_visible:false,
+            user_id:"",
             OTP:''
         }
     }
+    async resend_OTP(){
+        await setAuthToken();
+        let params = {
+            "user_id":this.state.user_id,
+          }
+         this.presenter.callPostApi(ApiConstants.resendOTP, params, true); 
+    }
+    verifyOTP(){
+        let params = {
+            "mobile_otp":this.state.OTP,
+          }
+         this.presenter.callPostApi(ApiConstants.forgotPassword, params, true);   
+    }
+
+async onResponse(apiConstant,data){
+switch (apiConstant) {
+    case ApiConstants.forgotPassword:{
+        if(data.status){    
+       console.log(data.status);
+       this.setState({user_id:data.user_id,modal_visible:true});
+        }else{
+            alert(data.message);
+        }
+    }  
+case ApiConstants.resendOTP:{
+    if(data.status){
+        console.log(data.status)
+    }else{
+alert(data.message);
+    }
+}
+    case ApiConstants.verifyOTP:{
+        if(data.status){
+            console.log(data.status);
+this.setState({modal_visible:false});
+this.props.navigation.navigate("SetPassword");
+        }else{
+            alert(data.message);
+        }
+    }
+        break;
+}
+}
+ onSubmit(){
+    let params = {
+      "mobile_no":this.state.mobile_number,
+    }
+   this.presenter.callPostApi(ApiConstants.forgotPassword, params, true);
+}
 
  modal_verifyOTP() {
         return (
@@ -36,7 +89,7 @@ export default class ForgotPassword extends React.Component {
                     <TextInput style={StyleForgotPassword.ModaltextInput}
                         value={this.state.OTP}
                         keyboardType="number-pad"
-                        maxLength={4}
+                        maxLength={6}
                         placeholder='0000'
                         onChangeText={(Text) => {
                             if(!isNaN(Text))
@@ -45,7 +98,11 @@ export default class ForgotPassword extends React.Component {
                              this.setState({ OTP:'' })
                         }}
                     />
-                    <TouchableOpacity style={{ alignSelf: 'center', marginTop: 15 }}>
+                    <TouchableOpacity style={{ alignSelf: 'center', marginTop: 15 }}
+                    onPress={()=>{
+                        this.resend_OTP();
+                    }}
+                    >
                         <Text style={StyleForgotPassword.resendText}>{Constants.ResendCode}</Text>
                     </TouchableOpacity>
                    
@@ -53,10 +110,7 @@ export default class ForgotPassword extends React.Component {
                                 
                         <TouchableOpacity style={StyleForgotPassword.modalButtonView}
                             onPress={()=>{
-                                this.setState({modal_visible:false});
-                                this.props.navigation.navigate('SetPassword');
-                                   
-                              
+                                this.verifyOTP();
                             }}
                         >
                             <Text style={StyleForgotPassword.modalButtonLabel}>{Constants.VERIFY}</Text>
@@ -78,6 +132,8 @@ export default class ForgotPassword extends React.Component {
         return (
             <View style={{ flex: 1, }}>
                 <HeaderBar title="Forgot Password" isBack={true} isLogout={true} navigation={navigation} />
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
+                
                 <View style={{ flex: 1 }}>
 
                     <View>
@@ -106,6 +162,7 @@ export default class ForgotPassword extends React.Component {
                             }}
                         />
                     </View>
+                  
                     <View style={{ bottom: 0, position: 'absolute', flexDirection: 'row', justifyContent: 'center', marginBottom: 20,}}>
                         <TouchableOpacity style={[StyleForgotPassword.forgotButtonView,{marginLeft:20}]}
                         onPress={()=>{
@@ -117,7 +174,8 @@ export default class ForgotPassword extends React.Component {
 
                         <TouchableOpacity style={[StyleForgotPassword.forgotButtonView,{}]}
                                    onPress={()=>{
-                                    this.setState({modal_visible:true})
+                                       this.onSubmit();
+                                    
                             }}
                         >
                             <Text style={StyleForgotPassword.buttonLabel}>{Constants.SUBMIT}</Text>

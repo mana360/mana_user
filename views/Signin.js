@@ -28,7 +28,6 @@ export default class SignIn extends Component {
   //just to test api call need to change later 
   componentDidMount() {
     this.setState({ isLoading: true })
-
     // getAllLangContent({ language: 'en' }).then((responseData) => {
     //   this.setState({ isLoading: false })
     //   if (responseData.status == 1) {
@@ -199,7 +198,7 @@ export default class SignIn extends Component {
      if (!this.isValid()) {
        return
      }
-     let fbToken=await getFirebaseToken()
+     let fbToken=await getFirebanpmseToken()
      let params = {
        "username": this.state.input_mobile_number,
        "password": this.state.input_password,
@@ -229,8 +228,6 @@ export default class SignIn extends Component {
       alert("password must be greater than 8 character & less than 16 character")
       return false
     }
-
-
     return true;
   }
 }
