@@ -34,11 +34,6 @@ export default class SignUp extends Component {
             <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
               onPress={() => {
                 this.setState({ modalVisible_welcome: false })
-                this.props.navigation.dispatch(
-                  StackActions.reset({
-                    index: 0,
-                    actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
-                  }))
               }}
             >
               <Image source={require('../images/close.png')}
@@ -89,8 +84,8 @@ onClickSignup(){
 }
 
 isValid() {
-  if (this.state.password==!this.state.confirm_password) {
-    alert("Password and confirm password does not match")
+  if (this.state.password=!this.state.confirm_password) {
+    alert("Password and Confirm Password  does not match");
     return false
   }
   if (this.state.mobile_number.length == 0) {
