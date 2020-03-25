@@ -2,7 +2,9 @@ import { Dimensions, Platform } from 'react-native';
 
 const Constants = {
 
-    BASE_URL :"http://laravel.exceptionaire.tk/mana/public/api/",
+    BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/api/",
+
+    EMAIL_REGX:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
 
     //fonts
     FONT_SIZE_SMALL: 10,
