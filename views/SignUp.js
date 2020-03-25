@@ -7,6 +7,7 @@ import { StyleSignUp } from '../config/CommonStyles'
 import Constants from '../config/Constants';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { MainPresenter } from '../config/MainPresenter';
+import ApiConstants from '../config/ApiConstants';
 export default class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -55,15 +56,16 @@ export default class SignUp extends Component {
       </View>
     )
   }
+
    onResponse(apiConstant, data) {
     switch (apiConstant) {
       case ApiConstants.register: {
         if (data.status) {  
   
           setTimeout(()=>{
-            this.setState({Modal_welcome:true});
+            this.setState({modalVisible_welcome:true});
           },2000)
-          this.setState({Modal_welcome:false});
+          this.setState({modalVisible_welcome:false});
         this.props.navigation.navigate('ProfileSetUp')
         } else {
           alert(data.message)
@@ -73,17 +75,53 @@ export default class SignUp extends Component {
         break;
       }
     }
-
-  
-
   
 onClickSignup(){
+  if(!this.isValid()){
+    return
+  }
+
   let params = {
     "mobile_no":this.state.mobile_number,
     "password":this.state.confirm_password
   }
  this.presenter.callPostApi(ApiConstants.register, params, true);
 }
+
+isValid() {
+  if (this.state.password==!this.state.confirm_password) {
+    alert("Password and confirm password does not match")
+    return false
+  }
+  if (this.state.mobile_number.length == 0) {
+    alert("Please enter mobile number")
+    return false
+  }
+  if (this.state.mobile_number.length < 9 || this.state.mobile_number.length > 13) {
+    console.log(this.state.mobile_number)
+    alert("Please enter valid mobile number")
+    return false
+  }
+  if (this.state.password.length == 0) {
+    alert("Please enter Password")
+    return false
+  }
+  if (this.state.password.length < 8 || this.state.password.length > 16) {
+    alert("password must be greater than 8 character & less than 16 character")
+    return false
+  }
+  if (this.state.confirm_password.length < 8 || this.state.confirm_password.length > 16) {
+    alert("password must be greater than 8 character & less than 16 character")
+    return false
+  }
+  if (this.state.password.length ==!this.state.confirm_password) {
+    alert("Password and conform password does not match")
+    return false
+  }
+  return true;
+}
+
+
 
   render() {
     return (
