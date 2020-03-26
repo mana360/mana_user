@@ -13,7 +13,7 @@ export default class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input_mobile_number: '',
+      input_email_id: '',
       input_password: '',
       policyRadio_button: false,
       isLoading: false,
@@ -81,22 +81,16 @@ export default class SignIn extends Component {
             <View style={StyleSignIn.labelBox}>
               <Image style={StyleSignIn.LabelBoxIcon}
                 source={require('../images/mobile_number.png')} />
-              <Text style={StyleSignIn.labelBoxText}>{Constants.MobileNumber}</Text>
+              <Text style={StyleSignIn.labelBoxText}>{Constants.Email}</Text>
             </View>
-            <TextInput placeholder='Enter Mobile Number'
+            <TextInput placeholder='Enter Email id'
               style={StyleSignIn.textInput_style}
-              keyboardType="number-pad"
-              maxLength={13}
-              value={this.state.input_mobile_number}
+              keyboardType="email-address"
+              value={this.state.input_email_id}
               onChangeText={(newText) => {
-                if (!isNaN(newText)){
-
-                  this.setState({ input_mobile_number: newText })
-                }
-                else{
-
-                  this.setState({ input_mobile_number: '' });
-                }
+              
+                  this.setState({ input_email_id: newText })
+                
 
               }}
             />
@@ -198,9 +192,9 @@ export default class SignIn extends Component {
      if (!this.isValid()) {
        return
      }
-     let fbToken=await getFirebanpmseToken()
+     let fbToken=await getFirebaseToken()
      let params = {
-       "username": this.state.input_mobile_number,
+       "username": this.state.input_email_id,
        "password": this.state.input_password,
        "device_type": "2",
        "device_token": fbToken==null ?'no-token':fbToken ,
@@ -210,13 +204,13 @@ export default class SignIn extends Component {
 
   }
   isValid() {
-    if (this.state.input_mobile_number.length == 0) {
-      alert("Please enter mobile number")
+    if (this.state.input_email_id.length == 0) {
+      alert("Please enter email id")
       return false
     }
-    if (this.state.input_mobile_number.length < 9 || this.state.input_mobile_number.length > 13) {
-      console.log(this.state.input_mobile_number)
-      alert("Please enter valid mobile number")
+    if (!Constants.EMAIL_REGX.test(this.state.input_email_id)) {
+      // console.log(this.state.input_email_id)
+      alert("Please enter valid email id")
       return false
     }
 
