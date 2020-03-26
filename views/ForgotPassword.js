@@ -20,12 +20,13 @@ export default class ForgotPassword extends React.Component {
             user_id:"",
             OTP:'',
             access_token:"",
+            emailId:'',
         }
     }
 
     onClickSubmit(){
         let params = {
-          "mobile_no":this.state.mobile_number,
+          "emailId":this.state.emailId,
         }
        this.presenter.callPostApi(ApiConstants.forgotPassword, params, true);
     }
@@ -153,21 +154,14 @@ this.props.navigation.navigate("SetPassword");
                             <Image source={require('../images/mobile_number.png')}
                                 style={StyleForgotPassword.labelIcon}
                             />
-                            <Text style={StyleForgotPassword.modalLabelText}>{Constants.MobileNumber}</Text>
+                            <Text style={StyleForgotPassword.modalLabelText}>{Constants.Email}</Text>
                         </View>
                         <TextInput
-                            placeholder="Enter Mobile Number"
+                            placeholder="Enter Email Id"
                             style={StyleForgotPassword.TextInput}
-
-                            value={this.state.mobile_number}
-                            keyboardType="number-pad"
-                            maxLength={10}
-                            onChangeText={(text) => {
-                                if(!isNaN(text))
-                                    this.setState({ mobile_number: text }) 
-                                else
-                                this.setState({ mobile_number: '' }) 
-                            }}
+                            value={this.state.emailId}
+                            keyboardType="email-address"
+                            onChangeText={(text) => { this.setState({emailId:text}) }}
                         />
                     </View>
                   

@@ -12,6 +12,7 @@ export default class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      emailId:'',
       mobile_number: '',
       password: '',
       confirm_password: '',
@@ -82,7 +83,7 @@ onClickSignup(){
   }
 
   let params = {
-    "mobile_no":this.state.mobile_number,
+    "emailId":this.state.emailId,
     "password":this.state.confirm_password
   }
  this.presenter.callPostApi(ApiConstants.register, params, true);
@@ -93,35 +94,42 @@ isValid() {
     alert("Password and confirm password does not match")
     return false
   }
-  if (this.state.mobile_number.length == 0) {
-    alert("Please enter mobile number")
-    return false
-  }
-  if (this.state.mobile_number.length < 9 || this.state.mobile_number.length > 13) {
-    console.log(this.state.mobile_number)
-    alert("Please enter valid mobile number")
-    return false
-  }
+  // if (this.state.mobile_number.length == 0) {
+  //   alert("Please enter mobile number")
+  //   return false
+  // }
+  // if (this.state.mobile_number.length < 9 || this.state.mobile_number.length > 13) {
+  //   console.log(this.state.mobile_number)
+  //   alert("Please enter valid mobile number")
+  //   return false
+  // }
   if (this.state.password.length == 0) {
     alert("Please enter Password")
+    this.TextInput_password.focus()
     return false
   }
   if (this.state.password.length < 8 || this.state.password.length > 16) {
     alert("password must be greater than 8 character & less than 16 character")
+    this.TextInput_password.focus()
     return false
   }
   if (this.state.confirm_password.length < 8 || this.state.confirm_password.length > 16) {
     alert("password must be greater than 8 character & less than 16 character")
+    this.TextInput_confirm_password.focus()
     return false
   }
   if (this.state.password.length ==!this.state.confirm_password) {
     alert("Password and conform password does not match")
+    this.TextInput_confirm_password.focus()
+    return false
+  }
+  if(this.state.referral_code.length==0){
+    alert("Please enter referral code")
+    this.TextInput_referral_code.focus()
     return false
   }
   return true;
 }
-
-
 
   render() {
     return (
@@ -144,19 +152,17 @@ isValid() {
             <View style={StyleSignUp.labelBox}>
               <Image style={StyleSignUp.LabelBoxIcon}
                 source={require('../images/mobile_number.png')} />
-              <Text style={StyleSignUp.labelBoxText}>{Constants.MobileNumber}</Text>
+              <Text style={StyleSignUp.labelBoxText}>{Constants.Email}</Text>
             </View>
-            <TextInput placeholder='Enter Mobile Number'
+            <TextInput placeholder='Enter Email Id'
+              ref={(ref)=>(this.TextInput_emailId = ref)}
               style={StyleSignUp.textInput_style}
-              keyboardType='number-pad'
-              maxLength={10}
-              value={this.state.mobile_number}
-              onChangeText={(newText) => {
-                if (!isNaN(newText))
-                  this.setState({ mobile_number: newText })
-                else
-                  this.setState({ mobile_number: '' })
-              }}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType='email-address'
+              value={this.state.emailId}
+              onChangeText={(newText) => { this.setState({emailId:newText}) }}
+              onBlur={()=>{this.TextInput_password.focus()}}
             />
           </View>
          
@@ -166,10 +172,13 @@ isValid() {
               <Text style={StyleSignUp.labelBoxText}>{Constants.Password}</Text>
             </View>
             <TextInput placeholder='Enter Password'
+              ref={(ref)=>(this.TextInput_password = ref)}
               secureTextEntry={true}
               style={StyleSignUp.textInput_style}
               value={this.state.password}
-              onChangeText={(newtext) => { this.setState({ password: newtext }) }} />
+              onChangeText={(newtext) => { this.setState({ password: newtext }) }}
+              onBlur={()=>{this.TextInput_confirm_password.focus()}}
+              />
           </View>
 
           <View style={StyleSignUp.textInput_container}>
@@ -179,10 +188,13 @@ isValid() {
               <Text style={StyleSignUp.labelBoxText}>{Constants.ConfirmPassword}</Text>
             </View>
             <TextInput placeholder='Enter Confirm Password'
+              ref={(ref)=>(this.TextInput_confirm_password = ref)}
               secureTextEntry={true}
               style={StyleSignUp.textInput_style}
               value={this.state.confirm_password}
-              onChangeText={(newText) => { this.setState({ confirm_password: newText }) }} />
+              onChangeText={(newText) => { this.setState({ confirm_password: newText }) }}
+              onBlur={()=>{this.Radio_referral_code.focus()}}
+              />
           </View>
 
           <View style={StyleSignUp.policyView}>
@@ -191,7 +203,9 @@ isValid() {
                 this.setState({ referalRadio_button: !this.state.referalRadio_button })
               }}>
               <Image source={this.state.referalRadio_button ? require('../images/radio_buttons_selected.png') : require('../images/radio_buttons.png')}
-                style={StyleSignUp.policyImage} />
+                style={StyleSignUp.policyImage}
+                ref={(ref)=>{this.Radio_referral_code = ref}}
+                />
             </TouchableOpacity>
             <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}>{Constants.IhaveAReferalCode}</Text>
           </View>
@@ -202,9 +216,12 @@ isValid() {
               <Text style={StyleSignUp.labelBoxText}>{Constants.Referralcode}</Text>
             </View>
             <TextInput placeholder='Enter Referral Code'
+              ref={(ref)=>(this.TextInput_referral_code = ref)}
               style={{ marginLeft: 25 ,height:45}}
               value={this.state.referral_code}
-              onChangeText={(newtext) => { this.setState({ referral_code: newtext }) }} />
+              onChangeText={(newtext) => { this.setState({ referral_code: newtext }) }}
+              onBlur={()=>{ this.Radio_terms_conditions.focus() }}
+              />
           </View>
 
           <View style={[StyleSignUp.policyView,]}>
@@ -214,7 +231,9 @@ isValid() {
               }}
             >
               <Image source={this.state.policyRadio_button ? require('../images/radio_buttons_selected.png') : require('../images/radio_buttons.png')}
-                style={StyleSignUp.policyImage} />
+                style={StyleSignUp.policyImage}
+                ref={(ref)=>{this.Radio_terms_conditions = ref}}
+                />
             </TouchableOpacity>
             <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}>{Constants.IagreeTo}</Text>
             <TouchableOpacity
@@ -247,8 +266,14 @@ isValid() {
         </View>
 
           <TouchableOpacity
-            style={this.state.policyRadio_button ? StyleSignUp.loginButton : [StyleSignUp.loginButton, { backgroundColor: Constants.COLOR_GREY_LIGHT }]}
-              disabled={this.state.policyRadio_button ? false : true}
+            style={
+                this.state.policyRadio_button && this.state.referalRadio_button && this.state.referral_code.length>0
+              ?
+                StyleSignUp.loginButton
+              :
+                [StyleSignUp.loginButton, { backgroundColor: Constants.COLOR_GREY_LIGHT }]
+              }
+              disabled={ this.state.policyRadio_button && this.state.referalRadio_button ? false : true}
               onPress={() => {
                 this.onClickSignup();
               }}
