@@ -24,7 +24,7 @@ export default class HelpAndSupport extends React.Component {
             support_contact_number: "",
             support_email:"jim.d@abc.com",
             modal_Visible: false,
-            isUser:false,  //help and suport(user)=true ,trip help and support(company)=false
+            isUser:true,  //help and suport(user)=true ,trip help and support(company)=false
 
             supportSubjectList:[]
         }
@@ -33,7 +33,30 @@ export default class HelpAndSupport extends React.Component {
         this.setState({ modal_Visible: true })
     }
     componentDidMount(){
-        this.getSupportSubjectList()
+        if(this.state.isUser){
+            this.setState({
+                supportSubjectList:[{
+                    subject_id:new Date().getTime(),
+                    subject_name:'Cargo Lost'
+                },
+                {
+                    subject_id:new Date().getTime(),
+                    subject_name:'Late Delivery'
+                },
+                {
+                    subject_id:new Date().getTime(),
+                    subject_name:'Driver not in contact'
+                },
+                {
+                    subject_id:new Date().getTime(),
+                    subject_name:'Others'
+                }
+            ]
+            })
+        }else{
+            this.getSupportSubjectList()
+
+        }
     }
 
     async getSupportSubjectList(){

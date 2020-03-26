@@ -35,11 +35,6 @@ export default class SignUp extends Component {
             <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
               onPress={() => {
                 this.setState({ modalVisible_welcome: false })
-                this.props.navigation.dispatch(
-                  StackActions.reset({
-                    index: 0,
-                    actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
-                  }))
               }}
             >
               <Image source={require('../images/close.png')}
@@ -62,11 +57,11 @@ export default class SignUp extends Component {
     switch (apiConstant) {
       case ApiConstants.register: {
         if (data.status) {  
-  
+          this.setState({modalVisible_welcome:true});
           setTimeout(()=>{
-            this.setState({modalVisible_welcome:true});
-          },2000)
-          this.setState({modalVisible_welcome:false});
+            this.setState({modalVisible_welcome:false});
+          
+          },3000)
         this.props.navigation.navigate('ProfileSetUp')
         } else {
           alert(data.message)
@@ -90,8 +85,8 @@ onClickSignup(){
 }
 
 isValid() {
-  if (this.state.password==!this.state.confirm_password) {
-    alert("Password and confirm password does not match")
+  if (this.state.password!==this.state.confirm_password) {
+    alert("Password and Confirm Password  does not match");
     return false
   }
   // if (this.state.mobile_number.length == 0) {
@@ -129,7 +124,7 @@ isValid() {
     return false
   }
   return true;
-}
+} 
 
   render() {
     return (
