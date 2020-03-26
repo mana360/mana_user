@@ -23,6 +23,7 @@ export default ApiConstants = {
     updateProfilePic:'customer/updateProfilePic',
     getSupportSubject:'customer/getSupportSubject',
     getBookingDetails:'customer/getBookingDetails',
+    rateBooking:'customer/rateBooking',
 
 
     /* ----------DEV 3------------- */
