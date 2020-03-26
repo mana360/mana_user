@@ -23,7 +23,6 @@ export default ApiConstants = {
     updateProfilePic:'customer/updateProfilePic',
     getSupportSubject:'customer/getSupportSubject',
     getBookingDetails:'customer/getBookingDetails',
-    rateBooking:'customer/rateBooking',
 
 
     /* ----------DEV 3------------- */
@@ -31,6 +30,7 @@ export default ApiConstants = {
     verifyOTP:"customer/verifyOTP",
     resendOTP:"customer/resendOTP",
     register:"customer/register",
+    getotherService:"customer/getOtherServices",
 
 
 } 

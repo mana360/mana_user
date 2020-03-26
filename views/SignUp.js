@@ -56,11 +56,11 @@ export default class SignUp extends Component {
     switch (apiConstant) {
       case ApiConstants.register: {
         if (data.status) {  
-  
+          this.setState({modalVisible_welcome:true});
           setTimeout(()=>{
-            this.setState({modalVisible_welcome:true});
-          },2000)
-          this.setState({modalVisible_welcome:false});
+            this.setState({modalVisible_welcome:false});
+          
+          },3000)
         this.props.navigation.navigate('ProfileSetUp')
         } else {
           alert(data.message)
@@ -84,7 +84,7 @@ onClickSignup(){
 }
 
 isValid() {
-  if (this.state.password=!this.state.confirm_password) {
+  if (this.state.password!==this.state.confirm_password) {
     alert("Password and Confirm Password  does not match");
     return false
   }
@@ -114,9 +114,7 @@ isValid() {
     return false
   }
   return true;
-}
-
-
+} 
 
   render() {
     return (
