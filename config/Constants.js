@@ -4,6 +4,8 @@ const Constants = {
 
     BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/api/",
 
+    EMAIL_REGX:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+
     //fonts
     FONT_SIZE_SMALL: 10,
     FONT_SIZE__MEDIUM: 12,
