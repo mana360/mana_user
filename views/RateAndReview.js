@@ -1,5 +1,6 @@
 /* screen -MANAPPCUS007,9
     design by -mayur s
+    api by : Udayraj
  */
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity } from 'react-native';
@@ -9,24 +10,56 @@ import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import StarRating from "react-native-star-rating";
+import {MainPresenter} from '../config/MainPresenter';
+import ApiConstants from '../config/ApiConstants';
+
 export default class RateAndReview extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            starCount: 3,
+            starCount: 0,
             inputLabelTrip: '',
             reviewTrip: '',
             modal_Visible: false,
         }
     }
+componentDidMount(){
 
-    render() {
+}
+
+async submitRating(){
+    let params = {
+        'booking_id' : 1,
+        'service_type_id':1,
+        'ratings':this.state.starCount,
+        'label':this.state.inputLabelTrip,
+        'review':this.state.reviewTrip,
+    }
+    await this.presenter.callPostApi(ApiConstants.getSupportSubject, params, true);
+}
+
+onResponse(apiConstant, data) {
+    switch (apiConstant) {
+      case ApiConstants.rateBooking: {
+          console.log("RatingReview => " + JSON.stringify(data))
+          if(data.status){
+              this.setState({ modal_Visible: true })
+          }
+          else{
+              alert(data.message)
+          }
+        break;
+      }
+    }
+}
+
+  render() {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1 }}>
 
                 <HeaderBar title="Rate and Review" isBack={true} isLogout={true} navigation={navigation} />
-
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
                 <View style={{ flex: 1 }}>
 
                     <ScrollView style={{ width: '100%' }} bounces={false}>
@@ -95,9 +128,7 @@ export default class RateAndReview extends React.Component {
                             </View>
 
                             <TouchableOpacity style={StyleRateAndReview.buttonView}
-                                onPress={() => {
-                                    this.setState({ modal_Visible: true })
-                                }}
+                                onPress={() => { this.submitRating() }}
                             >
                                 <Text style={StyleRateAndReview.buttonText}>{Constants.SUBMIT}</Text>
                             </TouchableOpacity>
