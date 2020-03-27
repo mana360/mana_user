@@ -158,10 +158,12 @@ this.props.navigation.navigate("SetPassword");
                         </View>
                         <TextInput
                             placeholder="Enter Email Id"
+                            autoCapitalize="none"
                             style={StyleForgotPassword.TextInput}
                             value={this.state.emailId}
                             keyboardType="email-address"
                             onChangeText={(text) => { this.setState({emailId:text}) }}
+                            onBlur={()=>{this.onClickSubmit();}}
                         />
                     </View>
                   

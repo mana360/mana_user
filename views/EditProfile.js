@@ -1,6 +1,6 @@
 /* screen -MANAPPCUS039,107
     design by -mayur s
-    API : Udayraj (country, cityList)
+    API : Udayraj (country, cityList, profileImage upload)
  */
 import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput,FlatList } from 'react-native';
@@ -711,17 +711,33 @@ export default class EditProfile extends React.Component {
     onResponse(apiConstant, data) {
         switch (apiConstant) {
           case ApiConstants.provinceList: {
-              console.log("country List => " + JSON.stringify(data))
-              this.setState({provinceList : data.stateList, isProvinceListFilled:1})
+              if(data.status)
+              {
+                  console.log("country List => " + JSON.stringify(data))
+                  this.setState({provinceList : data.stateList, isProvinceListFilled:1})
+              }
+              else {
+                  alert(data.message)
+              }
             break;
           }
           case ApiConstants.cityList:{
-              console.log("country List => " + JSON.stringify(data))
-              this.setState({cityList: data.cityList, isCityListFilled:1})
+              if(data.status){
+                    console.log("country List => " + JSON.stringify(data))
+                    this.setState({cityList: data.cityList, isCityListFilled:1})
+              }
+              else{
+                  alert(data.message)
+              }
               break;
           }
           case ApiConstants.updateProfilePic:{
-              console.log("img rep ===> "+JSON.stringify())
+              if(data.status){
+                  console.log("img rep ===> "+JSON.stringify())
+              }
+              else {
+                  alert(data.message)
+              }
               break;
           }
         }

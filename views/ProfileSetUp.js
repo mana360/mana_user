@@ -600,13 +600,23 @@ export default class ProfileSetUp extends React.Component {
     onResponse(apiConstant, data) {
         switch (apiConstant) {
           case ApiConstants.provinceList: {
-              console.log("country List => " + JSON.stringify(data))
-              this.setState({provinceList : data.stateList, isProvinceListFilled:1})
+              if(data.status){
+                  console.log("country List => " + JSON.stringify(data))
+                  this.setState({provinceList : data.stateList, isProvinceListFilled:1})
+              }
+              else {
+                  alert(data.message)
+              }
             break;
           }
           case ApiConstants.cityList:{
-              console.log("country List => " + JSON.stringify(data))
-              this.setState({cityList: data.cityList, isCityListFilled:1})
+              if(data.status){
+                  console.log("country List => " + JSON.stringify(data))
+                  this.setState({cityList: data.cityList, isCityListFilled:1})
+              }
+              else{
+                  alert(data.message)
+              }
               break;
           }
         }
@@ -616,7 +626,7 @@ export default class ProfileSetUp extends React.Component {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1 }}>
-                <HeaderBar isBack={true} title="Profile setup" isLogout={true} navigation={navigation} />
+                <HeaderBar isBack={false} title="Profile setup" isLogout={true} navigation={navigation} />
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
                 <ScrollView style={{ width: '100%', marginVertical: 20 }}
                     bounces={false}
