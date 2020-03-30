@@ -9,9 +9,11 @@ import HeaderBar from "../config/HeaderBar";
 import ImagePicker from "react-native-image-picker";
 import { Picker } from "native-base";
 import Constants from '../config/Constants';
-import { StyleSetUpProfile, StyleSignUp } from '../config/CommonStyles';
+import { StyleSetUpProfile, StyleSignUp,StyleForgotPassword } from '../config/CommonStyles';
 import ApiConstants from '../config/ApiConstants';
 import {MainPresenter} from '../config/MainPresenter';
+import { setUserData } from '../config/AppSharedPreference';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 export default class ProfileSetUp extends React.Component {
 
@@ -32,7 +34,9 @@ export default class ProfileSetUp extends React.Component {
             user_email: '',
             user_streetAddress: '',
             user_City: '',
+            user_city_id:'',
             user_Province: '',
+            user_Province_id:'',
             user_zipCode: '',
             user_password: '',
             user_confirmPassword: '',
@@ -45,7 +49,9 @@ export default class ProfileSetUp extends React.Component {
             company_fileName: '',
             company_streetAddress: '',
             company_City: '',
+            company_city_id: '',
             company_Province: '',
+            company_province_id:'',
             company_zipCode: '',
             company_password: '',
             company_confirmPass: '',
@@ -56,6 +62,11 @@ export default class ProfileSetUp extends React.Component {
 
             cityList:[],
             isCityListFilled:0,
+
+            otp_code:'',
+            otp_modal_visible:false,
+            resp_otp:'',
+            resp_token:'',
 
         }
     }
@@ -133,7 +144,9 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Company Name"
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.company_name}
+                        ref={(ref)=>{this.input_company_name = ref}}
                         onChangeText={(text) => { this.setState({ company_name: text }) }}
+                        onBlur={()=>{this.input_company_contact_person.focus()}}
                     />
                 </View>
 
@@ -147,9 +160,12 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Name"
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.company_contactPerson}
+                        ref={(ref)=>{this.input_company_contact_person = ref}}
                         onChangeText={(text) => { this.setState({ company_contactPerson: text }) }}
+                        onBlur={()=>{this.input_company_contact_position.focus()}}
                     />
                 </View>
+
                 <View>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -162,7 +178,9 @@ export default class ProfileSetUp extends React.Component {
                                 placeholder="Enter Position Name"
                                 style={StyleSetUpProfile.TextInput}
                                 value={this.state.company_contactPosition}
+                                ref={(ref)=>{this.input_company_contact_position = ref}}
                                 onChangeText={(text) => { this.setState({ company_contactPosition: text }) }}
+                                onBlur={()=>{this.input_company_telephone_number.focus()}}
                             />
                         </View>
                         {/* if required image upload in company profile,make TextInputView width small */}
@@ -196,6 +214,7 @@ export default class ProfileSetUp extends React.Component {
                         }}
                     />
                 </View>
+
                 <View style={StyleSetUpProfile.TextInputView}>
                     <View style={StyleSetUpProfile.LabelView}>
                         <Text style={StyleSetUpProfile.modalLabelText}>{Constants.CompanyTelephonenumber}</Text>
@@ -205,7 +224,11 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Number"
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.company_telephoneNo}
+                        ref={(ref)=>{this.input_company_telephone_number = ref}}
+                        maxLength={10}
+                        keyboardType="number-pad"
                         onChangeText={(text) => { this.setState({ company_telephoneNo: text }) }}
+                        onBlur={()=>{this.input_company_emailId.focus()}}
                     />
                 </View>
 
@@ -215,10 +238,14 @@ export default class ProfileSetUp extends React.Component {
                         <Text style={{ color: 'red' }}>*</Text>
                     </View>
                     <TextInput
-                        placeholder="Enter Telephone Number"
+                        placeholder="Enter Email Id"
                         style={StyleSetUpProfile.TextInput}
-                        value={this.state.emailId}
-                        onChangeText={(text) => { this.setState({ emailId: text }) }}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        value={this.state.company_emailId}
+                        ref={(ref)=>{this.input_company_emailId = ref}}
+                        onChangeText={(text) => { this.setState({ company_emailId: text }) }}
+                        onBlur={()=>{this.input_company_street_address.focus()}}
                     />
                 </View>
 
@@ -234,6 +261,7 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Address"
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.company_streetAddress}
+                        ref={(ref)=>{this.input_company_street_address = ref}}
                         onChangeText={(text) => { this.setState({ company_streetAddress: text }) }}
                     />
                 </View>
@@ -243,6 +271,7 @@ export default class ProfileSetUp extends React.Component {
                         <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.SelectProvince}</Text>
                     </View>
                     <Picker
+                        ref={(ref)=>{this.input_company_province = ref}}
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_LIGHT }}
                         selectedValue={this.state.company_Province}
@@ -252,13 +281,14 @@ export default class ProfileSetUp extends React.Component {
                                 this.setState({ company_Province : value })
                                 this.state.provinceList.map((item)=>{
                                     if(value == item.name){
+                                        this.setState({company_province_id : item.state_id})
                                         this.getCityList(item.state_id)
                                     }
                                 })
                             }
                         }
                     >
-                        <Picker.Item label="Select Province" value="Province" />
+                        <Picker.Item label="Select Province" value="-1" />
                         {
                             this.state.isProvinceListFilled==1
                             ?
@@ -274,6 +304,7 @@ export default class ProfileSetUp extends React.Component {
                         <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.SelectCity}</Text>
                     </View>
                     <Picker
+                        ref={(ref)=>{this.input_company_city = ref}}
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_LIGHT }}
                         selectedValue={this.state.company_City}
@@ -283,6 +314,7 @@ export default class ProfileSetUp extends React.Component {
                                 this.state.cityList.map((item)=>{
                                     if(value == item.name){
                                         // city id
+                                        this.setState({company_city_id : item.city_id})
                                     }
                                 })
                             }
@@ -305,10 +337,14 @@ export default class ProfileSetUp extends React.Component {
                         <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.ZipCode}</Text>
                     </View>
                     <TextInput
-                        placeholder="Enter Confirm Number"
+                        placeholder="Enter Zipcode"
                         style={StyleSetUpProfile.TextInput}
-                        value={this.state.zipCode}
+                        keyboardType="number-pad"
+                        maxLength={6}
+                        value={this.state.company_zipCode}
+                        ref={(ref)=>{this.input_company_zipcode = ref}}
                         onChangeText={(text) => { this.setState({ zipCode: text }) }}
+                        onBlur={()=>{this.input_company_new_password.focus()}}
                     />
                 </View>
 
@@ -319,8 +355,12 @@ export default class ProfileSetUp extends React.Component {
                     <TextInput
                         placeholder="Enter Password"
                         style={StyleSetUpProfile.TextInput}
+                        autoCapitalize="none"
                         value={this.state.company_password}
+                        secureTextEntry={true}
+                        ref={(ref)=>{this.input_company_new_password = ref}}
                         onChangeText={(text) => { this.setState({ company_password: text }) }}
+                        onBlur={()=>{this.input_company_confirm_password.focus()}}
                     />
                 </View>
 
@@ -331,7 +371,10 @@ export default class ProfileSetUp extends React.Component {
                     <TextInput
                         placeholder="Enter Confirm Password"
                         style={StyleSetUpProfile.TextInput}
+                        autoCapitalize="none"
                         value={this.state.company_confirmPass}
+                        secureTextEntry={true}
+                        ref={(ref)=>{this.input_company_confirm_password = ref}}
                         onChangeText={(text) => { this.setState({ company_confirmPass: text }) }}
                     />
                 </View>
@@ -354,7 +397,9 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter First Name"
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_firstName}
+                        ref={(ref)=>{this.input_user_first_name=ref}}
                         onChangeText={(text) => { this.setState({ user_firstName: text }) }}
+                        onBlur={()=>{this.input_user_last_name.focus()}}
                     />
                 </View>
 
@@ -368,6 +413,7 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter last Name"
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_lastName}
+                        ref={(ref)=>{this.input_user_last_name=ref}}
                         onChangeText={(text) => { this.setState({ user_lastName: text }) }}
                     />
                 </View>
@@ -378,13 +424,15 @@ export default class ProfileSetUp extends React.Component {
                         <Text style={{ color: 'red' }}>*</Text>
                     </View>
                     <Picker
+                        ref={(ref)=>{this.input_user_title = ref}}
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_LIGHT }}
                         selectedValue={this.state.user_title}
                         onValueChange={(value) => { this.setState({ user_title: value }) }}
                     >
-                        <Picker.Item label="Select" value="Key1" />
-                        <Picker.Item label="Title2" value="Key2" />
+                        <Picker.Item label="Select" value="-1" />
+                        <Picker.Item label="Mr" value="Mr" />
+                        <Picker.Item label="Mrs" value="Mrs" />
                     </Picker>
                 </View>
 
@@ -396,10 +444,15 @@ export default class ProfileSetUp extends React.Component {
                     <TextInput
                         placeholder="Enter Telephone Number"
                         style={StyleSetUpProfile.TextInput}
+                        keyboardType="number-pad"
+                        maxLength={10}
+                        ref={(ref)=>{this.input_user_telephone_number=ref}}
                         value={this.state.user_telephoneNumber}
                         onChangeText={(text) => { this.setState({ user_telephoneNumber: text }) }}
+                        onBlur={()=>{this.input_user_rsa_id.focus()}}
                     />
                 </View>
+
                 <View>
                     <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
                         <View style={[StyleSetUpProfile.TextInputView, { width: '74%' }]}>
@@ -410,8 +463,11 @@ export default class ProfileSetUp extends React.Component {
                             <TextInput
                                 placeholder="Enter Number"
                                 style={StyleSetUpProfile.TextInput}
+                                keyboardType="number-pad"
+                                ref={(ref)=>{this.input_user_rsa_id=ref}}
                                 value={this.state.user_rsaPassport}
                                 onChangeText={(text) => { this.setState({ user_rsaPassport: text }) }}
+                                onBlur={()=>{this.input_user_emailId.focus()}}
                             />
 
                         </View>
@@ -457,7 +513,11 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Email Addrss"
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_email}
+                        ref={(ref)=>{this.input_user_emailId=ref}}
+                        autoCapitalize="none"
+                        keyboardType="email-address"
                         onChangeText={(text) => { this.setState({ user_email: text }) }}
+                        onBlur={()=>{this.input_user_address.focus()}}
                     />
                 </View>
 
@@ -470,7 +530,9 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Address"
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_address}
+                        ref={(ref)=>{this.input_user_address=ref}}
                         onChangeText={(text) => { this.setState({ user_address: text }) }}
+                        onBlur={()=>{this.input_user_street_address.focus()}}
                     />
                 </View>
 
@@ -482,6 +544,7 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Address"
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_streetAddress}
+                        ref={(ref)=>{this.input_user_street_address=ref}}
                         onChangeText={(text) => { this.setState({ user_streetAddress: text }) }}
                     />
                 </View>
@@ -491,6 +554,7 @@ export default class ProfileSetUp extends React.Component {
                         <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.SelectProvince}</Text>
                     </View>
                     <Picker
+                        ref={(ref)=>{this.input_user_province = ref}}
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_LIGHT }}
                         selectedValue={this.state.user_Province}
@@ -500,7 +564,7 @@ export default class ProfileSetUp extends React.Component {
                                 this.state.provinceList.map((item, index)=>{
                                     if(value == item.name){
                                         //fetching country_id
-                                        //this.setState({user_Province_id : item.state_id})
+                                        this.setState({user_Province_id : item.state_id})
                                         this.getCityList(item.state_id)
                                     }
                                 })
@@ -523,12 +587,20 @@ export default class ProfileSetUp extends React.Component {
                         <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.SelectCity}</Text>
                     </View>
                     <Picker
+                        ref={(ref)=>{this.input_user_city = ref}}
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_LIGHT }}
                         selectedValue={this.state.user_City}
-                        onValueChange={(value) => this.setState({ user_City: value })}
+                        onValueChange={(value) => {
+                            this.setState({ user_City: value })
+                            this.state.cityList.map((item, index)=>{
+                                    if(value == item.name){
+                                        this.setState({user_city_id : item.city_id})
+                                    }
+                            })
+                        }}
                     >
-                        <Picker.Item label="Selct city" value="city" />
+                        <Picker.Item label="Selct city" value="-1" />
                         {
                             this.state.isCityListFilled==1
                             ?
@@ -544,11 +616,14 @@ export default class ProfileSetUp extends React.Component {
                         <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.ZipCode}</Text>
                     </View>
                     <TextInput
-                        placeholder="Enter Password"
-                        secureTextEntry={true}
+                        placeholder="Enter zip code"
                         style={StyleSetUpProfile.TextInput}
+                        keyboardType="number-pad"
+                        maxLength={6}
                         value={this.state.user_zipCode}
+                        ref={(ref)=>{this.input_user_zipcode=ref}}
                         onChangeText={(text) => { this.setState({ user_zipCode: text }) }}
+                        onBlur={()=>{this.input_user_new_password.focus()}}
                     />
                 </View>
 
@@ -561,7 +636,10 @@ export default class ProfileSetUp extends React.Component {
                         secureTextEntry={true}
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_password}
+                        autoCapitalize="none"
+                        ref={(ref)=>{this.input_user_new_password=ref}}
                         onChangeText={(text) => { this.setState({ user_password: text }) }}
+                        onBlur={()=>{this.input_user_confirm_password.focus()}}
                     />
                 </View>
 
@@ -570,13 +648,16 @@ export default class ProfileSetUp extends React.Component {
                         <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.ConfirmPassword}</Text>
                     </View>
                     <TextInput
-                        placeholder="Enter Confirm Number"
+                        placeholder="Enter Confirm Password"
                         secureTextEntry={true}
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_confirmPassword}
+                        autoCapitalize="none"
+                        ref={(ref)=>{this.input_user_confirm_password=ref}}
                         onChangeText={(text) => { this.setState({ user_confirmPassword: text }) }}
                     />
                 </View>
+            
             </View>
         )
 
@@ -619,15 +700,315 @@ export default class ProfileSetUp extends React.Component {
               }
               break;
           }
+          case ApiConstants.profileSetup:{
+              if(data.status){
+                  this.setState({resp_otp:data.email_otp, resp_token: data.access_token, Modal_visible : true})
+              }else{
+                  alert(data.message)
+              }
+              break;
+          }
         }
-      }
+    }
     
+    isUserFormValid(){
+        if(this.state.customerType=="Individual")
+        {
+
+            if(this.state.user_firstName==""){
+                    alert("Please enter first name")
+                    this.input_user_first_name.focus()
+                    return false
+            }
+            if(this.state.user_lastName==""){
+                    alert("Please enter last name")
+                    this.input_user_last_name.focus()
+                    return false
+            }
+            if(this.state.user_title=="-1"){
+                    alert("Please select title")
+                    this.input_user_title.focus()
+                    return false
+            }
+            if(this.state.user_telephoneNumber==""){
+                    alert("Please enter telephone number")
+                    this.input_user_telephone_number.focus()
+                    return false
+            }
+            if(this.state.user_telephoneNumber.length!=10){
+                    alert("Please enter correct telephone number")
+                    this.input_user_telephone_number.focus()
+                    return false
+            }
+            if(this.state.user_rsaPassport==""){
+                    alert("Please enter RSA Id / Passport")
+                    this.input_user_rsa_id.focus()
+                    return false
+            }
+            if(this.state.user_email==""){
+                    alert("Please enter email Id")
+                    this.input_user_emailId.focus()
+                    return false
+            }
+            if(this.state.user_address==""){
+                    alert("Please enter address")
+                    this.input_user_address.focus()
+                    return false
+            }
+            if(this.state.user_streetAddress==""){
+                    alert("Please enter street address")
+                    this.input_user_street_address.focus()
+                    return false
+            }
+            if(this.state.user_Province=="-1"){
+                    alert("Please select province")
+                    this.input_user_province.focus()
+                    return false
+            }
+            if(this.state.user_City=="-1"){
+                    alert("Please select city")
+                    this.input_user_city.focus()
+                    return false
+            }
+            if(this.state.user_zipCode==""){
+                    alert("Please enter zip code")
+                    this.input_user_zipcode.focus()
+                    return false
+            }
+            if(this.state.user_zipCode.length!=6){
+                    alert("Please enter correct zip code")
+                    this.input_user_zipcode.focus()
+                    return false
+            }
+            if(this.state.user_password==""){
+                    alert("Please enter password")
+                    this.input_user_new_password.focus()
+                    return false
+            }
+            if(this.state.user_password.length<=7){
+                    alert("Please enter strong password")
+                    this.input_user_new_password.focus()
+                    return false
+            }
+            if(this.state.user_confirmPassword==""){
+                    alert("Please enter confirm password")
+                    this.input_user_confirm_password.focus()
+                    return false
+            }
+            if(this.state.user_confirmPassword != this.state.user_password){
+                    alert("Please enter confirm password matching with new password")
+                    this.input_user_confirm_password.focus()
+                    return false
+            }
+        }
+        return true
+    }
+
+    isCompanyFormValid(){
+        if(this.state.company_name==""){
+            alert("Please enter company name")
+            this.input_company_name.focus()
+            return false
+        }
+        if(this.state.company_contactPerson==""){
+            alert("Please enter company contact person name")
+            this.input_company_contact_person.focus()
+            return false
+        }
+        if(this.state.company_contactPosition==""){
+            alert("Please enter position of company contact person")
+            this.input_company_contact_position.focus()
+            return false
+        }
+        if(this.state.company_telephoneNo==""){
+            alert("Please enter telephone number")
+            this.input_company_telephone_number.focus()
+            return false
+        }
+        if(this.state.company_telephoneNo.length!=10){
+            alert("Please enter correct telephone number")
+            this.input_company_telephone_number.focus()
+            return false
+        }
+        if(this.state.company_emailId==""){
+            alert("Please enter email Id")
+            this.input_company_emailId.focus()
+            return false
+        }
+        if(this.state.company_streetAddress==""){
+            alert("Please enter street address")
+            this.input_company_street_address.focus()
+            return false
+        }
+        if(this.state.company_Province=="-1"){
+            alert("Please select province")
+            this.input_company_province.focus()
+            return false
+        }
+        if(this.state.company_City=="-1"){
+            alert("Please select city")
+            this.input_company_city.focus()
+            return false
+        }
+        if(this.state.company_zipCode==""){
+            alert("Please enter zip code")
+            this.input_company_zipcode.focus()
+            return false
+        }
+        if(this.state.company_zipCode.length != 6){
+            alert("Please enter correct zip code")
+            this.input_company_zipcode.focus()
+            return false
+        }
+        if(this.state.company_password==""){
+            alert("Please enter password")
+            this.input_company_new_password.focus()
+            return false
+        }
+        if(this.state.company_password.length <=7){
+            alert("Please enter strong password")
+            this.input_company_new_password.focus()
+            return false
+        }
+        if(this.state.company_confirmPass==""){
+            alert("Please enter confirm password")
+            this.input_company_confirm_password.focus()
+            return false
+        }
+        if(this.state.company_confirmPass!= this.state.company_password){
+            alert("Please enter confirm password matching with new password")
+            this.input_company_confirm_password.focus()
+            return false
+        }
+        return true
+    }
+
+    submit(){
+        if(this.state.customerType=="Individual"){
+            if(this.isUserFormValid()){
+                // api call for user
+                let params = {
+                    "first_name":this.state.user_firstName,
+                    "last_name":this.state.user_lastName,
+                    "title":this.state.user_title,
+                    //"telephone_number":this.state.user_telephoneNumber,    // missing param in api
+                    "rsa_id":this.state.user_rsaPassport,
+                    "email_id":this.state.user_email,
+                    "password":this.state.user_confirmPassword,
+                    //"address":this.state.user_address,                     // missing param in api
+                    "street_address":this.state.user_streetAddress,
+                    "state_id":this.state.user_Province_id,
+                    "city_id":this.state.user_city_id,
+                    "zipcode":this.state.user_zipCode,
+                    "registration_type":1,
+                    "terms_accepted":1,
+                }
+                this.presenter.callPostApi(ApiConstants.profileSetup, params, true);
+            }
+        }
+        else{
+            if(this.isCompanyFormValid()){
+                // api call for company
+                let params = {
+                    "company_name":this.state.company_name,
+                    "comp_cont_person":this.state.company_contactPerson,
+                    "comp_cont_position":this.state.company_contactPosition,
+                    //"telephone_number":this.state.company_telephoneNo,        // missing param in api
+                    "email_id":this.state.company_emailId,
+                    //"password":this.state.company_confirmPass,                // missing param in api
+                    "street_address":this.state.company_streetAddress,
+                    "state_id":this.state.company_province_id,
+                    "city_id":this.state.company_city_id,
+                    "zipcode":this.state.company_zipCode,
+                    "registration_type":2,
+                    "terms_accepted":1,
+                }
+                this.presenter.callPostApi(ApiConstants.profileSetup, params, true);
+            }
+        }
+    }
+
+    async verifyOTP(){
+        if(this.state.otp_code == this.state.resp_otp){
+            this.setState({otp_modal_visible:false})
+            await setUserData(this.state.resp_token)
+            this.props.navigation.dispatch(
+                StackActions.reset({
+                    index :0,
+                    actions :[NavigationActions.navigate({routeName : 'Dashboard'})]
+                })
+            );
+        }
+        else{
+            alert("Please enter valid OTP code")
+            this.setState({otp_code:'',})
+        }
+    }
+
+    showOTpModal() {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                <View style={[StyleForgotPassword.ModalView, { width: '80%' }]}>
+                    
+                    <TouchableOpacity style={{ display:'none', alignSelf: 'flex-end', top: 10, right: 10 }}
+                            onPress={()=>{
+                                this.setState({otp_modal_visible:false})
+                        }}
+                    >
+                        <Image source={require('../images/close.png')}
+                            style={{ width: 15, height: 15 }}
+                        />
+                    </TouchableOpacity>
+                    
+                    <Text style={StyleForgotPassword.modalTextMSg}>{Constants.VerificationCode}</Text>
+                    
+                    <Text style={{ color: Constants.COLOR_GREY_SHADED, alignSelf: 'center' }}>{Constants.EnterOTP}</Text>
+                    
+                    <TextInput 
+                        style={StyleForgotPassword.ModaltextInput}
+                        value={this.state.otp_code}
+                        keyboardType="number-pad"
+                        maxLength={6}
+                        placeholder='000000'
+                        onChangeText={(Text) => {
+                            if(!isNaN(Text))
+                                this.setState({ otp_code: Text })
+                            else
+                             this.setState({ otp_code:'' })
+                        }}
+                        onBlur={()=>{this.verifyOTP()}}
+                    />
+                    <TouchableOpacity style={{ display:'none', alignSelf: 'center', marginTop: 15 }}
+                    onPress={()=>{ this.resendOTP() }}
+                    >
+                        <Text style={StyleForgotPassword.resendText}>{Constants.ResendCode}</Text>
+                    </TouchableOpacity>
+                   
+                    <View style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'center', marginVertical: 15 }}>
+                                
+                        <TouchableOpacity style={StyleForgotPassword.modalButtonView}
+                            onPress={()=>{
+                                this.verifyOTP();
+                            }}
+                        >
+                            <Text style={StyleForgotPassword.modalButtonLabel}>{Constants.VERIFY}</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+        )
+    }
+  
     render() {
         let { navigation } = this.props
         return (
+
             <View style={{ flex: 1 }}>
+                
                 <HeaderBar isBack={false} title="Profile setup" isLogout={true} navigation={navigation} />
+                
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
+                
                 <ScrollView style={{ width: '100%', marginVertical: 20 }}
                     bounces={false}
                 >
@@ -658,7 +1039,9 @@ export default class ProfileSetUp extends React.Component {
                         ? null
                         :
                         <View>
+                            
                             <View style={{ marginLeft: 15 }}>
+                                
                                 <View style={[StyleSignUp.policyView,]}>
                                     <TouchableOpacity
                                         onPress={() => {
@@ -680,6 +1063,7 @@ export default class ProfileSetUp extends React.Component {
                                 </View>
 
                                 <View style={[{ paddingLeft: 42, flexDirection: 'row', marginBottom: 10 }]}>
+                                    
                                     <TouchableOpacity
                                         onPress={() => {
                                             this.props.navigation.navigate('TermsAndCondition', { flag: 'CancellationPolicy' })
@@ -687,7 +1071,9 @@ export default class ProfileSetUp extends React.Component {
                                     >
                                         <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy}</Text>
                                     </TouchableOpacity>
+                                    
                                     <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}> & </Text>
+                                    
                                     <TouchableOpacity
                                         onPress={() => {
                                             this.props.navigation.navigate('TermsAndCondition', { flag: 'PaymentPolicy' })
@@ -696,7 +1082,9 @@ export default class ProfileSetUp extends React.Component {
                                     >
                                         <Text style={StyleSignUp.PolicyLabel}>{Constants.PaymentPolicy}</Text>
                                     </TouchableOpacity>
+                                
                                 </View>
+                            
                             </View>
 
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -711,12 +1099,13 @@ export default class ProfileSetUp extends React.Component {
                                 <TouchableOpacity style={this.state.policyRadio_button ? [StyleSetUpProfile.ButtonView, { paddingVertical: 10 }] : [StyleSetUpProfile.ButtonView, { paddingVertical: 10, backgroundColor: Constants.COLOR_GREY_LIGHT }]} disabled={!this.state.policyRadio_button}
                                     onPress={() => {
                                         this.setState({ Modal_visible: true })
-
                                     }}
                                 >
                                     <Text style={[StyleSetUpProfile.ButtonTextBottom, { fontSize: Constants.FONT_SIZE_EXTRA_LARGE }]}>{Constants.SUBMIT}</Text>
                                 </TouchableOpacity>
+
                             </View>
+
                         </View>
                     }
                 </ScrollView>
@@ -724,13 +1113,14 @@ export default class ProfileSetUp extends React.Component {
                 <Modal
                     transparent={true}
                     visible={this.state.Modal_visible}
+                    //visible={true}
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
                         <View style={StyleSetUpProfile.modalView}>
-                            <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
+                            <TouchableOpacity style={{ display:'none', alignSelf: 'flex-end', top: 10, right: 10 }}
                                 onPress={() => {
                                     this.setState({ Modal_visible: false })
-                                    this.props.navigation.navigate('Dashboard');
+                                    //this.props.navigation.navigate('Dashboard');
                                 }}
                             >
                                 <Image source={require('../images/close.png')}
@@ -745,8 +1135,11 @@ export default class ProfileSetUp extends React.Component {
                             <TouchableOpacity style={StyleSetUpProfile.modalButton}
                                 onPress={() => {
                                     this.setState({ Modal_visible: false })
-                                    this.props.navigation.navigate('Dashboard');
-
+                                    let timer = setInterval(()=>{
+                                        this.setState({otp_modal_visible:true})
+                                        clearInterval(timer)
+                                    } ,600)
+                                    //this.props.navigation.navigate('Dashboard');
                                 }}
                             >
                                 <Text style={StyleSetUpProfile.modalButtonText}>{Constants.OK}</Text>
@@ -755,6 +1148,13 @@ export default class ProfileSetUp extends React.Component {
                     </View>
                 </Modal>
 
+                <Modal
+                    transparent={true}
+                    visible={this.state.otp_modal_visible}
+                >
+                    {this.showOTpModal()}
+                </Modal>
+            
             </View>
         )
     }

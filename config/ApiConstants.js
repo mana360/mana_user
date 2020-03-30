@@ -24,6 +24,7 @@ export default ApiConstants = {
     getSupportSubject:'customer/getSupportSubject',
     getBookingDetails:'customer/getBookingDetails',
     resendOTP:'customer/resendOTP',
+    profileSetup:'customer/profileSetup',
 
 
     /* ----------DEV 3------------- */
