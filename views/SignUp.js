@@ -62,13 +62,13 @@ export default class SignUp extends Component {
     switch (apiConstant) {
       case ApiConstants.register: {
         if (data.status) {  
+      console.log(data);
           this.setState({otp_modal_visible:true, resp_otp_code:data.email_otp, resp_user_id:data.user_id});
           await setUserData(data.access_token)
           this.timer = setInterval(()=>{
             this.setState({modalVisible_welcome:true})
             clearInterval(this.timer)
           }, 1000)
-      
           this.timer = setInterval(()=>{
             this.setState({modalVisible_welcome:false})
             clearInterval(this.timer)

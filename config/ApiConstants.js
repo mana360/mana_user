@@ -31,7 +31,8 @@ export default ApiConstants = {
     verifyOTP:"customer/verifyOTP",
     resendOTP:"customer/resendOTP",
     register:"customer/register",
-    getotherService:"customer/getOtherServices",
+    getotherServices:"customer/getOtherServices",
+    getCMLTruckCategory:"customer/getCMLTruckCategory"
 
 
 } 
