@@ -180,7 +180,8 @@ export default class CollectMyLoad extends React.Component {
         )
     }
     componentDidMount() {
-        this.presenter.callGetApi(ApiConstants.getDashboardData, "", true)
+        this.presenter.callGetApi(ApiConstants.getDashboardData, "", true);
+        this.presenter.callGetApi(ApiConstants.getCMLTruckCategory,"",true);
     }
     onResponse(apiConstant, data) {
         switch (apiConstant) {
@@ -201,7 +202,14 @@ export default class CollectMyLoad extends React.Component {
                     alert(data.message)
                 }
                 break;
-
+                case ApiConstants.getCMLTruckCategory:
+                    if(data.status){
+                        console.log(data);
+                        this.setState({truckList:data.truck_category});
+                        console.log('value===>',data.truck_category);
+                    }else{
+                        alert(data.message)
+                    }
             default:
                 break;
         }

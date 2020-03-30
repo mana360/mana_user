@@ -12,6 +12,8 @@ import HeaderBar from '../config/HeaderBar';
 import Textarea from 'react-native-textarea';
 import { Dropdown } from 'react-native-material-dropdown';
 import moment from 'moment'
+import { MainPresenter } from '../config/MainPresenter';
+import ApiConstants from '../config/ApiConstants';
 
 export default class BookingSummary extends React.Component{
     setModalVisible(visible) {
@@ -34,7 +36,13 @@ export default class BookingSummary extends React.Component{
             contact_number:"",
             contact_number_additional:"",
             discountAmount:0,
+
+            otherServices:"",
         }
+    }
+
+    componentDidMount(){
+        this.getOtherServices();
     }
     setAddress( addressType:"", addressText:"",){
         //  addressType    1 = pickup, 2 = drop off1,    3 = drop off2
@@ -123,6 +131,7 @@ export default class BookingSummary extends React.Component{
                 {/* Header Start */ }
                    <HeaderBar  title="Booking Summary" isBack={true} isLogout={true} navigation={navigation}/>
                 {/* Header Close */ }
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
 
                 {/* Main Body Start */}
                     <ScrollView bounces={false} style={{width:wp('100%')}}>
@@ -327,9 +336,12 @@ export default class BookingSummary extends React.Component{
                                         <Text style={StyleBookingSummary.otherTxtser}>Other Services</Text>
                                         <View style={StyleBookingSummary.grayBox}>
                                             <Text style={{color:'#a3a3a3', fontFamily: "Roboto-Light",fontSize:14, width:"90%",}}>
-                                                Extra Helper - 2, No. of floors - 4
+                                                {this.state.otherServices}
                                             </Text>
-                                            <TouchableOpacity style={StyleBookingSummary.rtSec}>
+                                            <TouchableOpacity style={StyleBookingSummary.rtSec}
+                                            onPress={()=>{
+                                                this.setState({otherServices:""})
+                                            }}>
                                                     <Image style={StyleBookingSummary.removeImg}
                                                     source={require('../images/remove.png')} />
                                             </TouchableOpacity>
@@ -410,7 +422,7 @@ export default class BookingSummary extends React.Component{
                                                  
                                             <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
                                                     onPress={()=>{
-                                                        this.setState({modalVisible:false})
+                                                        this.setState({modalVisible:false});
                                                 }}
                                             >
                                             <Image source={require('../images/close.png')}
@@ -477,7 +489,8 @@ export default class BookingSummary extends React.Component{
                                                     </View> 
                                                         <TouchableOpacity  
                                                             onPress={()=>{
-                                                                this.setState({modalVisible:false})
+                                                                this.setState({modalVisible:false});
+                                                                this.getOtherServices();
                                                         }}
                                                         style={[StyleLocationDetails.logButton, {marginTop:0, marginBottom:0,} ]}>
                                                         <Text style={StyleLocationDetails.logButtonText}>{Constants.SUBMIT}</Text>
@@ -493,4 +506,27 @@ export default class BookingSummary extends React.Component{
         </View>
         )
     }
+getOtherServices(){
+    let params={
+
+    }
+    this.presenter.callGetApi(ApiConstants.getotherServices,"",true);
+}
+
+async onResponse(apiConstant, data) {
+    switch (apiConstant) {
+      case ApiConstants.getotherServices: {
+        if (data.status) { 
+            console.log(data);
+            this.setState({otherServices:data.other_services[0].service_name});
+
+         } else {
+            alert(data.message)
+          }
+      }
+      
+      }
+    }
+
+
 }
