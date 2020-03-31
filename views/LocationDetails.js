@@ -11,6 +11,8 @@ import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import Textarea from 'react-native-textarea';
 import moment from 'moment'
+import ApiConstants from '../config/ApiConstants';
+import { MainPresenter } from '../config/MainPresenter';
 
 export default class LocationDetails extends React.Component {
     constructor(props) {
@@ -23,10 +25,16 @@ export default class LocationDetails extends React.Component {
             add_nextAddress: '',
             pickup_date: "",
             pickup_time: "",
+
             load_category: '',
+            load_category_id:"",
+            loadCategoryList:[],
+            isLoadCategoryFilled:0
         }
     }
-
+componentDidMount(){
+    this.getloadCategoryList();
+}
     async openCalender() {
         console.log("called")
         try {
@@ -76,6 +84,36 @@ export default class LocationDetails extends React.Component {
     getMapInfo(resp) {
         console.log("RESP AALA RE ====>" + resp.results[1].formatted_address);
     }
+
+    onResponse(apiConstant, data) {
+        switch (apiConstant) {
+          case ApiConstants.LoadCategoryList: {
+              if(data.status){
+                //   console.log("LoadCategory List => " + JSON.stringify(data))
+                  this.setState({loadCategoryList : data.load_category,isLoadCategoryFilled:1})
+
+                }
+              else {
+                  alert(data.message)
+              }
+            break;
+          }
+          
+        }
+    }
+
+    isValid(){
+        if(this.state.load_category=="-1"){
+            alert("please Select Load Category");
+            this.input_loadcategory.focus();     
+        return false
+        }
+        return true
+    }
+getloadCategoryList(){
+this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true)
+}
+
     render() {
 
         let { navigation } = this.props;
@@ -85,6 +123,7 @@ export default class LocationDetails extends React.Component {
                 {/* Header Start */}
                 <HeaderBar title="Location Details" isBack={true} isLogout={true} navigation={navigation} />
                 {/* Header Close */}
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
 
                 {/* Main Body Start */}
                 <ScrollView bounces={false} style={{ width: wp('100%') }}>
@@ -260,17 +299,30 @@ export default class LocationDetails extends React.Component {
                                     <Text style={[StyleLocationDetails.labelTextNew, { textTransform: 'capitalize' }]}>{Constants.LOAD_CATEGORY}</Text>
                                 </View>
                                 <Picker
+                                     ref={(ref)=>{this.input_loadcategory = ref}}
                                     mode='dropdown'
                                     style={{ color: Constants.COLOR_GREY_DARK, width: '95%', alignSelf: 'center', paddingVertical: 20 }}
                                     selectedValue={this.state.load_category}
                                     onValueChange={(value) => {
-                                        this.setState({ load_category: value })
+                                        this.setState({ load_category: value });
+                                        this.state.loadCategoryList.map((Item,index)=>{
+                                           if(value==Item.name){
+                                               this.setState({load_category_id:item.state_id});
+                                            
+                                           }
+                                        })
                                     }}
                                 >
-                                    <Picker.Item label='Select Load Category' value='default' />
-                                    <Picker.Item label='Household' value='key1' />
-                                    <Picker.Item label='Other' value='key2' />
-
+                                    <Picker.Item label='Select Load Category' value='-1' />
+                                 {
+                                     this.state.isLoadCategoryFilled==1
+                                     ?
+                                     this.state.loadCategoryList.map((item,index)=>
+                                    
+                                         <Picker.item key={item.category_id}  label={""+item.category_name} value={item.category_name}/>
+                                     )
+                                     :null 
+                                    }
                                 </Picker>
 
                             </View>
