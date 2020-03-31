@@ -1,7 +1,7 @@
 /*
 Screen-Id : MANAPPCUS090-1,90-3,90
 @author :mayur s
-API : Udayraj (provinceList, cityList)
+API : Udayraj (provinceList, cityList, profileSetup, verifyOTP)
 */
 import React, { Component } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, Modal, FlatList } from "react-native";
@@ -12,7 +12,7 @@ import Constants from '../config/Constants';
 import { StyleSetUpProfile, StyleSignUp,StyleForgotPassword } from '../config/CommonStyles';
 import ApiConstants from '../config/ApiConstants';
 import {MainPresenter} from '../config/MainPresenter';
-import { setUserData } from '../config/AppSharedPreference';
+import { setUserData, clearAllData } from '../config/AppSharedPreference';
 import { StackActions, NavigationActions } from 'react-navigation';
 
 export default class ProfileSetUp extends React.Component {
@@ -931,13 +931,15 @@ export default class ProfileSetUp extends React.Component {
     async verifyOTP(){
         if(this.state.otp_code == this.state.resp_otp){
             this.setState({otp_modal_visible:false})
-            await setUserData(this.state.resp_token)
+            //-- instructions by Rohit
+            await clearAllData()
             this.props.navigation.dispatch(
                 StackActions.reset({
                     index :0,
-                    actions :[NavigationActions.navigate({routeName : 'Dashboard'})]
+                    actions :[NavigationActions.navigate({routeName : 'SignIn'})]
                 })
             );
+            //---------------------------
         }
         else{
             alert("Please enter valid OTP code")
@@ -1098,7 +1100,8 @@ export default class ProfileSetUp extends React.Component {
 
                                 <TouchableOpacity style={this.state.policyRadio_button ? [StyleSetUpProfile.ButtonView, { paddingVertical: 10 }] : [StyleSetUpProfile.ButtonView, { paddingVertical: 10, backgroundColor: Constants.COLOR_GREY_LIGHT }]} disabled={!this.state.policyRadio_button}
                                     onPress={() => {
-                                        this.setState({ Modal_visible: true })
+                                        this.submit()
+                                        //this.setState({ Modal_visible: true })
                                     }}
                                 >
                                     <Text style={[StyleSetUpProfile.ButtonTextBottom, { fontSize: Constants.FONT_SIZE_EXTRA_LARGE }]}>{Constants.SUBMIT}</Text>

@@ -21,6 +21,7 @@ export default class TermsAndCondition extends Component {
   render() {
     let { navigation } = this.props;
     let flag = this.props.navigation.getParam('flag', false);
+    let isLogout = this.props.navigation.getParam('isLogout',false)
 
     return (
       <View style={{ flex: 1, backgroundColor: Constants.colorGrey }}>
@@ -45,7 +46,7 @@ export default class TermsAndCondition extends Component {
             "About Us"
             :  "Terms & Conditions"
           }
-           isBack={true} isLogout={true} navigation={navigation} />
+           isBack={true} isLogout={ isLogout ? true : false } navigation={navigation} />
         <FlatList
             data={this.state.data}
             extraData={this.state}

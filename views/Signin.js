@@ -126,7 +126,7 @@ export default class SignIn extends Component {
               <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold', paddingHorizontal: 3 }}>{Constants.IagreeTo}</Text>
               <TouchableOpacity
                 onPress={() => {
-                  this.props.navigation.navigate('TermsAndCondition', { flag: 'TermsAndCondition' })
+                  this.props.navigation.navigate('TermsAndCondition', { flag: 'TermsAndCondition', isLogout:false})
                 }}
               >
                 <Text style={StyleSignUp.PolicyLabel}>{Constants.TermsAndConditions}</Text>
@@ -137,7 +137,7 @@ export default class SignIn extends Component {
             <View style={[{ paddingLeft: 42, flexDirection: 'row', marginBottom: 10 }]}>
               <TouchableOpacity
                 onPress={() => {
-                  this.props.navigation.navigate('TermsAndCondition', { flag: 'CancellationPolicy' })
+                  this.props.navigation.navigate('TermsAndCondition', { flag: 'CancellationPolicy', isLogout:false })
                 }}
               >
                 <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy}</Text>
@@ -145,7 +145,7 @@ export default class SignIn extends Component {
               <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}> & </Text>
               <TouchableOpacity
                 onPress={() => {
-                  this.props.navigation.navigate('TermsAndCondition', { flag: 'PaymentPolicy' })
+                  this.props.navigation.navigate('TermsAndCondition', { flag: 'PaymentPolicy', isLogout:false })
                 }}
 
               >
