@@ -27,13 +27,15 @@ export default ApiConstants = {
     profileSetup:'customer/profileSetup',
 
 
-    /* ----------DEV 3------------- */
+    /* ------------Mayur----------- */
     forgotPassword:"customer/forgotPassword",
     verifyOTP:"customer/verifyOTP",
     resendOTP:"customer/resendOTP",
     register:"customer/register",
     getotherServices:"customer/getOtherServices",
-    getCMLTruckCategory:"customer/getCMLTruckCategory"
+    getCMLTruckCategory:"customer/getCMLTruckCategory",
+    LoadCategoryList:"customer/getCMLLoadCategory",
+    userStatus:"customer/userStatus",
 
 
 } 

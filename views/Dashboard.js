@@ -26,6 +26,10 @@ export default class Dashboard extends React.Component {
             modal_Visible: false,
             screen_title: 'Dashboard',
             fill1: "90",
+            role_id:"",
+            active_status:"",
+            notifications_count:"",
+
             dashboard_data: [
                 // { title: "Truck Bookings", desc: "Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent: "60" },
                 // { title: "Warehouse Services", desc: "Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent: "35" },
@@ -35,9 +39,14 @@ export default class Dashboard extends React.Component {
         }
     }
     componentDidMount() {
-        this.presenter.callGetApi(ApiConstants.getDashboardData, "", true)
-
+       
+        this.presenter.callGetApi(ApiConstants.getDashboardData, "", true);
+        this.getUserStatus();
     }
+
+getUserStatus(){
+    this.presenter.callGetApi(ApiConstants.userStatus, "", true);
+}
     onResponse(apiConstant, data) {
         switch (apiConstant) {
             case ApiConstants.getDashboardData:
@@ -92,6 +101,15 @@ export default class Dashboard extends React.Component {
                     this.setState({
                         dashboard_data: localArray
                     })
+                }
+                break;
+                case ApiConstants.userStatus:{
+                    if (data.status) {
+                        this.setState({role_id:data.userStatus.role_id,active_status:data.userStatus.active_status,notifications_count:data.userStatus.notifications_count});
+                   console.log(data.userStatus);
+                    }else{
+                        alert(data.message);
+                    }
                 }
                 break;
 
