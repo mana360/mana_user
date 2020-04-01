@@ -1628,6 +1628,8 @@ const StyleCollectMyLoad = StyleSheet.create({
         color:Constants.COLOR_GREEN_DARK,
         marginTop:5,
         textAlign:"center",
+        height:130,
+        maxHeight:130,
     },
     grayBox:{
         backgroundColor:Constants.COLOR_GREY_DARK,

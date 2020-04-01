@@ -18,33 +18,33 @@ export default class CollectMyLoad extends React.Component {
             modalVisible_RateCard: false,
             ModalVisible_referFriend: false,
             truckList: [
-                {
-                    src: require('../images/truck_icon.png'),
-                    truckTitle: "Choose Truck",
-                    truckWeight: "1 Ton",
-                    truckDesp: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
-                    truckMaxWeight: "1 Ton",
-                    truckLength: 20,
-                    truckWidth: 10,
-                },
-                {
-                    src: require('../images/truck_icon_one.png'),
-                    truckTitle: "Choose Truck",
-                    truckWeight: "1.5 Ton",
-                    truckDesp: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
-                    truckMaxWeight: "1.5 Ton",
-                    truckLength: 20,
-                    truckWidth: "10S",
-                },
-                {
-                    src: require('../images/truck_icon_two.png'),
-                    truckTitle: "Choose Truck",
-                    truckWeight: "3 Ton",
-                    truckDesp: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
-                    truckMaxWeight: "3 Ton",
-                    truckLength: 20,
-                    truckWidth: 10,
-                }
+                // {
+                //     src: require('../images/truck_icon.png'),
+                //     truckTitle: "Choose Truck",
+                //     truckWeight: "1 Ton",
+                //     truckDesp: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+                //     truckMaxWeight: "1 Ton",
+                //     truckLength: 20,
+                //     truckWidth: 10,
+                // },
+                // {
+                //     src: require('../images/truck_icon_one.png'),
+                //     truckTitle: "Choose Truck",
+                //     truckWeight: "1.5 Ton",
+                //     truckDesp: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+                //     truckMaxWeight: "1.5 Ton",
+                //     truckLength: 20,
+                //     truckWidth: "10S",
+                // },
+                // {
+                //     src: require('../images/truck_icon_two.png'),
+                //     truckTitle: "Choose Truck",
+                //     truckWeight: "3 Ton",
+                //     truckDesp: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+                //     truckMaxWeight: "3 Ton",
+                //     truckLength: 20,
+                //     truckWidth: 10,
+                // }
             ],
             collectMyLoadData: [
                 /*   { title: "New Booking", type: "new", desc: "fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent: 45 },
@@ -206,7 +206,7 @@ export default class CollectMyLoad extends React.Component {
                     if(data.status){
                         console.log(data);
                         this.setState({truckList:data.truck_category});
-                        console.log('value===>',data.truck_category);
+                        console.log('truck value===>',data.truck_category);
                     }else{
                         alert(data.message)
                     }
@@ -227,7 +227,9 @@ export default class CollectMyLoad extends React.Component {
                     renderItem={
                         ({ item, index }) =>
                             <View style={StyleTruckBooking.row}>
+                                
                                 <View style={StyleTruckBooking.col1}>
+                                    
                                     <AnimatedCircularProgress
                                         size={90}
                                         width={10}
@@ -241,12 +243,16 @@ export default class CollectMyLoad extends React.Component {
                                     </AnimatedCircularProgress>
 
                                 </View>
+
                                 <View style={StyleTruckBooking.col2}>
+                                    
                                     <Text style={[StyleTruckBooking.labelText2]}>{item.title}</Text>
+                                    
                                     <Text style={StyleTruckBooking.descText}>{item.desc}</Text>
+                                    
                                     <TouchableOpacity style={StyleTruckBooking.button}
                                         onPress={() => {
-                                            item.type == "new"
+                                            item.type == "upcoming"
                                                 ?
                                                 this.RBSheet.open()
                                                 :
@@ -255,7 +261,9 @@ export default class CollectMyLoad extends React.Component {
                                     >
                                         <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>
                                     </TouchableOpacity>
+                                
                                 </View>
+                            
                             </View>
                     }
                 />
@@ -342,41 +350,48 @@ export default class CollectMyLoad extends React.Component {
                             indicatorSpace={15}
                         >
                             {
-                                this.state.truckList.map((item) => {
-                                    return (
-                                        <View style={StyleCollectMyLoad.carouselWrapp}>
-                                            <View style={StyleCollectMyLoad.innpickTop}>
-                                                <Image style={StyleCollectMyLoad.bgpickImg}
-                                                    source={require('../images/pickload_circle.png')}
-                                                />
-                                                <View style={StyleCollectMyLoad.outerCircle}>
-                                                    <View style={StyleCollectMyLoad.innerCircle}>
-                                                        <Image style={StyleCollectMyLoad.truckImg}
-                                                            source={item.src}
-                                                        />
-                                                    </View>
+                                this.state.truckList.map((item,index) =>
+                                    <View style={StyleCollectMyLoad.carouselWrapp}>
+                                        
+                                        <View style={StyleCollectMyLoad.innpickTop}>
+                                            <Image style={StyleCollectMyLoad.bgpickImg}
+                                                source={require('../images/pickload_circle.png')}
+                                            />
+                                            
+                                            <View style={StyleCollectMyLoad.outerCircle}>
+                                                <View style={StyleCollectMyLoad.innerCircle}>
+                                                    <Image style={StyleCollectMyLoad.truckImg}
+                                                        source={item.src}
+                                                    />
                                                 </View>
                                             </View>
+
+                                        </View>
                                             <View style={StyleCollectMyLoad.whiteinnBox}>
-                                                <Text style={StyleCollectMyLoad.chosetruckTxt}>{item.truckTitle}</Text>
-                                                <Text style={StyleCollectMyLoad.weighTxt}>{item.truckWeight}</Text>
-                                                <Text style={StyleCollectMyLoad.truckDetails}>{item.truckDesp}</Text>
+                                                
+                                                <Text style={StyleCollectMyLoad.chosetruckTxt}>Choose truck</Text>
+                                                
+                                                <Text style={StyleCollectMyLoad.weighTxt}>{item.category_name}</Text>
+                                                
+                                                <Text style={StyleCollectMyLoad.truckDetails}>{item.desc}</Text>
+                                                
                                                 <View style={StyleCollectMyLoad.grayBox}>
-                                                    <Text style={[StyleCollectMyLoad.maxTxt, { marginBottom: 6 }]}>Maximum Weight : {item.truckMaxWeight}</Text>
-                                                    <Text style={StyleCollectMyLoad.maxTxt}>Size : LENGTH {item.truckLength} * WIDTH {item.truckWidth}</Text>
+                                                    <Text style={[StyleCollectMyLoad.maxTxt, { marginBottom: 6 }]}>Maximum Weight : {item.weight} TON</Text>
+                                                    <Text style={StyleCollectMyLoad.maxTxt}>Size : {item.size} meters</Text>
                                                 </View>
+                                                
                                                 <TouchableOpacity
                                                     onPress={() => {
-                                                        this.props.navigation.navigate('LocationDetails')
                                                         this.RBSheet.close();
+                                                        this.props.navigation.navigate('LocationDetails')
                                                     }}
                                                     style={StyleCollectMyLoad.truckBtn}>
                                                     <Text style={StyleCollectMyLoad.truckBtnText}>Select Truck</Text>
                                                 </TouchableOpacity>
+                                            
                                             </View>
-                                        </View>
-                                    )
-                                })
+                                    </View>
+                                )
                             }
                         </Carousel>
                     </View>
