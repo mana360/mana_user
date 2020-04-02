@@ -25,6 +25,7 @@ export default ApiConstants = {
     getBookingDetails:'customer/getBookingDetails',
     resendOTP:'customer/resendOTP',
     profileSetup:'customer/profileSetup',
+    countryList:'customer/countryList',
 
 
     /* ------------Mayur----------- */

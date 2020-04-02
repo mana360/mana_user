@@ -173,19 +173,19 @@ class HeaderBar extends React.Component {
               <TouchableOpacity style={styles.modalButtonView}
                 onPress={() => {
                   this.presenter.callGetApi(ApiConstants.logout, {}, true);
-                  this.setState({ isLogoutModalVisible: false, isSuccessLogoutModal: true })
-                  let setinter = setInterval(() => {
-                    clearAllData()
-                    this.setState({ isSuccessLogoutModal: false })
-                    clearInterval(setinter);
-                    this.props.navigation.dispatch(
-                      StackActions.reset({
-                        index: 0,
-                        actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
-                      })
-                    )
-                  }, 2000);
-                  this.presenter.callGetApi(ApiConstants.logout, "", true);
+                  // this.setState({ isLogoutModalVisible: false, isSuccessLogoutModal: true })
+                  // let setinter = setInterval(() => {
+                  //   clearAllData()
+                  //   this.setState({ isSuccessLogoutModal: false })
+                  //   clearInterval(setinter);
+                  //   this.props.navigation.dispatch(
+                  //     StackActions.reset({
+                  //       index: 0,
+                  //       actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
+                  //     })
+                  //   )
+                  // }, 2000);
+                  //this.presenter.callGetApi(ApiConstants.logout, "", true);
                 }}
               >
                 <Text style={styles.modalButtonText}>{Constants.YES}</Text>

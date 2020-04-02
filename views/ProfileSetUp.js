@@ -33,6 +33,8 @@ export default class ProfileSetUp extends React.Component {
             user_address: '',
             user_email: '',
             user_streetAddress: '',
+            user_country:"",
+            user_country_id:'',
             user_City: '',
             user_city_id:'',
             user_Province: '',
@@ -48,6 +50,8 @@ export default class ProfileSetUp extends React.Component {
             company_img_arry: [],
             company_fileName: '',
             company_streetAddress: '',
+            company_country:'',
+            company_country_id:'',
             company_City: '',
             company_city_id: '',
             company_Province: '',
@@ -55,6 +59,9 @@ export default class ProfileSetUp extends React.Component {
             company_zipCode: '',
             company_password: '',
             company_confirmPass: '',
+
+            countryList:[],
+            isCountryListFilled:0,
 
             provinceList:[],
             isProvinceListFilled:0,
@@ -264,6 +271,39 @@ export default class ProfileSetUp extends React.Component {
                         ref={(ref)=>{this.input_company_street_address = ref}}
                         onChangeText={(text) => { this.setState({ company_streetAddress: text }) }}
                     />
+                </View>
+
+                <View style={StyleSetUpProfile.TextInputView}>
+                    <View style={StyleSetUpProfile.LabelView}>
+                        <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.SELECT_COUNTRY}</Text>
+                    </View>
+                    <Picker
+                        ref={(ref)=>{this.input_company_country = ref}}
+                        mode="dropdown"
+                        style={{ color: Constants.COLOR_GREY_LIGHT }}
+                        selectedValue={this.state.company_country}
+                        onValueChange={
+                            (value, index) => {
+                                console.log("value ===>"+value)
+                                this.setState({ company_country : value })
+                                this.state.countryList.map((item)=>{
+                                    if(value == item.name){
+                                        this.setState({company_country_id : item.country_id})
+                                        this.getProvinceList(item.country_id)
+                                    }
+                                })
+                            }
+                        }
+                    >
+                        <Picker.Item label="Select Country" value="-1" />
+                        {
+                            this.state.isCountryListFilled==1
+                            ?
+                            this.state.countryList.map((item) =>
+                            <Picker.Item key={item.country_id} label={"" + item.name} value={item.name} />)
+                            : null
+                        }
+                    </Picker>
                 </View>
 
                 <View style={StyleSetUpProfile.TextInputView}>
@@ -551,6 +591,39 @@ export default class ProfileSetUp extends React.Component {
 
                 <View style={StyleSetUpProfile.TextInputView}>
                     <View style={StyleSetUpProfile.LabelView}>
+                        <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.SELECT_COUNTRY}</Text>
+                    </View>
+                    <Picker
+                        ref={(ref)=>{this.input_user_country = ref}}
+                        mode="dropdown"
+                        style={{ color: Constants.COLOR_GREY_LIGHT }}
+                        selectedValue={this.state.user_country}
+                        onValueChange={
+                            (value, index) => {
+                                console.log("value ===>"+value)
+                                this.setState({ user_country : value })
+                                this.state.countryList.map((item)=>{
+                                    if(value == item.name){
+                                        this.setState({user_country_id : item.country_id})
+                                        this.getProvinceList(item.country_id)
+                                    }
+                                })
+                            }
+                        }
+                    >
+                        <Picker.Item label="Select Country" value="-1" />
+                        {
+                            this.state.isCountryListFilled==1
+                            ?
+                            this.state.countryList.map((item) =>
+                            <Picker.Item key={item.country_id} label={"" + item.name} value={item.name} />)
+                            : null
+                        }
+                    </Picker>
+                </View>
+
+                <View style={StyleSetUpProfile.TextInputView}>
+                    <View style={StyleSetUpProfile.LabelView}>
                         <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.SelectProvince}</Text>
                     </View>
                     <Picker
@@ -664,11 +737,16 @@ export default class ProfileSetUp extends React.Component {
     }
 
     componentDidMount(){
-        this.getProvinceList()
+        //this.getProvinceList()
+        this.getCountryList()
     }
 
-    async getProvinceList(){
-       await this.presenter.callPostApi(ApiConstants.provinceList, {country_id:1}, true);
+    async getCountryList(){
+        await this.presenter.callGetApi(ApiConstants.countryList, "", true);
+    }
+
+    async getProvinceList(country_id){
+       await this.presenter.callPostApi(ApiConstants.provinceList, {country_id:country_id}, true);
     }
 
     getCityList(state_id){
@@ -680,6 +758,14 @@ export default class ProfileSetUp extends React.Component {
 
     onResponse(apiConstant, data) {
         switch (apiConstant) {
+          case ApiConstants.countryList :{
+              if(data.status){
+                this.setState({countryList : data.countryList, isCountryListFilled:1})
+              }else{
+                  alert(data.message)
+              }
+              break;
+          }
           case ApiConstants.provinceList: {
               if(data.status){
                   console.log("country List => " + JSON.stringify(data))
