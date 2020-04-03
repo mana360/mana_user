@@ -1,5 +1,6 @@
 /* screen -MANAPPCUS108,36,37
     design by -mayur s
+    api by Udayraj (changePassword)
  */
 import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput, FlatList } from 'react-native';
@@ -7,8 +8,11 @@ import { StyleMyProfile } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import HeaderBar from '../config/HeaderBar';
 import Constants from '../config/Constants';
+import { MainPresenter } from '../config/MainPresenter';
+import ApiConstants from '../config/ApiConstants';
 
 export default class MyProfile extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -16,7 +20,7 @@ export default class MyProfile extends React.Component {
             new_password: '',
             confirm_password: '',
             password_visible: true,
-            screen_title: 'CompanyProfile', //CompanyProfile, UserProfile
+            screen_title: 'UserProfile', //CompanyProfile, UserProfile
             modalVisible_Changepassword: false,
             modalVisible_SavedMsg: false,
             companyProfile_data: [
@@ -341,11 +345,44 @@ export default class MyProfile extends React.Component {
         this.setState({ userProfile_image: temparray })
 
     }
+    
+    isValidPasswords(){
+        if(this.state.current_password==""){
+            alert("Please enter current password")
+            this.input_current_password.focus()
+            return false
+        }
+        if(this.state.new_password==""){
+            alert("Please enter new password")
+            this.input_new_password.focus()
+            return false
+        }
+        if(this.state.confirm_password==""){
+            alert("Please enter confirm passowrd")
+            this.input_confirm_password.focus()
+            return false
+        }
+        if(this.state.new_password != this.state.confirm_password){
+            alert("New and Confirm password doesn't matched.")
+            this.input_confirm_password.focus()
+            return false
+        }
+
+        return true
+    }
+    updatePassword(){
+        if(this.isValidPasswords()){
+            //----- api call for change password
+            this.setState({modalVisible_Changepassword:false})
+        }
+    }
 
     Modal_ChangePassword() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                
                 <View style={StyleMyProfile.ModalWrapper}>
+                    
                     <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
                         onPress={() => {
                             this.setState({ modalVisible_Changepassword: false })
@@ -355,6 +392,7 @@ export default class MyProfile extends React.Component {
                             style={{ width: 15, height: 15 }}
                         />
                     </TouchableOpacity>
+                    
                     <Text style={[StyleMyProfile.col1Text, { fontSize: Constants.FONT_SIZE_EXTRA_LARGE, textTransform: 'uppercase', alignSelf: 'center', marginVertical: 10 }]}>{Constants.ChangePassword}</Text>
 
                     <View style={{ marginTop: 10 }} >
@@ -368,10 +406,13 @@ export default class MyProfile extends React.Component {
                             </View>
                             <TextInput
                                 placeholder="Enter Password"
+                                ref={(ref)=>{this.input_current_password = ref}}
                                 style={StyleMyProfile.TextInput}
                                 value={this.state.current_password}
+                                secureTextEntry={true}
+                                autoCapitalize="none"
                                 onChangeText={(text) => { this.setState({ current_password: text }) }}
-
+                                onBlur={()=>{ this.input_new_password.focus() }}
                             />
                         </View>
 
@@ -383,11 +424,14 @@ export default class MyProfile extends React.Component {
                                 <Text style={StyleMyProfile.modalLabelText}>{Constants.NewPassword}</Text>
                             </View>
                             <TextInput
-                                placeholder="Enter Password"
+                                placeholder="Enter New Password"
+                                ref={(ref)=>{this.input_new_password = ref }}
                                 style={StyleMyProfile.TextInput}
                                 value={this.state.new_password}
+                                secureTextEntry={true}
+                                autoCapitalize="none"
                                 onChangeText={(text) => { this.setState({ new_password: text }) }}
-
+                                onBlur={()=>{this.input_confirm_password.focus()}}
                             />
                         </View>
 
@@ -399,22 +443,24 @@ export default class MyProfile extends React.Component {
                                 <Text style={StyleMyProfile.modalLabelText}>{Constants.ConfirmPassword}</Text>
                             </View>
                             <TextInput
-                                placeholder="Enter Password"
+                                placeholder="Enter Confirm Password"
+                                ref={(ref)=>{this.input_confirm_password = ref}}
                                 style={StyleMyProfile.TextInput}
                                 value={this.state.confirm_password}
+                                secureTextEntry={true}
+                                autoCapitalize="none"
                                 onChangeText={(text) => { this.setState({ confirm_password: text }) }}
-
                             />
                         </View>
 
                     </View>
+
                     <TouchableOpacity style={[StyleMyProfile.ButtonView, { width: '90%' }]}
-                        onPress={() => {
-                            this.setState({ modalVisible_SavedMsg: true })
-                        }}
+                        onPress={() => { this.updatePassword() }}
                     >
                         <Text style={StyleMyProfile.ButtonLabel}>{Constants.Update}</Text>
                     </TouchableOpacity>
+
                 </View>
             </View>
         )
@@ -451,12 +497,22 @@ export default class MyProfile extends React.Component {
         )
     }
 
+    onResponse(apiConstant,data){
+        switch(apiConstant){
+            case ApiConstants :{
+                break;
+            }
+        }
+    }
+
     render() {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1 }}>
 
                 <HeaderBar title="MY profile" isBack={true} isLogout={true} navigation={navigation} />
+                
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation}/>
                 
                 <View style={{ flex: 1 }}>
                     

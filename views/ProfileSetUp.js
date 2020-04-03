@@ -14,6 +14,7 @@ import ApiConstants from '../config/ApiConstants';
 import {MainPresenter} from '../config/MainPresenter';
 import { setUserData, clearAllData } from '../config/AppSharedPreference';
 import { StackActions, NavigationActions } from 'react-navigation';
+import {CommonFunctions} from '../config/CommonFunctions'
 
 export default class ProfileSetUp extends React.Component {
 
@@ -234,7 +235,14 @@ export default class ProfileSetUp extends React.Component {
                         ref={(ref)=>{this.input_company_telephone_number = ref}}
                         maxLength={10}
                         keyboardType="number-pad"
-                        onChangeText={(text) => { this.setState({ company_telephoneNo: text }) }}
+                        onChangeText={(text) => { 
+                            if(!isNaN(text))
+                            {
+                                this.setState({ company_telephoneNo: text })
+                            }else{
+                                this.setState({ company_telephoneNo: '' })
+                            }
+                        }}
                         onBlur={()=>{this.input_company_emailId.focus()}}
                     />
                 </View>
@@ -488,7 +496,13 @@ export default class ProfileSetUp extends React.Component {
                         maxLength={10}
                         ref={(ref)=>{this.input_user_telephone_number=ref}}
                         value={this.state.user_telephoneNumber}
-                        onChangeText={(text) => { this.setState({ user_telephoneNumber: text }) }}
+                        onChangeText={(text) => { 
+                            if(! isNaN(text)){
+                                this.setState({ user_telephoneNumber: text })
+                            }else{
+                                this.setState({ user_telephoneNumber: '' })
+                            }
+                        }}
                         onBlur={()=>{this.input_user_rsa_id.focus()}}
                     />
                 </View>
@@ -550,7 +564,7 @@ export default class ProfileSetUp extends React.Component {
                         <Text style={{ color: 'red' }}>*</Text>
                     </View>
                     <TextInput
-                        placeholder="Enter Email Addrss"
+                        placeholder="Enter Email Address"
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_email}
                         ref={(ref)=>{this.input_user_emailId=ref}}
@@ -798,6 +812,7 @@ export default class ProfileSetUp extends React.Component {
     }
     
     isUserFormValid(){
+        let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
         if(this.state.customerType=="Individual")
         {
 
@@ -835,6 +850,11 @@ export default class ProfileSetUp extends React.Component {
                     alert("Please enter email Id")
                     this.input_user_emailId.focus()
                     return false
+            }
+            if(!emailRegex.test(this.state.user_email)){
+                alert("Please enter valid email Id")
+                this.input_user_emailId.focus()
+                return false
             }
             if(this.state.user_address==""){
                     alert("Please enter address")
@@ -891,80 +911,89 @@ export default class ProfileSetUp extends React.Component {
     }
 
     isCompanyFormValid(){
-        if(this.state.company_name==""){
-            alert("Please enter company name")
-            this.input_company_name.focus()
-            return false
-        }
-        if(this.state.company_contactPerson==""){
-            alert("Please enter company contact person name")
-            this.input_company_contact_person.focus()
-            return false
-        }
-        if(this.state.company_contactPosition==""){
-            alert("Please enter position of company contact person")
-            this.input_company_contact_position.focus()
-            return false
-        }
-        if(this.state.company_telephoneNo==""){
-            alert("Please enter telephone number")
-            this.input_company_telephone_number.focus()
-            return false
-        }
-        if(this.state.company_telephoneNo.length!=10){
-            alert("Please enter correct telephone number")
-            this.input_company_telephone_number.focus()
-            return false
-        }
-        if(this.state.company_emailId==""){
-            alert("Please enter email Id")
-            this.input_company_emailId.focus()
-            return false
-        }
-        if(this.state.company_streetAddress==""){
-            alert("Please enter street address")
-            this.input_company_street_address.focus()
-            return false
-        }
-        if(this.state.company_Province=="-1"){
-            alert("Please select province")
-            this.input_company_province.focus()
-            return false
-        }
-        if(this.state.company_City=="-1"){
-            alert("Please select city")
-            this.input_company_city.focus()
-            return false
-        }
-        if(this.state.company_zipCode==""){
-            alert("Please enter zip code")
-            this.input_company_zipcode.focus()
-            return false
-        }
-        if(this.state.company_zipCode.length != 6){
-            alert("Please enter correct zip code")
-            this.input_company_zipcode.focus()
-            return false
-        }
-        if(this.state.company_password==""){
-            alert("Please enter password")
-            this.input_company_new_password.focus()
-            return false
-        }
-        if(this.state.company_password.length <=7){
-            alert("Please enter strong password")
-            this.input_company_new_password.focus()
-            return false
-        }
-        if(this.state.company_confirmPass==""){
-            alert("Please enter confirm password")
-            this.input_company_confirm_password.focus()
-            return false
-        }
-        if(this.state.company_confirmPass!= this.state.company_password){
-            alert("Please enter confirm password matching with new password")
-            this.input_company_confirm_password.focus()
-            return false
+        let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+        if(this.state.customerType=="Company"){
+
+            if(this.state.company_name==""){
+                alert("Please enter company name")
+                this.input_company_name.focus()
+                return false
+            }
+            if(this.state.company_contactPerson==""){
+                alert("Please enter company contact person name")
+                this.input_company_contact_person.focus()
+                return false
+            }
+            if(this.state.company_contactPosition==""){
+                alert("Please enter position of company contact person")
+                this.input_company_contact_position.focus()
+                return false
+            }
+            if(this.state.company_telephoneNo==""){
+                alert("Please enter telephone number")
+                this.input_company_telephone_number.focus()
+                return false
+            }
+            if(this.state.company_telephoneNo.length!=10){
+                alert("Please enter correct telephone number")
+                this.input_company_telephone_number.focus()
+                return false
+            }
+            if(this.state.company_emailId==""){
+                alert("Please enter email Id")
+                this.input_company_emailId.focus()
+                return false
+            }
+            if(!emailRegex.test(this.state.company_emailId)){
+                alert("Please enter valid email Id")
+                this.input_company_emailId.focus()
+                return false
+            }
+            if(this.state.company_streetAddress==""){
+                alert("Please enter street address")
+                this.input_company_street_address.focus()
+                return false
+            }
+            if(this.state.company_Province=="-1"){
+                alert("Please select province")
+                this.input_company_province.focus()
+                return false
+            }
+            if(this.state.company_City=="-1"){
+                alert("Please select city")
+                this.input_company_city.focus()
+                return false
+            }
+            if(this.state.company_zipCode==""){
+                alert("Please enter zip code")
+                this.input_company_zipcode.focus()
+                return false
+            }
+            if(this.state.company_zipCode.length != 6){
+                alert("Please enter correct zip code")
+                this.input_company_zipcode.focus()
+                return false
+            }
+            if(this.state.company_password==""){
+                alert("Please enter password")
+                this.input_company_new_password.focus()
+                return false
+            }
+            if(this.state.company_password.length <=7){
+                alert("Please enter strong password")
+                this.input_company_new_password.focus()
+                return false
+            }
+            if(this.state.company_confirmPass==""){
+                alert("Please enter confirm password")
+                this.input_company_confirm_password.focus()
+                return false
+            }
+            if(this.state.company_confirmPass!= this.state.company_password){
+                alert("Please enter confirm password matching with new password")
+                this.input_company_confirm_password.focus()
+                return false
+            }
         }
         return true
     }

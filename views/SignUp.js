@@ -201,19 +201,20 @@ onClickSignup(){
 }
 
 isValid() {
-  if (this.state.password!==this.state.confirm_password) {
-    alert("Password and Confirm Password  does not match");
+  let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+
+  if(this.state.emailId == ""){
+    alert("Please enter Email Id")
+    this.TextInput_emailId.focus()
     return false
   }
-  // if (this.state.mobile_number.length == 0) {
-  //   alert("Please enter mobile number")
-  //   return false
-  // }
-  // if (this.state.mobile_number.length < 9 || this.state.mobile_number.length > 13) {
-  //   console.log(this.state.mobile_number)
-  //   alert("Please enter valid mobile number")
-  //   return false
-  // }
+
+  if(!emailRegex.test(this.state.emailId)){
+    alert("Please enter valid email Id")
+    this.TextInput_emailId.focus()
+    return false
+}
+
   if (this.state.password.length == 0) {
     alert("Please enter Password")
     this.TextInput_password.focus()
@@ -229,9 +230,10 @@ isValid() {
     this.TextInput_confirm_password.focus()
     return false
   }
-  if (this.state.password.length ==!this.state.confirm_password) {
-    alert("Password and conform password does not match")
-    this.TextInput_confirm_password.focus()
+  
+  if (this.state.password!==this.state.confirm_password) {
+    alert("Password and Confirm Password  does not match");
+    this.TextInput_password.focus()
     return false
   }
 

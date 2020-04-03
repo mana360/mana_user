@@ -197,7 +197,11 @@ export default class HelpAndSupport extends React.Component {
 
                                     </View>
                                 :
-                                    <TouchableOpacity style={this.state.isUser ? StyleHelpAndSupport.buttonView : { display: 'none' }}
+                                    <TouchableOpacity style={
+                                        //this.state.isUser ? 
+                                        StyleHelpAndSupport.buttonView 
+                                        //: { display: 'flex' }
+                                        }
                                         onPress={() => {this.sendMessage()}}
                                     >
                                         <Text style={StyleHelpAndSupport.buttonText}>{Constants.SEND}</Text>

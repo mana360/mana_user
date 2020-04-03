@@ -1,5 +1,6 @@
 /* screen -MANAPPCUS041,42
     design by -mayur s
+    api by Udayraj (forgotPassword and otp)
  */
 import React from 'react';
 import { View, Text, TouchableOpacity, Image,Modal,TextInput } from 'react-native'
@@ -21,14 +22,32 @@ export default class ForgotPassword extends React.Component {
             OTP:'',
             access_token:"",
             emailId:'',
+            isTimerVisible:true,
+            timerValue:'',
         }
     }
 
     onClickSubmit(){
-        let params = {
-          "emailId":this.state.emailId,
+        if(this.isValidEmail()){
+            let params = {
+                "email_id":this.state.emailId,
+              }
+             this.presenter.callPostApi(ApiConstants.forgotPassword, params, true);
         }
-       this.presenter.callPostApi(ApiConstants.forgotPassword, params, true);
+    }
+    
+    isValidEmail(){
+        if(this.state.emailId==""){
+            alert("Please enter email Id")
+            this.input_emailId.focus()
+            return false
+        }
+        if(!Constants.EMAIL_REGX.test(this.state.emailId)){
+            alert("Please enter valid email Id")
+            this.input_emailId.focus()
+            return false
+        }
+        return true
     }
 
     async resend_OTP(){
@@ -41,60 +60,92 @@ export default class ForgotPassword extends React.Component {
     }
    async verifyOTP(){
         await setAuthToken(this.state.access_token);
+        clearInterval(this.timer)
         let params = {
             "mobile_otp":this.state.OTP,
           }
          this.presenter.callPostApi(ApiConstants.verifyOTP, params, true);   
     }
 
+    onReceiveOTP(user_id, token, otpTime){
+        this.setState({
+            modal_visible:true,
+            user_id:user_id,
+            access_token:token,
+            timerValue: otpTime,
+        });
+        this.timer = setInterval(()=>{
+            if(this.state.timerValue==0){
+                clearInterval(this.timer)
+                this.setState({timerValue:0, isTimerVisible:false})
+            }
+            else{
+                this.setState({timerValue :  this.state.timerValue - 1 })
+            }
+        }, 1000)
+    }
+
 async onResponse(apiConstant,data){
-switch (apiConstant) {
+    switch (apiConstant) {
     case ApiConstants.forgotPassword:{
-        if(data.status){    
-       console.log(data.status);
-       this.setState({modal_visible:true,user_id:data.user_id,access_token:data.access_token});
-       console.log(data.access_token)
+        if(data.status){
+            this.onReceiveOTP(data.user_id, data.access_token, data.otp_duration)
         }else{
             alert(data.message);
         }
-    }  
-case ApiConstants.resendOTP:{
-    if(data.status){
-        console.log(data.status);
-    }else{
-alert(data.message);
+        break;
     }
-}
+    case ApiConstants.resendOTP:{
+        if(data.status){
+            this.setState({isTimerVisible:true,OTP:''})
+            this.onReceiveOTP(data.user_id, data.access_token, data.otp_duration)
+        }else{
+            alert(data.message);
+            this.setState({OTP:''})
+            this.closeModal()
+        }
+        break;
+    }
     case ApiConstants.verifyOTP:{
         if(data.status){
-            alert(data.status);
-this.setState({modal_visible:false});
-this.props.navigation.navigate("SetPassword");
-
+            this.setState({modal_visible:false, isTimerVisible:true, timerValue:0,  OTP:''});
+            this.props.navigation.navigate("SetPassword");
         }else{
+            this.setState({OTP:''})
+            this.onReceiveOTP(this.state.user_id, this.state.access_token, this.state.timerValue)
             alert(data.message);
         }
     }
-        break;
-}
-}
+    break;
+    }
+  }
 
+closeModal(){
+    this.setState({
+        modal_visible:false,
+        timerValue:0,
+        isTimerVisible:true,
+    })
+}
 
  modal_verifyOTP() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                
                 <View style={[StyleForgotPassword.ModalView, { width: '80%' }]}>
+                    
                     <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
-                            onPress={()=>{
-                                this.setState({modal_visible:false})
-                        }}
+                            onPress={()=>{ this.closeModal() }}
                     >
                         <Image source={require('../images/close.png')}
                             style={{ width: 15, height: 15 }}
                         />
                     </TouchableOpacity>
+                    
                     <Text style={StyleForgotPassword.modalTextMSg}>{Constants.VerificationCode}</Text>
+                    
                     <Text style={{ color: Constants.COLOR_GREY_SHADED, alignSelf: 'center' }}>{Constants.EnterOTP}</Text>
+                    
                     <TextInput style={StyleForgotPassword.ModaltextInput}
                         value={this.state.OTP}
                         keyboardType="number-pad"
@@ -107,14 +158,23 @@ this.props.navigation.navigate("SetPassword");
                              this.setState({ OTP:'' })
                         }}
                     />
-                    <TouchableOpacity style={{ alignSelf: 'center', marginTop: 15 }}
-                    onPress={()=>{
-                        this.resend_OTP();
-                    }}
-                    >
-                        <Text style={StyleForgotPassword.resendText}>{Constants.ResendCode}</Text>
-                    </TouchableOpacity>
-                   
+                    
+                    <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
+                        
+                        <TouchableOpacity style={{ alignSelf: 'center', marginTop: 15, display: this.state.isTimerVisible ? 'none' : 'flex'}}
+                        onPress={()=>{
+                            this.resend_OTP();
+                        }}
+                        >
+                            <Text style={StyleForgotPassword.resendText}>{Constants.ResendCode}</Text>
+                        </TouchableOpacity>
+                        
+                        <Text style={[StyleForgotPassword.resendText,{ display: this.state.isTimerVisible ? 'flex' :'none', fontSize:14, textDecorationLine:'none' }]}>
+                            00:{this.state.timerValue}
+                        </Text>
+                    
+                    </View>
+
                     <View style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'center', marginVertical: 15 }}>
                                 
                         <TouchableOpacity style={StyleForgotPassword.modalButtonView}
@@ -125,18 +185,19 @@ this.props.navigation.navigate("SetPassword");
                             <Text style={StyleForgotPassword.modalButtonLabel}>{Constants.VERIFY}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={StyleForgotPassword.modalButtonView}
-                            onPress={()=>{
-                                this.setState({modal_visible:false})
-                            }}
+                            onPress={()=>{ this.closeModal() }}
                         >
                             <Text style={StyleForgotPassword.modalButtonLabel}>{Constants.BACK}</Text>
                         </TouchableOpacity>
                     </View>
+                
                 </View>
+            
             </View>
         )
     }
-    render() {
+
+render() {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, }}>
@@ -158,6 +219,7 @@ this.props.navigation.navigate("SetPassword");
                         </View>
                         <TextInput
                             placeholder="Enter Email Id"
+                            ref={(ref)=>{this.input_emailId = ref}}
                             autoCapitalize="none"
                             style={StyleForgotPassword.TextInput}
                             value={this.state.emailId}
@@ -186,13 +248,16 @@ this.props.navigation.navigate("SetPassword");
                     </View>
 
                 </View>
+                
                 <Modal
                     transparent={true}
                     visible={this.state.modal_visible}
                 >
                    {this.modal_verifyOTP()}
                 </Modal>
+                
                 <FooterBar navigation={navigation} />
+            
             </View>
         )
     }
