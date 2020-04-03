@@ -16,14 +16,14 @@ export default class MyProfile extends React.Component {
             new_password: '',
             confirm_password: '',
             password_visible: true,
-            screen_title: 'UserProfile', //CompanyProfile,UserProfile
+            screen_title: 'CompanyProfile', //CompanyProfile, UserProfile
             modalVisible_Changepassword: false,
             modalVisible_SavedMsg: false,
             companyProfile_data: [
-                { title: 'IBM', company_name: 'IBM', company_contactPerson: 'PMO', company_contactPositiion: 'PMO', company_telephoneNo: '+56 1245521425', email: 'ibmn@ibm.com', address: 'NYC,Lane 345,street 2.', city: 'Johnasburg', province: 'AAA', zipcode: '4561258' }
+                { title: 'IBM', company_name: 'IBM', company_contactPerson: 'PMO', company_contactPositiion: 'PMO', company_telephoneNo: '+56 1245521425', email: 'ibmn@ibm.com', address: 'NYC,Lane 345,street 2.', country:'India', city: 'Johnasburg', province: 'AAA', zipcode: '4561258' }
             ],
             userProfileData: [
-                { title: "Jimmy Dager", first_name: 'Jimmy123', last_name: 'Dager', title_1: 'Mr', telephone_no: '+56 454567874651', rsa_id: '4561323784251', street_address: 'NYC,Lane 345,street2', province: 'AAA', city: 'johnsburg', zipcode: '442301', email: 'vty2@gkml.com' }
+                { title: "Jimmy Dager", first_name: 'Jimmy123', last_name: 'Dager', title_1: 'Mr', telephone_no: '+56 454567874651', rsa_id: '4561323784251', street_address: 'NYC,Lane 345,street2', country:'India', province: 'AAA', city: 'johnsburg', zipcode: '442301', email: 'vty2@gkml.com' }
             ],
             userProfile_image: [
                 { image_name: "", image_path: require('../images/Profile_pic.png') },
@@ -119,6 +119,18 @@ export default class MyProfile extends React.Component {
                     </View>
                     <View style={StyleMyProfile.col2}>
                         <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].city}</Text>
+                    </View>
+                </View>
+
+                <View style={StyleMyProfile.row}>
+                    <View style={StyleMyProfile.col1}>
+                        <Image source={require('../images/address.png')}
+                            style={StyleMyProfile.Icon}
+                        />
+                        <Text style={StyleMyProfile.col1Text}>{Constants.SELECT_COUNTRY}</Text>
+                    </View>
+                    <View style={StyleMyProfile.col2}>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].country}</Text>
                     </View>
                 </View>
 
@@ -253,6 +265,18 @@ export default class MyProfile extends React.Component {
                     </View>
                     <View style={StyleMyProfile.col2}>
                         <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].street_address}</Text>
+                    </View>
+                </View>
+
+                <View style={StyleMyProfile.row}>
+                    <View style={StyleMyProfile.col1}>
+                        <Image source={require('../images/address.png')}
+                            style={StyleMyProfile.Icon}
+                        />
+                        <Text style={StyleMyProfile.col1Text}>{Constants.SELECT_COUNTRY}</Text>
+                    </View>
+                    <View style={StyleMyProfile.col2}>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].country}</Text>
                     </View>
                 </View>
 
@@ -433,7 +457,9 @@ export default class MyProfile extends React.Component {
             <View style={{ flex: 1 }}>
 
                 <HeaderBar title="MY profile" isBack={true} isLogout={true} navigation={navigation} />
+                
                 <View style={{ flex: 1 }}>
+                    
                     <ScrollView style={{ width: '100%', flex: 1 }} bounces={false}>
 
                         <View style={{ marginBottom: 2 }}>
@@ -469,6 +495,7 @@ export default class MyProfile extends React.Component {
                         </View>
 
                         <Text style={StyleMyProfile.label}>{this.state.screen_title == 'UserProfile' ? this.state.userProfileData[0].title : this.state.companyProfile_data[0].title}</Text>
+                        
                         <View style={StyleMyProfile.bottomline}></View>
 
                         {
@@ -490,10 +517,13 @@ export default class MyProfile extends React.Component {
                         >
                             <Text style={StyleMyProfile.UpdateBtn_text}>Change Password</Text>
                         </TouchableOpacity>
+                    
                     </ScrollView>
+                
                 </View>
 
                 <FooterBar navigation={navigation} />
+                
                 <Modal
                     visible={this.state.modalVisible_Changepassword}
                     animationType='fade'
@@ -501,6 +531,7 @@ export default class MyProfile extends React.Component {
                 >
                     {this.Modal_ChangePassword()}
                 </Modal>
+                
                 <Modal
                     visible={this.state.modalVisible_SavedMsg}
                     animationType='fade'
@@ -508,6 +539,7 @@ export default class MyProfile extends React.Component {
                 >
                     {this.Modal_chnagesSaveSuccessFully()}
                 </Modal>
+            
             </View>
         )
     }

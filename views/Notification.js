@@ -12,6 +12,7 @@ import { MainPresenter } from '../config/MainPresenter'
 import ApiConstants from '../config/ApiConstants';
 import moment from 'moment'
 export default class Notification extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -34,8 +35,15 @@ export default class Notification extends React.Component {
 
         }
     }
+    
     componentDidMount() {
         this.presenter.callGetApi(ApiConstants.getNotifications, "", true)
+    }
+
+    callMarkAsReadApi(notification_id) {
+        this.presenter.callPostApi(ApiConstants.readNotification, {
+            notification_id: notification_id
+        })
     }
 
     onResponse(apiConstant, data) {
@@ -62,13 +70,18 @@ export default class Notification extends React.Component {
             }
         }
     }
+    
     render() {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
+                
                 <HeaderBar title="Notifications" isBack={true} isLogout={true} navigation={navigation} />
+                
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
+                
                 <Text style={{ flex: 1, textAlignVertical: 'center', textAlign: 'center', display: this.state.noNotificationTextVisibility ? 'flex' : 'none' }}>No New Notification</Text>
+                
                 <FlatList
                     style={{ marginVertical: 15, display: !this.state.noNotificationTextVisibility ? 'flex' : 'none' }}
                     numColumns={1}
@@ -111,13 +124,10 @@ export default class Notification extends React.Component {
                         )
                     }}
                 />
+                
                 <FooterBar navigation={navigation} />
+           
             </View>
         )
-    }
-    callMarkAsReadApi(notification_id) {
-        this.presenter.callPostApi(ApiConstants.readNotification, {
-            notification_id: notification_id
-        })
     }
 }

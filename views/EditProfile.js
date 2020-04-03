@@ -14,12 +14,13 @@ import ApiConstants from '../config/ApiConstants';
 import {MainPresenter} from '../config/MainPresenter';
 
 export default class EditProfile extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
             modalVisible_Changepassword: false,
             modalVisible_successMsg: false,
-            screen_title: 'company_profile',//user_profile,company_profile
+            screen_title: 'user_profile',//user_profile,company_profile
             current_password: '',
             new_password: '',
             confirm_password: '',
@@ -34,6 +35,8 @@ export default class EditProfile extends React.Component {
             user_city: '',
             designation: 'PMO',
             user_telephoneNo: '459625123',
+            user_country:'',
+            user_country_id:'',
             user_city: 'johnasburg',
             user_province: '',
             user_zipcode: '4567854',
@@ -45,10 +48,15 @@ export default class EditProfile extends React.Component {
             company_telephoneNo: '45875323564',
             company_email: 'inm2@ibm.com',
             company_address: 'NYC,Lane 345,street 2.',
+            company_country:'',
+            company_country_id:'',
             company_city: 'AAA',
             company_province: 'Cape',
             company_zipcode: '5456464',
             company_password: 'sdadfas',
+
+            countryList:[],
+            isCountryListFilled:0,
 
             provinceList:[],
             isProvinceListFilled:0,
@@ -60,6 +68,7 @@ export default class EditProfile extends React.Component {
 
         }
     }
+    
     OpenImagePicker() {
         if (this.state.user_img_arry.length < 4) {
             ImagePicker.showImagePicker(this.options, (response) => {
@@ -83,6 +92,7 @@ export default class EditProfile extends React.Component {
 
         }
     }
+    
     uploadImage(uri) {
         let temp_arry = this.state.user_img_arry;
         temp_arry.push({ uri: uri });
@@ -208,6 +218,42 @@ export default class EditProfile extends React.Component {
                         value={this.state.company_address}
                         onChangeText={(text) => { this.setState({ company_address: text }) }}
                     />
+                </View>
+
+                <View style={StyleEditProfile.TextInputView}>
+                    <View style={StyleEditProfile.LabelView}>
+                        <Image source={require('../images/address.png')}
+                            style={StyleEditProfile.labelIcon}
+                        />
+                        <Text style={StyleEditProfile.modalLabelText}>{Constants.SELECT_COUNTRY}</Text>
+                    </View>
+                    <Picker
+                        mode="dropdown"
+                        style={{ color: Constants.COLOR_GREY_DARK }}
+                        selectedValue={this.state.company_country}
+                        onValueChange={
+                            (value, index) => {
+                                this.setState({ company_country : value })
+                                this.state.countryList.map((item, index)=>{
+                                    if(value == item.name){
+                                        //fetching country_id
+                                        //this.setState({user_Province_id : item.state_id})
+                                        this.getProvinceList(item.country_id)
+                                    }
+                                })
+                            }
+                        }
+                    >
+                        <Picker.Item label='select Country' value='-1' />
+                        {
+                            this.state.isCountryListFilled==1
+                            ?
+                            this.state.countryList.map((item, index) =>
+                            <Picker.Item key={item.country_id} label={"" + item.name} value={item.name} />)
+                            : null
+                        }
+
+                    </Picker>
                 </View>
 
                 <View style={StyleEditProfile.TextInputView}>
@@ -468,6 +514,42 @@ export default class EditProfile extends React.Component {
                         <Image source={require('../images/address.png')}
                             style={StyleEditProfile.labelIcon}
                         />
+                        <Text style={StyleEditProfile.modalLabelText}>{Constants.SELECT_COUNTRY}</Text>
+                    </View>
+                    <Picker
+                        mode="dropdown"
+                        style={{ color: Constants.COLOR_GREY_DARK }}
+                        selectedValue={this.state.user_country}
+                        onValueChange={
+                            (value, index) => {
+                                this.setState({ user_country : value })
+                                this.state.countryList.map((item, index)=>{
+                                    if(value == item.name){
+                                        //fetching country_id
+                                        //this.setState({user_Province_id : item.state_id})
+                                        this.getProvinceList(item.country_id)
+                                    }
+                                })
+                            }
+                        }
+                    >
+                        <Picker.Item label='select Country' value='-1' />
+                        {
+                            this.state.isCountryListFilled==1
+                            ?
+                            this.state.countryList.map((item, index) =>
+                            <Picker.Item key={item.country_id} label={"" + item.name} value={item.name} />)
+                            : null
+                        }
+
+                    </Picker>
+                </View>
+
+                <View style={StyleEditProfile.TextInputView}>
+                    <View style={StyleEditProfile.LabelView}>
+                        <Image source={require('../images/address.png')}
+                            style={StyleEditProfile.labelIcon}
+                        />
                         <Text style={StyleEditProfile.modalLabelText}>{Constants.SelectProvince}</Text>
                     </View>
                     <Picker
@@ -694,11 +776,16 @@ export default class EditProfile extends React.Component {
     }
 
     componentDidMount(){
-        this.getProvinceList()
+        //this.getProvinceList()
+        this.getCountryList()
     }
 
-    async getProvinceList(){
-       await this.presenter.callPostApi(ApiConstants.provinceList, {country_id:1}, true);
+    async getCountryList(){
+        await this.presenter.callGetApi(ApiConstants.countryList, "", true);
+    }
+
+    async getProvinceList(country_id){
+       await this.presenter.callPostApi(ApiConstants.provinceList, {country_id:country_id}, true);
     }
 
     getCityList(state_id){
@@ -710,6 +797,14 @@ export default class EditProfile extends React.Component {
 
     onResponse(apiConstant, data) {
         switch (apiConstant) {
+          case ApiConstants.countryList:{
+              if(data.status){
+                  this.setState({countryList : data.countryList, isCountryListFilled:1})
+              }else{
+                  alert(data.message)
+              }
+              break;
+          }
           case ApiConstants.provinceList: {
               if(data.status)
               {
