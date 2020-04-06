@@ -22,7 +22,6 @@ export default class ProfileSetUp extends React.Component {
         super(props);
         this.state = {
             policyRadio_button: false,
-            Modal_visible: false,
             customerType: '',//Individual,Company
             user_firstName: '',
             user_lastName: '',
@@ -71,10 +70,15 @@ export default class ProfileSetUp extends React.Component {
             cityList:[],
             isCityListFilled:0,
 
+            Modal_visible: false,
+
             otp_code:'',
             otp_modal_visible:false,
             resp_otp:'',
+            resp_otp_time:'',
+            isOtpTimerVisible:false,
             resp_token:'',
+            resp_user_id:'',
 
         }
     }
@@ -388,7 +392,7 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Zipcode"
                         style={StyleSetUpProfile.TextInput}
                         keyboardType="number-pad"
-                        maxLength={6}
+                        maxLength={5}
                         value={this.state.company_zipCode}
                         ref={(ref)=>{this.input_company_zipcode = ref}}
                         onChangeText={(text) => { this.setState({ zipCode: text }) }}
@@ -706,7 +710,7 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter zip code"
                         style={StyleSetUpProfile.TextInput}
                         keyboardType="number-pad"
-                        maxLength={6}
+                        maxLength={5}
                         value={this.state.user_zipCode}
                         ref={(ref)=>{this.input_user_zipcode=ref}}
                         onChangeText={(text) => { this.setState({ user_zipCode: text }) }}
@@ -748,11 +752,6 @@ export default class ProfileSetUp extends React.Component {
             </View>
         )
 
-    }
-
-    componentDidMount(){
-        //this.getProvinceList()
-        this.getCountryList()
     }
 
     async getCountryList(){
@@ -802,7 +801,36 @@ export default class ProfileSetUp extends React.Component {
           }
           case ApiConstants.profileSetup:{
               if(data.status){
-                  this.setState({resp_otp:data.email_otp, resp_token: data.access_token, Modal_visible : true})
+                  this.setState({
+                      resp_otp:data.email_otp,
+                      resp_otp_time:data.otp_duration,
+                      resp_token: data.access_token,
+                      resp_user_id:data.user_id,
+                    })
+                    this.openOTPModal()
+              }else{
+                  alert(data.message)
+              }
+              break;
+          }
+          case ApiConstants.verifyOTP:{
+              if(data.status){
+                  this.onOTPVerified()
+              }
+              else{
+                  alert(data.message)
+              }
+              break;
+          }
+          case ApiConstants.resendOTP:{
+              if(data.status){
+                  this.setState({
+                    resp_otp:data.email_otp,
+                    resp_otp_time:data.otp_duration,
+                    resp_token: data.access_token,
+                    resp_user_id:data.user_id,
+                  })
+                  this.openOTPModal()
               }else{
                   alert(data.message)
               }
@@ -810,7 +838,7 @@ export default class ProfileSetUp extends React.Component {
           }
         }
     }
-    
+
     isUserFormValid(){
         let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
         if(this.state.customerType=="Individual")
@@ -881,7 +909,7 @@ export default class ProfileSetUp extends React.Component {
                     this.input_user_zipcode.focus()
                     return false
             }
-            if(this.state.user_zipCode.length!=6){
+            if(this.state.user_zipCode.length!=5){
                     alert("Please enter correct zip code")
                     this.input_user_zipcode.focus()
                     return false
@@ -969,7 +997,7 @@ export default class ProfileSetUp extends React.Component {
                 this.input_company_zipcode.focus()
                 return false
             }
-            if(this.state.company_zipCode.length != 6){
+            if(this.state.company_zipCode.length != 5){
                 alert("Please enter correct zip code")
                 this.input_company_zipcode.focus()
                 return false
@@ -1043,38 +1071,31 @@ export default class ProfileSetUp extends React.Component {
         }
     }
 
-    async verifyOTP(){
-        if(this.state.otp_code == this.state.resp_otp){
-            this.setState({otp_modal_visible:false})
-            //-- instructions by Rohit
-            await clearAllData()
-            this.props.navigation.dispatch(
-                StackActions.reset({
-                    index :0,
-                    actions :[NavigationActions.navigate({routeName : 'SignIn'})]
-                })
-            );
-            //---------------------------
-        }
-        else{
-            alert("Please enter valid OTP code")
-            this.setState({otp_code:'',})
-        }
+    async onOTPVerified(){
+        this.closeOTPModal()
+        //-- instructions by Rohit
+        this.closeOTPModal()
+        await clearAllData()
+        let timer1 = setInterval(()=>{
+            clearInterval(timer1)
+            this.setState({Modal_visible:true})
+        }, 600)
     }
 
-    showOTpModal() {
+    resendOTP(){
+        this.closeOTPModal()
+        this.presenter.callPostApi(ApiConstants.resendOTP, {user_id : this.state.resp_user_id}, true);
+    }
+
+    getOTpModal() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
                 <View style={[StyleForgotPassword.ModalView, { width: '80%' }]}>
                     
                     <TouchableOpacity style={{ display:'none', alignSelf: 'flex-end', top: 10, right: 10 }}
-                            onPress={()=>{
-                                this.setState({otp_modal_visible:false})
-                        }}
+                            onPress={()=>{ this.closeOTPModal() }}
                     >
-                        <Image source={require('../images/close.png')}
-                            style={{ width: 15, height: 15 }}
-                        />
+                        <Image source={require('../images/close.png')} style={{ width: 15, height: 15 }} />
                     </TouchableOpacity>
                     
                     <Text style={StyleForgotPassword.modalTextMSg}>{Constants.VerificationCode}</Text>
@@ -1093,19 +1114,23 @@ export default class ProfileSetUp extends React.Component {
                             else
                              this.setState({ otp_code:'' })
                         }}
-                        onBlur={()=>{this.verifyOTP()}}
                     />
-                    <TouchableOpacity style={{ display:'none', alignSelf: 'center', marginTop: 15 }}
-                    onPress={()=>{ this.resendOTP() }}
+                    <TouchableOpacity style={{ display: this.state.isOtpTimerVisible ? 'none' : 'flex' , alignSelf: 'center', marginTop: 15 }}
+                        onPress={()=>{ this.resendOTP() }}
                     >
                         <Text style={StyleForgotPassword.resendText}>{Constants.ResendCode}</Text>
                     </TouchableOpacity>
+
+                    <Text style={[StyleForgotPassword.resendText,{ display: this.state.isOtpTimerVisible ? 'flex' : 'none', textDecorationLine:'none'}]}>00:{this.state.resp_otp_time}</Text>
                    
                     <View style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'center', marginVertical: 15 }}>
                                 
-                        <TouchableOpacity style={StyleForgotPassword.modalButtonView}
+                        <TouchableOpacity
+                            style={ this.state.otp_code.length ==6 ? StyleForgotPassword.modalButtonView : [StyleForgotPassword.modalButtonView,{backgroundColor:Constants.COLOR_GREY_LIGHT}]}
+                            disabled={ this.state.otp_code.length ==6 ? false : true}
                             onPress={()=>{
-                                this.verifyOTP();
+                                //this.verifyOTP();
+                                this.presenter.callPostApi(ApiConstants.verifyOTP, {mobile_otp : this.state.otp_code}, true);
                             }}
                         >
                             <Text style={StyleForgotPassword.modalButtonLabel}>{Constants.VERIFY}</Text>
@@ -1115,7 +1140,29 @@ export default class ProfileSetUp extends React.Component {
             </View>
         )
     }
+
+    openOTPModal(){
+        //modal open & timer starts here
+        this.setState({otp_modal_visible:true, isOtpTimerVisible:true, otp_code:''})
+        this.timer = setInterval(()=>{
+            if(this.state.resp_otp_time==0){
+                clearInterval(this.timer)
+                this.setState({resp_otp_time:'', isOtpTimerVisible:false,})
+            }else{
+                this.setState({ resp_otp_time : this.state.resp_otp_time-1 })
+            }
+        },1000)
+    }
+
+    closeOTPModal(){
+        clearInterval(this.timer)
+        this.setState({otp_modal_visible:false, isOtpTimerVisible:false, otp_code:''})
+    }
   
+    componentDidMount(){
+        //this.getProvinceList()
+        this.getCountryList()
+    }
     render() {
         let { navigation } = this.props
         return (
@@ -1238,7 +1285,12 @@ export default class ProfileSetUp extends React.Component {
                             <TouchableOpacity style={{ display:'none', alignSelf: 'flex-end', top: 10, right: 10 }}
                                 onPress={() => {
                                     this.setState({ Modal_visible: false })
-                                    //this.props.navigation.navigate('Dashboard');
+                                    this.props.navigation.dispatch(
+                                        StackActions.reset({
+                                            index :0,
+                                            actions :[NavigationActions.navigate({routeName : 'SignIn'})]
+                                        })
+                                    );
                                 }}
                             >
                                 <Image source={require('../images/close.png')}
@@ -1253,11 +1305,12 @@ export default class ProfileSetUp extends React.Component {
                             <TouchableOpacity style={StyleSetUpProfile.modalButton}
                                 onPress={() => {
                                     this.setState({ Modal_visible: false })
-                                    let timer = setInterval(()=>{
-                                        this.setState({otp_modal_visible:true})
-                                        clearInterval(timer)
-                                    } ,600)
-                                    //this.props.navigation.navigate('Dashboard');
+                                    this.props.navigation.dispatch(
+                                        StackActions.reset({
+                                            index :0,
+                                            actions :[NavigationActions.navigate({routeName : 'SignIn'})]
+                                        })
+                                    );
                                 }}
                             >
                                 <Text style={StyleSetUpProfile.modalButtonText}>{Constants.OK}</Text>
@@ -1270,7 +1323,7 @@ export default class ProfileSetUp extends React.Component {
                     transparent={true}
                     visible={this.state.otp_modal_visible}
                 >
-                    {this.showOTpModal()}
+                    {this.getOTpModal()}
                 </Modal>
             
             </View>

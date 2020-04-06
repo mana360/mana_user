@@ -175,6 +175,10 @@ getUserStatus(){
             </View>
         )
     }
+    resetPage(){
+        console.log("Resettting page")
+        this.setState({screen_title:'Dashboard'})
+    }
     render() {
         let { navigation } = this.props
         return (
@@ -286,7 +290,7 @@ getUserStatus(){
                     </ScrollView>
                 </View>
 
-                <FooterBar navigation={navigation} />
+                <FooterBar navigation={navigation} onReset={this.resetPage.bind(this)} />
             </View>
         )
     }

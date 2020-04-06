@@ -27,6 +27,7 @@ class FooterBar extends React.Component {
                 <TouchableOpacity
                   onPress={()=>{
                      this.props.navigation.navigate('Dashboard')
+                     this.props.onReset()
                   }}
                 >
                   <Image
