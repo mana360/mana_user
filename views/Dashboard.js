@@ -290,7 +290,7 @@ getUserStatus(){
                     </ScrollView>
                 </View>
 
-                <FooterBar navigation={navigation} onReset={this.resetPage.bind(this)} />
+                <FooterBar navigation={navigation} onReset={this.resetPage.bind(this)} setReset={true}/>
             </View>
         )
     }
