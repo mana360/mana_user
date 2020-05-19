@@ -1,5 +1,6 @@
 /* screen -MANAPPCUS010
     design by -mayur s
+    api by - Udayraj
  */
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
@@ -16,7 +17,6 @@ export default class SignIn extends Component {
       input_email_id: '',
       input_password: '',
       policyRadio_button: false,
-      isLoading: false,
     }
   }
   static navigationOptions = ({ navigation }) => {
@@ -25,19 +25,51 @@ export default class SignIn extends Component {
     };
   };
 
-  //just to test api call need to change later 
+
   componentDidMount() {
-    this.setState({ isLoading: true })
-    // getAllLangContent({ language: 'en' }).then((responseData) => {
-    //   this.setState({ isLoading: false })
-    //   if (responseData.status == 1) {
-    //     console.log("data from api :- " + JSON.stringify(responseData))
-    //   }
-    //   // else{
-    //   //   this.setState({isErrorVisible:true})
-    //   // }
-    // });
   }
+
+  async onSignInClick() {
+     if (!this.isValid()) {
+       return
+     }
+     let fbToken=await getFirebaseToken()
+     let params = {
+       "username": this.state.input_email_id,
+       "password": this.state.input_password,
+       "device_type": "2",
+       "device_token": fbToken==null ?'no-token':fbToken ,
+       "app_version": "1"
+     }
+    this.presenter.callPostApi(ApiConstants.login, params, true);
+  }
+
+  isValid() {
+    if (this.state.input_email_id.length == 0) {
+      alert("Please enter email id")
+      this.Input_emailId.focus()
+      return false
+    }
+    if (!Constants.EMAIL_REGX.test(this.state.input_email_id)) {
+      // console.log(this.state.input_email_id)
+      alert("Please enter valid email id")
+      this.Input_emailId.focus()
+      return false
+    }
+
+    if (this.state.input_password.length == 0) {
+      alert("Please enter Password")
+      this.Input_password.focus()
+      return false
+    }
+    if (this.state.input_password.length < 8 || this.state.input_password.length > 16) {
+      alert("password must be greater than 8 character & less than 16 character")
+      this.Input_password.focus()
+      return false
+    }
+    return true;
+  }
+
   async onResponse(apiConstant, data) {
     switch (apiConstant) {
       case ApiConstants.login: {
@@ -56,6 +88,7 @@ export default class SignIn extends Component {
     }
 
   }
+
   render() {
     return (
 
@@ -90,7 +123,6 @@ export default class SignIn extends Component {
               onChangeText={(newText) => {
                   this.setState({ input_email_id: newText })
               }}
-              onBlur={()=>{ this.Input_password.focus() }}
             />
           </View>
 
@@ -103,10 +135,10 @@ export default class SignIn extends Component {
             <TextInput placeholder="Enter Password"
               ref={(ref)=>{this.Input_password = ref}}
               secureTextEntry={true}
+              autoCapitalize="none"
               style={StyleSignIn.textInput_style}
               value={this.state.input_password}
               onChangeText={(newtext) => { this.setState({ input_password: newtext }) }}
-              onBlur={()=>{this.Input_terms_condition.focus()}}
             />
           </View>
 
@@ -163,72 +195,18 @@ export default class SignIn extends Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => { this.props.navigation.navigate('ForgotPassword') }}
+            onPress={() => { this.props.navigation.navigate('ForgotPassword',{isLogout:false, isFooter:false}) }}
             style={StyleSignIn.forgotButton}>
             <Text style={StyleSignIn.forgotLabel}>{Constants.ForgotPassword}</Text>
           </TouchableOpacity>
 
         </View>
 
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.navigate('SignUp')
-          }}
-          style={StyleSignIn.memberButton}
-        >
+        <TouchableOpacity onPress={() => { this.props.navigation.navigate('SignUp')}} style={StyleSignIn.memberButton}>
           <Text style={StyleSignIn.memberLabel}>{Constants.NotAMemmberYet}</Text>
         </TouchableOpacity>
 
       </View>
     )
-  }
-  async onSignInClick() {
-
-    // this.props.navigation.navigate('Dashboard'); 
-   /*  let params = {
-      "username": "yogita.p@exceptionaire.co",
-      "password": "abc@1232",
-      "device_type": "2",
-      "device_token": "device3",
-      "app_version": "1",
-    } */
-     if (!this.isValid()) {
-       return
-     }
-     let fbToken=await getFirebaseToken()
-     let params = {
-       "username": this.state.input_email_id,
-       "password": this.state.input_password,
-       "device_type": "2",
-       "device_token": fbToken==null ?'no-token':fbToken ,
-       "app_version": "1"
-     }
-    this.presenter.callPostApi(ApiConstants.login, params, true);
-
-  }
-  isValid() {
-    if (this.state.input_email_id.length == 0) {
-      alert("Please enter email id")
-      this.Input_emailId.focus()
-      return false
-    }
-    if (!Constants.EMAIL_REGX.test(this.state.input_email_id)) {
-      // console.log(this.state.input_email_id)
-      alert("Please enter valid email id")
-      this.Input_emailId.focus()
-      return false
-    }
-
-    if (this.state.input_password.length == 0) {
-      alert("Please enter Password")
-      this.Input_password.focus()
-      return false
-    }
-    if (this.state.input_password.length < 8 || this.state.input_password.length > 16) {
-      alert("password must be greater than 8 character & less than 16 character")
-      this.Input_password.focus()
-      return false
-    }
-    return true;
   }
 }

@@ -14,7 +14,6 @@ import ApiConstants from '../config/ApiConstants';
 import {MainPresenter} from '../config/MainPresenter';
 import { setUserData, clearAllData } from '../config/AppSharedPreference';
 import { StackActions, NavigationActions } from 'react-navigation';
-import {CommonFunctions} from '../config/CommonFunctions'
 
 export default class ProfileSetUp extends React.Component {
 
@@ -106,6 +105,7 @@ export default class ProfileSetUp extends React.Component {
 
         }
     }
+
     uploadImage(uri) {
         if (this.state.customerType == 'Individual') {
             let temp_arry = this.state.user_img_arry;
@@ -880,9 +880,9 @@ export default class ProfileSetUp extends React.Component {
                     return false
             }
             if(!emailRegex.test(this.state.user_email)){
-                alert("Please enter valid email Id")
-                this.input_user_emailId.focus()
-                return false
+                    alert("Please enter valid email Id")
+                    this.input_user_emailId.focus()
+                    return false
             }
             if(this.state.user_address==""){
                     alert("Please enter address")
@@ -1163,6 +1163,7 @@ export default class ProfileSetUp extends React.Component {
         //this.getProvinceList()
         this.getCountryList()
     }
+
     render() {
         let { navigation } = this.props
         return (
@@ -1301,7 +1302,7 @@ export default class ProfileSetUp extends React.Component {
                                 source={require('../images/sent_icon.png')}
                             />
                             <Text style={StyleSetUpProfile.modalMsg}>{Constants.ProfileSetUPDoneSuccessFul}</Text>
-                            <Text style={[StyleSetUpProfile.modalMsg, { fontWeight: 'none' }]}>{Constants.YouwillRevicefromourSupportTeam}</Text>
+                            <Text style={[StyleSetUpProfile.modalMsg, { fontWeight: 'normal' }]}>{Constants.YouwillRevicefromourSupportTeam}</Text>
                             <TouchableOpacity style={StyleSetUpProfile.modalButton}
                                 onPress={() => {
                                     this.setState({ Modal_visible: false })

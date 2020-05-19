@@ -199,9 +199,11 @@ closeModal(){
 
 render() {
         let { navigation } = this.props
+        let isLogout = this.props.navigation.getParam('isLogout')
+        let isFooter = this.props.navigation.getParam('isFooter')
         return (
             <View style={{ flex: 1, }}>
-                <HeaderBar title="Forgot Password" isBack={true} isLogout={true} navigation={navigation} />
+                <HeaderBar title="Forgot Password" isBack={true} isLogout={ isLogout ? true : false } navigation={navigation} />
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
                 
                 <View style={{ flex: 1 }}>
@@ -256,8 +258,12 @@ render() {
                    {this.modal_verifyOTP()}
                 </Modal>
                 
-                <FooterBar navigation={navigation} />
-            
+                {
+                    isFooter ?
+                        <FooterBar navigation={navigation}/>
+                    : null
+                }
+
             </View>
         )
     }
