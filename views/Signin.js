@@ -25,7 +25,6 @@ export default class SignIn extends Component {
     };
   };
 
-
   componentDidMount() {
   }
 
@@ -208,59 +207,5 @@ export default class SignIn extends Component {
       </View>
     )
   }
-  async onSignInClick() {
 
-    // this.props.navigation.navigate('Dashboard'); 
-   /*  let params = {
-      "username": "yogita.p@exceptionaire.co",
-      "password": "abc@1232",
-      "device_type": "2",
-      "device_token": "device3",
-      "app_version": "1",
-    } */
-     if (!this.isValid()) {
-       return
-     }
-     let fbToken=await getFirebaseToken()
-     let params = {
-       "username": this.state.input_email_id,
-       "password": this.state.input_password,
-       "device_id":"2",
-       "device_type": "2",
-       "device_token": fbToken==null ?'no-token':fbToken ,
-       "app_version": "1"
-     }
-
-     this.presenter.callPostApi(ApiConstants.login, params, true);
-
-    // this.presenter.callPostApi(ApiConstants.login, params, true).then(it=>{
-    //   alert(JSON.stringify(it))
-    // })
-
-  }
-  isValid() {
-    if (this.state.input_email_id.length == 0) {
-      alert("Please enter email id")
-      this.Input_emailId.focus()
-      return false
-    }
-    if (!Constants.EMAIL_REGX.test(this.state.input_email_id)) {
-      // console.log(this.state.input_email_id)
-      alert("Please enter valid email id")
-      this.Input_emailId.focus()
-      return false
-    }
-
-    if (this.state.input_password.length == 0) {
-      alert("Please enter Password")
-      this.Input_password.focus()
-      return false
-    }
-    if (this.state.input_password.length < 8 || this.state.input_password.length > 16) {
-      alert("password must be greater than 8 character & less than 16 character")
-      this.Input_password.focus()
-      return false
-    }
-    return true;
-  }
 }

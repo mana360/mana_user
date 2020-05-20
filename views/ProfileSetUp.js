@@ -1,7 +1,7 @@
 /*
 Screen-Id : MANAPPCUS090-1,90-3,90
 @author :mayur s
-API : Udayraj (provinceList, cityList, profileSetup, verifyOTP)
+API : Udayraj
 */
 import React, { Component } from "react";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, Modal, FlatList } from "react-native";
@@ -27,6 +27,9 @@ export default class ProfileSetUp extends React.Component {
             user_title: '',
             user_telephoneNumber: '',
             user_rsaPassport: '',
+            user_passport_number:'',
+            user_doc_image:'',
+
             user_img_arry: [],
             user_filename: '',
             user_address: '',
@@ -41,6 +44,9 @@ export default class ProfileSetUp extends React.Component {
             user_zipCode: '',
             user_password: '',
             user_confirmPassword: '',
+            user_docType:"0",
+            user_profile_image:"",
+
             company_contactPerson: '',
             company_name: '',
             company_contactPosition: '',
@@ -58,6 +64,7 @@ export default class ProfileSetUp extends React.Component {
             company_zipCode: '',
             company_password: '',
             company_confirmPass: '',
+            company_profile_image:"",
 
             countryList:[],
             isCountryListFilled:0,
@@ -80,6 +87,39 @@ export default class ProfileSetUp extends React.Component {
             resp_user_id:'',
 
         }
+    }
+    uploadUserProfile() {
+        ImagePicker.showImagePicker(this.options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                const source = { uri: response.uri };
+                console.log('response-->', source);
+                this.setState({user_profile_image : response.uri})
+            }
+            }
+        )
+    }
+
+    uploadCompanyProfile() {
+        ImagePicker.showImagePicker(this.options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                const source = { uri: response.uri };
+                console.log('response-->', source);
+                this.setState({company_profile_image : response.uri})
+            }
+            }
+        )
     }
 
     OpenImagePicker() {
@@ -108,14 +148,16 @@ export default class ProfileSetUp extends React.Component {
 
     uploadImage(uri) {
         if (this.state.customerType == 'Individual') {
-            let temp_arry = this.state.user_img_arry;
-            temp_arry.push({ uri: uri });
-            this.setState({ user_img_arry: temp_arry })
+            this.setState({user_doc_image:uri})
+            // let temp_arry = this.state.user_img_arry;
+            // temp_arry.push({ uri: uri });
+            // this.setState({ user_img_arry: temp_arry })
            
         } else {
-            let temp_arry = this.state.company_img_arry;
-            temp_arry.push({ uri: uri });
-            this.setState({ company_img_arry: temp_arry })
+            this.setState({company_profile_image:uri})
+            // let temp_arry = this.state.company_img_arry;
+            // temp_arry.push({ uri: uri });
+            // this.setState({ company_img_arry: temp_arry })
         }
     }
 
@@ -268,6 +310,28 @@ export default class ProfileSetUp extends React.Component {
                     />
                 </View>
 
+                <View style={{flex:6, flexDirection:'row', width:'90%', height: 50, marginVertical:0, marginHorizontal:25, backgroundColor: Constants.COLOR_WHITE, alignItems:'center', justifyContent:'center'}}>
+                    <View style={{flex:2}}>
+                        <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none',}]}>Company Logo</Text>
+                    </View>
+
+                    <View style={{flex:2, justifyContent:'center', alignItems:'center'}}>
+                        <Image 
+                            source={ this.state.company_profile_image==""? require('../images/company_name.png') : { uri: this.state.company_profile_image }}
+                            style={{ width: 40, height: 40, borderRadius: 5, margin: 5, resizeMode:'cover' }}
+                        />
+                    </View>
+
+                    <View style={{flex:2, justifyContent:'flex-end', alignItems:'flex-end'}}>
+                        <TouchableOpacity style={{ paddingLeft: 10, marginRight:10 }} onPress={() => { this.uploadCompanyProfile(); }}>
+                            <Image style={{ width: 30, height: 30, }}
+                                source={require('../images/Upload_file.png')} />
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
+
+
                 <Text style={{ color: Constants.COLOR_GREEN, fontWeight: "bold", textTransform: 'uppercase', paddingLeft: 45, marginVertical: 10 }}>
                     {Constants.CompanyAddress}
                 </Text>
@@ -395,7 +459,7 @@ export default class ProfileSetUp extends React.Component {
                         maxLength={5}
                         value={this.state.company_zipCode}
                         ref={(ref)=>{this.input_company_zipcode = ref}}
-                        onChangeText={(text) => { this.setState({ zipCode: text }) }}
+                        onChangeText={(text) => { this.setState({ company_zipCode: text }) }}
                         onBlur={()=>{this.input_company_new_password.focus()}}
                     />
                 </View>
@@ -511,13 +575,61 @@ export default class ProfileSetUp extends React.Component {
                     />
                 </View>
 
-                <View>
+                <View style={{flex:6, flexDirection:'row', width:'90%', height: 50, marginVertical:0, marginHorizontal:25, backgroundColor: Constants.COLOR_WHITE, alignItems:'center', justifyContent:'center'}}>
+                    <View style={{flex:2}}>
+                        <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none',}]}>Profile Picture</Text>
+                    </View>
+
+                    <View style={{flex:2, justifyContent:'center', alignItems:'center'}}>
+                        <Image 
+                            source={ this.state.user_profile_image==""? require('../images/person.png') : { uri: this.state.user_profile_image }}
+                            style={{ width: 40, height: 40, borderRadius: 5, margin: 5, resizeMode:'cover' }}
+                        />
+                    </View>
+
+                    <View style={{flex:2, justifyContent:'flex-end', alignItems:'flex-end'}}>
+                        <TouchableOpacity style={{ paddingLeft: 10, marginRight:10 }} onPress={() => { this.uploadUserProfile(); }}>
+                            <Image style={{ width: 30, height: 30, }}
+                                source={require('../images/Upload_file.png')} />
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
+
+                <View style={{flexDirection:'row', width:'90%', height: 50, marginVertical:0, marginHorizontal:25, backgroundColor: Constants.COLOR_WHITE, alignItems:'center', justifyContent:'center'}}>
+                    <TouchableOpacity style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}
+                        onPress={()=>{ this.setState({user_docType:"1", user_doc_image:""}) }}
+                    >
+                        <Image
+                            source={ this.state.user_docType =="1" ? require('../images/radio_button_circular_selected.png') : require('../images/radio_button_circular.png')}
+                            style={{width:25, height:25, resizeMode:'cover'}}
+                        />
+                        <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none', marginLeft:5, marginBottom:3, }]}>RSA ID</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{flexDirection:'row', justifyContent:'center', alignItems:'center', marginLeft:20}}
+                        onPress={()=>{ this.setState({user_docType:"2", user_doc_image:""}) }}
+                    >
+                        <Image
+                            source={ this.state.user_docType =="2" ? require('../images/radio_button_circular_selected.png') : require('../images/radio_button_circular.png')}
+                            style={{width:25, height:25, resizeMode:'cover'}}
+                        />
+                        <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none', marginLeft:5, marginBottom:3, }]}>Passport</Text>
+                    </TouchableOpacity>
+
+                </View>
+
+                <View style={{display: this.state.user_docType =="1" ? 'flex' : 'none'}}>
+                    
                     <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
+                        
                         <View style={[StyleSetUpProfile.TextInputView, { width: '74%' }]}>
+                            
                             <View style={StyleSetUpProfile.LabelView}>
-                                <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.RSAIDPassport}</Text>
+                                <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>RSA ID</Text>
                                 <Text style={{ color: 'red' }}>*</Text>
                             </View>
+                            
                             <TextInput
                                 placeholder="Enter Number"
                                 style={StyleSetUpProfile.TextInput}
@@ -530,21 +642,25 @@ export default class ProfileSetUp extends React.Component {
 
                         </View>
 
-                        <TouchableOpacity style={{ paddingLeft: 10 }}
-                            onPress={() => {
-                                this.OpenImagePicker();
-                            }}
-                        >
-                            <Image style={{ width: 40, height: 40, }}
+                        <TouchableOpacity style={{ paddingLeft: 10 }} onPress={() => { this.OpenImagePicker(); }}>
+                            <Image style={{ width: 35, height: 35, }}
                                 source={require('../images/Upload_file.png')} />
                         </TouchableOpacity>
-                    </View>
 
-                    <FlatList
+                    </View>
+                    {
+                        this.state.user_doc_image && this.state.user_docType=="1" ?
+                        <View style={{justifyContent:'center', alignItems:'center'}}>
+                            <Image source={{ uri: this.state.user_doc_image }} style={{ width: 60, height: 60, borderRadius: 5, margin: 5, resizeMode:'cover' }}/>
+                        </View>
+                        : null
+                    }
+
+                    {/* <FlatList
                         data={this.state.user_img_arry}
                         extraData={this.state}
                         horizontal={true}
-                        style={{ marginLeft: 25 }}
+                        style={{ marginLeft: 25}}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item, index }) => {
                             return (
@@ -559,7 +675,46 @@ export default class ProfileSetUp extends React.Component {
                                 </View>
                             )
                         }}
-                    />
+                    /> */}
+                </View>
+
+                <View style={{display: this.state.user_docType =="2" ? 'flex' : 'none'}}>
+                    
+                    <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
+                        
+                        <View style={[StyleSetUpProfile.TextInputView, { width: '74%' }]}>
+                            
+                            <View style={StyleSetUpProfile.LabelView}>
+                                <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>Passport</Text>
+                                <Text style={{ color: 'red' }}>*</Text>
+                            </View>
+                            
+                            <TextInput
+                                placeholder="Enter Number"
+                                style={StyleSetUpProfile.TextInput}
+                                keyboardType="number-pad"
+                                ref={(ref)=>{this.input_user_passport=ref}}
+                                value={this.state.user_passport_number}
+                                onChangeText={(text) => { this.setState({ user_passport_number: text }) }}
+                                onBlur={()=>{this.input_user_emailId.focus()}}
+                            />
+
+                        </View>
+
+                        <TouchableOpacity style={{ paddingLeft: 10 }} onPress={() => { this.OpenImagePicker(); }}>
+                            <Image style={{ width: 35, height: 35, }}
+                                source={require('../images/Upload_file.png')} />
+                        </TouchableOpacity>
+
+                    </View>
+                    {
+                        this.state.user_doc_image && this.state.user_docType=="2" ?
+                        <View style={{justifyContent:'center', alignItems:'center'}}>
+                            <Image source={{ uri: this.state.user_doc_image }} style={{ width: 60, height: 60, borderRadius: 5, margin: 5,resizeMode:'cover' }}/>
+                        </View>
+                        : null
+                    }
+
                 </View>
 
                 <View style={StyleSetUpProfile.TextInputView}>
@@ -775,7 +930,7 @@ export default class ProfileSetUp extends React.Component {
               if(data.status){
                 this.setState({countryList : data.countryList, isCountryListFilled:1})
               }else{
-                  alert(data.message)
+                  alert(data.msg)
               }
               break;
           }
@@ -801,12 +956,12 @@ export default class ProfileSetUp extends React.Component {
           }
           case ApiConstants.profileSetup:{
               if(data.status){
-                  this.setState({
+                   this.setState({
                       resp_otp:data.email_otp,
                       resp_otp_time:data.otp_duration,
                       resp_token: data.access_token,
                       resp_user_id:data.user_id,
-                    })
+                     })
                     this.openOTPModal()
               }else{
                   alert(data.message)
@@ -842,7 +997,20 @@ export default class ProfileSetUp extends React.Component {
     isUserFormValid(){
         let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
         if(this.state.customerType=="Individual")
-        {
+        {            
+            if(this.state.user_profile_image==""){
+                alert("Please upload profile picture.")
+                return false
+            }
+
+            if(this.state.user_docType=="0"){
+                alert("Please select Identification")
+                return false
+            }
+            if(this.state.user_docType!="0" && this.state.user_doc_image==""){
+                alert("Please upload document")
+                return false
+            }
 
             if(this.state.user_firstName==""){
                     alert("Please enter first name")
@@ -870,10 +1038,16 @@ export default class ProfileSetUp extends React.Component {
                     return false
             }
             if(this.state.user_rsaPassport==""){
-                    alert("Please enter RSA Id / Passport")
+                    alert("Please enter RSA Id")
                     this.input_user_rsa_id.focus()
                     return false
             }
+            if(this.state.user_passport_number==""){
+                alert("Please enter passport number")
+                this.input_user_passport.focus()
+                return false
+            }
+            input_user_passport
             if(this.state.user_email==""){
                     alert("Please enter email Id")
                     this.input_user_emailId.focus()
@@ -942,6 +1116,10 @@ export default class ProfileSetUp extends React.Component {
         let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
         if(this.state.customerType=="Company"){
 
+            if(this.state.company_profile_image==""){
+                alert("Please upload company logo")
+                return false
+            }
             if(this.state.company_name==""){
                 alert("Please enter company name")
                 this.input_company_name.focus()
@@ -1034,17 +1212,22 @@ export default class ProfileSetUp extends React.Component {
                     "first_name":this.state.user_firstName,
                     "last_name":this.state.user_lastName,
                     "title":this.state.user_title,
-                    //"telephone_number":this.state.user_telephoneNumber,    // missing param in api
-                    "rsa_id":this.state.user_rsaPassport,
+                    "telephone_number":this.state.user_telephoneNumber,    // missing param in api
+                    "rsa_id":   this.state.user_docType=="1" ? this.state.user_rsaPassport : 0,
+                    "rsa_file": this.state.user_docType=="1" ? this.state.user_doc_image : "",
+                    "passport_no" : this.state.user_docType=="2" ? user_passport_number : 0,
+                    "passport_file":this.state.user_docType=="2" ? this.state.user_doc_image : "",
+                    "profile_photo":this.state.user_profile_image,
                     "email_id":this.state.user_email,
                     "password":this.state.user_confirmPassword,
                     //"address":this.state.user_address,                     // missing param in api
                     "street_address":this.state.user_streetAddress,
+                    "country_id":this.state.user_country_id,
                     "state_id":this.state.user_Province_id,
                     "city_id":this.state.user_city_id,
                     "zipcode":this.state.user_zipCode,
                     "registration_type":1,
-                    "terms_accepted":1,
+                    "terms_accepted":this.state.policyRadio_button? 1 : 0,
                 }
                 this.presenter.callPostApi(ApiConstants.profileSetup, params, true);
             }
@@ -1056,15 +1239,17 @@ export default class ProfileSetUp extends React.Component {
                     "company_name":this.state.company_name,
                     "comp_cont_person":this.state.company_contactPerson,
                     "comp_cont_position":this.state.company_contactPosition,
-                    //"telephone_number":this.state.company_telephoneNo,        // missing param in api
+                    "profile_pic":this.state.company_profile_image,
+                    "telephone_number":this.state.company_telephoneNo,        // missing param in api
                     "email_id":this.state.company_emailId,
                     //"password":this.state.company_confirmPass,                // missing param in api
+                    "country_id": parseInt(this.state.company_country_id),
+                    "city_id": parseInt(this.state.company_city_id),
+                    "state_id": parseInt(this.state.company_province_id),
+                    "zipcode": parseInt(this.state.company_zipCode),
                     "street_address":this.state.company_streetAddress,
-                    "state_id":this.state.company_province_id,
-                    "city_id":this.state.company_city_id,
-                    "zipcode":this.state.company_zipCode,
                     "registration_type":2,
-                    "terms_accepted":1,
+                    "terms_accepted": this.state.policyRadio_button? 1 : 0,
                 }
                 this.presenter.callPostApi(ApiConstants.profileSetup, params, true);
             }
@@ -1074,7 +1259,6 @@ export default class ProfileSetUp extends React.Component {
     async onOTPVerified(){
         this.closeOTPModal()
         //-- instructions by Rohit
-        this.closeOTPModal()
         await clearAllData()
         let timer1 = setInterval(()=>{
             clearInterval(timer1)
@@ -1170,7 +1354,7 @@ export default class ProfileSetUp extends React.Component {
 
             <View style={{ flex: 1 }}>
                 
-                <HeaderBar isBack={false} title="Profile setup" isLogout={true} navigation={navigation} />
+                <HeaderBar isBack={false} title="Profile setup" isLogout={false} navigation={navigation} />
                 
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
                 
@@ -1283,6 +1467,7 @@ export default class ProfileSetUp extends React.Component {
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
                         <View style={StyleSetUpProfile.modalView}>
+                            
                             <TouchableOpacity style={{ display:'none', alignSelf: 'flex-end', top: 10, right: 10 }}
                                 onPress={() => {
                                     this.setState({ Modal_visible: false })
@@ -1298,6 +1483,7 @@ export default class ProfileSetUp extends React.Component {
                                     style={{ width: 15, height: 15 }}
                                 />
                             </TouchableOpacity>
+
                             <Image style={StyleSetUpProfile.modalImage}
                                 source={require('../images/sent_icon.png')}
                             />

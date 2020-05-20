@@ -67,7 +67,7 @@ export default class SignUp extends Component {
         if (data.status) {  
           console.log(data);
           this.setState({otp_modal_visible:true, resp_otp_code:data.email_otp, resp_user_id:data.user_id, resp_temp_token:data.access_token});
-          await setAuthToken(data.access_token);
+          await setAuthToken(data.access_token);  //token required for temp purpose only.
           //await setUserData(data)
           // this.timer = setInterval(()=>{
           //   this.setState({modalVisible_welcome:false})
