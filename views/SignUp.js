@@ -1,5 +1,6 @@
 /* screen -MANAPPCUS049,50,51,52
     design by -mayur s
+    api + functional by Udayraj
  */
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, Modal, ScrollView } from 'react-native';
@@ -8,7 +9,7 @@ import Constants from '../config/Constants';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { MainPresenter } from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
-import { setUserData, getFirebaseToken } from '../config/AppSharedPreference';
+import { setUserData, setAuthToken, clearAllData, getFirebaseToken } from '../config/AppSharedPreference';
 export default class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +26,7 @@ export default class SignUp extends Component {
       otp_code:'',
       resp_user_id:'',
       resp_otp_code:'',
+      resp_temp_token:'',
     }
   }
   static navigationOptions = ({ navigation }) => {
@@ -32,6 +34,7 @@ export default class SignUp extends Component {
       header: null,
     };
   };
+
   Modal_welcome() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
@@ -62,30 +65,53 @@ export default class SignUp extends Component {
     switch (apiConstant) {
       case ApiConstants.register: {
         if (data.status) {  
-      console.log(data);
-          this.setState({otp_modal_visible:true, resp_otp_code:data.email_otp, resp_user_id:data.user_id});
-          await setUserData(data.userData)
-          this.timer = setInterval(()=>{
-            this.setState({modalVisible_welcome:false})
-            clearInterval(this.timer)
-          this.props.navigation.dispatch(
-            StackActions.reset({
-                index: 0,
-                actions: [NavigationActions.navigate({ routeName: "ProfileSetUp" })],
-            }))
-          }, 3000)
+          console.log(data);
+          this.setState({otp_modal_visible:true, resp_otp_code:data.email_otp, resp_user_id:data.user_id, resp_temp_token:data.access_token});
+          await setAuthToken(data.access_token);
+          //await setUserData(data)
+          // this.timer = setInterval(()=>{
+          //   this.setState({modalVisible_welcome:false})
+          //   clearInterval(this.timer)
+          // this.props.navigation.dispatch(
+          //   StackActions.reset({
+          //       index: 0,
+          //       actions: [NavigationActions.navigate({ routeName: "ProfileSetUp" })],
+          //   }))
+          // }, 3000)
           //this.props.navigation.navigate('ProfileSetUp')
         } else {
+          await clearAllData()
           alert(data.message)
         }
         break;
       }
       case ApiConstants.resendOTP :{
         if(data.status){
-          this.setState({otp_modal_visible:true, resp_otp_code:data.email_otp, resp_user_id:data.user_id})
-          await setUserData(data)
+          this.setState({otp_modal_visible:true, resp_otp_code:data.email_otp, resp_user_id:data.user_id, resp_temp_token:data.access_token})
+          await setAuthToken(data.access_token);
         }
         else {
+          await clearAllData()
+          alert(data.message)
+        }
+        break;
+      }
+      case ApiConstants.verifyOTP:{
+        if(data.status){
+          this.setState({otp_modal_visible:false, modalVisible_welcome:true})
+          await clearAllData()
+          await setUserData(data.user_obj)
+          this.timer = setInterval(()=>{
+          this.setState({modalVisible_welcome:false})
+          clearInterval(this.timer)
+          this.props.navigation.dispatch(
+            StackActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: "ProfileSetUp" })],
+            }))
+          }, 3000)
+        }else{
+          await clearAllData()
           alert(data.message)
         }
         break;
@@ -95,23 +121,10 @@ export default class SignUp extends Component {
 
 verifyOTP(){
   if(this.state.resp_otp_code==this.state.otp_code){
-    this.setState({otp_modal_visible:false})
-    
-    this.timer = setInterval(()=>{
-      this.setState({modalVisible_welcome:true})
-      clearInterval(this.timer)
-    }, 1000)
-
-    this.timer = setInterval(()=>{
-      this.setState({modalVisible_welcome:false})
-      clearInterval(this.timer)
-    this.props.navigation.dispatch(
-      StackActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({ routeName: "ProfileSetUp" })],
-      }))
-    }, 3000)
-
+    let params = {
+      "mobile_otp":this.state.otp_code,
+    }
+   this.presenter.callPostApi(ApiConstants.verifyOTP, params, true);
   }else{
     alert("Please enter correct OTP")
     this.setState({otp_code:""})
@@ -149,8 +162,8 @@ showOTpModal() {
                       style={StyleForgotPassword.ModaltextInput}
                       value={this.state.otp_code}
                       keyboardType="number-pad"
-                      maxLength={6}
-                      placeholder='000000'
+                      maxLength={4}
+                      placeholder='0000'
                       onChangeText={(Text) => {
                           if(!isNaN(Text))
                               this.setState({ otp_code: Text })
@@ -283,7 +296,6 @@ isValid() {
               keyboardType='email-address'
               value={this.state.emailId}
               onChangeText={(newText) => { this.setState({emailId:newText}) }}
-              onBlur={()=>{this.TextInput_password.focus()}}
             />
           </View>
          
@@ -298,7 +310,6 @@ isValid() {
               style={StyleSignUp.textInput_style}
               value={this.state.password}
               onChangeText={(newtext) => { this.setState({ password: newtext }) }}
-              onBlur={()=>{this.TextInput_confirm_password.focus()}}
               />
           </View>
 
@@ -314,7 +325,6 @@ isValid() {
               style={StyleSignUp.textInput_style}
               value={this.state.confirm_password}
               onChangeText={(newText) => { this.setState({ confirm_password: newText }) }}
-              onBlur={()=>{this.Radio_referral_code.focus()}}
               />
           </View>
 
@@ -345,7 +355,7 @@ isValid() {
               />
           </View>
 
-          <View style={[StyleSignUp.policyView,]}>
+          <View style={[StyleSignUp.policyView]}>
             <TouchableOpacity
               onPress={() => {
                 this.setState({ policyRadio_button: !this.state.policyRadio_button })
