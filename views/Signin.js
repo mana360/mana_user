@@ -54,7 +54,6 @@ export default class SignIn extends Component {
         break;
       }
     }
-
   }
   render() {
     return (
@@ -199,11 +198,17 @@ export default class SignIn extends Component {
      let params = {
        "username": this.state.input_email_id,
        "password": this.state.input_password,
+       "device_id":"2",
        "device_type": "2",
        "device_token": fbToken==null ?'no-token':fbToken ,
        "app_version": "1"
      }
-    this.presenter.callPostApi(ApiConstants.login, params, true);
+
+     this.presenter.callPostApi(ApiConstants.login, params, true);
+
+    // this.presenter.callPostApi(ApiConstants.login, params, true).then(it=>{
+    //   alert(JSON.stringify(it))
+    // })
 
   }
   isValid() {
