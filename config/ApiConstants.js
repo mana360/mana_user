@@ -10,10 +10,22 @@ export default ApiConstants = {
     users: 'users?',
     //POST EXAMPLE
     login: 'customer/login',
-    getNotifications:"customer/getNotifications",
-    readNotification:"customer/readNotification",
+
     getVouchers:"customer/getVouchers",
     getDashboardData:"customer/getDashboardData",
+
+    /* ----------Vivek------------- */
+    
+   
+
+    getNotifications:"customer/getNotifications",
+    readNotification:"customer/readNotification",
+    removeNotification:"customer/removeNotification",
+    getMyProfile:"customer/getMyProfile",
+    updateProfilePic:"customer/updateProfilePic",//,
+    getMyBookings:"customer/getMyBookings",
+
+    /* ----------EOF Vivek------------- */
 
 
     /* ----------Udayraj------------- */

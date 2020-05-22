@@ -46,7 +46,13 @@ export default class Notification extends React.Component {
         })
     }
 
-    onResponse(apiConstant, data) {
+    callRemoveNotification(notification_id) {
+        this.presenter.callPostApi(ApiConstants.removeNotification, {
+            notification_id: notification_id
+        })
+    }
+
+    async onResponse(apiConstant, data) {
         switch (apiConstant) {
             case ApiConstants.getNotifications: {
                 if (data.status) {
@@ -65,6 +71,16 @@ export default class Notification extends React.Component {
                 } else {
                     alert(data.message)
                 }
+
+                break;
+            }
+
+            case ApiConstants.readNotification :{
+
+                break;
+            }
+
+            case ApiConstants.removeNotification :{
 
                 break;
             }
