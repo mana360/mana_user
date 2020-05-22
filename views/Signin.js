@@ -90,31 +90,15 @@ export default class SignIn extends Component {
               actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
             }))
         }else{
-            switch(data.status_code){
-              case 203:{
-                  // incomplete profile setup
-                  this.props.navigation.dispatch(
-                    StackActions.reset({
-                      index: 0,
-                      actions: [NavigationActions.navigate({ routeName: 'ProfileSetUp' })],
-                    }))
-                break
-              }
-              case 204:{
-                // account verification is pending from admin
-                alert(data.msg)
-              break
-              }
-              case 205:{
-                // account is rejected
-                alert(data.msg)
-              break
-              }
-              case 206:{
-                // account is deactivated
-                alert(data.msg)
-              break
-              }
+            if(data.status_code == 203){
+              // incomplete profile setup
+              this.props.navigation.dispatch(
+                StackActions.reset({
+                  index: 0,
+                  actions: [NavigationActions.navigate({ routeName: 'ProfileSetUp' })],
+                }))
+            }else{
+              alert(data.msg)
             }
         }
         break;

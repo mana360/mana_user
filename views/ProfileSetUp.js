@@ -1418,14 +1418,27 @@ export default class ProfileSetUp extends React.Component {
                                             this.props.navigation.navigate('TermsAndCondition', { flag: 'CancellationPolicy' })
                                         }}
                                     >
-                                        <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy}</Text>
+                                        <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy}, </Text>
                                     </TouchableOpacity>
-                                    
-                                    <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}> & </Text>
                                     
                                     <TouchableOpacity
                                         onPress={() => {
                                             this.props.navigation.navigate('TermsAndCondition', { flag: 'PaymentPolicy' })
+                                        }}
+
+                                    >
+                                        <Text style={StyleSignUp.PolicyLabel}>{Constants.PaymentPolicy}</Text>
+                                    </TouchableOpacity>
+                                
+                                </View>
+
+                                <View style={[{ paddingLeft: 42, flexDirection: 'row', marginBottom: 10 }]}>
+
+                                    <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}> & </Text>
+                                    
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            this.props.navigation.navigate('TermsAndCondition', { flag: 'PrivacyPolicy' })
                                         }}
 
                                     >
