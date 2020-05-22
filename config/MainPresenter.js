@@ -155,13 +155,13 @@ export class MainPresenter extends React.Component {
             console.log(e)
             data = {}
         }
-        if (data && data.status_code && data.status_code == "203") {
-            if (this.props.navigation) {
-                clearAllData()
-                this.props.navigation.navigate('SignIn');
-            }
-            return
-        }
+        // if (data && data.status_code && data.status_code == "203") {
+        //     if (this.props.navigation) {
+        //         //clearAllData()
+        //         //this.props.navigation.navigate('SignIn');
+        //     }
+        //     return
+        // }
         if (this.props.onResponse) {
             this.props.onResponse(apiConstant, data?data:{})
         } else {
