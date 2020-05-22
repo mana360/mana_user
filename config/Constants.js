@@ -213,6 +213,7 @@ const Constants = {
     TermsAndConditions:'Terms & Conditions',
     CancellationPlicy:'Cancellation Policy',
     PaymentPolicy:'Payment Policy',
+    PrivacyPolicy:'Privacy Policy',
     Referralcode:'Referral Code',
     PickUpAddress:'Pick Up Address',
     DropOffAddress:'Drop Off Address',

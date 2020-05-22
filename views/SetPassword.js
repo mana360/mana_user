@@ -1,5 +1,6 @@
 /* screen -MANAPPCUS043,44
     design by -mayur s
+    api by Udayraj
  */
 import React from 'react';
 import { View, Text, TouchableOpacity, Image,Modal,TextInput } from 'react-native'
@@ -7,16 +8,24 @@ import { StyleForgotPassword,StyleMyProfile } from '../config/CommonStyles';
 import Constants from '../config/Constants';
 import FooterBar from '../config/FooterBar';
 import HeaderBar from '../config/HeaderBar';
+import { MainPresenter } from '../config/MainPresenter'
+import ApiConstants from '../config/ApiConstants';
+import { clearAllData } from '../config/AppSharedPreference';
+
 export default class SetPassword extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             mobile_number: '',
+            new_password:"",
+            confirm_password:"",
             modal_visible:false,
-            OTP:''
+            OTP:'',
+            api_message:"",
         }
     }
-modal_setSuccessfully(){
+
+    modal_setSuccessfully(){
     return(
         <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
          
@@ -25,6 +34,7 @@ modal_setSuccessfully(){
                     <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
                         onPress={()=>{
                             this.setState({modal_visible:false})
+                            this.props.navigation.navigate('SignIn')
                         }}
                         
                     >
@@ -36,7 +46,9 @@ modal_setSuccessfully(){
                         style={{ width: 90, height: 90, marginVertical: 10, alignSelf: 'center' }}
 
                     />
-                    <Text style={[StyleMyProfile.col1Text, {  alignSelf: 'center', fontSize: Constants.FONT_SIZE_EXTRA_LARGE }]}>{Constants.PasswordHasResetSuccessfully}</Text>
+                    <Text style={[StyleMyProfile.col1Text, {  alignSelf: 'center', fontSize: Constants.FONT_SIZE_EXTRA_LARGE }]}>
+                        { this.state.api_message ==""? Constants.PasswordHasResetSuccessfully : this.state.api_message }
+                    </Text>
   
                     <TouchableOpacity style={[StyleMyProfile.ButtonView, { paddingHorizontal: 50, marginVertical:15 }]}
                         onPress={()=>{
@@ -50,12 +62,55 @@ modal_setSuccessfully(){
             </View>
             </View>
     )
-}
+    }
+
+    validate(){
+        if(this.state.new_password==""){
+            alert("Enter new password")
+            return false
+        }
+        if(this.state.confirm_password==""){
+            alert("Enter confirm password")
+            return false
+        }
+        if(this.state.confirm_password!=this.state.new_password){
+            alert("Password didn't matched")
+            return false
+        }
+        return true
+    }
+
+    changePassword(){
+        if(this.validate()){
+            let params = {
+                "new_password" : this.state.confirm_password
+            }
+            this.presenter.callPostApi(ApiConstants.setPassword, params, true);
+        }
+    }
+
+    async onResponse(apiConstant, data) {
+        switch(apiConstant){
+            case ApiConstants.setPassword : {
+                if(data.status){
+                    await clearAllData()
+                    this.setState({modal_visible:true, api_message:data.message})
+                }else{
+                    alert(data.message)
+                }
+                break;
+            }
+        }
+    }
+
     render() {
         let { navigation } = this.props
+        let isLogout = this.props.navigation.getParam('isLogout')
+        let isFooter = this.props.navigation.getParam('isFooter')
         return (
             <View style={{ flex: 1, }}>
-                <HeaderBar title="Forgot Password" isBack={true} isLogout={true} navigation={navigation} />
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
+                <HeaderBar title="Forgot Password" isBack={true} isLogout={isLogout ? true : false} navigation={navigation} />
                
                 <View style={{ flex: 1 }}>
 
@@ -72,9 +127,10 @@ modal_setSuccessfully(){
                         <TextInput
                             placeholder="Enter Password"
                             style={StyleForgotPassword.TextInput}
-                            value={this.state.mobile_number}
-                            maxLength={10}
-                            onChangeText={(text) => { this.setState({ mobile_number: text }) }}
+                            autoCapitalize="none"
+                            secureTextEntry={true}
+                            value={this.state.new_password}
+                            onChangeText={(text) => { this.setState({ new_password: text }) }}
                         />
                     </View>
 
@@ -86,34 +142,54 @@ modal_setSuccessfully(){
                             <Text style={StyleForgotPassword.modalLabelText}>{Constants.ConfirmPassword}</Text>
                         </View>
                         <TextInput
-                            placeholder="Enter Password"
+                            placeholder="Enter Confirm Password"
                             style={StyleForgotPassword.TextInput}
-                            value={this.state.mobile_number}
-                            maxLength={10}
-                            onChangeText={(text) => { this.setState({ mobile_number: text }) }}
+                            autoCapitalize="none"
+                            secureTextEntry={true}
+                            value={this.state.confirm_password}
+                            onChangeText={(text) => { this.setState({ confirm_password: text }) }}
                         />
                     </View>
-
                     
-                        <TouchableOpacity style={[StyleForgotPassword.ButtonView,]}
-                            onPress={()=>{
-                                        this.setState({modal_visible:true})
-                             }}  
-                        >
-                            <Text style={StyleForgotPassword.buttonLabel}>{Constants.Set}</Text>
-                        </TouchableOpacity>
-
+                    <TouchableOpacity
+                        disabled={
+                            this.state.new_password==""
+                            ? true
+                            :
+                            this.state.confirm_password==""
+                            ? true
+                            :false
+                        }
+                        style={
+                            [StyleForgotPassword.ButtonView,
+                                {
+                                    backgroundColor : this.state.new_password==""
+                                    ? Constants.COLOR_GREY_LIGHT
+                                    :
+                                    this.state.confirm_password==""
+                                    ? Constants.COLOR_GREY_LIGHT
+                                    : Constants.COLOR_GREEN
+                                }
+                            ]}
+                        onPress={()=>{ this.changePassword() }}
+                    >
+                        <Text style={StyleForgotPassword.buttonLabel}>{Constants.Set}</Text>
+                    </TouchableOpacity>
 
              </View>
-                
+
                 <Modal
                     transparent={true}
                     visible={this.state.modal_visible}
                 >
                    {this.modal_setSuccessfully()}
                 </Modal>
-               
-                <FooterBar navigation={navigation} />
+                
+                {
+                    isFooter ?
+                        <FooterBar navigation={navigation}/>
+                    : null
+                }
             </View>
         )
     }
