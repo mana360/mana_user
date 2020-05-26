@@ -80,19 +80,59 @@ export class MainPresenter extends React.Component {
 
         this._initLoader(loader)
         let URL = this.BASE_URL + apiConstant
+
         let options = {
             method: 'POST',
             headers: {
+                'Content-Type': 'multipart/form-data',
                 Authorization: authToken
             },
             body: this._createFormData(apiConstant, params)
         }
+
+        console.log(' Multi part request 1 :  '+JSON.stringify(options.body))
+
         fetch(URL, options).then(it => it.json(), (e) => { console.log(e) })
             .then(it => this._setResponse(apiConstant, it))
             .catch(e => console.error(e))
             .finally(() => { this._stopLoader() })
 
     }
+
+    async upload(apiConstant, params, loader) {
+        
+        if (await !this._isNetworkAvailable()) {
+            alert("No Network")
+            return
+        }
+        
+        let authToken = await getAuthToken()
+
+        this._initLoader(loader)
+        let URL = this.BASE_URL + apiConstant
+        let options = {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: authToken
+          },
+          method: 'POST'
+        };
+      
+        options.body = new FormData();
+        for (let key in params) {
+          options.body.append(key, params[key]);
+        }
+      
+        console.log('Multi part requests'+JSON.stringify(options.body))
+
+        fetch(URL, options).then(it => 
+            it.json(), (e) => {
+            console.log(e)})
+            .then(it => this._setResponse(apiConstant, it))
+            .catch(e => console.error(e))
+            .finally(() => { this._stopLoader() })
+      }
+
     /* -------------EOF Public method------------- */
 
     /* -------------Private method--------------- */
@@ -113,10 +153,9 @@ export class MainPresenter extends React.Component {
                     type: photo.type,
                     uri: Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
                 });
-
-
-
                 break;
+
+    
             }
         }
         return data

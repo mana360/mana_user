@@ -1229,7 +1229,7 @@ export default class ProfileSetUp extends React.Component {
                     "registration_type":1,
                     "terms_accepted":this.state.policyRadio_button? 1 : 0,
                 }
-                this.presenter.callPostApi(ApiConstants.profileSetup, params, true);
+                this.presenter.callMultipartApi(ApiConstants.profileSetup, params, true);
             }
         }
         else{
@@ -1251,7 +1251,7 @@ export default class ProfileSetUp extends React.Component {
                     "registration_type":2,
                     "terms_accepted": this.state.policyRadio_button? 1 : 0,
                 }
-                this.presenter.callPostApi(ApiConstants.profileSetup, params, true);
+                this.presenter.callMultipartApi(ApiConstants.profileSetup, params, true);
             }
         }
     }
