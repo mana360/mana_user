@@ -456,7 +456,7 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Zipcode"
                         style={StyleSetUpProfile.TextInput}
                         keyboardType="number-pad"
-                        maxLength={5}
+                        maxLength={4}
                         value={this.state.company_zipCode}
                         ref={(ref)=>{this.input_company_zipcode = ref}}
                         onChangeText={(text) => { this.setState({ company_zipCode: text }) }}
@@ -865,7 +865,7 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter zip code"
                         style={StyleSetUpProfile.TextInput}
                         keyboardType="number-pad"
-                        maxLength={5}
+                        maxLength={4}
                         value={this.state.user_zipCode}
                         ref={(ref)=>{this.input_user_zipcode=ref}}
                         onChangeText={(text) => { this.setState({ user_zipCode: text }) }}
@@ -1002,7 +1002,6 @@ export default class ProfileSetUp extends React.Component {
                 alert("Please upload profile picture.")
                 return false
             }
-
             if(this.state.user_docType=="0"){
                 alert("Please select Identification")
                 return false
@@ -1011,7 +1010,6 @@ export default class ProfileSetUp extends React.Component {
                 alert("Please upload document")
                 return false
             }
-
             if(this.state.user_firstName==""){
                     alert("Please enter first name")
                     this.input_user_first_name.focus()
@@ -1047,7 +1045,6 @@ export default class ProfileSetUp extends React.Component {
                 this.input_user_passport.focus()
                 return false
             }
-            input_user_passport
             if(this.state.user_email==""){
                     alert("Please enter email Id")
                     this.input_user_emailId.focus()
@@ -1083,7 +1080,7 @@ export default class ProfileSetUp extends React.Component {
                     this.input_user_zipcode.focus()
                     return false
             }
-            if(this.state.user_zipCode.length!=5){
+            if(this.state.user_zipCode.length!=4){
                     alert("Please enter correct zip code")
                     this.input_user_zipcode.focus()
                     return false
@@ -1175,7 +1172,7 @@ export default class ProfileSetUp extends React.Component {
                 this.input_company_zipcode.focus()
                 return false
             }
-            if(this.state.company_zipCode.length != 5){
+            if(this.state.company_zipCode.length != 4){
                 alert("Please enter correct zip code")
                 this.input_company_zipcode.focus()
                 return false

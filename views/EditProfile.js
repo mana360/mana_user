@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput,FlatList } from 'react-native';
-import { StyleEditProfile, StyleMyProfile } from '../config/CommonStyles';
+import { StyleEditProfile, StyleMyProfile,StyleSetUpProfile } from '../config/CommonStyles';
 import { Picker } from "native-base";
 import ImagePicker from "react-native-image-picker";
 import FooterBar from '../config/FooterBar';
@@ -14,46 +14,60 @@ import ApiConstants from '../config/ApiConstants';
 import {MainPresenter} from '../config/MainPresenter';
 
 export default class EditProfile extends React.Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
             modalVisible_Changepassword: false,
             modalVisible_successMsg: false,
-            screen_title: 'user_profile',//user_profile,company_profile
+            customerType: 'company_profile',//user_profile,company_profile
             current_password: '',
             new_password: '',
             confirm_password: '',
             password_visible: true,
-            first_name: 'Jimmy',
-            last_name: 'Dagger',
-            title: 'Mr',
-            user_rsa_id: '545632102',
+
+            user_first_name: '',
+            user_last_name: '',
+            user_title: '',
+
+            user_rsa_id: '',
+            user_rsa_photo:"",
+            user_rsa_photo_data:"",
+            user_passport_number:"",
+            user_passport_photo:"",
+            user_passport_photo_data:"",
+
             user_img_arry: [],
-            user_address: 'NYC,Lane 345,street2.',
+            user_address: '',
             user_province: '',
             user_city: '',
-            designation: 'PMO',
-            user_telephoneNo: '459625123',
+            designation: '',
+            user_telephoneNo: '',
             user_country:'',
             user_country_id:'',
-            user_city: 'johnasburg',
+            user_city: '',
             user_province: '',
-            user_zipcode: '4567854',
-            email_id: 'bhj@gmail.com',
-            password: 'johnson',
-            company_name: 'IBM',
-            company_contactPerson: 'PMO',
-            company_contactPosition: 'PMO',
-            company_telephoneNo: '45875323564',
-            company_email: 'inm2@ibm.com',
-            company_address: 'NYC,Lane 345,street 2.',
+            user_zipcode: '',
+            user_docType:"0",
+            user_profile_photo:"",
+            user_profile_photo_data:"",
+
+            email_id: '',
+            password: '',
+            company_name: '',
+            company_contactPerson: '',
+            company_contactPosition: '',
+            company_telephoneNo: '',
+            company_email: '',
+            company_address: '',
             company_country:'',
             company_country_id:'',
-            company_city: 'AAA',
-            company_province: 'Cape',
-            company_zipcode: '5456464',
-            company_password: 'sdadfas',
+            company_city: '',
+            company_province: '',
+            company_zipcode: '',
+            company_password: '',
+            company_logo:"",
+            company_logo_data:"",
 
             countryList:[],
             isCountryListFilled:0,
@@ -64,13 +78,12 @@ export default class EditProfile extends React.Component {
             cityList:[],
             isCityListFilled:0,
 
-            profileImagePath:require('../images/Profile_pic.png'),
+            defaultProfileImagePath:require('../images/Profile_pic.png'),
 
         }
     }
     
     OpenImagePicker() {
-        if (this.state.user_img_arry.length < 4) {
             ImagePicker.showImagePicker(this.options, (response) => {
                 console.log('response==', response);
                 if (response.didCancel) {
@@ -82,15 +95,61 @@ export default class EditProfile extends React.Component {
                 } else {
                     const source = { uri: response.uri };
                     console.log('response-->', source);
-                    this.setState({ user_filename: source })
-                    this.uploadImage(response.uri);
+                    this.setState({ user_filename: source, user_rsa_photo:response.uri, user_rsa_photo_data:response})
+                    //this.uploadImage(response.uri);
                 }
-
             })
-        } else {
-            alert('maximum 4 image selected');
+    }
 
-        }
+    getPassportPhoto() {
+            ImagePicker.showImagePicker(this.options, (response) => {
+                console.log('response==', response);
+                if (response.didCancel) {
+                    console.log('User cancelled image picker');
+                } else if (response.error) {
+                    console.log('ImagePicker Error: ', response.error);
+                } else if (response.customButton) {
+                    console.log('User tapped custom button: ', response.customButton);
+                } else {
+                    const source = { uri: response.uri };
+                    console.log('response-->', source);
+                    this.setState({ user_filename: source, user_passport_photo:response.uri, user_passport_photo_data:response})
+                }
+            })
+    }
+
+    getCompanyPhoto() {
+        ImagePicker.showImagePicker(this.options, (response) => {
+            console.log('response==', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                const source = { uri: response.uri };
+                console.log('response-->', source);
+                this.setState({ user_filename: source, company_logo:response.uri, company_logo_data:response})
+            }
+        })
+    }
+
+    getUserPhoto() {
+        ImagePicker.showImagePicker(this.options, (response) => {
+            console.log('response==', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                const source = { uri: response.uri };
+                console.log('response-->', source);
+                this.setState({ user_filename: source, user_profile_photo:response.uri, user_profile_photo_data:response})
+            }
+        })
     }
     
     uploadImage(uri) {
@@ -131,8 +190,8 @@ export default class EditProfile extends React.Component {
                     <TextInput
                         placeholder="Enter Company Name"
                         style={StyleEditProfile.TextInput}
-                        value={this.state.first_name}
-                        onChangeText={(text) => { this.setState({ first_name: text }) }}
+                        value={this.state.company_name}
+                        onChangeText={(text) => { this.setState({ company_name: text }) }}
                     />
                 </View>
 
@@ -181,7 +240,7 @@ export default class EditProfile extends React.Component {
                     <TextInput
                         placeholder="Enter Telephone Number"
                         style={StyleEditProfile.TextInput}
-                        value={this.state.user_telephoneNo}
+                        value={this.state.company_telephoneNo}
                         keyboardType="number-pad"
                         maxLength={10}
                         onChangeText={(text) => {
@@ -333,12 +392,14 @@ export default class EditProfile extends React.Component {
                     </View>
                     <TextInput
                         placeholder="Enter ZipCode"
+                        keyboardType="number-pad"
+                        maxLength={4}
                         style={StyleEditProfile.TextInput}
-                        value={this.state.user_zipcode}
-                        onChangeText={(text) => { this.setState({ user_zipcode: text }) }}
+                        value={this.state.company_zipcode}
+                        onChangeText={(text) => { this.setState({ company_zipcode: text }) }}
                     />
                 </View>
-
+{/* 
                 <View style={StyleEditProfile.TextInputView}>
                     <View style={StyleEditProfile.LabelView}>
                         <Image source={require('../images/password.png')}
@@ -368,7 +429,7 @@ export default class EditProfile extends React.Component {
                     </View>
 
                 </View>
-
+ */}
             </View>
 
         )
@@ -388,8 +449,8 @@ export default class EditProfile extends React.Component {
                     <TextInput
                         placeholder="Enter First Name"
                         style={StyleEditProfile.TextInput}
-                        value={this.state.first_name}
-                        onChangeText={(text) => { this.setState({ first_name: text }) }}
+                        value={this.state.user_first_name}
+                        onChangeText={(text) => { this.setState({ user_first_name: text }) }}
                     />
                 </View>
 
@@ -403,8 +464,8 @@ export default class EditProfile extends React.Component {
                     <TextInput
                         placeholder="Enter Last Name"
                         style={StyleEditProfile.TextInput}
-                        value={this.state.last_name}
-                        onChangeText={(text) => { this.setState({ last_name: text }) }}
+                        value={this.state.user_last_name}
+                        onChangeText={(text) => { this.setState({ user_last_name: text }) }}
                     />
                 </View>
 
@@ -418,8 +479,8 @@ export default class EditProfile extends React.Component {
                     <TextInput
                         placeholder="Enter Title"
                         style={StyleEditProfile.TextInput}
-                        value={this.state.title}
-                        onChangeText={(text) => { this.setState({ title: text }) }}
+                        value={this.state.user_title}
+                        onChangeText={(text) => { this.setState({ user_title: text }) }}
                     />
                 </View>
 
@@ -446,7 +507,30 @@ export default class EditProfile extends React.Component {
                     />
                 </View>
 
-                <View style={{ flexDirection: 'column',justifyContent:'center',}}>
+                <View style={{flexDirection:'row', width:'90%', height: 50, marginVertical:0, marginHorizontal:25, backgroundColor: Constants.COLOR_WHITE, alignItems:'center', justifyContent:'center'}}>
+                    <TouchableOpacity style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}
+                        onPress={()=>{ this.setState({user_docType:"1", user_rsa_photo:""}) }}
+                    >
+                        <Image
+                            source={ this.state.user_docType =="1" ? require('../images/radio_button_circular_selected.png') : require('../images/radio_button_circular.png')}
+                            style={{width:25, height:25, resizeMode:'cover'}}
+                        />
+                        <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none', marginLeft:5, marginBottom:3, }]}>RSA ID</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{flexDirection:'row', justifyContent:'center', alignItems:'center', marginLeft:20}}
+                        onPress={()=>{ this.setState({user_docType:"2",}) }}
+                    >
+                        <Image
+                            source={ this.state.user_docType =="2" ? require('../images/radio_button_circular_selected.png') : require('../images/radio_button_circular.png')}
+                            style={{width:25, height:25, resizeMode:'cover'}}
+                        />
+                        <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none', marginLeft:5, marginBottom:3, }]}>Passport</Text>
+                    </TouchableOpacity>
+
+                </View>
+
+                <View style={{ flexDirection: 'column',justifyContent:'center', display : this.state.user_docType==1 ? 'flex' : 'none'}}>
                     <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
                         <View style={[StyleEditProfile.TextInputView, { width: '68%' }]}>
                             <View style={StyleEditProfile.LabelView}>
@@ -456,10 +540,10 @@ export default class EditProfile extends React.Component {
                                 <Text style={StyleEditProfile.modalLabelText}>{Constants.RSAIDPassNO}</Text>
                             </View>
                             <TextInput
-                                placeholder="Enter Company Name"
+                                placeholder="Enter RSA Id"
                                 style={[StyleEditProfile.TextInput]}
                                 value={this.state.user_rsa_id}
-                                onChangeText={(text) => { this.setState({ rsa_id: text }) }}
+                                onChangeText={(text) => { this.setState({ user_rsa_id: text }) }}
                             />
                         </View>
                         <TouchableOpacity style={{ marginLeft: 10, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', marginBottom: 18 }}
@@ -470,8 +554,15 @@ export default class EditProfile extends React.Component {
                             <Image source={require('../images/add.png')} style={{ width: 55, height: 55, alignSelf: 'center' }} />
                         </TouchableOpacity>
                     </View>
+                    {
+                        this.state.user_rsa_photo && this.state.user_docType=="1" ?
+                        <View style={{justifyContent:'center', alignItems:'center'}}>
+                            <Image source={{ uri: this.state.user_rsa_photo }} style={{ width: 60, height: 60, borderRadius: 5, margin: 5, marginBottom:10, resizeMode:'cover' }}/>
+                        </View>
+                        : null
+                    }
                 
-                    <FlatList
+                    {/* <FlatList
                         data={this.state.user_img_arry}
                         extraData={this.state}
                         horizontal={true}
@@ -490,8 +581,41 @@ export default class EditProfile extends React.Component {
                                 </View>
                             )
                         }}
-                    />
+                    /> */}
 
+                </View>
+
+                <View style={{ flexDirection: 'column',justifyContent:'center', display : this.state.user_docType==2 ? 'flex' : 'none'}}>
+                    <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={[StyleEditProfile.TextInputView, { width: '68%' }]}>
+                            <View style={StyleEditProfile.LabelView}>
+                                <Image source={require('../images/designation.png')}
+                                    style={StyleEditProfile.labelIcon}
+                                />
+                                <Text style={StyleEditProfile.modalLabelText}>Passport</Text>
+                            </View>
+                            <TextInput
+                                placeholder="Enter Passport number"
+                                style={[StyleEditProfile.TextInput]}
+                                value={this.state.user_passport_number}
+                                onChangeText={(text) => { this.setState({ user_passport_number: text }) }}
+                            />
+                        </View>
+                        <TouchableOpacity style={{ marginLeft: 10, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', marginBottom: 18 }}
+                        onPress={()=>{
+                            this.getPassportPhoto();
+                        }}
+                        >
+                            <Image source={require('../images/add.png')} style={{ width: 55, height: 55, alignSelf: 'center' }} />
+                        </TouchableOpacity>
+                    </View>
+                    {
+                        this.state.user_passport_photo && this.state.user_docType=="2" ?
+                        <View style={{justifyContent:'center', alignItems:'center'}}>
+                            <Image source={{ uri: this.state.user_passport_photo }} style={{ width: 60, height: 60, borderRadius: 5, margin: 5, marginBottom:10, resizeMode:'cover' }}/>
+                        </View>
+                        : null
+                    }
                 </View>
 
                 <View style={StyleEditProfile.TextInputView}>
@@ -616,6 +740,8 @@ export default class EditProfile extends React.Component {
                         placeholder="Enter ZipCode"
                         style={StyleEditProfile.TextInput}
                         value={this.state.user_zipcode}
+                        keyboardType="number-pad"
+                        maxLength={4}
                         onChangeText={(text) => { this.setState({ user_zipcode: text }) }}
                     />
                 </View>
@@ -635,7 +761,7 @@ export default class EditProfile extends React.Component {
                     />
                 </View>
 
-                <View style={StyleEditProfile.TextInputView}>
+                {/* <View style={StyleEditProfile.TextInputView}>
                     <View style={StyleEditProfile.LabelView}>
                         <Image source={require('../images/password.png')}
                             style={StyleEditProfile.labelIcon}
@@ -663,24 +789,231 @@ export default class EditProfile extends React.Component {
                         </TouchableOpacity>
                     </View>
 
-                </View>
+                </View> */}
             </View>
         )
+    }
+
+    isCompanyFormValid(){
+        let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+        if(this.state.customerType=="company_profile"){
+
+            if(this.state.company_name==""){
+                alert("Please enter company name")
+                return false
+            }
+            if(this.state.company_contactPerson==""){
+                alert("Please enter company contact person name")
+                return false
+            }
+            if(this.state.company_contactPosition==""){
+                alert("Please enter position of company contact person")
+                return false
+            }
+            if(this.state.company_telephoneNo==""){
+                alert("Please enter telephone number")
+                return false
+            }
+            if(this.state.company_telephoneNo.length!=10){
+                alert("Please enter correct telephone number")
+                return false
+            }
+            if(this.state.company_emailId==""){
+                alert("Please enter email Id")
+                return false
+            }
+            if(!emailRegex.test(this.state.company_emailId)){
+                alert("Please enter valid email Id")
+                return false
+            }
+            if(this.state.company_address==""){
+                alert("Please enter street address")
+                return false
+            }
+            if(this.state.company_logo==""){
+                alert("Please upload company logo")
+                return false
+            }
+            if(this.state.company_country=="-1"){
+                alert("Please select country")
+                return false
+            }
+            if(this.state.company_Province=="-1"){
+                alert("Please select province")
+                return false
+            }
+            if(this.state.company_City=="-1"){
+                alert("Please select city")
+                return false
+            }
+            if(this.state.company_zipCode==""){
+                alert("Please enter zip code")
+                return false
+            }
+            if(this.state.company_zipCode.length != 4){
+                alert("Please enter correct zip code")
+                return false
+            }
+            // if(this.state.company_password==""){
+            //     alert("Please enter password")
+            //     return false
+            // }
+            // if(this.state.company_password.length <=7){
+            //     alert("Please enter strong password")
+            //     return false
+            // }
+            // if(this.state.company_confirmPass==""){
+            //     alert("Please enter confirm password")
+            //     return false
+            // }
+            // if(this.state.company_confirmPass!= this.state.company_password){
+            //     alert("Please enter confirm password matching with new password")
+            //     return false
+            // }
+        }
+        return true
+    }
+
+    isUserFormValid(){
+        let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+        if(this.state.customerType=="user_profile")
+        {
+            if(this.state.user_first_name==""){
+                    alert("Please enter first name")
+                    return false
+            }
+            if(this.state.user_last_name==""){
+                    alert("Please enter last name")
+                    return false
+            }
+            if(this.state.user_title==""){
+                    alert("Please select title")
+                    return false
+            }
+            if(this.state.user_telephoneNo==""){
+                    alert("Please enter telephone number")
+                    return false
+            }
+            if(this.state.user_telephoneNo.length!=10){
+                    alert("Please enter correct telephone number")
+                    return false
+            }
+            if(this.state.user_docType=="0"){
+                alert("Please select Identification")
+                return false
+            }
+            if( this.state.user_docType=="1" && this.state.user_rsa_id==""){
+                    alert("Please enter RSA Id")
+                    return false
+            }
+            if( this.state.user_docType=="1" && this.state.user_rsa_photo==""){
+                alert("Upload photo for RSA Id")
+                return false
+            }
+            if( this.state.user_docType=="2" && this.state.user_passport_number==""){
+                alert("Please enter passport number")
+                return false
+            }
+            if( this.state.user_docType=="2" && this.state.user_passport_photo==""){
+                alert("Upload photo for passport")
+                return false
+            }
+            if(this.state.user_address==""){
+                    alert("Please enter address")
+                    return false
+            }
+            if(this.state.user_country=="-1"){
+                alert("Please select country")
+                return false
+        }
+            if(this.state.user_Province=="-1"){
+                    alert("Please select province")
+                    return false
+            }
+            if(this.state.user_city=="-1"){
+                    alert("Please select city")
+                    return false
+            }
+            if(this.state.user_zipCode==""){
+                    alert("Please enter zip code")
+                    return false
+            }
+            if(this.state.user_zipCode.length!=4){
+                    alert("Please enter correct zip code")
+                    return false
+            }
+            if(this.state.email_id==""){
+                alert("Please enter email Id")
+                return false
+            }
+            if(!emailRegex.test(this.state.email_id)){
+                    alert("Please enter valid email Id")
+                    return false
+            }
+            // if(this.state.user_password==""){
+            //         alert("Please enter password")
+            //         return false
+            // }
+            // if(this.state.user_password.length<=7){
+            //         alert("Please enter strong password")
+            //         return false
+            // }
+            // if(this.state.user_confirmPassword==""){
+            //         alert("Please enter confirm password")
+            //         return false
+            // }
+            // if(this.state.user_confirmPassword != this.state.user_password){
+            //         alert("Please enter confirm password matching with new password")
+            //         return false
+            // }
+        }
+        return true
+    }
+
+    isPasswordValid(){
+        if(this.state.current_password==""){
+            alert("Please enter current password")
+            return false
+        }
+        if(this.state.new_password==""){
+            alert("Please enter new password")
+            return false
+        }
+        if(this.state.confirm_password==""){
+            alert("Please enter confirm password")
+            return false
+        }
+        if(this.state.confirm_password!=this.state.new_password){
+            alert("Password didn't matched.")
+            return false
+        }
+        return true
+    }
+
+    changePassword(){
+        if(this.isPasswordValid()){
+            let params = {
+                "current_password" : this.state.current_password,
+                "new_password": this.state.new_password
+            }
+            this.presenter.callPostApi(ApiConstants.changePassword,params ,true)
+        }
     }
 
     Modal_ChangePassword() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                
                 <View style={StyleMyProfile.ModalWrapper}>
+                    
                     <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
-                        onPress={() => {
-                            this.setState({ modalVisible_Changepassword: false })
-                        }}
+                        onPress={() => { this.setState({ modalVisible_Changepassword: false, current_password:"", new_password:"", confirm_password:""})}}
                     >
                         <Image source={require('../images/close.png')}
                             style={{ width: 15, height: 15 }}
                         />
                     </TouchableOpacity>
+
                     <Text style={[StyleMyProfile.col1Text, { fontSize: Constants.FONT_SIZE_EXTRA_LARGE, textTransform: 'uppercase', alignSelf: 'center', marginVertical: 10 }]}>{Constants.ChangePassword}</Text>
 
                     <View style={{ marginTop: 10 }} >
@@ -696,6 +1029,8 @@ export default class EditProfile extends React.Component {
                                 placeholder="Enter Password"
                                 style={StyleMyProfile.TextInput}
                                 value={this.state.current_password}
+                                autoCapitalize="none"
+                                secureTextEntry={true}
                                 onChangeText={(text) => { this.setState({ current_password: text }) }}
 
                             />
@@ -711,6 +1046,8 @@ export default class EditProfile extends React.Component {
                             <TextInput
                                 placeholder="Enter Password"
                                 style={StyleMyProfile.TextInput}
+                                autoCapitalize="none"
+                                secureTextEntry={true}
                                 value={this.state.new_password}
                                 onChangeText={(text) => { this.setState({ new_password: text }) }}
 
@@ -727,18 +1064,50 @@ export default class EditProfile extends React.Component {
                             <TextInput
                                 placeholder="Enter Password"
                                 style={StyleMyProfile.TextInput}
+                                autoCapitalize="none"
+                                secureTextEntry={true}
                                 value={this.state.confirm_password}
                                 onChangeText={(text) => { this.setState({ confirm_password: text }) }}
 
                             />
                         </View>
+                    
                     </View>
-                    <TouchableOpacity style={[StyleMyProfile.ButtonView, { width: '90%' }]}
-                        onPress={() => { this.setState({ modalVisible_successMsg: true }) }}
+                    
+                    <TouchableOpacity 
+                        disabled={
+                            this.state.current_password==""
+                            ? true
+                            :
+                            this.state.new_password==""
+                            ? true
+                            :
+                            this.state.confirm_password==""
+                            ? true
+                            : false
+                        }
+                        style={[StyleMyProfile.ButtonView,{width: '90%',
+                            backgroundColor: 
+                                this.state.current_password==""
+                                ? Constants.COLOR_GREY_LIGHT
+                                :
+                                this.state.new_password==""
+                                ? Constants.COLOR_GREY_LIGHT
+                                :
+                                this.state.confirm_password==""
+                                ? Constants.COLOR_GREY_LIGHT
+                                : Constants.COLOR_GREEN
+                            }]}
+                        onPress={() => { 
+                            this.changePassword()
+                            //this.setState({ modalVisible_successMsg: true })
+                        }}
                     >
                         <Text style={StyleMyProfile.ButtonLabel}>{Constants.Update}</Text>
                     </TouchableOpacity>
+
                 </View>
+
             </View>
         )
     }
@@ -801,7 +1170,7 @@ export default class EditProfile extends React.Component {
               if(data.status){
                   this.setState({countryList : data.countryList, isCountryListFilled:1})
               }else{
-                  alert(data.message)
+                  alert(data.msg)
               }
               break;
           }
@@ -828,9 +1197,18 @@ export default class EditProfile extends React.Component {
           }
           case ApiConstants.updateProfilePic:{
               if(data.status){
-                  console.log("img rep ===> "+JSON.stringify())
+                  console.log("img rep ===> "+data)
               }
               else {
+                  alert(data.msg)
+              }
+              break;
+          }
+          case ApiConstants.changePassword:{
+              if(data.status){
+                  this.setState({current_password:"", new_password:"", confirm_password:"", modalVisible_Changepassword:false})
+                  alert(data.message)
+              }else{
                   alert(data.message)
               }
               break;
@@ -851,6 +1229,7 @@ export default class EditProfile extends React.Component {
                 let source = { uri: response.uri };
                 console.log('response-->', source);
                 this.setState({ profileImagePath: source })
+                this.setState({ user_filename: source, user_profile_photo:response.uri})
                 let params = {
                     "file" : response
                 }
@@ -858,7 +1237,34 @@ export default class EditProfile extends React.Component {
             }
         })
       }
-    render() {
+
+    updateProfile(){
+        if(this.state.customerType=="user_profile"){
+            if(this.isUserFormValid()){
+                let params={
+                    "registration_type":1,
+                    "first_name":this.state.user_first_name,
+                    "last_name":this.state.user_last_name,
+                    "email_id":this.state.email_id,
+                    "mobile_no":this.state.user_telephoneNo,
+                }
+                this.presenter.callPostApi(ApiConstants.updateProfile, params, true)
+            }
+        }else{
+            //for company
+            if(this.isCompanyFormValid()){
+                let params={
+                    "registration_type":2,
+                    "company_name":this.state.company_name,
+                    "company_contact":this.state.company_contactPerson,
+                    "email_id":this.state.company_email,
+                }
+                this.presenter.callPostApi(ApiConstants.updateProfile, params, true)
+            }
+        }
+    }
+
+      render() {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1 }}>
@@ -881,14 +1287,32 @@ export default class EditProfile extends React.Component {
                                         style={StyleEditProfile.sideImage}
                                     />
                                 </TouchableOpacity>
-
-                                <Image
-                                    source={this.state.profileImagePath}
-                                    style={StyleEditProfile.ProfileImage}
-                                />
+                                
+                                {
+                                    this.state.customerType=="company_profile" ? 
+                                        <Image
+                                            source={ this.state.company_logo==""? require('../images/Profile_pic.png') : { uri: this.state.company_logo }}
+                                            style={StyleEditProfile.ProfileImage}
+                                        />
+                                    :null
+                                }
+                                {
+                                    this.state.customerType=="user_profile" ? 
+                                        <Image
+                                            source={ this.state.user_profile_photo==""? require('../images/Profile_pic.png') : { uri: this.state.user_profile_photo }}
+                                            style={StyleEditProfile.ProfileImage}
+                                        />
+                                    :null
+                                }
 
                                 <TouchableOpacity style={StyleEditProfile.sideImageView}
-                                    onPress={()=>{ this.uploadProfileImage() }}
+                                    onPress={()=>{
+                                        if(this.state.customerType=='user_profile'){
+                                            this.uploadProfileImage()
+                                        }else{
+                                            this.getCompanyPhoto()
+                                        }
+                                    }}
                                 >
                                     <Image source={require('../images/upload_normal.png')}
                                         style={StyleEditProfile.sideImage}
@@ -897,19 +1321,18 @@ export default class EditProfile extends React.Component {
                             </View>
                         </View>
 
-
-                        {this.state.screen_title == 'user_profile'
+                        {this.state.customerType == 'user_profile'
                             ? <Text style={StyleEditProfile.label}>{this.state.first_name}&nbsp;{this.state.last_name}</Text>
-                            : this.state.screen_title == 'company_profile'
+                            : this.state.customerType == 'company_profile'
                                 ? <Text style={StyleEditProfile.label}>{this.state.company_name}</Text>
                                 : null
                         }
                         <View style={StyleEditProfile.bottomline}></View>
 
                         <View style={{ marginTop: 10 }}>
-                            {this.state.screen_title == 'user_profile'
+                            {this.state.customerType == 'user_profile'
                                 ? this.user_Profile()
-                                : this.state.screen_title == 'company_profile'
+                                : this.state.customerType == 'company_profile'
                                     ? this.company_Profile()
                                     : null
                             }
@@ -923,7 +1346,8 @@ export default class EditProfile extends React.Component {
                             </TouchableOpacity>
                             <TouchableOpacity style={StyleEditProfile.ButtonView}
                                 onPress={() => {
-                                    this.setState({ modalVisible_successMsg: true })
+                                    this.updateProfile();
+                                    // this.setState({ modalVisible_successMsg: true })
                                 }}
                             >
                                 <Text style={StyleEditProfile.ButtonLabel}>{Constants.Update}</Text>
