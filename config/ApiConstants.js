@@ -38,6 +38,8 @@ export default ApiConstants = {
     profileSetup:'customer/profileSetup',
     countryList:'customer/countryList',
     setPassword:'customer/setPassword',
+    changePassword:'customer/changePassword',
+    updateProfile:"customer/updateProfile",
 
 
     /* ------------Mayur----------- */
