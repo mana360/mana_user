@@ -18,9 +18,10 @@ export default class EditProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isProfileUpdatedModal:false,
             modalVisible_Changepassword: false,
             modalVisible_successMsg: false,
-            customerType: 'company_profile',//user_profile,company_profile
+            customerType: 'user_profile',//user_profile,company_profile
             current_password: '',
             new_password: '',
             confirm_password: '',
@@ -195,7 +196,7 @@ export default class EditProfile extends React.Component {
                     />
                 </View>
 
-                <View style={StyleEditProfile.TextInputView}>
+            {/* <View style={StyleEditProfile.TextInputView}>
                     <View style={StyleEditProfile.LabelView}>
                         <Image source={require('../images/person.png')}
                             style={StyleEditProfile.labelIcon}
@@ -209,8 +210,8 @@ export default class EditProfile extends React.Component {
                         onChangeText={(text) => { this.setState({ company_contactPerson: text }) }}
                     />
                 </View>
-
-                <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
+            */}
+                {/* <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
                     <View style={[StyleEditProfile.TextInputView, { width: '68%' }]}>
                         <View style={StyleEditProfile.LabelView}>
                             <Image source={require('../images/designation.png')}
@@ -229,7 +230,7 @@ export default class EditProfile extends React.Component {
                         <Image source={require('../images/add.png')} style={{ width: 55, height: 55, alignSelf: 'center' }} />
                     </TouchableOpacity>
                 </View>
-
+ */}
                 <View style={StyleEditProfile.TextInputView}>
                     <View style={StyleEditProfile.LabelView}>
                         <Image source={require('../images/telephone.png')}
@@ -264,7 +265,7 @@ export default class EditProfile extends React.Component {
                     />
                 </View>
 
-                <View style={StyleEditProfile.TextInputView}>
+                {/* <View style={StyleEditProfile.TextInputView}>
                     <View style={StyleEditProfile.LabelView}>
                         <Image source={require('../images/address.png')}
                             style={StyleEditProfile.labelIcon}
@@ -278,8 +279,8 @@ export default class EditProfile extends React.Component {
                         onChangeText={(text) => { this.setState({ company_address: text }) }}
                     />
                 </View>
-
-                <View style={StyleEditProfile.TextInputView}>
+ */}
+                {/* <View style={StyleEditProfile.TextInputView}>
                     <View style={StyleEditProfile.LabelView}>
                         <Image source={require('../images/address.png')}
                             style={StyleEditProfile.labelIcon}
@@ -314,8 +315,8 @@ export default class EditProfile extends React.Component {
 
                     </Picker>
                 </View>
-
-                <View style={StyleEditProfile.TextInputView}>
+ */}
+                {/* <View style={StyleEditProfile.TextInputView}>
                     <View style={StyleEditProfile.LabelView}>
                         <Image source={require('../images/address.png')}
                             style={StyleEditProfile.labelIcon}
@@ -348,8 +349,8 @@ export default class EditProfile extends React.Component {
                         }
                     </Picker>
                 </View>
-
-                <View style={StyleEditProfile.TextInputView}>
+ */}
+                {/* <View style={StyleEditProfile.TextInputView}>
                     <View style={StyleEditProfile.LabelView}>
                         <Image source={require('../images/address.png')}
                             style={StyleEditProfile.labelIcon}
@@ -382,8 +383,8 @@ export default class EditProfile extends React.Component {
 
                     </Picker>
                 </View>
-
-                <View style={StyleEditProfile.TextInputView}>
+ */}
+                {/* <View style={StyleEditProfile.TextInputView}>
                     <View style={StyleEditProfile.LabelView}>
                         <Image source={require('../images/address.png')}
                             style={StyleEditProfile.labelIcon}
@@ -398,7 +399,7 @@ export default class EditProfile extends React.Component {
                         value={this.state.company_zipcode}
                         onChangeText={(text) => { this.setState({ company_zipcode: text }) }}
                     />
-                </View>
+                </View> */}
 {/* 
                 <View style={StyleEditProfile.TextInputView}>
                     <View style={StyleEditProfile.LabelView}>
@@ -469,7 +470,7 @@ export default class EditProfile extends React.Component {
                     />
                 </View>
 
-                <View style={StyleEditProfile.TextInputView}>
+                {/* <View style={StyleEditProfile.TextInputView}>
                     <View style={StyleEditProfile.LabelView}>
                         <Image source={require('../images/user_name.png')}
                             style={StyleEditProfile.labelIcon}
@@ -482,7 +483,7 @@ export default class EditProfile extends React.Component {
                         value={this.state.user_title}
                         onChangeText={(text) => { this.setState({ user_title: text }) }}
                     />
-                </View>
+                </View> */}
 
                 <View style={StyleEditProfile.TextInputView}>
                     <View style={StyleEditProfile.LabelView}>
@@ -507,7 +508,7 @@ export default class EditProfile extends React.Component {
                     />
                 </View>
 
-                <View style={{flexDirection:'row', width:'90%', height: 50, marginVertical:0, marginHorizontal:25, backgroundColor: Constants.COLOR_WHITE, alignItems:'center', justifyContent:'center'}}>
+                {/* <View style={{flexDirection:'row', width:'90%', height: 50, marginVertical:0, marginHorizontal:25, backgroundColor: Constants.COLOR_WHITE, alignItems:'center', justifyContent:'center'}}>
                     <TouchableOpacity style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}
                         onPress={()=>{ this.setState({user_docType:"1", user_rsa_photo:""}) }}
                     >
@@ -529,7 +530,8 @@ export default class EditProfile extends React.Component {
                     </TouchableOpacity>
 
                 </View>
-
+ */}
+{/* 
                 <View style={{ flexDirection: 'column',justifyContent:'center', display : this.state.user_docType==1 ? 'flex' : 'none'}}>
                     <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
                         <View style={[StyleEditProfile.TextInputView, { width: '68%' }]}>
@@ -581,11 +583,12 @@ export default class EditProfile extends React.Component {
                                 </View>
                             )
                         }}
-                    /> */}
+                    />
 
-                </View>
+                </View> */}
 
-                <View style={{ flexDirection: 'column',justifyContent:'center', display : this.state.user_docType==2 ? 'flex' : 'none'}}>
+
+                {/* <View style={{ flexDirection: 'column',justifyContent:'center', display : this.state.user_docType==2 ? 'flex' : 'none'}}>
                     <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }}>
                         <View style={[StyleEditProfile.TextInputView, { width: '68%' }]}>
                             <View style={StyleEditProfile.LabelView}>
@@ -631,8 +634,8 @@ export default class EditProfile extends React.Component {
                         value={this.state.user_address}
                         onChangeText={(text) => { this.setState({ user_address: text }) }}
                     />
-                </View>
-
+                </View> */}
+{/* 
                 <View style={StyleEditProfile.TextInputView}>
                     <View style={StyleEditProfile.LabelView}>
                         <Image source={require('../images/address.png')}
@@ -745,7 +748,7 @@ export default class EditProfile extends React.Component {
                         onChangeText={(text) => { this.setState({ user_zipcode: text }) }}
                     />
                 </View>
-
+ */}
                 <View style={StyleEditProfile.TextInputView}>
                     <View style={StyleEditProfile.LabelView}>
                         <Image source={require('../images/email_id.png')}
@@ -802,14 +805,14 @@ export default class EditProfile extends React.Component {
                 alert("Please enter company name")
                 return false
             }
-            if(this.state.company_contactPerson==""){
-                alert("Please enter company contact person name")
-                return false
-            }
-            if(this.state.company_contactPosition==""){
-                alert("Please enter position of company contact person")
-                return false
-            }
+            // if(this.state.company_contactPerson==""){
+            //     alert("Please enter company contact person name")
+            //     return false
+            // }
+            // if(this.state.company_contactPosition==""){
+            //     alert("Please enter position of company contact person")
+            //     return false
+            // }
             if(this.state.company_telephoneNo==""){
                 alert("Please enter telephone number")
                 return false
@@ -826,34 +829,34 @@ export default class EditProfile extends React.Component {
                 alert("Please enter valid email Id")
                 return false
             }
-            if(this.state.company_address==""){
-                alert("Please enter street address")
-                return false
-            }
-            if(this.state.company_logo==""){
-                alert("Please upload company logo")
-                return false
-            }
-            if(this.state.company_country=="-1"){
-                alert("Please select country")
-                return false
-            }
-            if(this.state.company_Province=="-1"){
-                alert("Please select province")
-                return false
-            }
-            if(this.state.company_City=="-1"){
-                alert("Please select city")
-                return false
-            }
-            if(this.state.company_zipCode==""){
-                alert("Please enter zip code")
-                return false
-            }
-            if(this.state.company_zipCode.length != 4){
-                alert("Please enter correct zip code")
-                return false
-            }
+            // if(this.state.company_address==""){
+            //     alert("Please enter street address")
+            //     return false
+            // }
+            // if(this.state.company_logo==""){
+            //     alert("Please upload company logo")
+            //     return false
+            // }
+            // if(this.state.company_country=="-1"){
+            //     alert("Please select country")
+            //     return false
+            // }
+            // if(this.state.company_Province=="-1"){
+            //     alert("Please select province")
+            //     return false
+            // }
+            // if(this.state.company_City=="-1"){
+            //     alert("Please select city")
+            //     return false
+            // }
+            // if(this.state.company_zipCode==""){
+            //     alert("Please enter zip code")
+            //     return false
+            // }
+            // if(this.state.company_zipCode.length != 4){
+            //     alert("Please enter correct zip code")
+            //     return false
+            // }
             // if(this.state.company_password==""){
             //     alert("Please enter password")
             //     return false
@@ -886,10 +889,10 @@ export default class EditProfile extends React.Component {
                     alert("Please enter last name")
                     return false
             }
-            if(this.state.user_title==""){
-                    alert("Please select title")
-                    return false
-            }
+            // if(this.state.user_title==""){
+            //         alert("Please select title")
+            //         return false
+            // }
             if(this.state.user_telephoneNo==""){
                     alert("Please enter telephone number")
                     return false
@@ -898,50 +901,50 @@ export default class EditProfile extends React.Component {
                     alert("Please enter correct telephone number")
                     return false
             }
-            if(this.state.user_docType=="0"){
-                alert("Please select Identification")
-                return false
-            }
-            if( this.state.user_docType=="1" && this.state.user_rsa_id==""){
-                    alert("Please enter RSA Id")
-                    return false
-            }
-            if( this.state.user_docType=="1" && this.state.user_rsa_photo==""){
-                alert("Upload photo for RSA Id")
-                return false
-            }
-            if( this.state.user_docType=="2" && this.state.user_passport_number==""){
-                alert("Please enter passport number")
-                return false
-            }
-            if( this.state.user_docType=="2" && this.state.user_passport_photo==""){
-                alert("Upload photo for passport")
-                return false
-            }
-            if(this.state.user_address==""){
-                    alert("Please enter address")
-                    return false
-            }
-            if(this.state.user_country=="-1"){
-                alert("Please select country")
-                return false
-        }
-            if(this.state.user_Province=="-1"){
-                    alert("Please select province")
-                    return false
-            }
-            if(this.state.user_city=="-1"){
-                    alert("Please select city")
-                    return false
-            }
-            if(this.state.user_zipCode==""){
-                    alert("Please enter zip code")
-                    return false
-            }
-            if(this.state.user_zipCode.length!=4){
-                    alert("Please enter correct zip code")
-                    return false
-            }
+            // if(this.state.user_docType=="0"){
+            //     alert("Please select Identification")
+            //     return false
+            // }
+            // if( this.state.user_docType=="1" && this.state.user_rsa_id==""){
+            //         alert("Please enter RSA Id")
+            //         return false
+            // }
+            // if( this.state.user_docType=="1" && this.state.user_rsa_photo==""){
+            //     alert("Upload photo for RSA Id")
+            //     return false
+            // }
+            // if( this.state.user_docType=="2" && this.state.user_passport_number==""){
+            //     alert("Please enter passport number")
+            //     return false
+            // }
+            // if( this.state.user_docType=="2" && this.state.user_passport_photo==""){
+            //     alert("Upload photo for passport")
+            //     return false
+            // }
+        //     if(this.state.user_address==""){
+        //             alert("Please enter address")
+        //             return false
+        //     }
+        //     if(this.state.user_country=="-1"){
+        //         alert("Please select country")
+        //         return false
+        // }
+        //     if(this.state.user_Province=="-1"){
+        //             alert("Please select province")
+        //             return false
+        //     }
+        //     if(this.state.user_city=="-1"){
+        //             alert("Please select city")
+        //             return false
+        //     }
+        //     if(this.state.user_zipCode==""){
+        //             alert("Please enter zip code")
+        //             return false
+        //     }
+        //     if(this.state.user_zipCode.length!=4){
+        //             alert("Please enter correct zip code")
+        //             return false
+        //     }
             if(this.state.email_id==""){
                 alert("Please enter email Id")
                 return false
@@ -1146,7 +1149,7 @@ export default class EditProfile extends React.Component {
 
     componentDidMount(){
         //this.getProvinceList()
-        this.getCountryList()
+        //this.getCountryList()
     }
 
     async getCountryList(){
@@ -1197,7 +1200,6 @@ export default class EditProfile extends React.Component {
           }
           case ApiConstants.updateProfilePic:{
               if(data.status){
-                  console.log("img rep ===> "+data)
               }
               else {
                   alert(data.msg)
@@ -1210,6 +1212,14 @@ export default class EditProfile extends React.Component {
                   alert(data.message)
               }else{
                   alert(data.message)
+              }
+              break;
+          }
+          case ApiConstants.updateProfile:{
+              if(data.status){
+                  this.setState({isProfileUpdatedModal:true})
+              }else{
+                  alert(data.msg)
               }
               break;
           }
@@ -1374,6 +1384,47 @@ export default class EditProfile extends React.Component {
                     transparent={true}
                 >
                     {this.Modal_chnagesSaveSuccessFully()}
+                </Modal>
+
+                <Modal
+                    visible={this.state.isProfileUpdatedModal}
+                    animationType='fade'
+                    transparent={true}
+                >
+                    <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                        
+                        <View style={[StyleMyProfile.ModalWrapper, { width: '80%' }]}>
+
+                            <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
+                                onPress={() => {
+                                    this.setState({ isProfileUpdatedModal: false,})
+                                    this.props.navigation.navigate("Dashboard")
+                                }}
+                            >
+                                <Image source={require('../images/close.png')}
+                                    style={{ width: 15, height: 15 }}
+                                />
+                            </TouchableOpacity>
+                            
+                            <Image source={require('../images/sent_icon.png')} style={{ width: 90, height: 90, marginVertical: 10, alignSelf: 'center' }}/>
+
+                            <Text style={[StyleMyProfile.col1Text, { alignSelf: 'center', fontSize: Constants.FONT_SIZE_EXTRA_LARGE, textAlign:'center' }]}>
+                                Your profie has been updated successfully.
+                            </Text>
+                            
+                            <TouchableOpacity style={[StyleMyProfile.ButtonView, { paddingHorizontal: 50, marginVertical: 15 }]}
+                                onPress={() => {
+                                    this.setState({ isProfileUpdatedModal: false})
+                                    this.props.navigation.navigate("Dashboard")
+                                }}
+                            >
+                                <Text style={StyleMyProfile.ButtonLabel}>{Constants.OK}</Text>
+                            </TouchableOpacity>
+
+                        </View>
+
+                    </View>
+
                 </Modal>
 
             </View>

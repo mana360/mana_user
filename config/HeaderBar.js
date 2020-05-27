@@ -1,5 +1,6 @@
 /*
-    design by : Udayraj 
+    design by : Udayraj
+    api by    : Udayraj
  */
 import React from 'react';
 import { BackHandler, View, Text, Image, StyleSheet, TouchableOpacity, } from 'react-native';
@@ -67,7 +68,7 @@ class HeaderBar extends React.Component {
           }else{
               // log out failed
               this.setState({isLogoutModalVisible:false})
-              alert(data.message)
+              alert(data.msg)
           }
         break;
       }
@@ -83,9 +84,12 @@ class HeaderBar extends React.Component {
     const isMenu = this.props.isMenu;
     return (
       <Header style={{ backgroundColor: Constants.COLOR_PRIMARY, padding: 0, margin: 0, justifyContent: 'center', alignItems: 'center', alignContent: 'center', }}>
+        
         <View style={{ flex: 10, flexDirection: 'row', }}>
           <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
+          
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-start' }}>
+            
             <TouchableOpacity style={isBack ? { display: 'flex', padding: 10, paddingLeft: 10, paddingRight: 40, } : { display: 'none' }}
               onPress={() => {
                 if (isPaymentBack) {
@@ -101,6 +105,7 @@ class HeaderBar extends React.Component {
                 style={styles.headerIcon}
               />
             </TouchableOpacity>
+            
             <TouchableOpacity style={isMenu ? { display: 'flex', padding: 10, paddingLeft: 10, paddingRight: 40, } : { display: 'none' }}
               onPress={() => { }}
             >
@@ -127,10 +132,7 @@ class HeaderBar extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity style={isLogout ? { display: 'flex' } : { display: 'none' }}
-              onPress={() => {
-                this.setState({ isLogoutModalVisible: true })
-
-              }}
+              onPress={() => { this.setState({ isLogoutModalVisible: true })}}
             >
               <Image
                 source={require('../images/logout.png')}

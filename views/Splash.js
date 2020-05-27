@@ -52,11 +52,19 @@ export default class Splash extends React.Component {
                   }else{
                       if(data.status_code == 203){
                           // incomplete profile setup
-                          this.props.navigation.dispatch(
-                            StackActions.reset({
-                              index: 0,
-                              actions: [NavigationActions.navigate({ routeName: 'ProfileSetUp' })],
+                          if(data.msg=="Unauthorized user."){
+                            this.props.navigation.dispatch(
+                                StackActions.reset({
+                                index: 0,
+                                actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
                             }))
+                          }else{
+                            this.props.navigation.dispatch(
+                                StackActions.reset({
+                                index: 0,
+                                actions: [NavigationActions.navigate({ routeName: 'ProfileSetUp' })],
+                            }))
+                          }
                       }else{
                         await clearAllData()
                         this.props.navigation.dispatch(
