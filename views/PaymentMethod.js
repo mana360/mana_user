@@ -43,7 +43,7 @@ export default class PaymentMethod extends React.Component {
             <View style={{ flex: 1, }}>
                 <HeaderBar title="Payment Method" isBack={true} isPaymentBack={true} isNotification={true} navigation={navigation} />
                 <ScrollView bounces={false} style={{ width: wp('100%'), }}>
-                    <View style={StylePaymentMethod.paymentamount}>
+                    {/* <View style={StylePaymentMethod.paymentamount}>
                 
                         <View style={StylePaymentMethod.paymentamounttxt}>
                             <Text style={StylePaymentMethod.paymentamountlefttxt}>Total Price</Text>
@@ -64,14 +64,14 @@ export default class PaymentMethod extends React.Component {
                             <Text style={StylePaymentMethod.paymenttotalamount}>R 490</Text>
                         </View>
                     
-                    </View>
+                    </View> */}
 
                     <View style={StylePaymentMethod.paymentmethod}>
                         <Text style={StylePaymentMethod.choosetext}>CHOOSE YOUR PAYMENT METHOD </Text>
                         <View style={StylePaymentMethod.choosetype}>
 
                             <TouchableOpacity style={ this.state.payment_method=="cash" ? StylePaymentMethod.onlinepay : StylePaymentMethod.cashpickup}
-                                onPress={()=>{this.setState({payment_method:"cash"})}}>
+                                onPress={()=>{this.setState({payment_method:"cash",secondmodalVisible:true})}}>
                                 <Text style={ this.state.payment_method=="cash" ? StylePaymentMethod.onlinepaytxt : StylePaymentMethod.cashpickuptxt}>Cash On Pick Up</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={StylePaymentMethod.onlinepay} onPress={() => { this.setModalVisible(true); }} underlayColor='#fff'>

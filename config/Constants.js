@@ -215,6 +215,7 @@ const Constants = {
     PaymentPolicy:'Payment Policy',
     Referralcode:'Referral Code',
     PickUpAddress:'Pick Up Address',
+    AddressDetails:"Address Details",
     DropOffAddress:'Drop Off Address',
     PickUpDate:'Pick up Date',
     PickUpTime:'Pick up Time',

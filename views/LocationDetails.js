@@ -5,7 +5,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, DatePickerAndroid, TimePickerAndroid, TextInput } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { StyleLocationDetails } from '../config/CommonStyles';
-import { Picker } from "native-base";
+import { Picker, List } from "native-base";
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
@@ -20,20 +20,54 @@ export default class LocationDetails extends React.Component {
 
         this.state = {
             pick_up_address: "",
+            pick_up_address_lat:"",
+            pick_up_address_long:"",
+            pick_up_addressDetails:"",
+
             drop_off_address: "",
+            drop_off_address_lat:'',
+            drop_off_address_long:"",
+            drop_off_addressDetails:"",
+
+
             drop_off_address_1: "",
+            drop_off_address_1_lat:'',
+            drop_off_address_1_long:"",
+            drop_off_address_1Details:"",
+
             add_nextAddress: '',
             pickup_date: "",
             pickup_time: "",
+            instruction:"",
 
             load_category: '',
-            load_category_id:"",
+            load_category_id:1,
+            other_flag:0,
+            load_Category_Manualtext:"",
             loadCategoryList:[],
-            isLoadCategoryFilled:0
+            isLoadCategoryFilled:0,
+            countList:[],
+            otherServicesList:[],
         }
-    }
+        this.userDetails="";
+
+        }
 componentDidMount(){
+    this.inItService();
+}
+
+ async inItService(){
+    
+     this.userDetails=this.props.navigation.getParam('userDetails');
+     console.log("UserDetails===>"+ JSON.stringify(this.userDetails));
+    let i=1
+        for(i=1;i<=15;i++){
+      this.state.countList.push(i);
+      console.log("count==>"+i);
+
+        }
     this.getloadCategoryList();
+    await this.presenter.callGetApi(ApiConstants.getotherServices,"",true);
 }
     async openCalender() {
         console.log("called")
@@ -89,14 +123,25 @@ componentDidMount(){
         switch (apiConstant) {
           case ApiConstants.LoadCategoryList: {
               if(data.status){
-                //   console.log("LoadCategory List => " + JSON.stringify(data))
-                  this.setState({loadCategoryList : data.load_category,isLoadCategoryFilled:1})
+                  console.log("LoadCategory List => " + JSON.stringify(data.load_category));
+                  this.setState({loadCategoryList : data.load_category,isLoadCategoryFilled:1});
 
                 }
               else {
-                  alert(data.message)
+                  alert(data.message);
               }
             break;
+          }
+
+          case ApiConstants.getotherServices:{
+              if(data.status){
+                        this.setState({otherServicesList:data.other_services});
+                        console.log("service List ===>"+JSON.stringify(this.state.otherServicesList));
+              }else{
+
+              }
+              break;
+
           }
           
         }
@@ -108,10 +153,60 @@ componentDidMount(){
             this.input_loadcategory.focus();     
         return false
         }
+        if(this.state.pick_up_address==""){
+            alert("Please Enter Pickup Address");
+            return false;
+        }
+        if(this.state.drop_off_address==""){
+            alert("Please Enter Dropup Address");
+            return false;
+        }
+        if(this.state.pickup_date==""){
+            alert("Please Enter valid Date");
+            return false;
+        }
+        if(this.state.pickup_time==""){
+            alert("Please Enter valid Time");
+            return false;
+        }
+        if(this.state.instructContainer==""){
+            alert("Please Enter Instruction");
+            return false;
+        }
         return true
     }
-getloadCategoryList(){
-this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true)
+    
+    getloadCategoryList(){
+    this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true);
+    }
+
+getAddress(flag){
+    this.props.navigation.navigate('MapViews', {
+        flag_location:flag, address: (resp) => {
+            console.log("callback flag==>"+flag);
+                      if(flag=="1"){
+                        this.setState({
+                            pick_up_address:resp.results[0].formatted_address,
+                            pick_up_address_lat:resp.results[0].geometry.location.lat,
+                            pick_up_address_long:resp.results[0].geometry.location.long
+                                });
+                      }
+                      if(flag=="2"){
+                            this.setState({
+                            drop_off_address:resp.results[0].formatted_address,
+                            drop_off_address_lat:resp.results[0].geometry.location.lat,
+                            drop_off_address_long:resp.results[0].geometry.location.long
+                            });
+                      }
+                      if(flag=='3'){
+                        this.setState({
+                            drop_off_address_1:resp.results[0].formatted_address,
+                            drop_off_address_1_lat:resp.results[0].geometry.location.lat,
+                            drop_off_address_1_long:resp.results[0].geometry.location.long
+                            });
+                    }
+         }
+    })
 }
 
     render() {
@@ -131,12 +226,11 @@ this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true)
                         <View style={StyleLocationDetails.locationWrapp}>
 
                             <View style={StyleLocationDetails.inputContainer}>
-
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.PickUpAddress}</Text>
                                 </View>
                                 <TextInput
-                                    placeholder='Lorum ipsum dolor sit amet,'
+                                    placeholder='Enter Pickup Address,'
                                     placeholderTextColor="#a4a4a4"
                                     ref={(ref) => { this.pick_up_address = ref }}
                                     value={this.state.pick_up_address}
@@ -146,15 +240,12 @@ this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true)
                                         }
                                     }
                                     style={StyleLocationDetails.inputBox} />
+                              
                                 <TouchableOpacity
                                     style={{ position: "absolute", right: 20, top: 12, }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('MapViews', {
-                                            flag_location: 'Location_details' , callBack: (resp) => {
-                                                this.setState({ pick_up_address: resp.results[1].formatted_address })
-                                                console.log('ikda bhi ala '+ resp.results[1].formatted_address)
-                                            }
-                                        })
+                                        let flag=1;
+                                       this.getAddress(flag);
                                     }
                                     }>
                                     <Image style={{ width: 20, height: 20, }}
@@ -162,11 +253,27 @@ this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true)
                                 </TouchableOpacity>
 
                             </View>
+                            <View style={StyleLocationDetails.inputContainer}>
+                                <View style={StyleLocationDetails.labelBoxNew}>
+                                    <Text style={StyleLocationDetails.labelTextNew}>{Constants.AddressDetails}</Text>
+                                </View>
+                                <TextInput
+                                    placeholder='Enter Pickup Address Details'
+                                    placeholderTextColor="#a4a4a4"
+                                    // ref={(ref) => { this.pick_up_address_Details = ref }}
+                                    value={this.state.pick_up_addressDetails}
+                                    onChangeText={
+                                        (value) => {
+                                            this.setState({ pick_up_addressDetails: value })
+                                        }
+                                    }
+                                    style={StyleLocationDetails.inputBox} />
+                            </View>
 
 
                             <View style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 20, width: '94%' }] : [StyleLocationDetails.inputContainer, { marginBottom: 20 }]}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
-                                    <Text style={StyleLocationDetails.labelTextNew}>{Constants.DropOffAddress}</Text>
+                                    <Text style={StyleLocationDetails.labelTextNew}>{Constants.DropOffAddress} 1</Text>
                                 </View>
                                 <TextInput placeholder='Drop Off Address'
                                     placeholderTextColor="#a4a4a4"
@@ -181,14 +288,8 @@ this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true)
                                 <TouchableOpacity
                                     style={{ position: "absolute", right: 20, top: 12, }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('MapViews', {
-                                            flag_location: 'Location_details' , callBack: (resp) => {
-                    
-                                                
-                                                this.setState({ drop_off_address: resp.results[1].formatted_address })
-                                                console.log('ikda bhi ala '+ resp.results[1].formatted_address)
-                                            }
-                                        })
+                                        let flag=2;
+                                        this.getAddress(flag);
                                     }
                                     }>
                                     <Image style={{ width: 20, height: 20, }}
@@ -196,9 +297,26 @@ this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true)
                                 </TouchableOpacity>
 
                             </View>
+                            <View style={StyleLocationDetails.inputContainer}>
+                                <View style={StyleLocationDetails.labelBoxNew}>
+                                    <Text style={StyleLocationDetails.labelTextNew}>{Constants.AddressDetails}</Text>
+                                </View>
+                                <TextInput
+                                    placeholder='Enter DropOff Address Details'
+                                    placeholderTextColor="#a4a4a4"
+                                    // ref={(ref) => { this.pick_up_address_Details = ref }}
+                                    value={this.state.drop_off_addressDetails}
+                                    onChangeText={
+                                        (value) => {
+                                            this.setState({ drop_off_addressDetails: value })
+                                        }
+                                    }
+                                    style={StyleLocationDetails.inputBox} />
+                            </View>
+
 
                             <TouchableOpacity
-                                style={this.state.add_nextAddress == '1' ? { position: "absolute", right: 10, top: '17%', } : { display: "none" }}
+                                style={this.state.add_nextAddress == '1' ? { position: "absolute", right: 10, top: '22%', } : { display: "none" }}
                                 onPress={() => { this.setState({ add_nextAddress: "" }) }}>
                                 <Image style={{ width: 25, height: 25, }}
                                     source={require('../images/remove.png')} />
@@ -207,7 +325,7 @@ this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true)
 
                             <View style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 20 }] : { display: 'none' }}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
-                                    <Text style={StyleLocationDetails.labelTextNew}>{Constants.DropOffAddress}</Text>
+                                    <Text style={StyleLocationDetails.labelTextNew}>{Constants.DropOffAddress} 2</Text>
                                 </View>
                                 <TextInput placeholder='Drop Off Address'
                                     placeholderTextColor="#a4a4a4"
@@ -222,22 +340,35 @@ this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true)
                                 <TouchableOpacity
                                     style={{ position: "absolute", right: 20, top: 12, }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('MapViews', {
-                                            flag_location: 'Location_details' , callBack: (resp) => {
-                                                this.setState({drop_off_address_1: resp.results[1].formatted_address })
-                                                console.log('ikda bhi ala '+ resp.results[1].formatted_address)
-                                            }
-                                        })
+                                        let flag=3;
+                                        this.getAddress(flag);
                                     }
                                     }>
                                     <Image style={{ width: 20, height: 20, }}
                                         source={require('../images/address.png')} />
                                 </TouchableOpacity>
+                                
 
+                            </View>
+                            <View  style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 35,paddingLeft:15 }] : { display: 'none' }}>
+                                <View style={StyleLocationDetails.labelBoxNew}>
+                                    <Text style={StyleLocationDetails.labelTextNew}>{Constants.AddressDetails}</Text>
+                                </View>
+                                <TextInput
+                                    placeholder='Enter DropOff Address Details'
+                                    placeholderTextColor="#a4a4a4"
+                                    // ref={(ref) => { this.pick_up_address_Details = ref }}
+                                    value={this.state.pick_up_addressDetails}
+                                    onChangeText={
+                                        (value) => {
+                                            this.setState({ pick_up_addressDetails: value })
+                                        }
+                                    }
+                                    style={StyleLocationDetails.inputBox} />
                             </View>
 
 
-                            <TouchableOpacity style={StyleLocationDetails.nextAddrBtn}
+                            <TouchableOpacity style={this.state.add_nextAddress?{display:'none'}:StyleLocationDetails.nextAddrBtn}
                                 onPress={() => {
                                     this.setState({ add_nextAddress: 1 })
                                 }}
@@ -281,7 +412,7 @@ this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true)
                                     />
                                 </TouchableOpacity>
                             </View>
-
+ 
                             <View style={StyleLocationDetails.instructContainer}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.Instructions}</Text>
@@ -289,8 +420,12 @@ this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true)
                                 <Textarea
                                     style={StyleLocationDetails.textarea}
                                     maxLength={100}
-                                    placeholder={'Lorem ipsum dolor sit amet, consectetur adipiscing elit, Lorem ipsum dolor sit amet, consectetur'}
+                                    placeholder="Enter Instruction"
                                     placeholderTextColor={'#a4a4a4'}
+                                    value={this.state.instruction}
+                                    onValueChange={(value)=>{
+                                        this.setState({instruction:value});
+                                    }}
                                 />
                             </View>
 
@@ -305,10 +440,12 @@ this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true)
                                     selectedValue={this.state.load_category}
                                     onValueChange={(value) => {
                                         this.setState({ load_category: value });
+                                        console.log(value);
                                         this.state.loadCategoryList.map((Item,index)=>{
-                                           if(value==Item.name){
-                                               this.setState({load_category_id:item.state_id});
-                                            
+                                           if(value==Item.category_name){
+                                            console.log("ID++>"+Item.category_id);
+                                               this.setState({load_category_id:Item.category_id,other_flag:Item.other_flag});
+                                               console.log("ID++>"+Item.category_id);
                                            }
                                         })
                                     }}
@@ -327,9 +464,58 @@ this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true)
 
                             </View>
 
+                            <View style={this.state.other_flag==1?[StyleLocationDetails.inputContainer,{justifyContent:"center",paddingLeft:25}]:{display:'none'}}>
+                                <View style={StyleLocationDetails.labelBoxNew}>
+                                    <Text style={StyleLocationDetails.labelTextNew}>{Constants.LOAD_CATEGORY}</Text>
+                                </View>
+                                <TextInput 
+                                placeholder='Enter Load Category' 
+                                style={[StyleLocationDetails.inputBox, { width: '90%',paddingLeft:15 }]}
+                                    value={this.state.load_Category_Manualtext}
+                                    onChangeText={(value)=>{
+                                        this.setState({load_Category_Manualtext:value});
+                                    }}
+                                    
+                                />
+                              
+                            </View>
+
+
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('BookingSummary')
+                                 
+                                    let user_data={
+                                        "pick_up_address": this.state.pick_up_address,
+                                        "pick_up_address_lat":this.state.pick_up_address_lat,
+                                        "pick_up_address_long":this.state.pick_up_address_long,
+                                        "pick_up_addressDetails":this.state.pick_up_addressDetails,
+
+                                        "drop_off_address":this.state.drop_off_address,
+                                        "drop_off_address_lat":this.state.drop_off_address_lat,
+                                        "drop_off_address_long":this.state. drop_off_address_long,
+                                        "drop_off_addressDetails":this.state.drop_off_addressDetails,
+
+                                        "drop_off_address_1": this.state. drop_off_address_1,
+                                        "drop_off_address_1_lat":this.state.drop_off_address_1_lat,
+                                        "drop_off_address_1_long":this.state.drop_off_address_1_long,
+                                        "drop_off_address_1Details": this.state. drop_off_address_1Details,
+
+
+                                        "pickupDate":this.state.pickup_date,
+                                        "pickupTime":this.state.pickup_time,
+                                        "instruction":this.state.instruction,
+                                        "load_category":this.state.other_flag==1?this.state.load_Category_Manualtext:this.state.load_category,
+                                        
+                                    }
+                                  
+
+                                    if(!this.isValid()){
+                                    }else{
+                                    this.props.navigation.navigate('BookingSummary',{userDetails_1:this.userDetails,userDetails_2:user_data});
+                                    }
+                                    this.props.navigation.navigate('BookingSummary',{userDetails_1:this.userDetails,userDetails_2:user_data});
+
+
                                 }}
                                 style={StyleLocationDetails.logButton}
                             >

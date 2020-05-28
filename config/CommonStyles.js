@@ -2495,6 +2495,20 @@ const StyleMapView = StyleSheet.create({
     mapStyle: {
         flex:1,
     },
+    bottom_btn:{
+        backgroundColor:Constants.COLOR_GREEN,
+        justifyContent:'center',
+        borderRadius:50,
+        alignSelf:'center',
+        width:"40%",
+        position: "absolute",
+        bottom:15,
+        paddingVertical:12,
+
+
+
+
+    }
 })
 const StyleViewMap = StyleSheet.create({
     mapStyle: {

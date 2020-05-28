@@ -19,8 +19,9 @@ export default class MapViews extends React.Component {
     this.state = {
       set_destination: false,
       current_address: "", //get current address  with draggable
-      current_latitude: 18.5581568,  // get current latitude
-      current_longitude: 73.7828864, // get current longtitude
+      current_latitude:0,  // get current latitude
+      current_longitude: 0, // get current longtitude
+      current_latlong:[],
       co_ordinate: [
         { origin: 0, latitude: 18.5204, longitude: 73.85672, title: 'pune', desc: '' },
         { destination: 1, latitude: 19.0760, longitude: 72.8777, title: 'mumbai', desc: '' },
@@ -35,6 +36,7 @@ export default class MapViews extends React.Component {
   // }
   componentDidMount() {
     this.getCurrentCoords();
+    this.RBSheet.open();
   }
   async getCurrentCoords() {
     const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
@@ -58,88 +60,95 @@ export default class MapViews extends React.Component {
     }
   }
 
-  getCurrentAdddress(lat, long) {
-    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + 'AIzaSyDaIta3GbvS-cK3Y8vagU7h6RhuHmGBlPI')
+  async getCurrentAdddress(lat, long) {
+    await fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + 'AIzaSyBEDVKNDyVUzE2ajUXcrpX89ZORifA0cN4')
       .then((response) => response.json()
         .then((responseJson) => {
 
-          console.log("FINALRESP====> " + responseJson.results[1].formatted_address)
-          this.setState({ current_address: responseJson.results[1].formatted_address })
-          this.props.navigation.state.params.callBack(responseJson);
-        })
+          console.log("FINALRESP Current Address====> " +JSON.stringify(responseJson.results[0].formatted_address));
+          console.log("Lat_long====> " +JSON.stringify(responseJson.results[0].geometry.location));
+
+
+          this.setState({ current_address: responseJson.results[0].formatted_address,current_latlong:responseJson.results[0].geometry.location })
+          this.props.navigation.state.params.address(responseJson);
+        }).catch(error=>
+          console.log(error))
       )
 
   }
 
-  setMarker_direction(origin, destination, GOOGLE_MAPS_APIKEY) {
-    return (
-      <View>
-        <Marker
-          draggable
-          onDragEnd={(e) => {
-            this.setDestination(e.nativeEvent.coordinatelet = e.nativeEvent.coordinate.longitude)
+  // setMarker_direction(origin, destination, GOOGLE_MAPS_APIKEY) {
+  //   return (
+  //     <View>
+  //       <Marker
+  //         draggable
+  //         onDragEnd={(e) => {
+  //           this.setDestination(e.nativeEvent.coordinatelet = e.nativeEvent.coordinate.longitude)
 
-          }}
-          coordinate={origin}
-          description={this.state.co_ordinate[0].desc}
-          title={this.state.co_ordinate[0].title}
-        />
+  //         }}
+  //         coordinate={origin}
+  //         description={this.state.co_ordinate[0].desc}
+  //         title={this.state.co_ordinate[0].title}
+  //       />
 
-        <Marker
-          draggable
-          onDragEnd={(e) => {
-            // this.setDestination(e.nativeEvent.coordinatelet =e.nativeEvent.coordinate.longitude)
+  //       <Marker
+  //         draggable
+  //         onDragEnd={(e) => {
+  //           // this.setDestination(e.nativeEvent.coordinatelet =e.nativeEvent.coordinate.longitude)
 
-          }}
-          position={destination}
-          coordinate={destination}
-          description={this.state.co_ordinate[1].desc}
-          title={this.state.co_ordinate[1].title}
+  //         }}
+  //         position={destination}
+  //         coordinate={destination}
+  //         description={this.state.co_ordinate[1].desc}
+  //         title={this.state.co_ordinate[1].title}
 
 
-        />
+  //       />
 
-        <MapViewDirections
-          origin={origin}
-          destination={destination}
-          apikey={GOOGLE_MAPS_APIKEY}
-          strokeWidth={5}
-          strokeColor={Constants.COLOR_GREEN}
-        />
-      </View>
+  //       <MapViewDirections
+  //         origin={origin}
+  //         destination={destination}
+  //         apikey={GOOGLE_MAPS_APIKEY}
+  //         strokeWidth={5}
+  //         strokeColor={Constants.COLOR_GREEN}
+  //       />
+  //     </View>
 
-    )
-  }
+  //   )
+  // }
 
-  setSource(lat, long) {
-    let temp = [...this.state.co_ordinate]
-    temp[0].latitude = lat;
-    temp[0].longitude = long;
-    this.setState({ co_ordinate: temp });
+  // setSource(lat, long) {
+  //   let temp = [...this.state.co_ordinate]
+  //   temp[0].latitude = lat;
+  //   temp[0].longitude = long;
+  //   this.setState({ co_ordinate: temp });
 
-  }
+  // }
 
-  setDestination(lat, long) {
-    let temp = [...this.state.co_ordinate]
-    temp[1].latitude = lat;
-    temp[1].longitude = long;
-    this.setState({ co_ordinate: temp })
-  }
+  // setDestination(lat, long) {
+  //   let temp = [...this.state.co_ordinate]
+  //   temp[1].latitude = lat;
+  //   temp[1].longitude = long;
+  //   this.setState({ co_ordinate: temp })
+  // }
 
 
   render() {
-    const crnt_location = { latitude: this.state.current_latitude, longitude: this.state.current_longitude, } //current address
-    const origin = { latitude: this.state.co_ordinate[0].latitude, longitude: this.state.co_ordinate[0].longitude, };
-    const destination = { latitude: this.state.co_ordinate[1].latitude, longitude: this.state.co_ordinate[1].longitude, };
-    const GOOGLE_MAPS_APIKEY = 'AIzaSyDaIta3GbvS-cK3Y8vagU7h6RhuHmGBlPI';
+    // const crnt_location = { latitude: this.state.current_latitude, longitude: this.state.current_longitude, } //current address
+    // const origin = { latitude: this.state.co_ordinate[0].latitude, longitude: this.state.co_ordinate[0].longitude, };
+    // const destination = { latitude: this.state.co_ordinate[1].latitude, longitude: this.state.co_ordinate[1].longitude, };
+    // const GOOGLE_MAPS_APIKEY = 'AIzaSyDaIta3GbvS-cK3Y8vagU7h6RhuHmGBlPI';
     let { navigation } = this.props
     let flag_map = this.props.navigation.getParam('flag_map'); //get marker direction with origin and destination coordinates 
-    let flag_location = this.props.navigation.getParam('flag_location'); //get current address 
+    let flag_location = this.props.navigation.getParam('flag_location'); //get current address
+    console.log("location flag==>"+this.props.navigation.getParam('flag_location'));
     return (
       <View style={{ flex: 1 }}>
         <HeaderBar isBack={true} title="View Map" isLogout={true} navigation={navigation} />
         <View style={StyleMapView.MainContainer}>
-
+        {
+          this.state.current_latitude==0?null:
+        
           <MapView
             style={StyleMapView.mapStyle}
             showsUserLocation={false}
@@ -152,25 +161,31 @@ export default class MapViews extends React.Component {
               longitudeDelta: 0.0421,
             }}
           >
-            {flag_map == 'marker_direction'
-              ?
-              this.setMarker_direction(origin, destination, GOOGLE_MAPS_APIKEY)
-              : flag_location == 'Location_details'
-                ? <Marker
+            
+             <Marker
                   draggable
                   onDragEnd={(e) => {
                     this.getCurrentAdddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude);
-                    console.log('drag location==>', e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)
+                    console.log('drag location==>', e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude);
+                     this.RBSheet.open();
+
                   }}
-                  coordinate={crnt_location}
+                  coordinate={{latitude:this.state.current_latitude,longitude:this.state.current_longitude}}
                 />
-                : null
-            }
+                
+            
 
           </MapView>
-
+  }
+               {/* <TouchableOpacity style={StyleMapView.bottom_btn}
+                onPress={()=>{
+                  this.props.navigation.goBack();
+                }}
+                >
+                    <Text style={{alignSelf:'center',color:'white',fontSize:16,textTransform:"uppercase"}}>Select</Text>
+                </TouchableOpacity> */}
         </View>
-
+              
         <RBSheet
           ref={ref => {
             this.RBSheet = ref;
@@ -190,11 +205,16 @@ export default class MapViews extends React.Component {
                 <Image style={StyleViewMap.mapimg} source={require('../images/address.png')} />
               </View>
               <View style={StyleViewMap.maptxtwid}>
-                <Text style={StyleViewMap.maptxt}>{Constants.Lorem}</Text>
+        <Text style={StyleViewMap.maptxt}>{this.state.current_address}</Text>
               </View>
             </View>
             <View style={StyleViewMap.maplocationbtn}>
-              <TouchableOpacity onPress={this._onPressButton}>
+              <TouchableOpacity onPress={()=>{
+                this.RBSheet.close();
+                  this.props.navigation.goBack();
+                }
+               
+                }>
                 <View style={StyleViewMap.mapbottbtn}>
                   <Text style={StyleViewMap.mapbottbtntxt}>select</Text>
                 </View>
