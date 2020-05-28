@@ -17,19 +17,7 @@ export default class Notification extends React.Component {
         super(props);
         this.state = {
             noNotificationTextVisibility: false,
-            dataSource: [
-                 {
-                            "notification_id": 1,
-                            "notification_type": 1,
-                            "title": "test notification",
-                            "message": "test message",
-                            "datetime": "2019-11-20 14:43:38",
-                            "read_status": 1
-                        },
-                        //previous demo
-                        { id: 12, status: "Trip 1 delay", desc: "Lorem ipsum dolor sit amet, consectetur ", datetime: "10 May 2018 10:24 AM", isCompleted: 'false' },
-                 
-            ],
+            dataSource: [],
 
         }
     }
@@ -54,7 +42,7 @@ export default class Notification extends React.Component {
         switch (apiConstant) {
             case ApiConstants.getNotifications: {
                 if (data.status) {
-                    if (data.notification_list && data.notification_list.length != 0) {
+                    if (data.notification_list.length != 0) {
                         this.setState({
                             dataSource: data.notification_list,
                             noNotificationTextVisibility: false
@@ -64,7 +52,7 @@ export default class Notification extends React.Component {
                             dataSource: [],
                             noNotificationTextVisibility: true
                         })
-                        // alert(data.message)
+                        
                     }
                 } else {
                     alert(data.message)
@@ -109,7 +97,7 @@ export default class Notification extends React.Component {
                                     if (item.isCompleted == 'true') {
                                         this.props.navigation.navigate('RateAndReview', { notif_id: item.id });
                                     } else if (item.read_status != '1') {
-                                        this.callMarkAsReadApi(item.notification_id)
+                                        this.callMarkAsReadApi(item.noti_id)
                                     }
                                 }}
                             >
@@ -121,10 +109,10 @@ export default class Notification extends React.Component {
                                 </View>
 
                                 <View style={StyleNotification.col2}>
-                                    <Text style={StyleNotification.title}>{/*item.title*/} </Text>
-                                    <Text style={StyleNotification.desc}>{/*item.message*/}
+                                    <Text style={StyleNotification.title}>{item.title} </Text>
+                                    <Text style={StyleNotification.desc}>{item.message}
                                     </Text>
-                                    <Text style={StyleNotification.dateTime}>{/*moment(item.datetime).format("DD MMM YYYY hh:mm:A")*/}</Text>
+                                    <Text style={StyleNotification.dateTime}>{moment(item.datetime).format("DD MMM YYYY hh:mm:A")}</Text>
                                 </View>
 
                                 <View style={StyleNotification.col1}>
