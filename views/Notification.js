@@ -18,9 +18,7 @@ export default class Notification extends React.Component {
         this.state = {
             noNotificationTextVisibility: false,
             dataSource: [
-                /* /**     
-                        server response
-                *    {
+                 {
                             "notification_id": 1,
                             "notification_type": 1,
                             "title": "test notification",
@@ -30,7 +28,7 @@ export default class Notification extends React.Component {
                         },
                         //previous demo
                         { id: 12, status: "Trip 1 delay", desc: "Lorem ipsum dolor sit amet, consectetur ", datetime: "10 May 2018 10:24 AM", isCompleted: 'false' },
-                 */
+                 
             ],
 
         }
@@ -123,10 +121,10 @@ export default class Notification extends React.Component {
                                 </View>
 
                                 <View style={StyleNotification.col2}>
-                                    <Text style={StyleNotification.title}>{item.title} </Text>
-                                    <Text style={StyleNotification.desc}>{item.message}
+                                    <Text style={StyleNotification.title}>{/*item.title*/} </Text>
+                                    <Text style={StyleNotification.desc}>{/*item.message*/}
                                     </Text>
-                                    <Text style={StyleNotification.dateTime}>{moment(item.datetime).format("DD MMM YYYY hh:mm:A")}</Text>
+                                    <Text style={StyleNotification.dateTime}>{/*moment(item.datetime).format("DD MMM YYYY hh:mm:A")*/}</Text>
                                 </View>
 
                                 <View style={StyleNotification.col1}>
