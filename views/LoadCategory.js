@@ -27,7 +27,6 @@ export default class LoadCategory extends React.Component{
                         <View style={{flex:1, backgroundColor:Constants.COLOR_WHITE}}>                        
                             <View style={StyleLoadCategory.loadWrapp}>
 
-                                 
                                 <TouchableOpacity style={StyleLoadCategory.loadBox}>
                                     <View style={StyleLoadCategory.loadLt}>  
                                         <View style={StyleLoadCategory.radioBtn}>
@@ -45,6 +44,7 @@ export default class LoadCategory extends React.Component{
                                         </View>
                                     </View>
                                 </TouchableOpacity>
+                              
                                 <TouchableOpacity style={StyleLoadCategory.loadBox}>
                                     <View style={StyleLoadCategory.loadLt}>  
                                         <View style={StyleLoadCategory.radioBtn}>
@@ -62,6 +62,7 @@ export default class LoadCategory extends React.Component{
                                         </View>
                                     </View>
                                 </TouchableOpacity>
+                              
                                 <TouchableOpacity style={StyleLoadCategory.loadBox}>
                                     <View style={StyleLoadCategory.loadLt}>  
                                         <View style={StyleLoadCategory.radioBtn}>
@@ -79,6 +80,7 @@ export default class LoadCategory extends React.Component{
                                         </View>
                                     </View>
                                 </TouchableOpacity>  
+                              
                                 <TouchableOpacity style={StyleLoadCategory.loadBox}>
                                     <View style={StyleLoadCategory.loadLt}>  
                                         <View style={StyleLoadCategory.radioBtn}>
@@ -96,6 +98,7 @@ export default class LoadCategory extends React.Component{
                                         </View>
                                     </View>
                                 </TouchableOpacity>  
+                              
                                 <TouchableOpacity style={StyleLoadCategory.loadBox}>
                                     <View style={StyleLoadCategory.loadLt}>  
                                         <View style={StyleLoadCategory.radioBtn}>
@@ -113,6 +116,7 @@ export default class LoadCategory extends React.Component{
                                         </View>
                                     </View>
                                 </TouchableOpacity>  
+                              
                                 <TouchableOpacity style={StyleLoadCategory.loadBox}>
                                     <View style={StyleLoadCategory.loadLt}>  
                                         <View style={StyleLoadCategory.radioBtn}>
