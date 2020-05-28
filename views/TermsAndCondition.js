@@ -44,6 +44,10 @@ export default class TermsAndCondition extends Component {
             flag=="AboutUs"
             ?
             "About Us"
+            :
+            flag=="PrivacyPolicy"
+            ?
+            "Privacy Policy"
             :  "Terms & Conditions"
           }
            isBack={true} isLogout={ isLogout ? true : false } navigation={navigation} />

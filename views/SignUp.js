@@ -10,6 +10,7 @@ import { StackActions, NavigationActions } from 'react-navigation';
 import { MainPresenter } from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
 import { setUserData, setAuthToken, clearAllData, getFirebaseToken } from '../config/AppSharedPreference';
+
 export default class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -67,7 +68,7 @@ export default class SignUp extends Component {
         if (data.status) {  
           console.log(data);
           this.setState({otp_modal_visible:true, resp_otp_code:data.email_otp, resp_user_id:data.user_id, resp_temp_token:data.access_token});
-          await setAuthToken(data.access_token);
+          await setAuthToken(data.access_token);  //token required for temp purpose only.
           //await setUserData(data)
           // this.timer = setInterval(()=>{
           //   this.setState({modalVisible_welcome:false})
@@ -268,12 +269,14 @@ isValid() {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
 
-        <Image style={StyleSignUp.bgImage} source={require('../images/Splash_screen.jpg')} />
-           <View style={this.state.referalRadio_button ? [StyleSignUp.loginBox, { marginTop:50 }] : StyleSignUp.loginBox}>
+          <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
 
-           <View style={StyleSignUp.LogoImageView}>
+          <Image style={StyleSignUp.bgImage} source={require('../images/Splash_screen.jpg')} />
+          
+          <View style={this.state.referalRadio_button ? [StyleSignUp.loginBox, { marginTop:50 }] : StyleSignUp.loginBox}>
+
+          <View style={StyleSignUp.LogoImageView}>
               <Image style={{width:148,height:62, marginLeft:0.5,bottom:0,position:'absolute',zIndex:-1,resizeMode:"stretch"}}
                   source={require('../images/circle.png')}/>
               <Image style={StyleSignUp.logoImage}
@@ -377,26 +380,39 @@ isValid() {
             <Text style={{ color: Constants.COLOR_GREY_DARK }}>,</Text>
           </View>
          
-         <View style={[{ paddingLeft: 42, flexDirection: 'row', marginBottom: 10 }]}>
+         <View style={[{ paddingLeft: 42, flexDirection: 'row', marginBottom: 0 }]}>
+          
           <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('TermsAndCondition', { flag: 'CancellationPolicy' })
               }}
           >
-              <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy}</Text>
+              <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy} </Text>
           </TouchableOpacity>
-          <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}> & </Text>
+          
           <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('TermsAndCondition', { flag: 'PaymentPolicy' })
               }}
 
           >
-              <Text style={StyleSignUp.PolicyLabel}>{Constants.PaymentPolicy}</Text>
+              <Text style={StyleSignUp.PolicyLabel}>, {Constants.PaymentPolicy}</Text>
           </TouchableOpacity>
+          
+          <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}> & </Text>
+
         </View>
 
-          <TouchableOpacity
+        <TouchableOpacity style={{marginLeft:41, marginBottom:10}}
+              onPress={() => {
+                this.props.navigation.navigate('TermsAndCondition', { flag: 'PrivacyPolicy',isLogout:false })
+              }}
+
+          >
+              <Text style={StyleSignUp.PolicyLabel}>{Constants.PrivacyPolicy}</Text>
+          </TouchableOpacity>
+
+        <TouchableOpacity
             style={
                 this.state.policyRadio_button
               ?
@@ -413,6 +429,7 @@ isValid() {
           </TouchableOpacity>
 
         </View>
+        
         <TouchableOpacity style={StyleSignUp.memberButton}
           onPress={() => {
             this.props.navigation.navigate('SignIn');

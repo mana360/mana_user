@@ -38,6 +38,39 @@ export default class MyProfile extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.presenter.callGetApi(ApiConstants.getMyProfile, "", true)
+    }
+
+    callMarkAsReadApi(updated_profile_url) {
+        this.presenter.callPostApi(ApiConstants.updateProfilePic, {
+                        profile_image:updated_profile_url,
+                      })
+    }
+
+    async onResponse(apiConstant, data) {
+        switch (apiConstant) {
+            case ApiConstants.getMyProfile: {
+                if (data.status) {
+                } else {
+                    alert(data.message)
+                }
+    
+                break;
+            }
+    
+            case ApiConstants.updateProfilePic: {
+                if (data.status) {
+                } else {
+                    alert(data.message)
+                }
+    
+                break;
+            }
+    
+        }
+    }
+
     company_Profile() {
         return (
             <View style={{ flex: 1 }}>

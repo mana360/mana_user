@@ -29,6 +29,25 @@ constructor(props){
         ],
     }
 }
+
+componentDidMount() {
+    this.presenter.callGetApi(ApiConstants.getMyBookings, "", true)
+}
+
+async onResponse(apiConstant, data) {
+    switch (apiConstant) {
+        case ApiConstants.getMyBookings: {
+            if (data.status) {
+            } else {
+                alert(data.message)
+            }
+
+            break;
+        }
+
+    }
+}
+
 getNewBookingView(){
     return(
         <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>

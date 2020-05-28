@@ -109,7 +109,7 @@ async onResponse(apiConstant,data){
     case ApiConstants.verifyOTP:{
         if(data.status){
             this.setState({modal_visible:false, isTimerVisible:true, timerValue:0,  OTP:''});
-            this.props.navigation.navigate("SetPassword");
+            this.props.navigation.navigate("SetPassword",{isLogout:false, isFooter:false});
         }else{
             this.setState({OTP:''})
             this.onReceiveOTP(this.state.user_id, this.state.access_token, this.state.timerValue)
@@ -149,7 +149,7 @@ closeModal(){
                     <TextInput style={StyleForgotPassword.ModaltextInput}
                         value={this.state.OTP}
                         keyboardType="number-pad"
-                        maxLength={6}
+                        maxLength={4}
                         placeholder='000000'
                         onChangeText={(Text) => {
                             if(!isNaN(Text))
