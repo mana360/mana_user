@@ -21,7 +21,7 @@ export default class EditProfile extends React.Component {
             isProfileUpdatedModal:false,
             modalVisible_Changepassword: false,
             modalVisible_successMsg: false,
-            customerType: 'user_profile',//user_profile,company_profile
+            customerType: 'company_profile',//user_profile,company_profile
             current_password: '',
             new_password: '',
             confirm_password: '',
@@ -132,6 +132,10 @@ export default class EditProfile extends React.Component {
                 const source = { uri: response.uri };
                 console.log('response-->', source);
                 this.setState({ user_filename: source, company_logo:response.uri, company_logo_data:response})
+                let params = {
+                    "file" : response
+                }
+                this.presenter.callMultipartApi(ApiConstants.updateProfilePic, params, true)
             }
         })
     }
@@ -1200,9 +1204,10 @@ export default class EditProfile extends React.Component {
           }
           case ApiConstants.updateProfilePic:{
               if(data.status){
+                alert(data.message)
               }
               else {
-                  alert(data.msg)
+                  alert(data.message)
               }
               break;
           }
