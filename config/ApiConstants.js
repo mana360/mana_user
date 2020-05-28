@@ -51,6 +51,8 @@ export default ApiConstants = {
     getCMLTruckCategory:"customer/getCMLTruckCategory",
     LoadCategoryList:"customer/getCMLLoadCategory",
     userStatus:"customer/userStatus",
-
+    getRateCard:"customer/getRateCard",
+    getSupportSubject:"customer/getSupportSubject",
+    bookCMLTrip:"customer/bookCMLTrip",
 
 } 

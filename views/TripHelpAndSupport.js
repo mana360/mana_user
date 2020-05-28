@@ -2,12 +2,15 @@
     design by -mayur s
  */
 import React, { Component } from 'react';
-import {View, Text, TouchableOpacity,Image,ScrollView,Picker,TextInput,Modal} from 'react-native';
+import {View, Text, TouchableOpacity,Image,ScrollView,TextInput,Modal} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {StyleTripHelpAndSupport} from '../config/CommonStyles';
+import {Picker} from 'native-base';   
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
+import { MainPresenter } from '../config/MainPresenter';
+import ApiConstants from '../config/ApiConstants';
 export default class TripHelpAndSupport extends React.Component{
     constructor(props) {
         super(props);
@@ -18,14 +21,36 @@ export default class TripHelpAndSupport extends React.Component{
           modal_Visible:false,
           isUser:'',
           isTruck:'',
+          supportSubjectList:[],
+          isSupportSubjectListFilled:0,
         }
       }
+componentDidMount(){
+    // this.presenter.callGetApi(ApiConstants.getSupportSubjects,"",true);
+}
+onResponse(apiConstants,data){
+    switch (apiConstants) {
+        case ApiConstants.getSupportSubject:{
+                if(data){
+
+                }else{
+
+                }
+            
+            break;
+        }
+        default:
+            break;
+    }
+}
+
     render(){
         
         let {navigation} = this.props
         return(
             <View style={{flex:1,}}>
             <HeaderBar title="TRIP-HELP & SUPPORT" isBack={true} isLogout={true} navigation={navigation}/>
+            <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
 
                 <ScrollView bounces={false} style={{width:wp('100%')}}>
                 <View style={{flex:1, backgroundColor:Constants.colorGrey}}>
@@ -68,8 +93,11 @@ export default class TripHelpAndSupport extends React.Component{
                                 <Text style={StyleTripHelpAndSupport.pickerTitle}>{Constants.SupportSubject}</Text>
                             </View>
                             <Picker style={StyleTripHelpAndSupport.picker}>
-                                <option label="Lorem ipsum" value="Lorem ipsum"></option>
-                                <option label="Lorem ipsum" value="Lorem ipsum"></option>
+                               <Picker.Item  label="Select Support Subject"  key="-1"/>
+                               {
+                                   this.state.supportSubjectList.map((item,indexe)=>
+                                   <Picker.item label={item.title} value={item.id}/>)
+                               }
                             </Picker>
                         </View>
 

@@ -14,6 +14,8 @@ import { Dropdown } from 'react-native-material-dropdown';
 import moment from 'moment'
 import { MainPresenter } from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
+import { FlatList } from 'react-native-gesture-handler';
+import { Picker } from 'native-base';
 
 export default class BookingSummary extends React.Component{
     setModalVisible(visible) {
@@ -23,28 +25,115 @@ export default class BookingSummary extends React.Component{
         super(props)
 
         this.state={
-            pick_up_address:"",
-            drop_off_address1:"",
-            drop_off_address2:"",
+            pick_up_address: "",
+            pick_up_address_lat:"",
+            pick_up_address_long:"",
+            pick_up_addressDetails:"",
+
+            drop_off_address: "",
+            drop_off_address_lat:'',
+            drop_off_address_long:"",
+            drop_off_addressDetails:"",
+
+
+            drop_off_address_1: "",
+            drop_off_address_1_lat:'',
+            drop_off_address_1_long:"",
+            drop_off_address_1Details:"",
+
+
             modalVisible: false,
 
             pickup_date:"",
             pick_time:"",
             instructions:"",
+            load_category:"",
 
             name:"",
             contact_number:"",
             contact_number_additional:"",
             discountAmount:0,
 
-            otherServices:"",
+            otherServices:[],
+            countList:[],
+            otherServicesID:"",
+            selectedOtherService:"",
         }
+        this.userDetails_1={};
+        this.userDetails_2={};
     }
 
     componentDidMount(){
-        this.getOtherServices();
+        this.initServices();
     }
-    setAddress( addressType:"", addressText:"",){
+initServices(){
+
+    this.getOtherServices();
+    let i=1
+    for(i=1;i<=15;i++){
+  this.state.countList.push(i);
+  console.log("count==>"+i);
+    }
+     
+        this.userDetails_1=this.props.navigation.getParam('userDetails_1');
+        console.log("userDetails_1=====>"+ this.userDetails_1);
+        this.userDetails_2=this.props.navigation.getParam('userDetails_2');
+
+        this.setState({
+            pick_up_address:this.userDetails_2.pick_up_address,
+            pick_up_addressDetails:this.userDetails_2.pick_up_addressDetails,
+            drop_off_address:this.userDetails_2.drop_off_address,
+            drop_off_addressDetails:this.userDetails_2.drop_off_address,
+            drop_off_address1:this.userDetails_2.drop_off_address_1,
+            drop_off_address_1Details:this.userDetails_2.drop_off_address_1Details,
+            pickup_date:this.userDetails_2.pickupDate,
+            pick_time:this.userDetails_2.pickupTime,
+            instruction:this.userDetails_2.instruction,
+            load_category:this.userDetails_2.load_category,
+        })
+        
+
+}
+isValid(){
+   
+    if(this.state.pick_up_address==""){
+        alert("Please Enter Pickup Address");
+        return false;
+    }
+    if(this.state.drop_off_address==""){
+        alert("Please Enter Dropup Address");
+        return false;
+    }
+    if(this.state.pickup_date==""){
+        alert("Please Enter valid Date");
+        return false;
+    }
+    if(this.state.pickup_time==""){
+        alert("Please Enter valid Time");
+        return false;
+    }
+    if(this.state.instructContainer==""){
+        alert("Please Enter Instruction");
+        return false;
+    }
+    if(this.state.name==""){
+        alert("Please Enter Name");
+        return false;
+    }
+    if(this.state.contact_number==""){
+        alert("Please Enter Contact Number");
+        return false;
+    }
+    if(this.state.contact_number.length>10&&this.state.contact_number.length<13){
+        alert("Please Enter Contact Number");
+        return false;
+    }
+
+    return true
+}
+
+
+ setAddress( addressType, addressText){
         //  addressType    1 = pickup, 2 = drop off1,    3 = drop off2
         if(addressType==1){
             this.setState({pick_up_address:addressText})
@@ -142,10 +231,10 @@ export default class BookingSummary extends React.Component{
                                    
                                    <View style={StyleBookingSummary.topBox}>
                                         <View style={[StyleBookingSummary.topinnBox, { borderBottomColor:'#a9b0b5', borderBottomWidth:0.8,} ]}>
-                                            <Text style={StyleBookingSummary.topinnTxt}>Truck Type - 1.5 Ton</Text>
+                                    <Text style={StyleBookingSummary.topinnTxt}>Truck Type -{this.userDetails_1.category_name}</Text>
                                         </View>
                                         <View style={StyleBookingSummary.topinnBox}>
-                                            <Text style={StyleBookingSummary.topinnTxt}>Load Category - HouseHold, Consumables</Text>
+                                       <Text style={StyleBookingSummary.topinnTxt}>Load Category -{this.userDetails_2.load_category}</Text>
                                         </View>
                                    </View>
                                 
@@ -154,7 +243,7 @@ export default class BookingSummary extends React.Component{
                                             <Text style={StyleLocationDetails.labelTextNew}>{Constants.PickUpAddress}</Text>
                                         </View>
                                         <TextInput
-                                            placeholder='Lorum ipsum dolor sit amet,'
+                                            placeholder='Enter Pickup Address,'
                                             placeholderTextColor="#a4a4a4"
                                             ref={(ref)=>{this.pick_up_address=ref}}
                                             value={this.state.pick_up_address}
@@ -175,18 +264,36 @@ export default class BookingSummary extends React.Component{
                                         </TouchableOpacity>
 
                                      </View>
-                                     
+                                     <View style={StyleLocationDetails.inputContainer}>
+                                <View style={StyleLocationDetails.labelBoxNew}>
+                                    <Text style={StyleLocationDetails.labelTextNew}>{Constants.AddressDetails}</Text>
+                                </View>
+                                <TextInput
+                                    placeholder='Enter Pickup Address Details'
+                                    placeholderTextColor="#a4a4a4"
+                                    // ref={(ref) => { this.pick_up_address_Details = ref }}
+                                    value={this.state.pick_up_addressDetails}
+                                    onChangeText={
+                                        (value) => {
+                                            this.setState({ pick_up_addressDetails: value })
+                                        }
+                                    }
+                                    style={StyleLocationDetails.inputBox} />
+                            </View>
+
+
+
                                     <View style={StyleLocationDetails.inputContainer}>
                                         <View style={StyleLocationDetails.labelBoxNew}>
                                             <Text style={StyleLocationDetails.labelTextNew}>{Constants.DropOffAddress1}</Text>
                                         </View>
-                                        <TextInput placeholder='Lorum ipsum dolor sit amet' 
+                                        <TextInput placeholder='Enter Dropoff Address' 
                                         placeholderTextColor="#a4a4a4"
                                         ref={(ref)=>{this.drop_off_address1=ref}}
-                                        value={this.state.drop_off_address1}
+                                        value={this.state.drop_off_address}
                                         onChangeText={
                                             (value)=>{
-                                                this.setState({drop_off_address1:value})
+                                                this.setState({drop_off_address:value})
                                             }
                                         }
                                         style={StyleLocationDetails.inputBox} />
@@ -200,12 +307,29 @@ export default class BookingSummary extends React.Component{
                                                 source={require('../images/address.png')} />
                                         </TouchableOpacity>
                                     </View> 
+                                    <View style={StyleLocationDetails.inputContainer}>
+                                    <View style={StyleLocationDetails.labelBoxNew}>
+                                        <Text style={StyleLocationDetails.labelTextNew}>{Constants.AddressDetails}</Text>
+                                    </View>
+                                    <TextInput
+                                        placeholder='Enter DropOff Address Details'
+                                        placeholderTextColor="#a4a4a4"
+                                        // ref={(ref) => { this.pick_up_address_Details = ref }}
+                                        value={this.state.drop_off_addressDetails}
+                                        onChangeText={
+                                            (value) => {
+                                                this.setState({ drop_off_addressDetails: value })
+                                            }
+                                        }
+                                        style={StyleLocationDetails.inputBox} />
+                                </View>
+                         
                                     
                                     <View style={StyleLocationDetails.inputContainer}>
                                         <View style={StyleLocationDetails.labelBoxNew}>
                                             <Text style={StyleLocationDetails.labelTextNew}>{Constants.DropOffAddress2}</Text>
                                         </View>
-                                        <TextInput placeholder='Lorum ipsum dolor sit amet' 
+                                        <TextInput placeholder='Enter Dropup Address' 
                                         placeholderTextColor="#a4a4a4"
                                         ref={(ref)=>{this.drop_off_address2=ref}}
                                         value={this.state.drop_off_address2}
@@ -225,7 +349,24 @@ export default class BookingSummary extends React.Component{
                                         </TouchableOpacity>
                                         
                                     </View>     
+                                    <View style={StyleLocationDetails.inputContainer}>
+                                <View style={StyleLocationDetails.labelBoxNew}>
+                                    <Text style={StyleLocationDetails.labelTextNew}>{Constants.AddressDetails}</Text>
+                                </View>
+                                <TextInput
+                                    placeholder='Enter DropOff Address Details'
+                                    placeholderTextColor="#a4a4a4"
+                                    // ref={(ref) => { this.pick_up_address_Details = ref }}
+                                    value={this.state.drop_off_address_1Details}
+                                    onChangeText={
+                                        (value) => {
+                                            this.setState({ drop_off_address_1Details: value })
+                                        }
+                                    }
+                                    style={StyleLocationDetails.inputBox} />
+                            </View>
                                     
+
                                     <View style={StyleLocationDetails.inputContainer}>
                                         <View style={StyleLocationDetails.labelBoxNew}>
                                             <Text style={StyleLocationDetails.labelTextNew}>{Constants.PickUpDate}</Text>
@@ -270,10 +411,12 @@ export default class BookingSummary extends React.Component{
                                         <Textarea                                       
                                             style={StyleLocationDetails.textarea}
                                             maxLength={100}
-                                            placeholder={'Lorem ipsum dolor sit amet, consectetur adipiscing elit, Lorem ipsum dolor sit amet, consectetur adipiscing elit, '}
+                                            placeholder="Enter Instruction"
                                             placeholderTextColor={'#a4a4a4'}
                                             value={this.state.instructions}
-                                            onChangeText={(val)=>{this.setState({instructions:val})}}
+                                            onChangeText={(value)=>{
+                                                this.setState({instructions:value});
+                                            }}
                                         />
                                     </View>  
                                     
@@ -310,7 +453,7 @@ export default class BookingSummary extends React.Component{
                                         />
                                     </View>
                                     
-                                    <View style={StyleLocationDetails.inputContainer}>
+                                    {/* <View style={StyleLocationDetails.inputContainer}>
                                         <View style={StyleLocationDetails.labelBoxNew}>
                                             <Text style={StyleLocationDetails.labelTextNew}>{Constants.AdditionalContactNumber}</Text>
                                         </View>
@@ -330,7 +473,7 @@ export default class BookingSummary extends React.Component{
                                                 }
                                             }
                                         />
-                                    </View>   
+                                    </View>    */}
 
                                     <View style={[StyleBookingSummary.otherServiceBox, {display: "flex"} ]}>
                                         <Text style={StyleBookingSummary.otherTxtser}>Other Services</Text>
@@ -349,7 +492,7 @@ export default class BookingSummary extends React.Component{
                                     </View> 
 
                                     <TouchableOpacity  
-                                        onPress={() => {this.setModalVisible(true);}}
+                                        // onPress={() => {this.setModalVisible(true);}}
                                         underlayColor='#fff' 
                                         style={StyleLocationDetails.logButton}>
                                         <Text style={StyleLocationDetails.logButtonText}>{Constants.AddServices}</Text>
@@ -399,7 +542,7 @@ export default class BookingSummary extends React.Component{
                                 
                                 <TouchableOpacity 
                                     onPress={()=>{
-                                        this.props.navigation.navigate('PaymentMethod')
+                                        this.bookCMLtrip();
                                     }}
                                     style={[StyleLocationDetails.logButton, {marginTop:0, marginHorizontal:25,} ]}
                                 >
@@ -411,8 +554,7 @@ export default class BookingSummary extends React.Component{
                         </View>
                     
                     </ScrollView> 
-                                  
-                    <Modal
+                            <Modal
                                         animationType="fade"
                                         transparent={true}
                                         visible={this.state.modalVisible}
@@ -423,7 +565,7 @@ export default class BookingSummary extends React.Component{
                                             <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
                                                     onPress={()=>{
                                                         this.setState({modalVisible:false});
-                                                }}
+                                                }}  
                                             >
                                             <Image source={require('../images/close.png')}
                                                 style={{ width: 15, height: 15 }}
@@ -431,7 +573,49 @@ export default class BookingSummary extends React.Component{
                                             </TouchableOpacity>
                                                 <View style={StyleBookingSummary.serpopSec}> 
                                                     <Text style={StyleBookingSummary.othserTxt}>Other Services</Text>  
-                                                    <View style={StyleBookingSummary.inputboxDropDown}>
+                                                    <FlatList
+                                                        data={this.state.otherServices}
+                                                        extraData={this.state}
+                                                        renderItem={({item,index})=>(
+                                                            <View style={StyleBookingSummary.inputboxDropDown}>
+                                                                <View style={[StyleLocationDetails.labelBoxNew, {top:-9} ]}>
+                                                                <Text style={[StyleLocationDetails.labelTextNew, {fontSize:13,} ]}>{item.service_name}</Text>
+                                                            </View>
+                                                                <Picker
+                                                                    mode='dropdown'
+                                                                    style={{ color: Constants.COLOR_GREY_DARK, width: '95%', alignSelf: 'center', paddingVertical: 20 }}
+                                                                    selectedValue={this.state.selectedOtherService}
+                                                                    onValueChange={(value) => {
+                                                                        this.setState({selectedOtherService : value });
+                                                                        console.log(value);
+                                                                        this.state.countList.map((Item,index)=>{
+                                                                        if(value==Item){
+                                                                            console.log("service_ID++>"+Item.id);
+                                                                            this.setState({load_category_id:item.id});
+                                                                            console.log("service_ID++>"+Item.id);
+                                                                        }
+                                                                        })
+                                                                    }}
+                                                                >
+                                                                    <Picker.Item label='Select' value='-1' />
+                                                                {
+                                                                    this.state.countList.map((item,index)=>
+                                                                    
+                                                                     <Picker.item key={item}  label={""+item} value={item}/>
+                                                                    )
+                                                                  
+                                                                    }
+                                                                </Picker>
+                                                           </View>
+                                                      
+                                                                    
+                                                      )}
+
+                                                        /> 
+                                                 
+                                                 
+                                                 
+                                                    {/* <View style={StyleBookingSummary.inputboxDropDown}>
                                                         <View style={[StyleLocationDetails.labelBoxNew, {top:-9} ]}>
                                                             <Text style={[StyleLocationDetails.labelTextNew, {fontSize:13,} ]}>Extra helper to pick up load (in addition to Driver)</Text>
                                                         </View>
@@ -487,10 +671,16 @@ export default class BookingSummary extends React.Component{
                                                             containerStyle = {StyleBookingSummary.dropdown}
                                                         />
                                                     </View> 
-                                                        <TouchableOpacity  
+                                                        */}
+
+                                                       
+                                                    <TouchableOpacity  
                                                             onPress={()=>{
                                                                 this.setState({modalVisible:false});
                                                                 this.getOtherServices();
+                                                              this.props.navigation.navigate('PaymentMethod');
+
+
                                                         }}
                                                         style={[StyleLocationDetails.logButton, {marginTop:0, marginBottom:0,} ]}>
                                                         <Text style={StyleLocationDetails.logButtonText}>{Constants.SUBMIT}</Text>
@@ -506,22 +696,35 @@ export default class BookingSummary extends React.Component{
         </View>
         )
     }
-getOtherServices(){
+
+async getOtherServices(){
+
+ await this.presenter.callGetApi(ApiConstants.getotherServices,"",true);
+}
+
+async bookCMLtrip(){
     let params={
 
     }
-    this.presenter.callGetApi(ApiConstants.getotherServices,"",true);
+    await this.presenter.callGetApi(ApiConstants.bookCMLTrip,params,true);
 }
-
 async onResponse(apiConstant, data) {
     switch (apiConstant) {
       case ApiConstants.getotherServices: {
         if (data.status) { 
             console.log(data);
             this.setState({otherServices:data.other_services[0].service_name});
+            console.log("other services==>"+JSON.stringify(data.other_services[0]));
 
          } else {
             alert(data.message)
+          }
+      }
+      case ApiConstants.bookCMLTrip:{
+          if(data.status){
+            // this.props.navigation.navigate('PaymentMethod');
+          }else{
+              alert(data.status);
           }
       }
       

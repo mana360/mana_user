@@ -10,6 +10,7 @@ import Carousel from "react-native-carousel";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { MainPresenter } from '../config/MainPresenter'
 import ApiConstants from '../config/ApiConstants';
+import { Table, TableWrapper, Row, Cell, Rows } from 'react-native-table-component';
 
 export default class CollectMyLoad extends React.Component {
     constructor(props) {
@@ -50,63 +51,112 @@ export default class CollectMyLoad extends React.Component {
                 /*   { title: "New Booking", type: "new", desc: "fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent: 45 },
                   { title: "My Booking", type: "my", desc: "fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent: 70 }, */
             ],
+
+            truckdata_Head:[
+                "SN","Truck Ton Capacity","Rate/KM"
+            ],
+            otherServices_Head:[
+                "SN","Other Services","Rate/KM"
+            ],
+            truckTableData: [
+                ['1', '2', '3'],
+                ['a', 'b', 'c'],
+                ['1', '2', '3'],
+                ['a', 'b', 'c'],
+              ],
+              otherServicesData: [
+                ['1', '2', '3',],
+                ['a', 'b', 'c'],
+                ['1', '2', '3',],
+                ['a', 'b', 'c']
+              ]
         }
     }
+
+
+
     RateCard() {
         return (
+
+        
             <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)', }}>
 
-                <View style={[StyleCollectMyLoad.modalCotainer, { width: '80%' }]}>
-                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
-                        onPress={() => {
-                            this.setState({ modalVisible_RateCard: false })
-                        }}
-                    >
-                        <Image source={require('../images/close.png')}
-                            style={{ width: 15, height: 15 }}
-                        />
+                <View style={[StyleCollectMyLoad.modalCotainer, { width: '95%' ,padding:25,justifyContent:'center'}]}>
+                 
+                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10,position:"absolute",paddingBottom:5}}
+                            onPress={() => {
+                                this.setState({ modalVisible_RateCard: false })
+                            }}
+                        >
+                            <Image source={require('../images/close.png')}
+                                style={{ width: 15, height: 15 }}
+                            />
                     </TouchableOpacity>
-
-                    <Text style={StyleCollectMyLoad.modalText}>{Constants.RateCard}</Text>
-
-                    <View style={[StyleCollectMyLoad.modalrow, { borderBottomWidth: 0.5, borderBottomColor: Constants.COLOR_GREY_LIGHT, marginBottom: 10 }]}>
-                        <View style={StyleCollectMyLoad.modalcol1}>
-                            <Text style={[StyleCollectMyLoad.modalTittle]}>{Constants.Size}</Text>
-                        </View>
-                        <View style={StyleCollectMyLoad.modalcol2}>
-                            <Text style={StyleCollectMyLoad.modalTittle}>{Constants.Amount}</Text>
-                        </View>
-                    </View>
-
-                    <View style={StyleCollectMyLoad.modalrow}>
-                        <View style={StyleCollectMyLoad.modalcol1}>
-                            <Text style={StyleCollectMyLoad.keytext}>{Constants.SmallLessthan}</Text>
-                        </View>
-                        <View style={StyleCollectMyLoad.modalcol2}>
-                            <Text style={StyleCollectMyLoad.valueText}>$40/-</Text>
-                        </View>
-                    </View>
-
-                    <View style={StyleCollectMyLoad.modalrow}>
-                        <View style={StyleCollectMyLoad.modalcol1}>
-                            <Text style={StyleCollectMyLoad.keytext}>{Constants.Medium}</Text>
-                        </View>
-                        <View style={StyleCollectMyLoad.modalcol2}>
-                            <Text style={StyleCollectMyLoad.valueText}>$80/-</Text>
-                        </View>
-                    </View>
-
-                    <View style={[StyleCollectMyLoad.modalrow, { marginBottom: 15 }]}>
-                        <View style={StyleCollectMyLoad.modalcol1}>
-                            <Text style={StyleCollectMyLoad.keytext}>{Constants.Large}</Text>
-                        </View>
-                        <View style={StyleCollectMyLoad.modalcol2}>
-                            <Text style={StyleCollectMyLoad.valueText}>$120/-</Text>
-                        </View>
-                    </View>
-
+                    <Table borderStyle={{borderWidth: 1, borderColor:Constants.COLOR_GREY_DARK,}} style={{marginBottom:8}}>
+                        <Row data={this.state.truckdata_Head} textStyle={{alignSelf:"center"}} />
+                        <Rows data={this.state.truckTableData} textStyle={{alignSelf:"center"}} />
+                    </Table>
+                    <Table borderStyle={{borderWidth: 1, borderColor:Constants.COLOR_GREY_DARK}}>
+                        <Row data={this.state.otherServices_Head} textStyle={{alignSelf:"center"}}/>
+                        <Rows data={this.state.otherServicesData} textStyle={{alignSelf:"center"}}/>
+                    </Table>
                 </View>
             </View>
+
+
+            // <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)', }}>
+
+            //     <View style={[StyleCollectMyLoad.modalCotainer, { width: '80%' }]}>
+            //         <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
+            //             onPress={() => {
+            //                 this.setState({ modalVisible_RateCard: false })
+            //             }}
+            //         >
+            //             <Image source={require('../images/close.png')}
+            //                 style={{ width: 15, height: 15 }}
+            //             />
+            //         </TouchableOpacity>
+
+            //         <Text style={StyleCollectMyLoad.modalText}>{Constants.RateCard}</Text>
+
+            //         <View style={[StyleCollectMyLoad.modalrow, { borderBottomWidth: 0.5, borderBottomColor: Constants.COLOR_GREY_LIGHT, marginBottom: 10 }]}>
+            //             <View style={StyleCollectMyLoad.modalcol1}>
+            //                 <Text style={[StyleCollectMyLoad.modalTittle]}>{Constants.Size}</Text>
+            //             </View>
+            //             <View style={StyleCollectMyLoad.modalcol2}>
+            //                 <Text style={StyleCollectMyLoad.modalTittle}>{Constants.Amount}</Text>
+            //             </View>
+            //         </View>
+
+            //         <View style={StyleCollectMyLoad.modalrow}>
+            //             <View style={StyleCollectMyLoad.modalcol1}>
+            //                 <Text style={StyleCollectMyLoad.keytext}>{Constants.SmallLessthan}</Text>
+            //             </View>
+            //             <View style={StyleCollectMyLoad.modalcol2}>
+            //                 <Text style={StyleCollectMyLoad.valueText}>$40/-</Text>
+            //             </View>
+            //         </View>
+
+            //         <View style={StyleCollectMyLoad.modalrow}>
+            //             <View style={StyleCollectMyLoad.modalcol1}>
+            //                 <Text style={StyleCollectMyLoad.keytext}>{Constants.Medium}</Text>
+            //             </View>
+            //             <View style={StyleCollectMyLoad.modalcol2}>
+            //                 <Text style={StyleCollectMyLoad.valueText}>$80/-</Text>
+            //             </View>
+            //         </View>
+
+            //         <View style={[StyleCollectMyLoad.modalrow, { marginBottom: 15 }]}>
+            //             <View style={StyleCollectMyLoad.modalcol1}>
+            //                 <Text style={StyleCollectMyLoad.keytext}>{Constants.Large}</Text>
+            //             </View>
+            //             <View style={StyleCollectMyLoad.modalcol2}>
+            //                 <Text style={StyleCollectMyLoad.valueText}>$120/-</Text>
+            //             </View>
+            //         </View>
+
+            //     </View>
+            // </View>
         )
     }
     ReferAFriend() {
@@ -180,6 +230,7 @@ export default class CollectMyLoad extends React.Component {
         )
     }
     componentDidMount() {
+        this.presenter.callGetApi(ApiConstants.getRateCard, "", true);
         this.presenter.callGetApi(ApiConstants.getDashboardData, "", true);
         this.presenter.callGetApi(ApiConstants.getCMLTruckCategory,"",true);
     }
@@ -202,7 +253,7 @@ export default class CollectMyLoad extends React.Component {
                     alert(data.message)
                 }
                 break;
-                case ApiConstants.getCMLTruckCategory:
+                case ApiConstants.getCMLTruckCategory:{
                     if(data.status){
                         console.log(data);
                         this.setState({truckList:data.truck_category});
@@ -210,6 +261,21 @@ export default class CollectMyLoad extends React.Component {
                     }else{
                         alert(data.message)
                     }
+
+                    break;
+                }
+                   
+                case ApiConstants.getRateCard:{
+                        if(data.status){
+                            console.log("Other Services Data===>"+ JSON.stringify(data.booking_rates.other_service));
+                            console.log("Other Services Data===>"+ JSON.stringify(data.booking_rates.other_service));
+                            this.setState({otherServicesData:data.booking_rates.other_service});
+
+                          }else{
+                            console.log(data.message);
+                          }
+                    }
+                       
             default:
                 break;
         }
@@ -314,6 +380,7 @@ export default class CollectMyLoad extends React.Component {
                 <Modal
                     transparent={true}
                     visible={this.state.modalVisible_RateCard}
+                    // visible={true}
                     animationType='fade'
                 >
                     {this.RateCard()}
@@ -361,8 +428,9 @@ export default class CollectMyLoad extends React.Component {
                                             <View style={StyleCollectMyLoad.outerCircle}>
                                                 <View style={StyleCollectMyLoad.innerCircle}>
                                                     <Image style={StyleCollectMyLoad.truckImg}
-                                                        source={item.src}
+                                                        source={{uri:Constants.BASE_URL.substr(0,Constants.BASE_URL.length-5)+item.image}}
                                                     />
+                                                    
                                                 </View>
                                             </View>
 
@@ -377,13 +445,13 @@ export default class CollectMyLoad extends React.Component {
                                                 
                                                 <View style={StyleCollectMyLoad.grayBox}>
                                                     <Text style={[StyleCollectMyLoad.maxTxt, { marginBottom: 6 }]}>Maximum Weight : {item.weight} TON</Text>
-                                                    <Text style={StyleCollectMyLoad.maxTxt}>Size : {item.size} meters</Text>
+                                                    <Text style={StyleCollectMyLoad.maxTxt}>Size : {item.size} (m)</Text>
                                                 </View>
                                                 
                                                 <TouchableOpacity
                                                     onPress={() => {
                                                         this.RBSheet.close();
-                                                        this.props.navigation.navigate('LocationDetails')
+                                                        this.props.navigation.navigate('LocationDetails',{userDetails:item});
                                                     }}
                                                     style={StyleCollectMyLoad.truckBtn}>
                                                     <Text style={StyleCollectMyLoad.truckBtnText}>Select Truck</Text>
