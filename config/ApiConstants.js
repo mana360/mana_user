@@ -54,5 +54,6 @@ export default ApiConstants = {
     getRateCard:"customer/getRateCard",
     getSupportSubject:"customer/getSupportSubject",
     bookCMLTrip:"customer/bookCMLTrip",
+    calculateBooking:"customer/calculateBooking",
 
 } 

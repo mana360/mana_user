@@ -232,6 +232,7 @@ const Constants = {
     TotalPrice:'Total Price',
     BookTrip:'Book Trip',
     OtherServices:'Other Services',
+    vat:"Vat",
     DiscountVoucher:"Discount Voucher",
     GrandTotal:'Grand Total',
     WelcomeToMana360:'Welcome to Mana360!!',

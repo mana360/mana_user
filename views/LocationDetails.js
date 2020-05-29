@@ -505,6 +505,7 @@ getAddress(flag){
                                         "pickupTime":this.state.pickup_time,
                                         "instruction":this.state.instruction,
                                         "load_category":this.state.other_flag==1?this.state.load_Category_Manualtext:this.state.load_category,
+                                        "load_category_id":this.state.other_flag,
                                         
                                     }
                                   
