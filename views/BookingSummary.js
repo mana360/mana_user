@@ -48,16 +48,25 @@ export default class BookingSummary extends React.Component{
             pick_time:"",
             instructions:"",
             load_category:"",
+            load_category_id:"",
+
 
             name:"",
             contact_number:"",
-            contact_number_additional:"",
+            // contact_number_additional:"",
+           
             discountAmount:0,
+            discountAmount_ID:'',
+            grand_total:0,
+            total_price:0,
+            vat:0,
 
-            otherServices:[],
             countList:[],
+            otherServices:[],
             otherServicesID:"",
             selectedOtherService:"",
+            otherServiceSelected:[], 
+            truck_Type_id:"",
         }
         this.userDetails_1={};
         this.userDetails_2={};
@@ -77,20 +86,32 @@ initServices(){
     }
      
         this.userDetails_1=this.props.navigation.getParam('userDetails_1');
-        console.log("userDetails_1=====>"+ this.userDetails_1);
+        console.log("userDetails_1=====>"+JSON.stringify(this.userDetails_1.category_id));
         this.userDetails_2=this.props.navigation.getParam('userDetails_2');
 
         this.setState({
             pick_up_address:this.userDetails_2.pick_up_address,
+            pick_up_address_lat:this.userDetails_2.pick_up_address_lat,
+            pick_up_address_long:this.userDetails_2.pick_up_address_long,
             pick_up_addressDetails:this.userDetails_2.pick_up_addressDetails,
+            
+
             drop_off_address:this.userDetails_2.drop_off_address,
+            drop_off_address_lat:this.userDetails_2.drop_off_address_lat,
+            drop_off_address_lat:this.userDetails_2.drop_off_address_long,
             drop_off_addressDetails:this.userDetails_2.drop_off_address,
+
             drop_off_address1:this.userDetails_2.drop_off_address_1,
+            drop_off_address_1_lat:this.userDetails_2.drop_off_address_1_lat,
+            drop_off_address_1_long:this.userDetails_2.drop_off_address_1_long,
             drop_off_address_1Details:this.userDetails_2.drop_off_address_1Details,
+
             pickup_date:this.userDetails_2.pickupDate,
             pick_time:this.userDetails_2.pickupTime,
             instruction:this.userDetails_2.instruction,
             load_category:this.userDetails_2.load_category,
+            truck_Type_id:this.userDetails_1.category_id,
+
         })
         
 
@@ -132,6 +153,94 @@ isValid(){
 
     return true
 }
+
+async getOtherServices(){
+
+    await this.presenter.callGetApi(ApiConstants.getotherServices,"",true);
+   }
+   
+   async bookCMLtrip(){
+    
+    let params={
+        pickup_address:this.state.pick_up_address,
+        pickup_latlng:"",
+        drop1_address:"",
+        drop1_latlng:this.state.add,
+        drop2_address:'',
+        drop2_latlng:"",
+        truck_type_id:"",
+        pickup_date:"",
+        pickup_time:"",
+        instructions:"",
+        other_services:'',
+        booking_amount:"",
+        discount:'',
+        grand_total:'',
+        coupon_id:'',
+        load_category_id:"",
+       }
+       await this.presenter.callPostApi(ApiConstants.bookCMLTrip,params,true);
+   }
+   
+   async getcalculatingBooking(){
+       let params=  {
+ 	
+        "pickup_latlng":{
+            "latitude": this.state.pick_up_address_lat,
+            "longitude":this.state.pick_up_address_long
+        },
+             "drop1_latlng":{
+            "latitude": this.state.drop_off_address_lat,
+            "longitude":this.state.drop_off_address_long,
+        },
+        "drop2_latlng":{
+            "latitude": this.state.drop_off_address_1_lat,
+            "longitude":this.state.drop_off_address_1_long
+        },
+        "truck_type_id" : 6,
+        "pickup_date": this.state.pick_time,
+        "load_category_id":this.state.load_category_id , 
+        
+        "other_services" :  
+           [
+           { "service_id":1,
+           "qty":1
+           },
+           { "service_id":2,
+           "qty":1
+           }
+           ],
+        "coupon_id":this.state.discountAmount_ID,
+        "discount" :this.state.discountAmount 
+        
+    }
+       await this.presenter.callPostApi(ApiConstants.calculateBooking,params,true);
+   }
+   async onResponse(apiConstant, data) {
+       switch (apiConstant) {
+         case ApiConstants.getotherServices: {
+           if (data.status) { 
+               console.log(data);
+            //    this.setState({otherServices:data.other_services});
+               console.log("other services==>"+JSON.stringify(this.state.otherServices));
+   
+            } else {
+               alert(data.message)
+             }
+         }
+         case ApiConstants.bookCMLTrip:{
+             if(data.status){
+               // this.props.navigation.navigate('PaymentMethod');
+             }else{
+                 alert(data.status);
+             }
+         }
+         
+         }
+       }
+
+
+
 
 
  setAddress( addressType, addressText){
@@ -307,6 +416,7 @@ isValid(){
                                             <Image style={StyleLocationDetails.labelIconLoc}
                                                 source={require('../images/address.png')} />
                                         </TouchableOpacity>
+                                  
                                     </View> 
                                     <View style={StyleLocationDetails.inputContainer}>
                                     <View style={StyleLocationDetails.labelBoxNew}>
@@ -493,7 +603,7 @@ isValid(){
                                     </View> 
 
                                     <TouchableOpacity  
-                                        // onPress={() => {this.setModalVisible(true);}}
+                                        onPress={() => {this.setModalVisible(true);}}
                                         underlayColor='#fff' 
                                         style={StyleLocationDetails.logButton}>
                                         <Text style={StyleLocationDetails.logButtonText}>{Constants.AddServices}</Text>
@@ -512,6 +622,12 @@ isValid(){
                                         <Text style={StyleBookingSummary.priceTxt}>{Constants.OtherServices}</Text>
                                         <Text style={StyleBookingSummary.priceVol}>R 55</Text>
                                     </View>
+                                    
+                                    <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
+                                        <Text style={StyleBookingSummary.priceTxt}>{Constants.vat}</Text>
+                                        <Text style={StyleBookingSummary.priceVol}>{this.state.vat} %</Text>
+                                    </View>
+
 
                                     <View style={ this.state.discountAmount==0 ? {display:'none'} :{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={[StyleBookingSummary.priceTxt,{width:'65%'}]}>{Constants.DiscountVoucher}</Text>
@@ -555,11 +671,13 @@ isValid(){
                         </View>
                     
                     </ScrollView> 
+
                             <Modal
-                                        animationType="fade"
-                                        transparent={true}
-                                        visible={this.state.modalVisible}
-                                    >
+                                animationType="fade"
+                                transparent={true}
+                                visible={this.state.modalVisible}
+                                // visible={true}
+                            >
                                         <View style={StyleBookingSummary.modalpopupBox}>
                                             <View style={StyleBookingSummary.modalinnBox}>                                               
                                                  
@@ -574,15 +692,25 @@ isValid(){
                                             </TouchableOpacity>
                                                 <View style={StyleBookingSummary.serpopSec}> 
                                                     <Text style={StyleBookingSummary.othserTxt}>Other Services</Text>  
-                                                    <FlatList
+                                         <FlatList
                                                         data={this.state.otherServices}
                                                         extraData={this.state}
                                                         renderItem={({item,index})=>(
-                                                            <View style={StyleBookingSummary.inputboxDropDown}>
-                                                                <View style={[StyleLocationDetails.labelBoxNew, {top:-9} ]}>
-                                                                <Text style={[StyleLocationDetails.labelTextNew, {fontSize:13,} ]}>{item.service_name}</Text>
-                                                            </View>
-                                                                <Picker
+                                                            // <View style={StyleBookingSummary.inputboxDropDown}>
+                                                            //     <View style={[StyleLocationDetails.labelBoxNew, {top:-9} ]}>
+                                                            //     <Text style={[StyleLocationDetails.labelTextNew, {fontSize:13,} ]}>{item.service_name}</Text>
+                                                            // </View>
+                                                            
+                                                        //    </View> 
+                                                        <View style={{flex:1,flexDirection:'row',paddingBottom:20}}>
+
+                                                            
+                                                      <View style={{paddingVertical:10,width:'60%'}}>
+                                                        <Text style={[StyleLocationDetails.labelTextNew, {fontSize:13,} ]}>{item.service_name}</Text>
+
+                                                      </View>
+                                                      <View style={{width:"40%",borderWidth:1,borderColor:'grey',borderRadius:50}}>
+                                                        <Picker
                                                                     mode='dropdown'
                                                                     style={{ color: Constants.COLOR_GREY_DARK, width: '95%', alignSelf: 'center', paddingVertical: 20 }}
                                                                     selectedValue={this.state.selectedOtherService}
@@ -607,7 +735,9 @@ isValid(){
                                                                   
                                                                     }
                                                                 </Picker>
-                                                           </View>
+                                                                </View>
+                                                            </View>
+                                                           
                                                       
                                                                     
                                                       )}
@@ -697,41 +827,5 @@ isValid(){
         </View>
         )
     }
-
-async getOtherServices(){
-
- await this.presenter.callGetApi(ApiConstants.getotherServices,"",true);
-}
-
-async bookCMLtrip(){
-    let params={
-
-    }
-    await this.presenter.callGetApi(ApiConstants.bookCMLTrip,params,true);
-}
-async onResponse(apiConstant, data) {
-    switch (apiConstant) {
-      case ApiConstants.getotherServices: {
-        if (data.status) { 
-           
-            console.log(data);
-            this.setState({otherServices:data.other_services});
-            console.log("other services==>"+JSON.stringify(data.other_services));
-
-         } else {
-            alert(data.message)
-          }
-      }
-      case ApiConstants.bookCMLTrip:{
-          if(data.status){
-            // this.props.navigation.navigate('PaymentMethod');
-          }else{
-              alert(data.status);
-          }
-      }
-      
-      }
-    }
-
 
 }
