@@ -605,7 +605,7 @@ async getOtherServices(){
                                     </View> 
 
                                     <TouchableOpacity  
-                                        // onPress={() => {this.setModalVisible(true);}}
+                                        onPress={() => {this.setModalVisible(true);}}
                                         underlayColor='#fff' 
                                         style={StyleLocationDetails.logButton}>
                                         <Text style={StyleLocationDetails.logButtonText}>{Constants.AddServices}</Text>
