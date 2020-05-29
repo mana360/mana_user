@@ -322,7 +322,8 @@ export default class CollectMyLoad extends React.Component {
                                                 ?
                                                 this.RBSheet.open()
                                                 :
-                                                this.props.navigation.navigate('MyBookings')
+                                                // this.props.navigation.navigate('MyBookings');
+                                                null
                                         }}
                                     >
                                         <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>
@@ -379,11 +380,13 @@ export default class CollectMyLoad extends React.Component {
 
                 <Modal
                     transparent={true}
-                    visible={this.state.modalVisible_RateCard}
-                    // visible={true}
+                    // visible={this.state.modalVisible_RateCard}
+                    visible={false}
                     animationType='fade'
                 >
-                    {this.RateCard()}
+                    {
+                    this.RateCard()
+                    }
                 </Modal>
 
                 <Modal

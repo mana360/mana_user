@@ -57,15 +57,16 @@ export default class BookingSummary extends React.Component{
            
             discountAmount:0,
             discountAmount_ID:'',
+            booking_amount:"",
             grand_total:0,
             total_price:0,
             vat:0,
 
             countList:[],
             otherServices:[],
-            otherServicesID:"",
             selectedOtherService:"",
             otherServiceSelected:[], 
+            otherServices_amount:0,
             truck_Type_id:"",
         }
         this.userDetails_1={};
@@ -161,22 +162,24 @@ async getOtherServices(){
    async bookCMLtrip(){
     
     let params={
-        pickup_address:this.state.pick_up_address,
-        pickup_latlng:"",
-        drop1_address:"",
-        drop1_latlng:this.state.add,
-        drop2_address:'',
-        drop2_latlng:"",
-        truck_type_id:"",
-        pickup_date:"",
-        pickup_time:"",
-        instructions:"",
-        other_services:'',
-        booking_amount:"",
-        discount:'',
-        grand_total:'',
-        coupon_id:'',
-        load_category_id:"",
+        "pickup_address":`${this.state.pick_up_addressDetails},${this.state.pick_up_address}`,
+        "pickup_latlng":`${this.state.pick_up_address_lat},${this.state.pick_up_address_long}`,
+        "drop1_address":`${this.state.drop_off_addressDetails},${this.state.drop_off_address}`,
+        "drop1_latlng":`${this.state.drop_off_address_lat},${this.state.drop_off_address_long}`,
+        "drop2_address":`${this.state.drop_off_address_1Details},${this.state.drop_off_address_1}`,
+        "drop2_latlng":`${this.state.drop_off_address_1_lat},${this.state.drop_off_address_1_long}`,
+        "truck_type_id":this.state.truck_Type_id,
+        "pickup_date":this.state.pickup_date,
+        "pickup_time":this.state.pickup_time,
+        "instructions":this.state.instructions,
+        "other_services":this.state.otherServiceSelected,
+        "booking_amount":this.state.booking_amount,
+        "discount":this.state.discountAmount,
+        "grand_total":this.state.grand_total,
+        "coupon_id":this.state.coupon_id,
+        "load_category_id":this.state.load_category_id,
+        "name":this.state.name,
+        "contact_number":this.state.contact_number,
        }
        await this.presenter.callPostApi(ApiConstants.bookCMLTrip,params,true);
    }
@@ -373,23 +376,23 @@ async getOtherServices(){
                                         </TouchableOpacity>
 
                                      </View>
+                                    
                                      <View style={StyleLocationDetails.inputContainer}>
-                                <View style={StyleLocationDetails.labelBoxNew}>
-                                    <Text style={StyleLocationDetails.labelTextNew}>{Constants.AddressDetails}</Text>
-                                </View>
-                                <TextInput
-                                    placeholder='Enter Pickup Address Details'
-                                    placeholderTextColor="#a4a4a4"
-                                    // ref={(ref) => { this.pick_up_address_Details = ref }}
-                                    value={this.state.pick_up_addressDetails}
-                                    onChangeText={
-                                        (value) => {
-                                            this.setState({ pick_up_addressDetails: value })
-                                        }
-                                    }
-                                    style={StyleLocationDetails.inputBox} />
-                            </View>
-
+                                    <View style={StyleLocationDetails.labelBoxNew}>
+                                        <Text style={StyleLocationDetails.labelTextNew}>{Constants.AddressDetails}</Text>
+                                    </View>
+                                    <TextInput
+                                                placeholder='Enter Pickup Address Details'
+                                                placeholderTextColor="#a4a4a4"
+                                                // ref={(ref) => { this.pick_up_address_Details = ref }}
+                                            value={this.state.pick_up_addressDetails}
+                                            onChangeText={
+                                                (value) => {
+                                                    this.setState({ pick_up_addressDetails: value })
+                                                }
+                                            }
+                                            style={StyleLocationDetails.inputBox} />
+                                    </View>
 
 
                                     <View style={StyleLocationDetails.inputContainer}>
@@ -417,6 +420,7 @@ async getOtherServices(){
                                         </TouchableOpacity>
                                   
                                     </View> 
+                                   
                                     <View style={StyleLocationDetails.inputContainer}>
                                     <View style={StyleLocationDetails.labelBoxNew}>
                                         <Text style={StyleLocationDetails.labelTextNew}>{Constants.AddressDetails}</Text>
@@ -433,8 +437,7 @@ async getOtherServices(){
                                         }
                                         style={StyleLocationDetails.inputBox} />
                                 </View>
-                         
-                                    
+                                           
                                     <View style={StyleLocationDetails.inputContainer}>
                                         <View style={StyleLocationDetails.labelBoxNew}>
                                             <Text style={StyleLocationDetails.labelTextNew}>{Constants.DropOffAddress2}</Text>
@@ -459,10 +462,11 @@ async getOtherServices(){
                                         </TouchableOpacity>
                                         
                                     </View>     
+                                   
                                     <View style={StyleLocationDetails.inputContainer}>
-                                <View style={StyleLocationDetails.labelBoxNew}>
-                                    <Text style={StyleLocationDetails.labelTextNew}>{Constants.AddressDetails}</Text>
-                                </View>
+                                    <View style={StyleLocationDetails.labelBoxNew}>
+                                        <Text style={StyleLocationDetails.labelTextNew}>{Constants.AddressDetails}</Text>
+                                    </View>
                                 <TextInput
                                     placeholder='Enter DropOff Address Details'
                                     placeholderTextColor="#a4a4a4"
@@ -475,7 +479,6 @@ async getOtherServices(){
                                     }
                                     style={StyleLocationDetails.inputBox} />
                             </View>
-                                    
 
                                     <View style={StyleLocationDetails.inputContainer}>
                                         <View style={StyleLocationDetails.labelBoxNew}>
@@ -602,7 +605,7 @@ async getOtherServices(){
                                     </View> 
 
                                     <TouchableOpacity  
-                                        onPress={() => {this.setModalVisible(true);}}
+                                        // onPress={() => {this.setModalVisible(true);}}
                                         underlayColor='#fff' 
                                         style={StyleLocationDetails.logButton}>
                                         <Text style={StyleLocationDetails.logButtonText}>{Constants.AddServices}</Text>
@@ -614,7 +617,7 @@ async getOtherServices(){
 
                                     <View style={{ flexDirection:'row', }}>
                                         <Text style={StyleBookingSummary.priceTxt}>{Constants.TotalPrice}</Text>
-                                        <Text style={StyleBookingSummary.priceVol}>R 445</Text>
+                                        <Text style={StyleBookingSummary.priceVol}>{this.state.total_price}</Text>
                                     </View>
 
                                     <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
@@ -630,7 +633,7 @@ async getOtherServices(){
 
                                     <View style={ this.state.discountAmount==0 ? {display:'none'} :{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={[StyleBookingSummary.priceTxt,{width:'65%'}]}>{Constants.DiscountVoucher}</Text>
-                                        <Text style={[StyleBookingSummary.priceVol,{width:'20%',}]}>- R {this.state.discountAmount}</Text>
+                                        <Text style={[StyleBookingSummary.priceVol,{width:'20%',}]}> R {this.state.discountAmount}</Text>
                                         <TouchableOpacity
                                             style={{width:30, justifyContent:'center', alignItems:'center', marginRight:5, marginTop:5}}
                                             onPress={()=>{this.removeDiscount()}}
@@ -642,14 +645,16 @@ async getOtherServices(){
 
                                     <View style={{flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15, }}>
                                         <Text style={[StyleBookingSummary.priceTxt, {color:Constants.COLOR_GREEN, textTransform:"uppercase", fontFamily: "Roboto-Bold",} ]}>{Constants.GrandTotal}</Text>
-                                        <Text style={[StyleBookingSummary.priceVol, {color:Constants.COLOR_GREEN, fontFamily: "Roboto-Bold",} ]}>R 500</Text>
+                                        <Text style={[StyleBookingSummary.priceVol, {color:Constants.COLOR_GREEN, fontFamily: "Roboto-Bold",} ]}>{this.state.grand_total}</Text>
                                     </View>
                                    
                                 </View>            
                                 
                                 <TouchableOpacity 
                                      onPress={()=>{
-                                        this.props.navigation.navigate('DiscountVouchers',{'isOrder':true, getAmount:(amt)=>{ this.setState({discountAmount:amt}) }})
+                                        this.props.navigation.navigate('DiscountVouchers',{'isOrder':true, getAmount:(amt)=>{
+                                             this.setState({discountAmount:amt}) 
+                                            }})
                                     }}
                                     style={StyleBookingSummary.discntBtn}
                                 >
@@ -658,7 +663,9 @@ async getOtherServices(){
                                 
                                 <TouchableOpacity 
                                     onPress={()=>{
-                                        this.bookCMLtrip();
+                                        // this.bookCMLtrip();
+                                    this.props.navigation.navigate('PaymentMethod');
+
                                     }}
                                     style={[StyleLocationDetails.logButton, {marginTop:0, marginHorizontal:25,} ]}
                                 >
@@ -691,7 +698,7 @@ async getOtherServices(){
                                             </TouchableOpacity>
                                                 <View style={StyleBookingSummary.serpopSec}> 
                                                     <Text style={StyleBookingSummary.othserTxt}>Other Services</Text>  
-                                         <FlatList
+                                                    <FlatList
                                                         data={this.state.otherServices}
                                                         extraData={this.state}
                                                         renderItem={({item,index})=>(
