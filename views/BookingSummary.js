@@ -66,6 +66,7 @@ export default class BookingSummary extends React.Component{
     componentDidMount(){
         this.initServices();
     }
+
 initServices(){
 
     this.getOtherServices();
@@ -712,9 +713,10 @@ async onResponse(apiConstant, data) {
     switch (apiConstant) {
       case ApiConstants.getotherServices: {
         if (data.status) { 
+           
             console.log(data);
-            this.setState({otherServices:data.other_services[0].service_name});
-            console.log("other services==>"+JSON.stringify(data.other_services[0]));
+            this.setState({otherServices:data.other_services});
+            console.log("other services==>"+JSON.stringify(data.other_services));
 
          } else {
             alert(data.message)
