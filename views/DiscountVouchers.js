@@ -9,6 +9,8 @@ import {StyleDiscountVouchers} from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
+import ApiConstants from '../config/ApiConstants';
+import { MainPresenter } from '../config/MainPresenter';
 
 export default class DiscountVouchers extends React.Component{
 
@@ -32,13 +34,38 @@ constructor (props) {
                 voucherdate: '31/11/2019',
                 discountpercentage: 20,
             },
-        ]
+        ],
+        dataSource:[],
     }
 }
+
+componentDidMount() {
+    this.presenter.callGetApi(ApiConstants.getVouchers, "", true)
+}
+onResponse(apiConstant, data) {
+    switch (apiConstant) {
+        case ApiConstants.getVouchers: {
+            if (data.status) {
+                if (data.coupon_list && data.coupon_list.length == 0) {
+                    this.setState({ dataSource: [] })
+                } else {
+                    this.setState({
+                        dataSource: data.coupon_list
+                    })
+                }
+            }
+            break;
+        }
+    }
+}
+
+
 getVouchers(item, isOrder) {
     return (
          
         <View style={StyleDiscountVouchers.voucherbgimg}>
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
+           
             <Image style={StyleDiscountVouchers.vourimg} source={require('../images/voucher.png')} />
             <View style={StyleDiscountVouchers.vouchertxtbox}>
                 <Image style={StyleDiscountVouchers.voucerinnerimg} source={require('../images/DiscountVouchers.jpg')} />   
@@ -54,7 +81,8 @@ getVouchers(item, isOrder) {
                             style={ isOrder ? {display:'flex'} : {display:'none'}}
                             onPress={()=>{
                             this.props.navigation.pop();
-                            this.props.navigation.state.params.getAmount(item.discountpercentage)
+                            this.props.navigation.state.params.getAmount(item.discountpercentage);
+
                         }}>
                             <View style={StyleDiscountVouchers.voucerbtn}>
                                 <Text style={StyleDiscountVouchers.voucerapplybtn}>{Constants.APPLY}</Text>

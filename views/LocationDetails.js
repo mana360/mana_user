@@ -38,7 +38,8 @@ export default class LocationDetails extends React.Component {
             add_nextAddress: '',
             pickup_date: "",
             pickup_time: "",
-            instruction:"",
+            // instruction:"",
+            instruction_1:'',
 
             load_category: '',
             load_category_id:1,
@@ -419,12 +420,12 @@ getAddress(flag){
                                 </View>
                                 <Textarea
                                     style={StyleLocationDetails.textarea}
-                                    maxLength={100}
+                                    // maxLength={100}
                                     placeholder="Enter Instruction"
                                     placeholderTextColor={'#a4a4a4'}
-                                    value={this.state.instruction}
-                                    onValueChange={(value)=>{
-                                        this.setState({instruction:value});
+                                    value={this.state.instruction_1}
+                                    onChangeText={value=>{
+                                        this.setState({instruction_1:value});
                                     }}
                                 />
                             </View>
@@ -503,7 +504,7 @@ getAddress(flag){
 
                                         "pickupDate":this.state.pickup_date,
                                         "pickupTime":this.state.pickup_time,
-                                        "instruction":this.state.instruction,
+                                        "instruction":this.state.instruction_1,
                                         "load_category":this.state.other_flag==1?this.state.load_Category_Manualtext:this.state.load_category,
                                         "load_category_id":this.state.other_flag,
                                         
