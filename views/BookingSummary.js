@@ -221,7 +221,8 @@ async getOtherServices(){
          case ApiConstants.getotherServices: {
            if (data.status) { 
                console.log(data);
-            //    this.setState({otherServices:data.other_services});
+               this.setState({otherServices:data.other_services});
+               alert(JSON.stringify(this.state.otherServices));
                console.log("other services==>"+JSON.stringify(this.state.otherServices));
    
             } else {
