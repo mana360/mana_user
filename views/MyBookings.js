@@ -15,18 +15,8 @@ export default class MyBookings extends React.Component{
 constructor(props){
     super(props)
     this.state={
-        current_booking_data:[
-            {booking_id:"1002", status:"order_placed",    price:445, driver_name:"Greg Thomson", driver_number:275747332129, driver_alternate_no:"4546546352", truck_type:"1.5 Ton", booking_date_time:"20th Aug, 2019 112:30 PM", other_services:[{service_name:"Extra helper to pick up load", qnt:1},{service_name:"Number of floors", qnt:3}], truck_name:"Piaggo",truck_registration_number:"GAJD-980-AA",truck_insurance:"Yes",truck_color:"grey",reason:"", expected_pickup:"Sep. 15, 2019 11:30AM",  payment_type:"cash",     customer_name:"Luis Greg",   customer_number:"+27248451009", pickup_address:"Lorem ipsum dolor sit amet, consectetur", drop_address_1:"Lorem ipsum dolor sit amet", drop_address_2:"Lorem ipsum dolor sit amet, consectetur", picked_up_instructions:"Lorem ipsum dolor sit amet, consectetur", load_category:"Consumables, Household",},
-            {booking_id:"4527", status:"driver_assigned", price:374, driver_name:"Michael Lussy", driver_number:275747332129, driver_alternate_no:"4546546352", truck_type:"1.5 Ton", booking_date_time:"20th Aug, 2019 112:30 PM", other_services:[{service_name:"Extra helper to pick up load", qnt:1},{service_name:"Number of floors", qnt:3}],truck_name:"Piaggo",truck_registration_number:"GAJD-980-AA",truck_insurance:"Yes",truck_color:"grey", reason:"Lorem ipsum is the reason.", expected_pickup:"Sep. 20, 2019 05:15AM", payment_type:"online",       customer_name:"Greg Thomas", customer_number:"+27248451001", pickup_address:"Lorem ipsum dolor sit amet, consectetur", drop_address_1:"Lorem ipsum dolor sit amet", drop_address_2:"Lorem ipsum dolor sit amet, consectetur", picked_up_instructions:"Lorem ipsum dolor sit amet, consectetur", load_category:"Consumables"},
-            {booking_id:"4512", status:"picked_up",       price:825, driver_name:"John Dherey", driver_number:275747332129, driver_alternate_no:"4546546352", truck_type:"1.5 Ton", booking_date_time:"20th Aug, 2019 112:30 PM", other_services:[{service_name:"Extra helper to pick up load", qnt:1},{service_name:"Number of floors", qnt:3}],truck_name:"Piaggo",truck_registration_number:"GAJD-980-AA",truck_insurance:"Yes",truck_color:"grey" ,reason:"", expected_pickup:"Sep. 29, 2019 05:15AM", payment_type:"online",   customer_name:"Greg Thomas", customer_number:"+27754721980", pickup_address:"Lorem ipsum dolor sit amet, consectetur", drop_address_1:"Lorem ipsum dolor sit amet", drop_address_2:"Lorem ipsum dolor sit amet, consectetur", picked_up_instructions:"Lorem ipsum dolor sit amet, consectetur", load_category:"Consumables",},
-            {booking_id:"4125", status:"in_process",      price:930, driver_name:"Sims Merry", driver_number:275747332129, driver_alternate_no:"4546546352", truck_type:"1.5 Ton", booking_date_time:"20th Aug, 2019 112:30 PM", other_services:[{service_name:"Extra helper to pick up load", qnt:1},{service_name:"Number of floors", qnt:3}], truck_name:"Piaggo",truck_registration_number:"GAJD-980-AA",truck_insurance:"Yes",truck_color:"grey",reason:"", expected_pickup:"Sep. 19, 2019 06:00PM", payment_type:"cash",     customer_name:"Christpher",  customer_number:"+27248451007", pickup_address:"Lorem ipsum dolor sit amet, consectetur", drop_address_1:"Lorem ipsum dolor sit amet", drop_address_2:"Lorem ipsum dolor sit amet, consectetur", picked_up_instructions:"Lorem ipsum dolor sit amet, consectetur", load_category:"Consumables",},
-        ],
-        past_booking_data:[
-            {booking_id:"1002", status:"cancelled",  price:445, driver_name:"Lionador Kook", driver_number:275747332129, driver_alternate_no:"4546546352", truck_type:"1.5 Ton", booking_date_time:"20th Aug, 2019 112:30 PM", other_services:[{service_name:"Extra helper to pick up load", qnt:1},{service_name:"Number of floors", qnt:3}],truck_name:"Piaggo",truck_registration_number:"GAJD-980-AA",truck_insurance:"Yes",truck_color:"grey", reason:"Lorem ipsum is the reason. Lorem ipsum is the reason.", expected_pickup:"Sep. 15, 2019 11:30AM",  payment_type:"cash",     customer_name:"Luis Greg",   customer_number:"+27248451009", pickup_address:"Lorem ipsum dolor sit amet, consectetur", drop_address_1:"Lorem ipsum dolor sit amet", drop_address_2:"Lorem ipsum dolor sit amet, consectetur", picked_up_instructions:"Lorem ipsum dolor sit amet, consectetur", load_category:"Consumables, Household",},
-            {booking_id:"4527", status:"delivered",  price:374, driver_name:"Robert Vadhera", driver_number:275747332129, driver_alternate_no:"4546546352", truck_type:"1.5 Ton", booking_date_time:"20th Aug, 2019 112:30 PM", other_services:[{service_name:"Extra helper to pick up load", qnt:1},{service_name:"Number of floors", qnt:3}], truck_name:"Piaggo",truck_registration_number:"GAJD-980-AA",truck_insurance:"Yes",truck_color:"grey",reason:"", expected_pickup:"Sep. 20, 2019 05:15AM", payment_type:"online",       customer_name:"Greg Thomas", customer_number:"+27248451001", pickup_address:"Lorem ipsum dolor sit amet, consectetur", drop_address_1:"Lorem ipsum dolor sit amet", drop_address_2:"Lorem ipsum dolor sit amet, consectetur", picked_up_instructions:"Lorem ipsum dolor sit amet, consectetur", load_category:"Consumables"},
-            {booking_id:"4512", status:"cancelled",  price:825, driver_name:"Bophen Henry", driver_number:275747332129, driver_alternate_no:"4546546352", truck_type:"1.5 Ton", booking_date_time:"20th Aug, 2019 112:30 PM", other_services:[{service_name:"Extra helper to pick up load", qnt:1},{service_name:"Number of floors", qnt:3}], truck_name:"Piaggo",truck_registration_number:"GAJD-980-AA",truck_insurance:"Yes",truck_color:"grey",reason:"Lorem ipsum is the reason. Lorem ipsum is the reason.", expected_pickup:"Sep. 29, 2019 05:15AM", payment_type:"online",   customer_name:"Greg Thomas", customer_number:"+27754721980", pickup_address:"Lorem ipsum dolor sit amet, consectetur", drop_address_1:"Lorem ipsum dolor sit amet", drop_address_2:"Lorem ipsum dolor sit amet, consectetur", picked_up_instructions:"Lorem ipsum dolor sit amet, consectetur", load_category:"Consumables",},
-            {booking_id:"4125", status:"delivered",  price:930, driver_name:"Cyrus Mistry", driver_number:275747332129, driver_alternate_no:"4546546352", truck_type:"1.5 Ton", booking_date_time:"20th Aug, 2019 112:30 PM", other_services:[{service_name:"Extra helper to pick up load", qnt:1},{service_name:"Number of floors", qnt:3}], truck_name:"Piaggo",truck_registration_number:"GAJD-980-AA",truck_insurance:"Yes",truck_color:"grey",reason:"", expected_pickup:"Sep. 19, 2019 06:00PM", payment_type:"cash",     customer_name:"Christpher",  customer_number:"+27248451007", pickup_address:"Lorem ipsum dolor sit amet, consectetur", drop_address_1:"Lorem ipsum dolor sit amet", drop_address_2:"Lorem ipsum dolor sit amet, consectetur", picked_up_instructions:"Lorem ipsum dolor sit amet, consectetur", load_category:"Consumables",},
-        ],
+        current_booking_data:[],
+        past_booking_data:[],
     }
 }
 
@@ -38,13 +28,22 @@ async onResponse(apiConstant, data) {
     switch (apiConstant) {
         case ApiConstants.getMyBookings: {
             if (data.status) {
+                if (data.notification_list.length != 0) {
+                    this.setState({
+                        current_booking_data: data.cml_booking_list,
+                    }) 
+                } else {
+                    this.setState({
+                        current_booking_data: [],
+                    })
+                    
+                }
             } else {
                 alert(data.message)
             }
 
             break;
         }
-
     }
 }
 
