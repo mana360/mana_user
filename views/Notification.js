@@ -23,19 +23,22 @@ export default class Notification extends React.Component {
     }
     
     componentDidMount() {
-        this.presenter.callGetApi(ApiConstants.getNotifications, "", true)
+        //this.presenter.callGetApi(ApiConstants.getNotifications, "", true)
     }
 
-    callMarkAsReadApi(notification_id) {
-        this.presenter.callPostApi(ApiConstants.readNotification, {
-            notification_id: notification_id
-        })
-    }
+    // callMarkAsReadApi(notification_id) {
+    //     let param = {
+    //         "noti_id" : notification_id,
+    //         }
+
+    //     this.presenter.callPostApi(ApiConstants.readNotification, param,true)
+    // }
+
 
     callRemoveNotification(notification_id) {
         this.presenter.callPostApi(ApiConstants.removeNotification, {
-            notification_id: notification_id
-        })
+            "noti_id" : notification_id
+        },true)
     }
 
     async onResponse(apiConstant, data) {
@@ -62,12 +65,20 @@ export default class Notification extends React.Component {
             }
 
             case ApiConstants.readNotification :{
-
+                if (data.status) {
+                    alert(data.message)
+                } else {
+                    alert(data.message)
+                }
                 break;
             }
 
             case ApiConstants.removeNotification :{
-
+                if (data.status) {
+                    alert(data.message)
+                } else {
+                    alert(data.message)
+                }
                 break;
             }
         }
@@ -80,9 +91,12 @@ export default class Notification extends React.Component {
                 
                 <HeaderBar title="Notifications" isBack={true} isLogout={true} navigation={navigation} />
                 
-                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
+                <MainPresenter ref={(ref) => { this.presenter = ref }} 
+                onResponse={this.onResponse.bind(this)}
+                 navigation={this.props.navigation} />
                 
-                <Text style={{ flex: 1, textAlignVertical: 'center', textAlign: 'center', display: this.state.noNotificationTextVisibility ? 'flex' : 'none' }}>No New Notification</Text>
+                <Text style={{ flex: 1, textAlignVertical: 'center', textAlign: 'center',
+                 display: this.state.noNotificationTextVisibility ? 'flex' : 'none' }}>No New Notification</Text>
                 
                 <FlatList
                     style={{ marginVertical: 15, display: !this.state.noNotificationTextVisibility ? 'flex' : 'none' }}
@@ -95,9 +109,11 @@ export default class Notification extends React.Component {
                             <TouchableOpacity style={StyleNotification.row}
                                 onPress={() => {
                                     if (item.isCompleted == 'true') {
-                                        this.props.navigation.navigate('RateAndReview', { notif_id: item.id });
+                                        alert('hello')
+                                        //this.props.navigation.navigate('RateAndReview', { notif_id: item.id });
                                     } else if (item.read_status != '1') {
-                                        this.callMarkAsReadApi(item.noti_id)
+                                        alert('hello')
+                                        //this.callMarkAsReadApi(item.noti_id)
                                     }
                                 }}
                             >

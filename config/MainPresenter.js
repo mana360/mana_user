@@ -21,16 +21,26 @@ export class MainPresenter extends React.Component {
     }
     /* -------------Public method------------------- */
     async callPostApi(apiConstant, params, loader) {
+
+        console.log("Paraneters : "+JSON.stringify(params));
+
         if (await !this._isNetworkAvailable()) {
             alert("No Network")
             return
         }
+
         this._initLoader(loader)
 
+        
+        
         let URL = this.BASE_URL + apiConstant
+        
         let token = await getAuthToken()
+        
         let options = this._getOptions('POST', token, params)
+        
         this._requestLogging(URL, options)
+        
         fetch(URL, options).then(it => {
             try {
                 return it.json()
@@ -53,10 +63,15 @@ export class MainPresenter extends React.Component {
         }
 
         this._initLoader(loader)
+
         let URL = this.BASE_URL + apiConstant + queryParams
+        
         let token = await getAuthToken()
+        
         let options = this._getOptions('GET', token)
+        
         this._requestLogging(URL, options)
+        
         fetch(URL, options).then(it => {
             try {
                 return it.json()
@@ -161,6 +176,9 @@ export class MainPresenter extends React.Component {
         return data
     }
     _getOptions(method, authToken = undefined, body = undefined) {
+
+        console.log('Parameters : '+JSON.stringify(body));
+
         return {
             method: method,
             headers: {
@@ -170,6 +188,7 @@ export class MainPresenter extends React.Component {
             },
             body: body ? JSON.stringify(body) : undefined
         }
+
     }
     _requestLogging(URL, options) {
         this._logging(`-----------API CALL------------- \n API NAME : ` + URL + `\n`)

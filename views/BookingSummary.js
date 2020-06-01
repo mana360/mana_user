@@ -2,7 +2,7 @@
     design by -Harshad 
     redesign by Udayraj (call for calendar, timer and map)
  */
-import React from 'react';
+import React, { Component } from 'react';
 import {View, Text, TouchableOpacity, Image, ScrollView, TextInput, Modal, DatePickerAndroid, TimePickerAndroid} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {StyleBookingSummary, StyleLocationDetails} from '../config/CommonStyles';
@@ -80,10 +80,12 @@ export default class BookingSummary extends React.Component{
 initServices(){
 
     this.getOtherServices();
+    
     let i=1
+    
     for(i=1;i<=15;i++){
-  this.state.countList.push(i);
-  console.log("count==>"+i);
+            this.state.countList.push(i);
+        console.log("count==>"+i);
     }
      
         this.userDetails_1=this.props.navigation.getParam('userDetails_1');
@@ -158,6 +160,7 @@ isValid(){
 async getOtherServices(){
 
     await this.presenter.callGetApi(ApiConstants.getotherServices,"",true);
+
    }
    
    async bookCMLtrip(){
@@ -223,8 +226,8 @@ async getOtherServices(){
        switch (apiConstant) {
          case ApiConstants.getotherServices: {
            if (data.status) { 
-               console.log(data);
-               alert(data)
+                console.log("other ==>"+JSON.stringify(data.other_services));
+               //alert(data)
                this.setState({otherServices:data.other_services});
                alert(JSON.stringify(this.state.otherServices));
                console.log("other services==>"+JSON.stringify(this.state.otherServices));
