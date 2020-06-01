@@ -8,9 +8,10 @@ import { StyleNotification } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
-import { MainPresenter } from '../config/MainPresenter'
+import { MainPresenter } from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
-import moment from 'moment'
+import moment from 'moment';
+
 export default class Notification extends React.Component {
     
     constructor(props) {
@@ -23,16 +24,20 @@ export default class Notification extends React.Component {
     }
     
     componentDidMount() {
-        //this.presenter.callGetApi(ApiConstants.getNotifications, "", true)
+        this.presenter.callGetApi(ApiConstants.getNotifications, "", true)
     }
 
-    // callMarkAsReadApi(notification_id) {
-    //     let param = {
-    //         "noti_id" : notification_id,
-    //         }
+    async getAllNotification(){
+        this.presenter.callGetApi(ApiConstants.getNotifications, "", true)
+    }
 
-    //     this.presenter.callPostApi(ApiConstants.readNotification, param,true)
-    // }
+    callMarkAsReadApi(notification_id) {
+        let param = {
+            "noti_id" : notification_id,
+            }
+
+        this.presenter.callPostApi(ApiConstants.readNotification, param,true)
+    }
 
 
     callRemoveNotification(notification_id) {
@@ -66,9 +71,17 @@ export default class Notification extends React.Component {
 
             case ApiConstants.readNotification :{
                 if (data.status) {
-                    alert(data.message)
+                 alert(
+                    data.message,[
+                                 {text: 'OK',
+                                  onPress:()=>this.getAllNotification()},
+                                 ],{ cancelable: false })
                 } else {
-                    alert(data.message)
+                    alert(data.message,
+                        [
+                            {text: 'OK', onPress:()=>{}},
+                        ],
+                        { cancelable: false })
                 }
                 break;
             }
@@ -108,20 +121,19 @@ export default class Notification extends React.Component {
                         return (
                             <TouchableOpacity style={StyleNotification.row}
                                 onPress={() => {
-                                    if (item.isCompleted == 'true') {
-                                        alert('hello')
-                                        //this.props.navigation.navigate('RateAndReview', { notif_id: item.id });
-                                    } else if (item.read_status != '1') {
-                                        alert('hello')
-                                        //this.callMarkAsReadApi(item.noti_id)
+                                
+                                    if (item.is_read == 'true') {
+                                       this.props.navigation.navigate('RateAndReview', { notif_id: item.id });
+                                    } else  {
+                                        this.callMarkAsReadApi(item.noti_id)
                                     }
                                 }}
                             >
                                 <View style={StyleNotification.col1}>
-                                    <Image
+                                     <Image
                                         source={require('../images/notification-icon.png')}
-                                        style={StyleNotification.icon}
-                                    />
+                                        style={StyleNotification.icon} />
+                                    
                                 </View>
 
                                 <View style={StyleNotification.col2}>
@@ -132,10 +144,24 @@ export default class Notification extends React.Component {
                                 </View>
 
                                 <View style={StyleNotification.col1}>
-                                    <Image
+                                <TouchableOpacity onPress = {()=>{
+                                            alert(item.is_read)
+                                 }}>
+
+                                    {item.is_read == false ? <Image
                                         source={require('../images/forward_icon.png')}
+                                        style={StyleNotification.arrow} />
+                                        :<Image
+                                        source={require('../images/remove.png')}
                                         style={StyleNotification.arrow}
                                     />
+                                    }
+
+                                    </TouchableOpacity>
+                                    {/* <Image
+                                        source={require('../images/forward_icon.png')}
+                                        style={StyleNotification.arrow}
+                                    /> */}
                                 </View>
 
                             </TouchableOpacity>

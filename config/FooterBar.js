@@ -20,7 +20,8 @@ class FooterBar extends React.Component {
   }
   render(){
   return (
-     <Footer style={{backgroundColor:Constants.COLOR_FOOTER_GREY, padding:5, margin:0, justifyContent:'center', alignItems:'center', alignContent:'center',}}>
+     <Footer style={{backgroundColor:Constants.COLOR_FOOTER_GREY, padding:5, margin:0, justifyContent:'center',
+      alignItems:'center', alignContent:'center',}}>
         <View style={{flex:4, flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
 
             <View style={styles.footerCol}>
