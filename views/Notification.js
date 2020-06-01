@@ -71,8 +71,7 @@ export default class Notification extends React.Component {
 
             case ApiConstants.readNotification :{
                 if (data.status) {
-                 alert(
-                    data.message,[
+                 alert(data.message,[
                                  {text: 'OK',
                                   onPress:()=>this.getAllNotification()},
                                  ],{ cancelable: false })
@@ -88,10 +87,17 @@ export default class Notification extends React.Component {
 
             case ApiConstants.removeNotification :{
                 if (data.status) {
-                    alert(data.message)
-                } else {
-                    alert(data.message)
-                }
+                    alert(data.message,[
+                              {text: 'OK',
+                                 onPress:()=>this.getAllNotification()},
+                                ],{ cancelable: false })
+                   } else {
+                       alert(data.message,
+                           [
+                               {text: 'OK', onPress:()=>{}},
+                           ],
+                           { cancelable: false })
+                   }
                 break;
             }
         }
@@ -127,8 +133,7 @@ export default class Notification extends React.Component {
                                     } else  {
                                         this.callMarkAsReadApi(item.noti_id)
                                     }
-                                }}
-                            >
+                                }}  >
                                 <View style={StyleNotification.col1}>
                                      <Image
                                         source={require('../images/notification-icon.png')}
@@ -145,9 +150,10 @@ export default class Notification extends React.Component {
 
                                 <View style={StyleNotification.col1}>
                                 <TouchableOpacity onPress = {()=>{
-                                            alert(item.is_read)
+                                            if(item.is_read==true){
+                                                this.callRemoveNotification(item.noti_id)
+                                            }
                                  }}>
-
                                     {item.is_read == false ? <Image
                                         source={require('../images/forward_icon.png')}
                                         style={StyleNotification.arrow} />
