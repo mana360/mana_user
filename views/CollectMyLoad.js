@@ -59,16 +59,16 @@ export default class CollectMyLoad extends React.Component {
                 "SN","Other Services","Rate/KM"
             ],
             truckTableData: [
-                ['1', '2', '3'],
-                ['a', 'b', 'c'],
-                ['1', '2', '3'],
-                ['a', 'b', 'c'],
+                // ['1', '2', '3'],
+                // ['a', 'b', 'c'],
+                // ['1', '2', '3'],
+                // ['a', 'b', 'c'],
               ],
               otherServicesData: [
-                ['1', '2', '3',],
-                ['a', 'b', 'c'],
-                ['1', '2', '3',],
-                ['a', 'b', 'c']
+                // ['1', '2', '3',],
+                // ['a', 'b', 'c'],
+                // ['1', '2', '3',],
+                // ['a', 'b', 'c']
               ]
         }
     }
@@ -268,9 +268,16 @@ export default class CollectMyLoad extends React.Component {
                 case ApiConstants.getRateCard:{
                         if(data.status){
                             console.log("Other Services Data===>"+ JSON.stringify(data.booking_rates.other_service));
-                            console.log("Other Services Data===>"+ JSON.stringify(data.booking_rates.other_service));
-                            this.setState({otherServicesData:data.booking_rates.other_service});
-
+                            console.log("Other Services Data===>"+ JSON.stringify(data.booking_rates));
+                           let  truckTableData=[];
+                           let otherServicesData=[];
+                        //    data.booking_rates.truck_type.forEach((currentItem,index)=>{
+                        //     currentItem.category_list.forEach(child=>{
+                        //           let temp=[index , currentItem.truck_type_name , child.categoty_name, child.rate]
+                        //           truckTableData.push(temp);
+                        //     })
+                        //     })
+                        //     this.setState({truckTableData:truckTableData});
                           }else{
                             console.log(data.message);
                           }
@@ -280,6 +287,9 @@ export default class CollectMyLoad extends React.Component {
                 break;
         }
     }
+
+
+   
     render() {
         let { navigation } = this.props;
         return (
@@ -380,12 +390,12 @@ export default class CollectMyLoad extends React.Component {
 
                 <Modal
                     transparent={true}
-                    // visible={this.state.modalVisible_RateCard}
-                    visible={false}
+                    visible={this.state.modalVisible_RateCard}
+                    // visible={false}
                     animationType='fade'
                 >
                     {
-                    this.RateCard()
+                    // this.RateCard()
                     }
                 </Modal>
 

@@ -16,6 +16,8 @@ import { MainPresenter } from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
 import { FlatList } from 'react-native-gesture-handler';
 import { Picker } from 'native-base';
+import {getUserData  } from "../config/AppSharedPreference";
+
 
 export default class BookingSummary extends React.Component{
     setModalVisible(visible) {
@@ -63,9 +65,9 @@ export default class BookingSummary extends React.Component{
             vat:0,
 
             countList:[],
-            otherServices:[],
-            selectedOtherService:"",
-            otherServiceSelected:[], 
+            otherServicesList:[],
+            selectedOtherService_value:[],
+            otherServiceSelected:new Set(), 
             otherServices_amount:0,
             truck_Type_id:"",
         }
@@ -75,8 +77,11 @@ export default class BookingSummary extends React.Component{
 
     componentDidMount(){
         this.initServices();
+     
     }
-initServices(){
+async initServices(){
+    let value = await getUserData();
+    console.log("value user data===>"+JSON.stringify(value));
 
     this.getOtherServices();
     let i=1
@@ -112,10 +117,8 @@ initServices(){
             load_category:this.userDetails_2.load_category,
             truck_Type_id:this.userDetails_1.category_id,
 
-        })
-        
-
-}
+        }) 
+    }
 isValid(){
    
     if(this.state.pick_up_address==""){
@@ -217,14 +220,16 @@ async getOtherServices(){
         
     }
        await this.presenter.callPostApi(ApiConstants.calculateBooking,params,true);
-   }
+    }
+
    async onResponse(apiConstant, data) {
        switch (apiConstant) {
          case ApiConstants.getotherServices: {
            if (data.status) { 
                console.log(data);
-            //    this.setState({otherServices:data.other_services});
-               console.log("other services==>"+JSON.stringify(this.state.otherServices));
+               this.setState({otherServicesList:data.other_services,selectedOtherService_value:data.other_services});
+
+               console.log("other services List==>"+ JSON.stringify(this.state.otherServicesList));
    
             } else {
                alert(data.message)
@@ -237,10 +242,24 @@ async getOtherServices(){
                  alert(data.status);
              }
          }
+
+         case ApiConstants.calculateBooking:{
+            if(data.status){
+                // this.props.navigation.navigate('PaymentMethod');data.booking_summary
+                // this.setState({grand_total:data.booking_summary.grand_total,
+                //     otherServices_amount:data.booking_summary.other_services,
+                //     discountAmount:data.booking_summary.discount,
+                //     total_price:data.booking_summary.booking_amount
+                //   });
+              }else{
+                  alert(data.status);
+              }
+              break;
+
+         }
          
          }
-       }
-
+    }
 
 
 
@@ -394,7 +413,6 @@ async getOtherServices(){
                                             style={StyleLocationDetails.inputBox} />
                                     </View>
 
-
                                     <View style={StyleLocationDetails.inputContainer}>
                                         <View style={StyleLocationDetails.labelBoxNew}>
                                             <Text style={StyleLocationDetails.labelTextNew}>{Constants.DropOffAddress1}</Text>
@@ -537,8 +555,9 @@ async getOtherServices(){
                                         <View style={StyleLocationDetails.labelBoxNew}>
                                             <Text style={StyleLocationDetails.labelTextNew}>{Constants.Name}</Text>
                                         </View>
-                                        <TextInput placeholder='John Henry' 
+                                        <TextInput placeholder='Name' 
                                             placeholderTextColor="#a4a4a4"
+                                            editable={false}
                                             style={StyleLocationDetails.inputBox}
                                             value={this.state.name}
                                             onChangeText={(val)=>{this.setState({name:val})}}    
@@ -549,8 +568,9 @@ async getOtherServices(){
                                         <View style={StyleLocationDetails.labelBoxNew}>
                                             <Text style={StyleLocationDetails.labelTextNew}>{Constants.ContactNumber}</Text>
                                         </View>
-                                        <TextInput placeholder='+27 680308023 ' 
+                                        <TextInput placeholder='Contact Number ' 
                                             placeholderTextColor="#a4a4a4"
+                                            editable={false}
                                             style={StyleLocationDetails.inputBox}
                                             keyboardType="number-pad"
                                             value={this.state.contact_number}
@@ -622,14 +642,13 @@ async getOtherServices(){
 
                                     <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={StyleBookingSummary.priceTxt}>{Constants.OtherServices}</Text>
-                                        <Text style={StyleBookingSummary.priceVol}>R 55</Text>
+                                        <Text style={StyleBookingSummary.priceVol}>{this.state.otherServices_amount}</Text>
                                     </View>
                                     
                                     <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={StyleBookingSummary.priceTxt}>{Constants.vat}</Text>
                                         <Text style={StyleBookingSummary.priceVol}>{this.state.vat} %</Text>
                                     </View>
-
 
                                     <View style={ this.state.discountAmount==0 ? {display:'none'} :{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={[StyleBookingSummary.priceTxt,{width:'65%'}]}>{Constants.DiscountVoucher}</Text>
@@ -652,8 +671,10 @@ async getOtherServices(){
                                 
                                 <TouchableOpacity 
                                      onPress={()=>{
-                                        this.props.navigation.navigate('DiscountVouchers',{'isOrder':true, getAmount:(amt)=>{
-                                             this.setState({discountAmount:amt}) 
+                                        this.props.navigation.navigate('DiscountVouchers',{'isOrder':true, getAmount:(item)=>{
+                                             this.setState({discountAmount:item.coupon_desc,discountAmount_ID:item.coupon_id}); 
+                                             console.log("discount Amount==>"+JSON.stringify(item));
+                                             getcalculatingBooking();
                                             }})
                                     }}
                                     style={StyleBookingSummary.discntBtn}
@@ -678,7 +699,7 @@ async getOtherServices(){
                     
                     </ScrollView> 
 
-                            <Modal
+                            <Modal          
                                 animationType="fade"
                                 transparent={true}
                                 visible={this.state.modalVisible}
@@ -698,38 +719,40 @@ async getOtherServices(){
                                             </TouchableOpacity>
                                                 <View style={StyleBookingSummary.serpopSec}> 
                                                     <Text style={StyleBookingSummary.othserTxt}>Other Services</Text>  
-                                                    <FlatList
-                                                        data={this.state.otherServices}
-                                                        extraData={this.state}
-                                                        renderItem={({item,index})=>(
-                                                            // <View style={StyleBookingSummary.inputboxDropDown}>
+
+
+                                                    {/* // <View style={StyleBookingSummary.inputboxDropDown}>
                                                             //     <View style={[StyleLocationDetails.labelBoxNew, {top:-9} ]}>
                                                             //     <Text style={[StyleLocationDetails.labelTextNew, {fontSize:13,} ]}>{item.service_name}</Text>
                                                             // </View>
                                                             
-                                                        //    </View> 
-                                                        <View style={{flex:1,flexDirection:'row',paddingBottom:20}}>
-
-                                                            
-                                                      <View style={{paddingVertical:10,width:'60%'}}>
+                                                        //    </View>  */}
+                                                    <FlatList
+                                                        data={this.state.otherServicesList}
+                                                        extraData={this.state}
+                                                        renderItem={({item,index})=>(
+                                                           
+                                                     <View style={{flex:1,flexDirection:'row',paddingBottom:20}}>
+                                                        <View style={{paddingVertical:10,width:'60%'}}>
                                                         <Text style={[StyleLocationDetails.labelTextNew, {fontSize:13,} ]}>{item.service_name}</Text>
-
                                                       </View>
+
                                                       <View style={{width:"40%",borderWidth:1,borderColor:'grey',borderRadius:50}}>
-                                                        <Picker
+                                                         <Picker
                                                                     mode='dropdown'
                                                                     style={{ color: Constants.COLOR_GREY_DARK, width: '95%', alignSelf: 'center', paddingVertical: 20 }}
-                                                                    selectedValue={this.state.selectedOtherService}
+                                                                    selectedValue={this.state.selectedOtherService_value[index].qty}
                                                                     onValueChange={(value) => {
-                                                                        this.setState({selectedOtherService : value });
-                                                                        console.log(value);
-                                                                        this.state.countList.map((Item,index)=>{
-                                                                        if(value==Item){
-                                                                            console.log("service_ID++>"+Item.id);
-                                                                            this.setState({load_category_id:item.id});
-                                                                            console.log("service_ID++>"+Item.id);
-                                                                        }
-                                                                        })
+                                                                        
+                                                                        let tempArry=this.state.selectedOtherService_value
+                                                                     
+                                                                            tempArry[index].qty=value
+                                                                                this.state.otherServiceSelected.add({service_id:item.id,qty:value});
+                                                                        this.setState({selectedOtherService_value:tempArry});
+                                                                        console.log("othe service selected value and id==>"+value+","+tempArry[index].id);
+                                                                        console.log("updated array ==>"+JSON.stringify(tempArry));
+                                                                        let arry = Array.from(this.state.otherServiceSelected)
+                                                                        console.log("Selected Value Array ==>"+this.state.arry);
                                                                     }}
                                                                 >
                                                                     <Picker.Item label='Select' value='-1' />
@@ -741,6 +764,8 @@ async getOtherServices(){
                                                                   
                                                                     }
                                                                 </Picker>
+                                                                
+                                                                
                                                                 </View>
                                                             </View>
                                                            
