@@ -17,6 +17,7 @@ import ApiConstants from '../config/ApiConstants';
 import { FlatList } from 'react-native-gesture-handler';
 import { Picker } from 'native-base';
 import {getUserData  } from "../config/AppSharedPreference";
+import { parse } from '@babel/core';
 
 
 export default class BookingSummary extends React.Component{
@@ -67,10 +68,12 @@ export default class BookingSummary extends React.Component{
             countList:[],
             otherServicesList:[],
             selectedOtherService_value:[],
+            otherServicesdata:[],
             otherServiceSelected:new Set(), 
             otherServices_amount:0,
             truck_Type_id:"",
         }
+        // this.userInfo=[];
         this.userDetails_1={};
         this.userDetails_2={};
     }
@@ -80,15 +83,18 @@ export default class BookingSummary extends React.Component{
      
     }
 async initServices(){
-    let value = await getUserData();
-    console.log("value user data===>"+JSON.stringify(value));
-
     this.getOtherServices();
     let i=1
     for(i=1;i<=15;i++){
   this.state.countList.push(i);
   console.log("count==>"+i);
     }
+//  this.userInfo = await getUserData();
+//  this.userInfo = JSON.stringify(this.userInfo);
+//     console.log("userData===>"+ this.userInfo);
+    // let firstname=`${this.userInfo.first_name} ${this.userInfo.last_name}`
+    // let telephone_no=`${this.userInfo.telephone_no}`
+    // this.setState({name:firstname,contact_number:telephone_no});
      
         this.userDetails_1=this.props.navigation.getParam('userDetails_1');
         console.log("userDetails_1=====>"+JSON.stringify(this.userDetails_1.category_id));
@@ -113,9 +119,11 @@ async initServices(){
 
             pickup_date:this.userDetails_2.pickupDate,
             pick_time:this.userDetails_2.pickupTime,
-            instruction:this.userDetails_2.instruction,
+            instructions:this.userDetails_2.instruction,
             load_category:this.userDetails_2.load_category,
             truck_Type_id:this.userDetails_1.category_id,
+            // name:`${this.userInfo.first_name} ${this.userInfo.last_name}`,
+            // contact_number:`${this.userInfo.contact}`
 
         }) 
     }
@@ -206,15 +214,7 @@ async getOtherServices(){
         "pickup_date": this.state.pick_time,
         "load_category_id":this.state.load_category_id , 
         
-        "other_services" :  
-           [
-           { "service_id":1,
-           "qty":1
-           },
-           { "service_id":2,
-           "qty":1
-           }
-           ],
+        "other_services" : this.state.otherServicesdata,
         "coupon_id":this.state.discountAmount_ID,
         "discount" :this.state.discountAmount 
         
@@ -245,12 +245,12 @@ async getOtherServices(){
 
          case ApiConstants.calculateBooking:{
             if(data.status){
-                // this.props.navigation.navigate('PaymentMethod');data.booking_summary
-                // this.setState({grand_total:data.booking_summary.grand_total,
-                //     otherServices_amount:data.booking_summary.other_services,
-                //     discountAmount:data.booking_summary.discount,
-                //     total_price:data.booking_summary.booking_amount
-                //   });
+                this.props.navigation.navigate('PaymentMethod');data.booking_summary
+                this.setState({grand_total:data.booking_summary.grand_total,
+                    otherServices_amount:data.booking_summary.other_services,
+                    discountAmount:data.booking_summary.discount,
+                    total_price:data.booking_summary.booking_amount
+                  });
               }else{
                   alert(data.status);
               }
@@ -611,12 +611,22 @@ async getOtherServices(){
                                     <View style={[StyleBookingSummary.otherServiceBox, {display: "flex"} ]}>
                                         <Text style={StyleBookingSummary.otherTxtser}>Other Services</Text>
                                         <View style={StyleBookingSummary.grayBox}>
-                                            <Text style={{color:'#a3a3a3', fontFamily: "Roboto-Light",fontSize:14, width:"90%",}}>
-                                                {this.state.otherServices}
-                                            </Text>
+                                               {
+                                                   this.state.otherServiceSelected.length==0?null:
+                                                   this.state.otherServiceSelected.map(({item,index})=>{
+                                                    <Text style={{color:'#a3a3a3', fontFamily: "Roboto-Light",fontSize:14, width:"90%",}}>
+                                                    {item.service_id}-{item.qty},
+                                                      </Text>
+                                                   
+                                                   })
+
+                                               }
                                             <TouchableOpacity style={StyleBookingSummary.rtSec}
                                             onPress={()=>{
-                                                this.setState({otherServices:""})
+                                                this.setState({otherServices:""});
+                                                this.state.otherServiceSelected.pop();
+                                                
+                                                this.setState({otherServiceSelected:temparry})
                                             }}>
                                                     <Image style={StyleBookingSummary.removeImg}
                                                     source={require('../images/remove.png')} />
@@ -747,12 +757,23 @@ async getOtherServices(){
                                                                         let tempArry=this.state.selectedOtherService_value
                                                                      
                                                                             tempArry[index].qty=value
+                                                                                // let selected_value=new Set();
                                                                                 this.state.otherServiceSelected.add({service_id:item.id,qty:value});
                                                                         this.setState({selectedOtherService_value:tempArry});
                                                                         console.log("othe service selected value and id==>"+value+","+tempArry[index].id);
-                                                                        console.log("updated array ==>"+JSON.stringify(tempArry));
-                                                                        let arry = Array.from(this.state.otherServiceSelected)
-                                                                        console.log("Selected Value Array ==>"+this.state.arry);
+                                                                        let temp=this.state.otherServiceSelected;
+                                                                        let arry = Array.from(temp);
+
+                                                                        console.log("Selected Value Array ==> "+JSON.stringify(arry));  
+                                                                        this.setState({otherServicesdata:arry});    
+                                                                        // this.setState({otherServiceSelected:arry});
+                                                                        // console.log("Selected Value Array ==> "+JSON.stringify(this.state.a));
+                                                                        // this.setState({otherServiceSelected:arry});
+                                                                        console.log("Selected Value Array ==> "+this.state.otherServiceSelected);
+
+                                                                        
+
+
                                                                     }}
                                                                 >
                                                                     <Picker.Item label='Select' value='-1' />
@@ -839,8 +860,10 @@ async getOtherServices(){
                                                     <TouchableOpacity  
                                                             onPress={()=>{
                                                                 this.setState({modalVisible:false});
-                                                                this.getOtherServices();
-                                                              this.props.navigation.navigate('PaymentMethod');
+                                                                // this.getOtherServices();
+                                                            //   this.props.navigation.navigate('PaymentMethod');
+                                                             this.getcalculatingBooking();
+
 
 
                                                         }}

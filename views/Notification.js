@@ -28,8 +28,7 @@ export default class Notification extends React.Component {
 
     callMarkAsReadApi(notification_id) {
         this.presenter.callPostApi(ApiConstants.readNotification, {
-            notification_id: notification_id
-        })
+            notification_id: notification_id   })
     }
 
     callRemoveNotification(notification_id) {

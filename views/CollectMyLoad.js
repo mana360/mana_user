@@ -332,7 +332,7 @@ export default class CollectMyLoad extends React.Component {
                                                 ?
                                                 this.RBSheet.open()
                                                 :
-                                                // this.props.navigation.navigate('MyBookings');
+                                                this.props.navigation.navigate('MyBookings');
                                                 null
                                         }}
                                     >
