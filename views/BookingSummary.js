@@ -244,15 +244,17 @@ async getOtherServices(){
             } else {
                alert(data.message)
              }
+             break;
          }
          case ApiConstants.bookCMLTrip:{
              if(data.status){
-               this.props.navigation.navigate('PaymentMethod');
+            //    this.props.navigation.navigate('PaymentMethod');
              }else{
                 //  alert(data.message);
             //    this.props.navigation.navigate('PaymentMethod');
 
              }
+             break;
          }
 
          case ApiConstants.calculateBooking:{
