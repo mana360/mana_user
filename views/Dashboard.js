@@ -281,7 +281,7 @@ getUserStatus(){
                                                 :
                                                 this.state.screen_title == "Pick My Load"
                                                     ?
-                                                    <CollectMyLoad navigation={navigation} data= {this.state.dashboard_data[3]}/>
+                                                    <CollectMyLoad navigation={navigation} data = {this.state.dashboard_data[3]}/>
                                                     :
                                                     null
                             }

@@ -48,8 +48,8 @@ export default class CollectMyLoad extends React.Component {
                 // }
             ],
             collectMyLoadData: [
-                /*   { title: "New Booking", type: "new", desc: "fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent: 45 },
-                  { title: "My Booking", type: "my", desc: "fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent: 70 }, */
+                { title: "New Booking", type: "new", },
+                  { title: "My Booking", type: "my", desc: "fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent: 70 }, 
             ],
 
             truckdata_Head:[
@@ -332,7 +332,7 @@ export default class CollectMyLoad extends React.Component {
                                                 ?
                                                 this.RBSheet.open()
                                                 :
-                                                // this.props.navigation.navigate('MyBookings');
+                                                this.props.navigation.navigate('MyBookings');
                                                 null
                                         }}
                                     >
@@ -344,6 +344,9 @@ export default class CollectMyLoad extends React.Component {
                             </View>
                     }
                 />
+
+
+                
 
                 <View style={StyleCollectMyLoad.ServicesView}>
 
@@ -390,12 +393,12 @@ export default class CollectMyLoad extends React.Component {
 
                 <Modal
                     transparent={true}
-                    visible={this.state.modalVisible_RateCard}
-                    // visible={false}
+                    // visible={this.state.modalVisible_RateCard}
+                    visible={false}
                     animationType='fade'
                 >
                     {
-                    // this.RateCard()
+                    this.RateCard()
                     }
                 </Modal>
 

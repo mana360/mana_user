@@ -143,6 +143,7 @@ getVouchers(item, isOrder) {
                                         onPress={()=>{
                                             this.props.navigation.pop();
                                             this.props.navigation.state.params.getAmount(item);
+                                            console.log("get coupaon====>"+JSON.stringify(item));
 
                                     }}>
                                         <View style={StyleDiscountVouchers.voucerbtn}>
