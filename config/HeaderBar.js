@@ -174,7 +174,7 @@ class HeaderBar extends React.Component {
 
               <TouchableOpacity style={styles.modalButtonView}
                 onPress={() => {
-                  this.presenter.callGetApi(ApiConstants.logout, {}, true);
+                  this.presenter.callGetApi(ApiConstants.logout, "", true);
                   // this.setState({ isLogoutModalVisible: false, isSuccessLogoutModal: true })
                   // let setinter = setInterval(() => {
                   //   clearAllData()
