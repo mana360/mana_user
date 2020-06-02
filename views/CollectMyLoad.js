@@ -11,6 +11,7 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { MainPresenter } from '../config/MainPresenter'
 import ApiConstants from '../config/ApiConstants';
 import { Table, TableWrapper, Row, Cell, Rows } from 'react-native-table-component';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default class CollectMyLoad extends React.Component {
     constructor(props) {
@@ -49,13 +50,13 @@ export default class CollectMyLoad extends React.Component {
                 //     truckWidth: 10,
                 // }
             ],
-            collectMyLoadData: [
-                { title: "New Booking", type: "new", },
-                  { title: "My Booking", type: "my", desc: "fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent: 70 }, 
+            collectMyLoadData: [ 
+                // { title: "New Booking", type: "new", },
+                //   { title: "My Booking", type: "my", desc: "fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent: 70 }, 
             ],
 
             truckdata_Head:[
-                "SN","Truck Ton Capacity","Rate/KM"
+                "SN","Truck Ton Capacity","Cargo Type","Rate/KM"
             ],
             otherServices_Head:[
                 "SN","Other Services","Rate/KM"
@@ -82,8 +83,7 @@ export default class CollectMyLoad extends React.Component {
             <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)', }}>
 
                 <View style={[StyleCollectMyLoad.modalCotainer, { width: '95%' ,padding:25,justifyContent:'center'}]}>
-                 
-                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10,position:"absolute",paddingBottom:5}}
+                <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10,position:"absolute",paddingBottom:5}}
                             onPress={() => {
                                 this.setState({ modalVisible_RateCard: false })
                             }}
@@ -92,6 +92,9 @@ export default class CollectMyLoad extends React.Component {
                                 style={{ width: 15, height: 15 }}
                             />
                     </TouchableOpacity>
+              <ScrollView>
+                 
+                    
                     <Table borderStyle={{borderWidth: 1, borderColor:Constants.COLOR_GREY_DARK,}} style={{marginBottom:8}}>
                         <Row data={this.state.truckdata_Head} textStyle={{alignSelf:"center"}} />
                         <Rows data={this.state.truckTableData} textStyle={{alignSelf:"center"}} />
@@ -100,7 +103,9 @@ export default class CollectMyLoad extends React.Component {
                         <Row data={this.state.otherServices_Head} textStyle={{alignSelf:"center"}}/>
                         <Rows data={this.state.otherServicesData} textStyle={{alignSelf:"center"}}/>
                     </Table>
+                    </ScrollView>
                 </View>
+            
             </View>
 
 
@@ -319,16 +324,30 @@ export default class CollectMyLoad extends React.Component {
                 case ApiConstants.getRateCard:{
                         if(data.status){
                             console.log("Other Services Data===>"+ JSON.stringify(data.booking_rates.other_service));
-                            console.log("Other Services Data===>"+ JSON.stringify(data.booking_rates));
-                           let  truckTableData=[];
-                           let otherServicesData=[];
-                        //    data.booking_rates.truck_type.forEach((currentItem,index)=>{
-                        //     currentItem.category_list.forEach(child=>{
-                        //           let temp=[index , currentItem.truck_type_name , child.categoty_name, child.rate]
-                        //           truckTableData.push(temp);
-                        //     })
-                        //     })
-                        //     this.setState({truckTableData:truckTableData});
+                            // console.log("Other Services Data===>"+ JSON.stringify(data.booking_rates));
+                           var  truckTableData=[];
+                           var otherServices_Data=[];
+                           data.booking_rates.truck_type.forEach((currentItem,index)=>{
+                            currentItem.category_list.forEach(child=>{
+                                truckTableData[index]=[index+1 , currentItem.truck_type_name , child.categoty_name, child.rate]
+                                  
+                            })
+                            })
+                            this.setState({truckTableData:truckTableData});
+
+                            console.log("=mayure =====>"+ JSON.stringify(data.booking_rates.other_service));
+
+                                         data.booking_rates.other_service.forEach((currentItem,index) => {
+                                          otherServices_Data[index]=[index+1,currentItem.other_service, currentItem.rate]
+                                      console.log("msjhfkjahkajhfkjbkfjbakbafbamnbamn======>"+otherServices_Data);
+
+                                             
+                                         });
+
+                            
+
+                            this.setState({otherServicesData:otherServices_Data});
+                            console.log("======>"+ this.state.otherServicesData);
                           }else{
                             console.log(data.message);
                           }
@@ -448,8 +467,8 @@ export default class CollectMyLoad extends React.Component {
 
                 <Modal
                     transparent={true}
-                    // visible={this.state.modalVisible_RateCard}
-                    visible={false}
+                    visible={this.state.modalVisible_RateCard}
+                    // visible={false}
                     animationType='fade'
                 >
                     {

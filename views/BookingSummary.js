@@ -51,6 +51,7 @@ export default class BookingSummary extends React.Component{
             instructions:"",
             load_category:"",
             load_category_id:"",
+            other_flag:"",
 
 
             name:"",
@@ -69,7 +70,7 @@ export default class BookingSummary extends React.Component{
             selectedOtherService_value:[],
             otherServicesdata:[],
             otherServiceSelected:new Map(), 
-            otherServices_amount:0,
+            otherServices_amount:"0",
             truck_Type_id:"",
         }
         // this.userInfo=[];
@@ -78,7 +79,9 @@ export default class BookingSummary extends React.Component{
     }
 
     componentDidMount(){
+    this.getcalculatingBooking();
         this.initServices();
+
      
     }
 async initServices(){
@@ -112,7 +115,7 @@ async initServices(){
 
             drop_off_address:this.userDetails_2.drop_off_address,
             drop_off_address_lat:this.userDetails_2.drop_off_address_lat,
-            drop_off_address_lat:this.userDetails_2.drop_off_address_long,
+            drop_off_address_long:this.userDetails_2.drop_off_address_long,
             drop_off_addressDetails:this.userDetails_2.drop_off_addressDetails,
 
             drop_off_address_1:this.userDetails_2.drop_off_address_1,
@@ -124,6 +127,8 @@ async initServices(){
             pick_time:this.userDetails_2.pickupTime,
             instructions:this.userDetails_2.instruction,
             load_category:this.userDetails_2.load_category,
+            other_flag:this.userDetails_2.other_flag,
+            load_category_id:this.userDetails_2.load_category_id,
             truck_Type_id:this.userDetails_1.category_id,
             // name:`${this.userInfo.first_name} ${this.userInfo.last_name}`,
             // contact_number:`${this.userInfo.contact}`
@@ -183,9 +188,10 @@ async getOtherServices(){
         "drop2_latlng":`${this.state.drop_off_address_1_lat},${this.state.drop_off_address_1_long}`,
         "truck_type_id":this.state.truck_Type_id,
         "pickup_date":this.state.pickup_date,
-        "pickup_time":this.state.pickup_time,
+        "pickup_time":this.state.pick_time,
         "instructions":this.state.instructions,
-        "other_services":this.state.otherServiceSelected,
+        "other_services":[{"service_id" : 1, "qty": 23}],
+        // this.state.otherServiceSelected,
         "booking_amount":this.state.booking_amount,
         "discount":this.state.discountAmount,
         "grand_total":this.state.grand_total,
@@ -198,67 +204,30 @@ async getOtherServices(){
    }
    
    async getcalculatingBooking(item){
-       let params= [ {
-  
-        // {
- 	
-            "pickup_latlng":{
-                "latitude": 18.5680289,
-                "longitude":73.7751416
-            },
-                 "drop1_latlng":{
-                "latitude": 18.5790698,
-                "longitude":75.3433
-            },
-            "drop2_latlng":{
-                "latitude": 18.5790698,
-                "longitude":73.7369171
-            },
-            "truck_type_id" : 6,
-            "pickup_date": "2019-20-15",
-            "load_category_id":"1,2" , 
-            
-            "other_services" :  
-               [
-               { "service_id":1,
-               "qty":1
-               },
-               { "service_id":2,
-               "qty":1
-               }
-               ],
-            "coupon_id":1 ,
-            "discount" :50 
-            
-            
-            
-            
-        }
-           
-       
-        // "pickup_latlng":{
-        //     "latitude": this.state.pick_up_address_lat,
-        //     "longitude":this.state.pick_up_address_long
-        // },
-        //      "drop1_latlng":{
-        //     "latitude": this.state.drop_off_address_lat,
-        //     "longitude":this.state.drop_off_address_long,
-        // },
-        // "drop2_latlng":{
-        //     "latitude": this.state.drop_off_address_1_lat,
-        //     "longitude":this.state.drop_off_address_1_long
-        // },
-        // "truck_type_id" : this.userDetails_1.category_id,
-        // "pickup_date": this.state.pick_time,
-        // "load_category_id":this.state.load_category_id , 
+       let params=  {
+        "pickup_latlng":{
+            "latitude": this.state.pick_up_address_lat,
+            "longitude":this.state.pick_up_address_long
+        },
+             "drop1_latlng":{
+            "latitude": this.state.drop_off_address_lat,
+            "longitude":this.state.drop_off_address_long,
+        },
+        "drop2_latlng":{
+            "latitude": this.state.drop_off_address_1_lat,
+            "longitude":this.state.drop_off_address_1_long
+        },
+        "truck_type_id" : this.userDetails_1.category_id,
+        "pickup_date": this.state.pick_time,
+        "load_category_id":this.state.load_category_id , 
         
-        // "other_services" : this.state.otherServicesdata,
-        // "coupon_id":item==[]?this.state.discountAmount_ID:item.coupon_id,
+        "other_services" : this.state.otherServiceSelected,
+        "coupon_id":item==[]?this.state.discountAmount_ID:item.coupon_id,
 
-        // "discount" :item==[]?this.state.discountAmount:item.coupon_desc,  
+        "discount" :item==[]?this.state.discountAmount:item.coupon_desc,  
         
-    // }
-]
+    }
+
     // console.log("calculating PArams====>"+ JSON.stringifyparams);
        await this.presenter.callPostApi(ApiConstants.calculateBooking,params,true);
     }
@@ -275,22 +244,26 @@ async getOtherServices(){
             } else {
                alert(data.message)
              }
+             break;
          }
          case ApiConstants.bookCMLTrip:{
              if(data.status){
             //    this.props.navigation.navigate('PaymentMethod');
              }else{
-                 alert(data.message);
+                //  alert(data.message);
+            //    this.props.navigation.navigate('PaymentMethod');
+
              }
+             break;
          }
 
          case ApiConstants.calculateBooking:{
             if(data.status){
-                // this.setState({grand_total:data.booking_summary.grand_total,
-                //     otherServices_amount:data.booking_summary.other_services,
-                //     discountAmount:data.booking_summary.discount,
-                //     total_price:data.booking_summary.booking_amount
-                //   });
+                this.setState({grand_total:data.booking_summary.grand_total,
+                    otherServices_amount:data.booking_summary.other_services,
+                    discountAmount:parseInt(data.booking_summary.discount),
+                    total_price:data.booking_summary.booking_amount
+                  });
               }else{
                   alert(data.message);
               }
@@ -302,26 +275,6 @@ async getOtherServices(){
     }
 
 
-
-
-//  setAddress( addressType, addressText){
-//         //  addressType    1 = pickup, 2 = drop off1,    3 = drop off2
-//         if(addressType==1){
-//             this.setState({pick_up_address:addressText})
-//         }
-//         else if(addressType==2){
-//             this.setState({drop_off_address1:addressText})
-//         }
-//         else if(addressType==3){
-//             this.setState({drop_off_address2:addressText})
-//         }
-//         else{
-//             this.setState({pick_up_address:""})
-//         }
-//     }
-
-
-
 getAddress(flag){
     this.props.navigation.navigate('MapViews', {
         flag_location:flag, address: (resp) => {
@@ -330,21 +283,21 @@ getAddress(flag){
                         this.setState({
                             pick_up_address:resp.results[0].formatted_address,
                             pick_up_address_lat:resp.results[0].geometry.location.lat,
-                            pick_up_address_long:resp.results[0].geometry.location.long
+                            pick_up_address_long:resp.results[0].geometry.location.lng
                                 });
                       }
                       if(flag=="2"){
                             this.setState({
                             drop_off_address:resp.results[0].formatted_address,
                             drop_off_address_lat:resp.results[0].geometry.location.lat,
-                            drop_off_address_long:resp.results[0].geometry.location.long
+                            drop_off_address_long:resp.results[0].geometry.location.lng
                             });
                       }
                       if(flag=='3'){
                         this.setState({
                             drop_off_address_1:resp.results[0].formatted_address,
                             drop_off_address_1_lat:resp.results[0].geometry.location.lat,
-                            drop_off_address_1_long:resp.results[0].geometry.location.long
+                            drop_off_address_1_long:resp.results[0].geometry.location.lng
                             });
                     }
          }
@@ -689,16 +642,16 @@ removeDiscount(){
                                     <View style={[StyleBookingSummary.otherServiceBox, {display: "flex"} ]}>
                                         <Text style={StyleBookingSummary.otherTxtser}>Other Services</Text>
                                         <View style={StyleBookingSummary.grayBox}>
-                                        {/* <Text style={{color:'#a3a3a3', fontFamily: "Roboto-Light",fontSize:14, width:"90%",}}>
                                              
                                                {
                                                    this.state.otherServiceSelected==[]?null:
                                                 this.state.otherServiceSelected.forEach((item)=>{
-
+                                                    <Text style={{color:'#a3a3a3', fontFamily: "Roboto-Light",fontSize:14, width:"90%",}}>
+                                                    </Text>
                                                 })
 
                                                }
-                                                      </Text> */}
+                                                     
 
                                                  <Text style={{color:'#a3a3a3', fontFamily: "Roboto-Light",fontSize:14, width:"90%",}}>
                                                     {/* {item.service_id}-{item.qty}, */}
@@ -742,14 +695,14 @@ removeDiscount(){
                                         <Text style={StyleBookingSummary.priceVol}>{this.state.vat} %</Text>
                                     </View> */}
 
-                                    <View style={ this.state.discountAmount==0 ? {display:'none'} :{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
+                                    <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={[StyleBookingSummary.priceTxt,{width:'65%'}]}>{Constants.DiscountVoucher}</Text>
                                         <Text style={[StyleBookingSummary.priceVol,{width:'20%',}]}> R {this.state.discountAmount}</Text>
                                         <TouchableOpacity
                                             style={{width:30, justifyContent:'center', alignItems:'center', marginRight:5, marginTop:5}}
                                             onPress={()=>{this.removeDiscount()}}
                                         >
-                                            <Image style={{width:20, height:20, resizeMode:'stretch'}}
+                                            <Image style={ this.state.discountAmount==0?{display:"none"}:{width:20, height:20, resizeMode:'stretch'}}
                                                 source={require('../images/remove.png')} />
                                         </TouchableOpacity>
                                     </View>
@@ -779,6 +732,8 @@ removeDiscount(){
                                 <TouchableOpacity 
                                     onPress={()=>{
                                         this.bookCMLtrip();
+                              this.props.navigation.navigate('PaymentMethod');
+
                                     }}
                                     style={[StyleLocationDetails.logButton, {marginTop:0, marginHorizontal:25,} ]}
                                 >
@@ -835,9 +790,7 @@ removeDiscount(){
                                                                     style={{ color: Constants.COLOR_GREY_DARK, width: '95%', alignSelf: 'center', paddingVertical: 20 }}
                                                                     selectedValue={this.state.selectedOtherService_value[index].qty}
                                                                     onValueChange={(value) => {
-                                                                        
                                                                         let tempArry=this.state.selectedOtherService_value
-                                                                     
                                                                             tempArry[index].qty=value
                                                                                 // let selected_value=new Set();
                                                                                 this.state.otherServiceSelected.set({service_id:item.id,qty:value});
@@ -847,15 +800,13 @@ removeDiscount(){
                                                                         let arry = Array.from(temp);
 
                                                                         console.log("Selected Value Array ==> "+JSON.stringify(arry));  
-                                                                        this.setState({otherServicesdata:arry});    
+                                                                        // this.setState({otherServicesdata:arry});    
                                                                         // this.setState({otherServiceSelected:arry});
                                                                         // console.log("Selected Value Array ==> "+JSON.stringify(this.state.a));
                                                                         // this.setState({otherServiceSelected:arry});
                                                                         // console.log("Selected Value Array ==> "+this.state.otherServiceSelected);
 
-                                                                        
-
-
+                                                        
                                                                     }}
                                                                 >
                                                                     <Picker.Item label='Select' value='-1' />

@@ -73,8 +73,9 @@ export default class Notification extends React.Component {
                 if (data.status) {
                  alert(data.message,[
                                  {text: 'OK',
-                                  onPress:()=>this.getAllNotification()},
+                                  onPress:()=>{}},
                                  ],{ cancelable: false })
+                 this.getAllNotification()            
                 } else {
                     alert(data.message,
                         [
@@ -89,8 +90,9 @@ export default class Notification extends React.Component {
                 if (data.status) {
                     alert(data.message,[
                               {text: 'OK',
-                                 onPress:()=>this.getAllNotification()},
+                                 onPress:()=>{}},
                                 ],{ cancelable: false })
+                    this.getAllNotification()
                    } else {
                        alert(data.message,
                            [
@@ -128,7 +130,7 @@ export default class Notification extends React.Component {
                             <TouchableOpacity style={StyleNotification.row}
                                 onPress={() => {
                                 
-                                    if (item.is_read == 'true') {
+                                    if (item.is_read == 1) {
                                        this.props.navigation.navigate('RateAndReview', { notif_id: item.id });
                                     } else  {
                                         this.callMarkAsReadApi(item.noti_id)
@@ -150,11 +152,11 @@ export default class Notification extends React.Component {
 
                                 <View style={StyleNotification.col1}>
                                 <TouchableOpacity onPress = {()=>{
-                                            if(item.is_read==true){
+                                            if(item.is_read==1){
                                                 this.callRemoveNotification(item.noti_id)
                                             }
                                  }}>
-                                    {item.is_read == false ? <Image
+                                    {item.is_read == 0 ? <Image
                                         source={require('../images/forward_icon.png')}
                                         style={StyleNotification.arrow} />
                                         :<Image
@@ -164,10 +166,7 @@ export default class Notification extends React.Component {
                                     }
 
                                     </TouchableOpacity>
-                                    {/* <Image
-                                        source={require('../images/forward_icon.png')}
-                                        style={StyleNotification.arrow}
-                                    /> */}
+                                    
                                 </View>
 
                             </TouchableOpacity>

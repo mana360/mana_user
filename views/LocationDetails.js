@@ -189,21 +189,21 @@ getAddress(flag){
                         this.setState({
                             pick_up_address:resp.results[0].formatted_address,
                             pick_up_address_lat:resp.results[0].geometry.location.lat,
-                            pick_up_address_long:resp.results[0].geometry.location.long
+                            pick_up_address_long:resp.results[0].geometry.location.lng
                                 });
                       }
                       if(flag=="2"){
                             this.setState({
                             drop_off_address:resp.results[0].formatted_address,
                             drop_off_address_lat:resp.results[0].geometry.location.lat,
-                            drop_off_address_long:resp.results[0].geometry.location.long
+                            drop_off_address_long:resp.results[0].geometry.location.lng
                             });
                       }
                       if(flag=='3'){
                         this.setState({
                             drop_off_address_1:resp.results[0].formatted_address,
                             drop_off_address_1_lat:resp.results[0].geometry.location.lat,
-                            drop_off_address_1_long:resp.results[0].geometry.location.long
+                            drop_off_address_1_long:resp.results[0].geometry.location.lng
                             });
                     }
          }
@@ -506,7 +506,8 @@ getAddress(flag){
                                         "pickupTime":this.state.pickup_time,
                                         "instruction":this.state.instruction_1,
                                         "load_category":this.state.other_flag==1?this.state.load_Category_Manualtext:this.state.load_category,
-                                        "load_category_id":this.state.other_flag,
+                                        "load_category_id":this.state.other_flag==0?this.state.load_category_id:this.state.other_flag,
+                                       " other_flag":this.state.other_flag,
                                         
                                     }
                                   
@@ -515,7 +516,7 @@ getAddress(flag){
                                     }else{
                                     this.props.navigation.navigate('BookingSummary',{userDetails_1:this.userDetails,userDetails_2:user_data});
                                     }
-                                    this.props.navigation.navigate('BookingSummary',{userDetails_1:this.userDetails,userDetails_2:user_data});
+                                    // this.props.navigation.navigate('BookingSummary',{userDetails_1:this.userDetails,userDetails_2:user_data});
 
 
                                 }}
