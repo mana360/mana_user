@@ -29,9 +29,8 @@ export default class HelpAndSupport extends React.Component {
             supportSubjectList:[]
         }
     }
-    sendMessage(){
-        this.setState({ modal_Visible: true })
-    }
+    
+
     componentDidMount(){
         if(this.state.isUser){
             this.setState({
@@ -63,13 +62,35 @@ export default class HelpAndSupport extends React.Component {
         await this.presenter.callPostApi(ApiConstants.getSupportSubject, {'driver_id':1}, true);
     }
 
+    async sendMessage(){
+        await this.presenter.callPostApi(ApiConstants.addSupportData,
+            {'booking_id':0},
+            {'service_type_id':0},
+            {'subject_id':0},
+            {'message':'test message'}, true);
+    }
+
     onResponse(apiConstant, data) {
         switch (apiConstant) {
           case ApiConstants.getSupportSubject: {
-              console.log("Subject list => " + JSON.stringify(data))
-              this.setState({supportSubjectList : data.support_subjects})
+              if(data.status){
+                this.setState({supportSubjectList : data.support_subjects})
+              }else{
+                this.setState({supportSubjectList : []})
+              }
+             
             break;
           }
+          case ApiConstants.addSupportData: {
+              if(data.status){
+                this.setState({supportSubjectList : data.support_subjects})
+              }else{
+                alert(data.message)
+              }
+            
+          break;
+        }
+
         }
       }
 
