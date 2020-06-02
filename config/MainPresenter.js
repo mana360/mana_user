@@ -22,7 +22,7 @@ export class MainPresenter extends React.Component {
     /* -------------Public method------------------- */
     async callPostApi(apiConstant, params, loader) {
 
-        console.log("Paraneters : "+JSON.stringify(params));
+        console.log("Params : "+JSON.stringify(params));
 
         if (await !this._isNetworkAvailable()) {
             alert("No Network")
