@@ -496,7 +496,7 @@ getAddress(flag){
                                         "drop_off_address_long":this.state. drop_off_address_long,
                                         "drop_off_addressDetails":this.state.drop_off_addressDetails,
 
-                                        "drop_off_address_1": this.state. drop_off_address_1,
+                                        "drop_off_address_1": this.state.drop_off_address_1,
                                         "drop_off_address_1_lat":this.state.drop_off_address_1_lat,
                                         "drop_off_address_1_long":this.state.drop_off_address_1_long,
                                         "drop_off_address_1Details": this.state. drop_off_address_1Details,
@@ -515,7 +515,7 @@ getAddress(flag){
                                     }else{
                                     this.props.navigation.navigate('BookingSummary',{userDetails_1:this.userDetails,userDetails_2:user_data});
                                     }
-                                    // this.props.navigation.navigate('BookingSummary',{userDetails_1:this.userDetails,userDetails_2:user_data});
+                                    this.props.navigation.navigate('BookingSummary',{userDetails_1:this.userDetails,userDetails_2:user_data});
 
 
                                 }}

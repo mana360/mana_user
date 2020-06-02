@@ -17,7 +17,6 @@ import ApiConstants from '../config/ApiConstants';
 import { FlatList } from 'react-native-gesture-handler';
 import { Picker } from 'native-base';
 import {getUserData  } from "../config/AppSharedPreference";
-import { parse } from '@babel/core';
 
 
 export default class BookingSummary extends React.Component{
@@ -59,7 +58,7 @@ export default class BookingSummary extends React.Component{
             // contact_number_additional:"",
            
             discountAmount:0,
-            discountAmount_ID:'',
+            discountAmount_ID:0,
             booking_amount:"",
             grand_total:0,
             total_price:0,
@@ -69,7 +68,7 @@ export default class BookingSummary extends React.Component{
             otherServicesList:[],
             selectedOtherService_value:[],
             otherServicesdata:[],
-            otherServiceSelected:new Set(), 
+            otherServiceSelected:new Map(), 
             otherServices_amount:0,
             truck_Type_id:"",
         }
@@ -84,23 +83,25 @@ export default class BookingSummary extends React.Component{
     }
 async initServices(){
     this.getOtherServices();
-    
     let i=1
-    
     for(i=1;i<=15;i++){
             this.state.countList.push(i);
         console.log("count==>"+i);
     }
-//  this.userInfo = await getUserData();
-//  this.userInfo = JSON.stringify(this.userInfo);
-//     console.log("userData===>"+ this.userInfo);
-    // let firstname=`${this.userInfo.first_name} ${this.userInfo.last_name}`
-    // let telephone_no=`${this.userInfo.telephone_no}`
-    // this.setState({name:firstname,contact_number:telephone_no});
+        this.userInfo = await getUserData();
+        this.userInfo = JSON.parse(this.userInfo);
+        console.log("userData_object========>"+ JSON.stringify(this.userInfo));
+        console.log("userData_object========>"+ JSON.stringify(`${this.userInfo.first_name} ${this.userInfo.last_name}`));
+
+    this.setState({name:`${this.userInfo.first_name} ${this.userInfo.last_name}`,
+    contact_number:`${this.userInfo.telephone_no}`
+});
      
         this.userDetails_1=this.props.navigation.getParam('userDetails_1');
-        console.log("userDetails_1=====>"+JSON.stringify(this.userDetails_1.category_id));
+        console.log("userDetails_1=====>"+JSON.stringify(this.userDetails_1));
         this.userDetails_2=this.props.navigation.getParam('userDetails_2');
+        console.log("userDetails_2__=====>"+JSON.stringify(this.userDetails_2));
+
 
         this.setState({
             pick_up_address:this.userDetails_2.pick_up_address,
@@ -112,9 +113,9 @@ async initServices(){
             drop_off_address:this.userDetails_2.drop_off_address,
             drop_off_address_lat:this.userDetails_2.drop_off_address_lat,
             drop_off_address_lat:this.userDetails_2.drop_off_address_long,
-            drop_off_addressDetails:this.userDetails_2.drop_off_address,
+            drop_off_addressDetails:this.userDetails_2.drop_off_addressDetails,
 
-            drop_off_address1:this.userDetails_2.drop_off_address_1,
+            drop_off_address_1:this.userDetails_2.drop_off_address_1,
             drop_off_address_1_lat:this.userDetails_2.drop_off_address_1_lat,
             drop_off_address_1_long:this.userDetails_2.drop_off_address_1_long,
             drop_off_address_1Details:this.userDetails_2.drop_off_address_1Details,
@@ -196,30 +197,69 @@ async getOtherServices(){
        await this.presenter.callPostApi(ApiConstants.bookCMLTrip,params,true);
    }
    
-   async getcalculatingBooking(){
-       let params=  {
+   async getcalculatingBooking(item){
+       let params= [ {
+  
+        // {
  	
-        "pickup_latlng":{
-            "latitude": this.state.pick_up_address_lat,
-            "longitude":this.state.pick_up_address_long
-        },
-             "drop1_latlng":{
-            "latitude": this.state.drop_off_address_lat,
-            "longitude":this.state.drop_off_address_long,
-        },
-        "drop2_latlng":{
-            "latitude": this.state.drop_off_address_1_lat,
-            "longitude":this.state.drop_off_address_1_long
-        },
-        "truck_type_id" : 6,
-        "pickup_date": this.state.pick_time,
-        "load_category_id":this.state.load_category_id , 
+            "pickup_latlng":{
+                "latitude": 18.5680289,
+                "longitude":73.7751416
+            },
+                 "drop1_latlng":{
+                "latitude": 18.5790698,
+                "longitude":75.3433
+            },
+            "drop2_latlng":{
+                "latitude": 18.5790698,
+                "longitude":73.7369171
+            },
+            "truck_type_id" : 6,
+            "pickup_date": "2019-20-15",
+            "load_category_id":"1,2" , 
+            
+            "other_services" :  
+               [
+               { "service_id":1,
+               "qty":1
+               },
+               { "service_id":2,
+               "qty":1
+               }
+               ],
+            "coupon_id":1 ,
+            "discount" :50 
+            
+            
+            
+            
+        }
+           
+       
+        // "pickup_latlng":{
+        //     "latitude": this.state.pick_up_address_lat,
+        //     "longitude":this.state.pick_up_address_long
+        // },
+        //      "drop1_latlng":{
+        //     "latitude": this.state.drop_off_address_lat,
+        //     "longitude":this.state.drop_off_address_long,
+        // },
+        // "drop2_latlng":{
+        //     "latitude": this.state.drop_off_address_1_lat,
+        //     "longitude":this.state.drop_off_address_1_long
+        // },
+        // "truck_type_id" : this.userDetails_1.category_id,
+        // "pickup_date": this.state.pick_time,
+        // "load_category_id":this.state.load_category_id , 
         
-        "other_services" : this.state.otherServicesdata,
-        "coupon_id":this.state.discountAmount_ID,
-        "discount" :this.state.discountAmount 
+        // "other_services" : this.state.otherServicesdata,
+        // "coupon_id":item==[]?this.state.discountAmount_ID:item.coupon_id,
+
+        // "discount" :item==[]?this.state.discountAmount:item.coupon_desc,  
         
-    }
+    // }
+]
+    // console.log("calculating PArams====>"+ JSON.stringifyparams);
        await this.presenter.callPostApi(ApiConstants.calculateBooking,params,true);
     }
 
@@ -238,22 +278,21 @@ async getOtherServices(){
          }
          case ApiConstants.bookCMLTrip:{
              if(data.status){
-               this.props.navigation.navigate('PaymentMethod');
+            //    this.props.navigation.navigate('PaymentMethod');
              }else{
-                 alert(data.status);
+                 alert(data.message);
              }
          }
 
          case ApiConstants.calculateBooking:{
             if(data.status){
-                this.props.navigation.navigate('PaymentMethod');data.booking_summary
-                this.setState({grand_total:data.booking_summary.grand_total,
-                    otherServices_amount:data.booking_summary.other_services,
-                    discountAmount:data.booking_summary.discount,
-                    total_price:data.booking_summary.booking_amount
-                  });
+                // this.setState({grand_total:data.booking_summary.grand_total,
+                //     otherServices_amount:data.booking_summary.other_services,
+                //     discountAmount:data.booking_summary.discount,
+                //     total_price:data.booking_summary.booking_amount
+                //   });
               }else{
-                  alert(data.status);
+                  alert(data.message);
               }
               break;
 
@@ -265,21 +304,52 @@ async getOtherServices(){
 
 
 
- setAddress( addressType, addressText){
-        //  addressType    1 = pickup, 2 = drop off1,    3 = drop off2
-        if(addressType==1){
-            this.setState({pick_up_address:addressText})
-        }
-        else if(addressType==2){
-            this.setState({drop_off_address1:addressText})
-        }
-        else if(addressType==3){
-            this.setState({drop_off_address2:addressText})
-        }
-        else{
-            this.setState({pick_up_address:""})
-        }
-    }
+//  setAddress( addressType, addressText){
+//         //  addressType    1 = pickup, 2 = drop off1,    3 = drop off2
+//         if(addressType==1){
+//             this.setState({pick_up_address:addressText})
+//         }
+//         else if(addressType==2){
+//             this.setState({drop_off_address1:addressText})
+//         }
+//         else if(addressType==3){
+//             this.setState({drop_off_address2:addressText})
+//         }
+//         else{
+//             this.setState({pick_up_address:""})
+//         }
+//     }
+
+
+
+getAddress(flag){
+    this.props.navigation.navigate('MapViews', {
+        flag_location:flag, address: (resp) => {
+            console.log("callback flag==>"+flag);
+                      if(flag=="1"){
+                        this.setState({
+                            pick_up_address:resp.results[0].formatted_address,
+                            pick_up_address_lat:resp.results[0].geometry.location.lat,
+                            pick_up_address_long:resp.results[0].geometry.location.long
+                                });
+                      }
+                      if(flag=="2"){
+                            this.setState({
+                            drop_off_address:resp.results[0].formatted_address,
+                            drop_off_address_lat:resp.results[0].geometry.location.lat,
+                            drop_off_address_long:resp.results[0].geometry.location.long
+                            });
+                      }
+                      if(flag=='3'){
+                        this.setState({
+                            drop_off_address_1:resp.results[0].formatted_address,
+                            drop_off_address_1_lat:resp.results[0].geometry.location.lat,
+                            drop_off_address_1_long:resp.results[0].geometry.location.long
+                            });
+                    }
+         }
+    })
+}
 
     async openCalender(){
         try {
@@ -327,13 +397,13 @@ async getOtherServices(){
             this.setState({ pick_time:selectedTime})
     }
 
-    applyDiscount(amount){
-        this.setState({discountAmount:amount})
-    }
+applyDiscount(amount){
+    this.setState({discountAmount:amount})
+}
 
-    removeDiscount(){
-        this.setState({discountAmount:0})
-    }
+removeDiscount(){
+    this.setState({discountAmount:0})
+}
 
     render(){
 
@@ -381,14 +451,17 @@ async getOtherServices(){
                                             value={this.state.pick_up_address}
                                             onChangeText={
                                                 (value)=>{
-                                                    this.setState({pick_up_address:value})
+                                                    this.setState({pick_up_address:value});
                                                 }
                                             }
                                             style={StyleLocationDetails.inputBox}
                                         />
                                         <TouchableOpacity style={StyleLocationDetails.iconView}
                                             onPress={()=>{
-                                                this.props.navigation.navigate("MapViews")
+                                                let flag="1"
+                                                this.getAddress(flag);
+                                                // this.props.navigation.navigate("MapViews");
+
                                             }}
                                         >
                                             <Image style={StyleLocationDetails.labelIconLoc}
@@ -431,7 +504,9 @@ async getOtherServices(){
 
                                         <TouchableOpacity style={StyleLocationDetails.iconView}
                                             onPress={()=>{
-                                                this.props.navigation.navigate("MapViews")
+                                                this.props.navigation.navigate("MapViews");
+                                                let flag="2"
+                                                this.getAddress(flag);
                                             }}
                                         >
                                             <Image style={StyleLocationDetails.labelIconLoc}
@@ -464,16 +539,18 @@ async getOtherServices(){
                                         <TextInput placeholder='Enter Dropup Address' 
                                         placeholderTextColor="#a4a4a4"
                                         ref={(ref)=>{this.drop_off_address2=ref}}
-                                        value={this.state.drop_off_address2}
+                                        value={this.state.drop_off_address_1}
                                         onChangeText={
                                             (value)=>{
-                                                this.setState({drop_off_address2:value})
+                                                this.setState({drop_off_address_1:value})
                                             }
                                         }
                                         style={StyleLocationDetails.inputBox} />
                                         <TouchableOpacity style={StyleLocationDetails.iconView}
                                             onPress={()=>{
-                                                this.props.navigation.navigate("MapViews")
+                                                let flag="3"
+                                                this.getAddress(flag);
+                                                // this.props.navigation.navigate("MapViews");
                                             }}
                                         >
                                             <Image style={StyleLocationDetails.labelIconLoc}
@@ -612,22 +689,26 @@ async getOtherServices(){
                                     <View style={[StyleBookingSummary.otherServiceBox, {display: "flex"} ]}>
                                         <Text style={StyleBookingSummary.otherTxtser}>Other Services</Text>
                                         <View style={StyleBookingSummary.grayBox}>
+                                        {/* <Text style={{color:'#a3a3a3', fontFamily: "Roboto-Light",fontSize:14, width:"90%",}}>
+                                             
                                                {
-                                                   this.state.otherServiceSelected.length==0?null:
-                                                   this.state.otherServiceSelected.map(({item,index})=>{
-                                                    <Text style={{color:'#a3a3a3', fontFamily: "Roboto-Light",fontSize:14, width:"90%",}}>
-                                                    {item.service_id}-{item.qty},
-                                                      </Text>
-                                                   
-                                                   })
+                                                   this.state.otherServiceSelected==[]?null:
+                                                this.state.otherServiceSelected.forEach((item)=>{
+
+                                                })
 
                                                }
+                                                      </Text> */}
+
+                                                 <Text style={{color:'#a3a3a3', fontFamily: "Roboto-Light",fontSize:14, width:"90%",}}>
+                                                    {/* {item.service_id}-{item.qty}, */}
+                                                      </Text>
                                             <TouchableOpacity style={StyleBookingSummary.rtSec}
                                             onPress={()=>{
                                                 this.setState({otherServices:""});
-                                                this.state.otherServiceSelected.pop();
+                                            
                                                 
-                                                this.setState({otherServiceSelected:temparry})
+                                                // this.setState({otherServiceSelected:temparry})
                                             }}>
                                                     <Image style={StyleBookingSummary.removeImg}
                                                     source={require('../images/remove.png')} />
@@ -656,10 +737,10 @@ async getOtherServices(){
                                         <Text style={StyleBookingSummary.priceVol}>{this.state.otherServices_amount}</Text>
                                     </View>
                                     
-                                    <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
+                                    {/* <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={StyleBookingSummary.priceTxt}>{Constants.vat}</Text>
                                         <Text style={StyleBookingSummary.priceVol}>{this.state.vat} %</Text>
-                                    </View>
+                                    </View> */}
 
                                     <View style={ this.state.discountAmount==0 ? {display:'none'} :{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={[StyleBookingSummary.priceTxt,{width:'65%'}]}>{Constants.DiscountVoucher}</Text>
@@ -683,9 +764,11 @@ async getOtherServices(){
                                 <TouchableOpacity 
                                      onPress={()=>{
                                         this.props.navigation.navigate('DiscountVouchers',{'isOrder':true, getAmount:(item)=>{
-                                             this.setState({discountAmount:item.coupon_desc,discountAmount_ID:item.coupon_id}); 
-                                             console.log("discount Amount==>"+JSON.stringify(item));
-                                             getcalculatingBooking();
+                                            //  console.log("discount Amount==>"+JSON.stringify(item.coupon_id));
+                                            this.setState({discountAmount:item.coupon_desc,discountAmount_ID:item.coupon_id});
+                                            // console.log("discount Amount==>"+JSON.stringify(item.coupon_id));
+                                           
+                                            this.getcalculatingBooking(item);
                                             }})
                                     }}
                                     style={StyleBookingSummary.discntBtn}
@@ -757,7 +840,7 @@ async getOtherServices(){
                                                                      
                                                                             tempArry[index].qty=value
                                                                                 // let selected_value=new Set();
-                                                                                this.state.otherServiceSelected.add({service_id:item.id,qty:value});
+                                                                                this.state.otherServiceSelected.set({service_id:item.id,qty:value});
                                                                         this.setState({selectedOtherService_value:tempArry});
                                                                         console.log("othe service selected value and id==>"+value+","+tempArry[index].id);
                                                                         let temp=this.state.otherServiceSelected;
@@ -768,7 +851,7 @@ async getOtherServices(){
                                                                         // this.setState({otherServiceSelected:arry});
                                                                         // console.log("Selected Value Array ==> "+JSON.stringify(this.state.a));
                                                                         // this.setState({otherServiceSelected:arry});
-                                                                        console.log("Selected Value Array ==> "+this.state.otherServiceSelected);
+                                                                        // console.log("Selected Value Array ==> "+this.state.otherServiceSelected);
 
                                                                         
 
@@ -797,63 +880,6 @@ async getOtherServices(){
                                                  
                                                  
                                                  
-                                                    {/* <View style={StyleBookingSummary.inputboxDropDown}>
-                                                        <View style={[StyleLocationDetails.labelBoxNew, {top:-9} ]}>
-                                                            <Text style={[StyleLocationDetails.labelTextNew, {fontSize:13,} ]}>Extra helper to pick up load (in addition to Driver)</Text>
-                                                        </View>
-                                                        <Dropdown
-                                                            placeholder="Select"
-                                                            data={data}
-                                                            inputContainerStyle={{borderBottomColor: 'transparent' }}
-                                                            style={StyleBookingSummary.dropInner}  
-                                                            dropdownOffset={{ top: 15, left: 0, }}        
-                                                            rippleInsets={{ top: 0, bottom: 0, }}  
-                                                            containerStyle = {StyleBookingSummary.dropdown}
-                                                        />
-                                                    </View>  
-                                                    <View style={StyleBookingSummary.inputboxDropDown}>
-                                                        <View style={[StyleLocationDetails.labelBoxNew, {top:-9} ]}>
-                                                            <Text style={[StyleLocationDetails.labelTextNew, {fontSize:13,} ]}>Extra helper in truck (in addition to Driver)</Text>
-                                                        </View>
-                                                        <Dropdown
-                                                            placeholder="Select"
-                                                            data={data}
-                                                            inputContainerStyle={{borderBottomColor: 'transparent' }}
-                                                            style={StyleBookingSummary.dropInner}  
-                                                            dropdownOffset={{ top: 15, left: 0, }}        
-                                                            rippleInsets={{ top: 0, bottom: 0, }}  
-                                                            containerStyle = {StyleBookingSummary.dropdown}
-                                                        />
-                                                    </View> 
-                                                    <View style={StyleBookingSummary.inputboxDropDown}>
-                                                        <View style={[StyleLocationDetails.labelBoxNew, {top:-9} ]}>
-                                                            <Text style={[StyleLocationDetails.labelTextNew, {fontSize:13,} ]}>Number of floors to collect the load up & down</Text>
-                                                        </View>
-                                                        <Dropdown
-                                                            placeholder="Select"
-                                                            data={data}
-                                                            inputContainerStyle={{borderBottomColor: 'transparent' }}
-                                                            style={StyleBookingSummary.dropInner}  
-                                                            dropdownOffset={{ top: 15, left: 0, }}        
-                                                            rippleInsets={{ top: 0, bottom: 0, }}  
-                                                            containerStyle = {StyleBookingSummary.dropdown}
-                                                        />
-                                                    </View> 
-                                                    <View style={StyleBookingSummary.inputboxDropDown}>
-                                                        <View style={[StyleLocationDetails.labelBoxNew, {top:-9} ]}>
-                                                            <Text style={[StyleLocationDetails.labelTextNew, {fontSize:13,} ]}>Shuttle Service to gate</Text>
-                                                        </View>
-                                                        <Dropdown
-                                                            placeholder="Select"
-                                                            data={data}
-                                                            inputContainerStyle={{borderBottomColor: 'transparent' }}
-                                                            style={StyleBookingSummary.dropInner}  
-                                                            dropdownOffset={{ top: 15, left: 0, }}        
-                                                            rippleInsets={{ top: 0, bottom: 0, }}  
-                                                            containerStyle = {StyleBookingSummary.dropdown}
-                                                        />
-                                                    </View> 
-                                                        */}
 
                                                        
                                                     <TouchableOpacity  
