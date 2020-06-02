@@ -24,7 +24,7 @@ export default ApiConstants = {
     getMyProfile:"customer/getMyProfile",
     updateProfilePic:"customer/updateProfilePic",//,
     getMyBookings:"customer/getMyBookings",
-
+    addSupportData:"customer/addSupportData",
     /* ----------EOF Vivek------------- */
 
 
