@@ -40,6 +40,7 @@ export default ApiConstants = {
     setPassword:'customer/setPassword',
     changePassword:'customer/changePassword',
     updateProfile:"customer/updateProfile",
+    referFriend:"customer/referFriend",
 
 
     /* ------------Mayur----------- */
