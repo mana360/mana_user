@@ -57,7 +57,7 @@ export default class BookingSummary extends React.Component{
             name:"",
             contact_number:"",
             // contact_number_additional:"",
-           
+            discountVoucher:0,
             discountAmount:0,
             discountAmount_ID:0,
             booking_amount:"",
@@ -80,9 +80,7 @@ export default class BookingSummary extends React.Component{
 
     componentDidMount(){
     this.getcalculatingBooking();
-        this.initServices();
-
-     
+        this.initServices(); 
     }
 async initServices(){
     this.getOtherServices();
@@ -172,13 +170,13 @@ isValid(){
 
     return true
 }
+// ---------------------------------API ---------------------
 
 async getOtherServices(){
     await this.presenter.callGetApi(ApiConstants.getotherServices,"",true);
 }
    
    async bookCMLtrip(){
-    
     let params={
         "pickup_address":`${this.state.pick_up_addressDetails},${this.state.pick_up_address}`,
         "pickup_latlng":`${this.state.pick_up_address_lat},${this.state.pick_up_address_long}`,
@@ -195,7 +193,7 @@ async getOtherServices(){
         "booking_amount":this.state.booking_amount,
         "discount":this.state.discountAmount,
         "grand_total":this.state.grand_total,
-        "coupon_id":this.state.coupon_id,
+        "coupon_id":this.state.discountAmount_ID,
         "load_category_id":this.state.load_category_id,
         "name":this.state.name,
         "contact_number":this.state.contact_number,
@@ -250,7 +248,7 @@ async getOtherServices(){
              if(data.status){
             //    this.props.navigation.navigate('PaymentMethod');
              }else{
-                //  alert(data.message);
+                 alert(data.message);
             //    this.props.navigation.navigate('PaymentMethod');
 
              }
@@ -261,8 +259,9 @@ async getOtherServices(){
             if(data.status){
                 this.setState({grand_total:data.booking_summary.grand_total,
                     otherServices_amount:data.booking_summary.other_services,
-                    // discountAmount:parseInt(data.booking_summary.discount),
-                    total_price:data.booking_summary.booking_amount
+                    discountAmount:data.booking_summary.discount,
+                    total_price:data.booking_summary.booking_amount,
+                    booking_amount:data.booking_summary.booking_amount
                   });
               }else{
                   alert(data.message);
@@ -273,6 +272,10 @@ async getOtherServices(){
          
          }
     }
+//=---------------------------------- API --------------------EOF--------------------
+
+
+
 
 
 getAddress(flag){
@@ -697,7 +700,7 @@ removeDiscount(){
 
                                     <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={[StyleBookingSummary.priceTxt,{width:'65%'}]}>{Constants.DiscountVoucher}</Text>
-                                        <Text style={[StyleBookingSummary.priceVol,{width:'20%',}]}> {this.state.discountAmount} %</Text>
+                                        <Text style={[StyleBookingSummary.priceVol,{width:'20%',}]}> R  {this.state.discountAmount} </Text>
                                         <TouchableOpacity
                                             style={{width:30, justifyContent:'center', alignItems:'center', marginRight:5, marginTop:5}}
                                             onPress={()=>{this.removeDiscount()}}
@@ -732,7 +735,7 @@ removeDiscount(){
                                 <TouchableOpacity 
                                     onPress={()=>{
                                         this.bookCMLtrip();
-                              this.props.navigation.navigate('PaymentMethod');
+                                    //   this.props.navigation.navigate('PaymentMethod');
 
                                     }}
                                     style={[StyleLocationDetails.logButton, {marginTop:0, marginHorizontal:25,} ]}
@@ -796,15 +799,21 @@ removeDiscount(){
                                                                                 this.state.otherServiceSelected.set({service_id:item.id,qty:value});
                                                                         this.setState({selectedOtherService_value:tempArry});
                                                                         console.log("othe service selected value and id==>"+value+","+tempArry[index].id);
+                                                                      
                                                                         let temp=this.state.otherServiceSelected;
                                                                         let arry = Array.from(temp);
+                                                                        console.log("Selected Value Array ==> "+JSON.stringify(arry)); 
 
-                                                                        console.log("Selected Value Array ==> "+JSON.stringify(arry));  
-                                                                        // this.setState({otherServicesdata:arry});    
-                                                                        // this.setState({otherServiceSelected:arry});
-                                                                        // console.log("Selected Value Array ==> "+JSON.stringify(this.state.a));
-                                                                        // this.setState({otherServiceSelected:arry});
-                                                                        // console.log("Selected Value Array ==> "+this.state.otherServiceSelected);
+                                                                        //   -----------array to share on API------
+                                                                                                                         
+                                                                            let arry1=new Map();
+
+                                                                            arry1.set(item.id,{service_id:item.id,qty:value});
+                                                                           
+                                                                                let rt=arry1.entries();
+                                                                        
+                                                                            console.log("array shree====>"+JSON.stringify(rt));
+                                                                        //   -----------array to share on API------EOF----
 
                                                         
                                                                     }}
