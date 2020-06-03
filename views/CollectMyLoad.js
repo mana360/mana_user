@@ -18,35 +18,7 @@ export default class CollectMyLoad extends React.Component {
         this.state = {
             modalVisible_RateCard: false,
             ModalVisible_referFriend: false,
-            truckList: [
-                // {
-                //     src: require('../images/truck_icon.png'),
-                //     truckTitle: "Choose Truck",
-                //     truckWeight: "1 Ton",
-                //     truckDesp: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
-                //     truckMaxWeight: "1 Ton",
-                //     truckLength: 20,
-                //     truckWidth: 10,
-                // },
-                // {
-                //     src: require('../images/truck_icon_one.png'),
-                //     truckTitle: "Choose Truck",
-                //     truckWeight: "1.5 Ton",
-                //     truckDesp: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
-                //     truckMaxWeight: "1.5 Ton",
-                //     truckLength: 20,
-                //     truckWidth: "10S",
-                // },
-                // {
-                //     src: require('../images/truck_icon_two.png'),
-                //     truckTitle: "Choose Truck",
-                //     truckWeight: "3 Ton",
-                //     truckDesp: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
-                //     truckMaxWeight: "3 Ton",
-                //     truckLength: 20,
-                //     truckWidth: 10,
-                // }
-            ],
+            truckList: [],
             collectMyLoadData: [
                 { title: "New Booking", type: "new", },
                   { title: "My Booking", type: "my", desc: "fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent: 70 }, 
@@ -58,18 +30,8 @@ export default class CollectMyLoad extends React.Component {
             otherServices_Head:[
                 "SN","Other Services","Rate/KM"
             ],
-            truckTableData: [
-                // ['1', '2', '3'],
-                // ['a', 'b', 'c'],
-                // ['1', '2', '3'],
-                // ['a', 'b', 'c'],
-              ],
-              otherServicesData: [
-                // ['1', '2', '3',],
-                // ['a', 'b', 'c'],
-                // ['1', '2', '3',],
-                // ['a', 'b', 'c']
-              ]
+            truckTableData: [],
+              otherServicesData: []
         }
     }
 
@@ -78,7 +40,6 @@ export default class CollectMyLoad extends React.Component {
     RateCard() {
         return (
 
-        
             <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)', }}>
 
                 <View style={[StyleCollectMyLoad.modalCotainer, { width: '95%' ,padding:25,justifyContent:'center'}]}>

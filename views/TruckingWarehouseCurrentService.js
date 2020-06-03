@@ -7,21 +7,58 @@ import { StyleCurrentTrip } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
+import { MainPresenter } from '../config/MainPresenter';
+
 export default class TruckingWarehouseCurrentService extends React.Component {
     constructor(props) {
         super(props);
+        this.trucking_warehouseService = false
         this.state = {
-            dataSource: [
-                { id: 12, title: "Nyc-Syc", date: "27 May 2018", pickUpTime: "10:24 PM", dropUpTime: "11:00 AM" },
-                { id: 15, title: "Nyc Sys", date: "27 May 2018", pickUpTime: "10:24 PM", dropUpTime: "11:00 AM" },
-                { id: 16, title: "Nyc 3chruch", date: "27 May 2018", pickUpTime: "10:24 PM", dropUpTime: "11:00 AM" },
-            ]
+            dataSource: [],
+            truckBookingList:[]
         }
     }
+
+    componentDidMount(){
+        this.trucking_warehouseService=this.props.navigation.getParam('flag_trucking_warehouse_services')
+        this.service_type_id = this.props.navigation.getParam('service_type_id')
+        if(this.trucking_warehouseService){
+            this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':this.service_type_id,'flag':1,
+            'start_index':0,'total_count':10}, true)
+        }
+    }
+
+    async onResponse(apiConstant, data) {
+        switch (apiConstant) {
+            case ApiConstants.getMyBookings: {
+                if (data.status) {
+                    if (data.warehouse_booking_list.length != 0) {
+                            this.setState({
+                                dataSource: data.warehouse_booking_list,
+                                truckBookingList : data.truck_booking_list
+                    })
+                }
+                    
+                else {
+                        this.setState({
+                            dataSource: [],
+                        })
+                        
+                    }
+                }else {
+                    alert(data.message)
+                }
+    
+                break;
+            }
+        }
+    }
+
     render() {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
                 <HeaderBar title="CURRENT SERVICES" isBack={true} isLogout={true} navigation={navigation} />
                 <FlatList
                     style={{ marginVertical: 15 }}

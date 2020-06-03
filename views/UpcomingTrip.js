@@ -9,31 +9,89 @@ import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import constants from 'jest-haste-map/build/constants';
+import { MainPresenter } from '../config/MainPresenter';
 export default class UpcomingTrip extends React.Component {
     constructor(props) {
         super(props);
+        this.truckBooingStatus = false,
+        this.warehouseService = false,
+        this.truckAndWareHouse = false,
+        this.collectMyLoad = false,
         this.state = {
-            dataSource: [
-                { id: 12, title: "Nyc-Syc", date: "27 May 2018", pickUpTime: "10:24 PM", dropUpTime: "11:00 AM" },
-                { id: 15, title: "Nyc Sys", date: "27 May 2018", pickUpTime: "10:24 PM", dropUpTime: "11:00 AM" },
-                { id: 16, title: "Nyc 3chruch", date: "27 May 2018", pickUpTime: "10:24 PM", dropUpTime: "11:00 AM" },
-            ],
-
-            truckData: [
-                {
-                    title:'Church gate2 -SYC', booking_id: '1001', status: 'Not yet  Started', partner_name: 'ABC Service', contact_number: '+56 784520141',
-                    dateOF_pickUp: '11/04/2019', pickup_time: '11.00 AM', pickup_location: '275 N Marr Road,CA', destination_location: 'Block no 2,Jackson street', arrival_date: '11/04/2019', arrivalTime: '12.00 AM', truck_name: '407 TATA', mid_point1: 'Lorem ipsome', truckID: '1010',
-                    cargo_type: 'Cargo Type 1', cargo_description: 'Lorem ipsomeLorem ipsomeLorem ipsomeLorem ', cargo_handling: 'Yes', numberUsers: '2', quantity: '10', cargo_insurance: 'Yes', dimensions: '10*50*50', Volumetric_weight: '200kg', valueof_load: 'R 200',
-                    recursing_requirement: 'Yes', costOf_recurring: 'R 100', cargoHandling_cost: 'R 100', service_frquency: 'Daily', insurance_rate: 'R 500', trip_amount: 'R 850', discount: '10'
-                }
-            ]
+            dataSource: [],
+            truckData: []
         }
     }
+
+    
+    componentDidMount() {
+        
+        this.truckBooingStatus = this.props.navigation.getParam('flag_truck_booking')
+
+        console.log('status 1234 : ' + this.truckBooingStatus)
+
+        let isWarehouse=this.props.navigation.getParam('flag_warehouse_services')
+        let isTruckingWarehouse=this.props.navigation.getParam('flag_Trucking_warehouse')
+        let service_type_id = this.props.navigation.getParam('service_type_id') //service_type_id
+        
+        if(this.truckBooingStatus){
+            this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':service_type_id,'flag':2,
+             'start_index':0,'total_count':10}, true)
+         }else if(isWarehouse){
+            this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':service_type_id,'flag':2,
+            'start_index':0,'total_count':10}, true)
+         }else if(isTruckingWarehouse){
+            this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':service_type_id,'flag':2,
+            'start_index':0,'total_count':10}, true)
+         }
+         
+    }
+
+    async onResponse(apiConstant, data) {
+        switch (apiConstant) {
+            case ApiConstants.getMyBookings: {
+                if (data.status) {
+                    if(this.truckBooingStatus){
+                        if (data.truck_booking_list.length != 0) {
+                            this.setState({
+                                dataSource: data.truck_booking_list,
+                            }) 
+                    }
+                }else if(this.warehouseService){
+                        if (data.truck_booking_list.length != 0) {
+                            this.setState({
+                                dataSource: data.truck_booking_list,
+                            })
+                    }
+                }else if(this.truckAndWareHouse){
+                        if (data.truck_booking_list.length != 0) {
+                            this.setState({
+                                dataSource: data.truck_booking_list,
+                            })
+                    } 
+                }
+                    else {
+                        this.setState({
+                            dataSource: [],
+                        })
+                        
+                    }
+                } else {
+                    alert(data.message)
+                }
+    
+                break;
+            }
+        }
+    }
+
     render() {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
                 <HeaderBar title="UPCOMING TRIPS" isBack={true} isLogout={true} navigation={navigation} />
+                <MainPresenter ref={(ref) => { this.presenter = ref }}
+                    onResponse={this.onResponse.bind(this)} />
                 <FlatList
                     style={{ marginVertical: 15 }}
                     numColumns={1}
@@ -61,7 +119,7 @@ export default class UpcomingTrip extends React.Component {
                                             style={[StyleUpcomingTrip.imageIcon]}
                                         />
                                         <Text style={StyleUpcomingTrip.labeltext}>{Constants.Date}</Text>
-                                        <Text style={StyleUpcomingTrip.datacss}>{item.date}</Text>
+                                        <Text style={StyleUpcomingTrip.datacss}>{item.pickedup_date_time}</Text>
                                     </View>
 
                                     <View style={{ flexDirection: 'row' }}>
