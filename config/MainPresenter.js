@@ -22,16 +22,12 @@ export class MainPresenter extends React.Component {
     /* -------------Public method------------------- */
     async callPostApi(apiConstant, params, loader) {
 
-        console.log("Params : "+JSON.stringify(params));
-
         if (await !this._isNetworkAvailable()) {
             alert("No Network")
             return
         }
 
         this._initLoader(loader)
-
-        
         
         let URL = this.BASE_URL + apiConstant
         
