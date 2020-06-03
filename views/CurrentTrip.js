@@ -65,6 +65,7 @@ export default class CurrentTrip extends React.Component {
         let isTruck = this.props.navigation.getParam('flag_truck_booking')
         let isWarehouse=this.props.navigation.getParam('flag_warehouse_services')
         let isTruckingWarehouse=this.props.navigation.getParam('flag_Trucking_warehouse')
+
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
                 <HeaderBar 
@@ -79,7 +80,10 @@ export default class CurrentTrip extends React.Component {
                     data={this.state.dataSource}
                     renderItem={({ item }, index) => {
                         return (
-                            <TouchableOpacity style={StyleCurrentTrip.row} onPress={() => {this.props.navigation.navigate('ViewCurrentTrip') }}>
+                            <TouchableOpacity style={StyleCurrentTrip.row} onPress={() =>
+
+                             {this.props.navigation.navigate('ViewCurrentTrip',
+                             {'booking_id':item.truck_booking_id,'service_type_id':this.service_type_id}) }}>
 
                                 <View style={StyleCurrentTrip.col1}>
                                     <Image
