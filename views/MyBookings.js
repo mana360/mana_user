@@ -9,6 +9,7 @@ import HeaderBar from '../config/HeaderBar'
 import FooterBar from '../config/FooterBar'
 import {StyleMyBooking} from '../config/CommonStyles'
 import {Tab, Tabs, Card, CardItem,} from 'native-base'
+import { MainPresenter } from '../config/MainPresenter'
 
 export default class MyBookings extends React.Component{
 
@@ -21,17 +22,20 @@ constructor(props){
 }
 
 componentDidMount() {
-    this.presenter.callGetApi(ApiConstants.getMyBookings, "", true)
+    this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':4,'flag':1,
+    'start_index':0,'total_count':10}, true)
 }
 
 async onResponse(apiConstant, data) {
     switch (apiConstant) {
         case ApiConstants.getMyBookings: {
             if (data.status) {
-                if (data.notification_list.length != 0) {
+                if (data.cml_booking_list.length != 0) {
                     this.setState({
                         current_booking_data: data.cml_booking_list,
                     }) 
+
+                    console.log("Available data : "+ JSON.stringify(this.state.current_booking_data))
                 } else {
                     this.setState({
                         current_booking_data: [],
@@ -243,6 +247,7 @@ render(){
     let {navigation} = this.props
     return(
         <View style={{flex:1,}}>
+            <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
             <HeaderBar title="my bookings" isNotification={true} navigation={navigation}/>
             {
                 this.state.current_booking_data.length==0

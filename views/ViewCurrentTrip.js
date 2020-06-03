@@ -9,27 +9,22 @@ import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import Invoice from './InvoiceView';
+import { MainPresenter } from '../config/MainPresenter';
+
 export default class ViewCurrentTrip extends React.Component {
     constructor(props) {
         super(props);
+        this.service_type_id = 0,
+        this.booking_id = 0,
         this.state = {
             starCount: null,
             inputLabelTrip: '',
             reviewTrip: '',
             modal_Visible: false,
-            live_geopin: true,//true=Map,false=delay rbsheet 
+            live_geopin: true, 
             invoiceModal_Visible: false,
-            truck_data: [
-                { title: 'NYC - SYS', current_status: 'On Route to destinatio', estimate_timetocmplte: '11 PM', estimate_datetocmplete: '11/03/2019', driver_name: 'Amanda.P', driver_no: '+56 7845145142', Partner_name: 'Uric', partner_no: '+56 745895612' }
-            ],
-            truckData: [
-                {
-                    title:'Church gate2 -SYC', booking_id: '1001', status: 'Not yet  Started', partner_name: 'ABC Service', contact_number: '+56 784520141',
-                    dateOF_pickUp: '11/04/2019', pickup_time: '11.00 AM', pickup_location: '275 N Marr Road,CA', destination_location: 'Block no 2,Jackson street', arrival_date: '11/04/2019', arrivalTime: '12.00 AM', truck_name: '407 TATA', mid_point1: 'Lorem ipsome', truckID: '1010',
-                    cargo_type: 'Cargo Type 1', cargo_description: 'Lorem ipsomeLorem ipsomeLorem ipsomeLorem ', cargo_handling: 'Yes', numberUsers: '2', quantity: '10', cargo_insurance: 'Yes', dimensions: '10*50*50', Volumetric_weight: '200kg', valueof_load: 'R 200',
-                    recursing_requirement: 'Yes', costOf_recurring: 'R 100', cargoHandling_cost: 'R 100', service_frquency: 'Daily', insurance_rate: 'R 500', trip_amount: 'R 850', discount: '10'
-                }
-            ],
+            truck_data: [],
+            truckData: '',
         }
     }
 
@@ -46,13 +41,52 @@ export default class ViewCurrentTrip extends React.Component {
      
         Linking.openURL(phoneNumber);
       };
+
+    
+    componentDidMount(){
+
+            this.service_type_id = this.props.navigation.getParam('service_type_id')
+            this.booking_id = this.props.navigation.getParam('booking_id')
+            console.log('bookig_id  ' + JSON.stringify(this.booking_id))
+    
+        this.presenter.callPostApi(ApiConstants.getBookingDetails, {'service_type_id':this.service_type_id,'booking_id':this.booking_id}, true)
+    }
+
+    async onResponse(apiConstant, data) {
+        switch (apiConstant) {
+            case ApiConstants.getBookingDetails: {
+                if (data.status) {
+                    if (data.truck_booking_details.length != 0) {
+                        this.setState({
+                                truckData: data.truck_booking_details[0],
+                            }) 
+                            console.log('data data data : ' + JSON.stringify(this.truckData))
+                    }else {
+                        this.setState({
+                            truckData: '',
+                        })
+                        
+                    }
+                } else {
+                    alert(data.message)
+                }
+    
+                break;
+            }
+        }
+    }
+
+
     render() {
+       
         let { navigation } = this.props
 
         return (
             <View style={{ flex: 1 }}>
-
+            <MainPresenter ref={(ref) => { this.presenter = ref }}
+                                onResponse={this.onResponse.bind(this)} />
                 <HeaderBar title="VIEW CURRENT TRIP" isBack={true} isLogout={true} navigation={navigation} />
+              
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%' }} bounces={false}>
 
@@ -72,10 +106,14 @@ export default class ViewCurrentTrip extends React.Component {
                                     <Image source={require('../images/invoice_details.png')}
                                         style={StyleViewCurrentTrip.sideImage} />
                                 </TouchableOpacity>
-
-                                <Image source={require('../images/current_trips.png')}
+                                <Image
+                                 source={ require('../images/Truck_Bookings.png')}
                                     style={StyleViewCurrentTrip.ImageCurrentTrip}
                                 />
+                                {/* <Image
+                                 source={this.truckData ==""? require('../images/Truck_Bookings.png'):{uri: Constants.IMAGE_BASE_URL+this.truckData}}
+                                    style={StyleViewCurrentTrip.ImageCurrentTrip}
+                                /> */}
                                 <TouchableOpacity style={{ marginTop: 25, }}
                                     onPress={() => {
                                         this.props.navigation.navigate('HelpAndSupport', { flag: false })
@@ -89,10 +127,10 @@ export default class ViewCurrentTrip extends React.Component {
 
                         </View>
 
-                        {this.state.truck_data.map((result) => {
-                            return (
+                        {/* {this.state.truckData.map((result) => {
+                            return ( */}
                                 <View>
-                                    <Text style={StyleViewCurrentTrip.title}>NYC - SYS</Text>
+                                    <Text style={StyleViewCurrentTrip.title}>{this.state.truckData.driver_name}</Text>
                                     <View style={StyleViewCurrentTrip.bottomLine}></View>
 
                                     <View style={StyleViewCurrentTrip.row}>
@@ -100,7 +138,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.CurrentStatus}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.current_status}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.current_status}</Text>
                                         </View>
                                     </View>
 
@@ -109,7 +147,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedTimeTocmpleteTrip}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.estimate_timetocmplte}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.estimate_timetocmplte}</Text>
                                         </View>
                                     </View>
 
@@ -118,7 +156,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedDateTocmpleteTrip}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.estimate_datetocmplete}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.estimate_datetocmplete}</Text>
                                         </View>
                                     </View>
 
@@ -127,7 +165,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.DriverName}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.driver_name}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.driver_name}</Text>
                                         </View>
                                     </View>
 
@@ -136,7 +174,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.ContactNo}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.driver_no}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.driver_contact}</Text>
                                             <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}
                                              onPress={()=>{
                                                 this.dialCall();
@@ -152,7 +190,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.Partnername}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.Partner_name}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.partner_name}</Text>
                                         </View>
                                     </View>
 
@@ -161,7 +199,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.ContactNo}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.partner_no}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.partner_no}</Text>
                                             <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}
                                                onPress={()=>{
                                                    this.dialCall();
@@ -173,8 +211,8 @@ export default class ViewCurrentTrip extends React.Component {
                                     </View>
 
                                 </View>
-                            )
-                        })}
+                            {/* )
+                        })} */}
 
                         {/* buttom button */}
                         <View style={{ flexDirection: 'row', justifyContent: 'center', }}>

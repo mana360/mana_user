@@ -261,7 +261,7 @@ async getOtherServices(){
             if(data.status){
                 this.setState({grand_total:data.booking_summary.grand_total,
                     otherServices_amount:data.booking_summary.other_services,
-                    discountAmount:parseInt(data.booking_summary.discount),
+                    // discountAmount:parseInt(data.booking_summary.discount),
                     total_price:data.booking_summary.booking_amount
                   });
               }else{
@@ -697,7 +697,7 @@ removeDiscount(){
 
                                     <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={[StyleBookingSummary.priceTxt,{width:'65%'}]}>{Constants.DiscountVoucher}</Text>
-                                        <Text style={[StyleBookingSummary.priceVol,{width:'20%',}]}> R {this.state.discountAmount}</Text>
+                                        <Text style={[StyleBookingSummary.priceVol,{width:'20%',}]}> {this.state.discountAmount} %</Text>
                                         <TouchableOpacity
                                             style={{width:30, justifyContent:'center', alignItems:'center', marginRight:5, marginTop:5}}
                                             onPress={()=>{this.removeDiscount()}}

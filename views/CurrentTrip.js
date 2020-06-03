@@ -7,36 +7,83 @@ import { StyleCurrentTrip } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
+import { MainPresenter } from '../config/MainPresenter';
+
 export default class CurrentTrip extends React.Component {
     constructor(props) {
         super(props);
+        this.truckBooingStatus = false,
+        this.warehouseService = false,
+        this.truckAndWareHouse = false,
+        this.collectMyLoad = false,
+        this.service_type_id = 0,
         this.state = {
-            dataSource:[
-                {id:12, title:"Nyc-Syc", date:"27 May 2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
-                {id:15, title:"Nyc Sys", date:"27 May 2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
-                {id:16, title:"Nyc 3chruch", date:"27 May 2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
-              ]
+            dataSource:[],
         }
     }
+
+     componentDidMount() {
+
+        this.truckBooingStatus = this.props.navigation.getParam('flag_truck_booking')
+        this.service_type_id = this.props.navigation.getParam('service_type_id') 
+  
+        if( this.truckBooingStatus){
+            this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':this.service_type_id,'flag':1,
+             'start_index':0,'total_count':10}, true)
+         }
+         
+    }
+
+    async onResponse(apiConstant, data) {
+        switch (apiConstant) {
+            case ApiConstants.getMyBookings: {
+                if (data.status) {
+                    if(this.truckBooingStatus){
+                        if (data.truck_booking_list.length != 0) {
+                            this.setState({
+                                dataSource: data.truck_booking_list,
+                            }) 
+                    }
+                }else {
+                        this.setState({
+                            dataSource: [],
+                        })
+                        
+                    }
+                } else {
+                    alert(data.message)
+                }
+    
+                break;
+            }
+        }
+    }
+
     render() {
 
         let { navigation } = this.props
         let isTruck = this.props.navigation.getParam('flag_truck_booking')
         let isWarehouse=this.props.navigation.getParam('flag_warehouse_services')
         let isTruckingWarehouse=this.props.navigation.getParam('flag_Trucking_warehouse')
-        //let isWareHouse= 
+
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
                 <HeaderBar 
                     title="Current Trips"
                     isBack={true} isLogout={true} navigation={navigation} />
+                    <MainPresenter ref={(ref) => { this.presenter = ref }}
+                    onResponse={this.onResponse.bind(this)} />
+                    
                 <FlatList
                     style={{ marginVertical: 15 }}
                     numColumns={1}
                     data={this.state.dataSource}
                     renderItem={({ item }, index) => {
                         return (
-                            <TouchableOpacity style={StyleCurrentTrip.row} onPress={() => {this.props.navigation.navigate('ViewCurrentTrip') }}>
+                            <TouchableOpacity style={StyleCurrentTrip.row} onPress={() =>
+
+                             {this.props.navigation.navigate('ViewCurrentTrip',
+                             {'booking_id':item.truck_booking_id,'service_type_id':this.service_type_id}) }}>
 
                                 <View style={StyleCurrentTrip.col1}>
                                     <Image

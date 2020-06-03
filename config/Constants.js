@@ -3,6 +3,8 @@ import { Dimensions, Platform } from 'react-native';
 const Constants = {
 
     BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/api/",
+    
+    IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/",
 
     EMAIL_REGX:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
 

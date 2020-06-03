@@ -24,6 +24,7 @@ export default ApiConstants = {
     getMyProfile:"customer/getMyProfile",
     updateProfilePic:"customer/updateProfilePic",//,
     getMyBookings:"customer/getMyBookings",
+    getBookingDetails:'customer/getBookingDetails',
     addSupportData:"customer/addSupportData",
     /* ----------EOF Vivek------------- */
 
@@ -34,7 +35,6 @@ export default ApiConstants = {
     cityList:'customer/cityList',
     updateProfilePic:'customer/updateProfilePic',
     getSupportSubject:'customer/getSupportSubject',
-    getBookingDetails:'customer/getBookingDetails',
     profileSetup:'customer/profileSetup',
     countryList:'customer/countryList',
     setPassword:'customer/setPassword',

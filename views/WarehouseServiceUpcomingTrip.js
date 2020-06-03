@@ -7,30 +7,56 @@ import {StyleUpcomingTrip} from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
+import { MainPresenter } from '../config/MainPresenter'
 
 export default class WarehouseServiceUpcomingTrip extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            dataSource:[
-                {id:12, title:"Nyc-Syc", date:"27 May 2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
-                {id:15, title:"Nyc Sys", date:"27 May 2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
-                {id:16, title:"Nyc 3chruch", date:"27 May 2018", pickUpTime:"10:24 PM",dropUpTime:"11:00 AM"},
-              ],
-              warehouse_data:[
-                {
-                   title:'ABC service', booking_id: '1021', status: 'ongoing', partner_name: 'ABC Service', contact_number: '+56 784520141',
-                    cargo_type: 'Cargo Type 1', cargo_description: 'Lorem ipsomeLorem ipsomeLorem ipsomeLorem ', cargo_handling: 'Yes', numberUsers: '2', quantity: '10', cargo_insurance: 'Yes', dimensions: '10*50*50', Volumetric_weight: '200kg', valueof_load: 'R 200',
-                    warehouse_id:'1234',warehouse_type:'Public',storage_type:'Refregirator',costPer_sqm:'R 35',warehouse_location:'Street 45,Lane2',duration_ofstorage:'11/09/2019 to 15/10/2020',
-                    recursing_requirement: 'Yes', costOf_recurring: 'R 100', cargoHandling_cost: 'R 100', service_frquency: 'Daily', insurance_rate: 'R 500', discount: '10',total_amount:'R 500'
-                }
-              ]
+            dataSource:[],
+            warehouse_data:[]
       }
     }
+
+    componentDidMount(){
+        this.warehouseService=this.props.navigation.getParam('flag_warehouse_services')
+        this.service_type_id = this.props.navigation.getParam('service_type_id')
+        if(this.warehouseService){
+            this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':this.service_type_id,'flag':2,
+            'start_index':0,'total_count':10}, true)
+        }
+    }
+
+    async onResponse(apiConstant, data) {
+        switch (apiConstant) {
+            case ApiConstants.getMyBookings: {
+                if (data.status) {
+                    if (data.warehouse_booking_list.length != 0) {
+                            this.setState({
+                                dataSource: data.warehouse_booking_list,
+                    })
+                }
+                    
+                else {
+                        this.setState({
+                            dataSource: [],
+                        })
+                        
+                    }
+                }else {
+                    alert(data.message)
+                }
+    
+                break;
+            }
+        }
+    }
+
     render(){
         let {navigation} = this.props
         return(
             <View style={{flex:1,backgroundColor:Constants.COLOR_GREY}}>
+                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
             <HeaderBar title="UPCOMING TRIPS" isBack={true} isLogout={true} navigation={navigation}/>
             <FlatList
                     style={{marginVertical:15}}
@@ -64,13 +90,13 @@ export default class WarehouseServiceUpcomingTrip extends React.Component{
                                           style={StyleUpcomingTrip.imageIcon}
                                     />
                                     <Text style={StyleUpcomingTrip.labeltext}>{Constants.PickUpTime}</Text>
-                                    <Text style={StyleUpcomingTrip.datacss}>{item.pickUpTime}</Text>
+                                    <Text style={StyleUpcomingTrip.datacss}>{item.pickup_time}</Text>
 
                                     <Image source={require('../images/time_icon.png')}
                                           style={[StyleUpcomingTrip.imageIcon,{marginLeft:10}]}
                                     />
                                     <Text style={StyleUpcomingTrip.labeltext}>{Constants.PickUpTime}</Text>
-                                    <Text style={StyleUpcomingTrip.datacss}>{item.dropUpTime}</Text>
+                                    <Text style={StyleUpcomingTrip.datacss}>{item.dropup_time}</Text>
                                 </View>
                             </View>
                         
