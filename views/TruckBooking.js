@@ -20,8 +20,6 @@ export default class TruckBooking extends React.Component {
             modal_Visible: false,
             booking_status: 1,
             truckBookingData: [
-                /*     { title: "Current Trips", type: "current", desc: "fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent: 28 },
-                    { title: "Upcoming Trips", type: "upcoming", desc: "fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent: 13 }, */
             ],
         }
     }
@@ -94,9 +92,9 @@ export default class TruckBooking extends React.Component {
                                             onPress={() => {
                                                 item.type == "current"
                                                     ?
-                                                    this.props.navigation.navigate('CurrentTrip')
+                                                    this.props.navigation.navigate('CurrentTrip',{'flag_truck_booking':true,'service_type_id':1})
                                                     :
-                                                    this.props.navigation.navigate('UpcomingTrip')
+                                                    this.props.navigation.navigate('UpcomingTrip',{'flag_truck_booking':true,'service_type_id':1})
                                             }}
                                         >
                                             <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>

@@ -14,14 +14,12 @@ export default class WarehouseServices extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            warehouseServicesData: [
-                // {title:"Current Trips",  type:"current",  desc:"fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent:75},
-                // {title:"Upcoming Trips", type:"upcoming",  desc:"fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent:40},
-            ],
+            warehouseServicesData: [],
         }
     }
     componentDidMount() {
         this.presenter.callGetApi(ApiConstants.getDashboardData, "", true)
+
     }
     onResponse(apiConstant, data) {
         switch (apiConstant) {
@@ -81,9 +79,9 @@ export default class WarehouseServices extends React.Component {
                                         onPress={() => {
                                             item.type == "current"
                                                 ?
-                                                this.props.navigation.navigate('WarehouseServicesCurrentTrip')
+                                                this.props.navigation.navigate('WarehouseServicesCurrentTrip',{'flag_warehouse_services':true,'service_type_id':2})
                                                 :
-                                                this.props.navigation.navigate('WarehouseServiceUpcomingTrip')
+                                                this.props.navigation.navigate('WarehouseServiceUpcomingTrip',{'flag_warehouse_services':true,'service_type_id':2})
                                         }}
                                     >
                                         <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>
