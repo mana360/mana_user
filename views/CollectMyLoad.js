@@ -11,11 +11,14 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { MainPresenter } from '../config/MainPresenter'
 import ApiConstants from '../config/ApiConstants';
 import { Table, TableWrapper, Row, Cell, Rows } from 'react-native-table-component';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default class CollectMyLoad extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            refer_emailId:"",
+            refer_mobile_number:"",
             modalVisible_RateCard: false,
             ModalVisible_referFriend: false,
             truckList: [],
@@ -25,7 +28,7 @@ export default class CollectMyLoad extends React.Component {
             ],
 
             truckdata_Head:[
-                "SN","Truck Ton Capacity","Rate/KM"
+                "SN","Truck Ton Capacity","Cargo Type","Rate/KM"
             ],
             otherServices_Head:[
                 "SN","Other Services","Rate/KM"
@@ -35,16 +38,13 @@ export default class CollectMyLoad extends React.Component {
         }
     }
 
-
-
     RateCard() {
         return (
 
             <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)', }}>
 
                 <View style={[StyleCollectMyLoad.modalCotainer, { width: '95%' ,padding:25,justifyContent:'center'}]}>
-                 
-                    <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10,position:"absolute",paddingBottom:5}}
+                <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10,position:"absolute",paddingBottom:5}}
                             onPress={() => {
                                 this.setState({ modalVisible_RateCard: false })
                             }}
@@ -53,6 +53,9 @@ export default class CollectMyLoad extends React.Component {
                                 style={{ width: 15, height: 15 }}
                             />
                     </TouchableOpacity>
+              <ScrollView>
+                 
+                    
                     <Table borderStyle={{borderWidth: 1, borderColor:Constants.COLOR_GREY_DARK,}} style={{marginBottom:8}}>
                         <Row data={this.state.truckdata_Head} textStyle={{alignSelf:"center"}} />
                         <Rows data={this.state.truckTableData} textStyle={{alignSelf:"center"}} />
@@ -61,7 +64,9 @@ export default class CollectMyLoad extends React.Component {
                         <Row data={this.state.otherServices_Head} textStyle={{alignSelf:"center"}}/>
                         <Rows data={this.state.otherServicesData} textStyle={{alignSelf:"center"}}/>
                     </Table>
+                    </ScrollView>
                 </View>
+            
             </View>
 
 
@@ -123,7 +128,9 @@ export default class CollectMyLoad extends React.Component {
     ReferAFriend() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)', }}>
+                
                 <View style={[StyleCollectMyLoad.modalCotainer, { width: '90%' }]}>
+                    
                     <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10, }}
                         onPress={() => {
                             this.setState({ ModalVisible_referFriend: false })
@@ -133,7 +140,9 @@ export default class CollectMyLoad extends React.Component {
                             style={{ width: 15, height: 15 }}
                         />
                     </TouchableOpacity>
+                    
                     <Text style={StyleCollectMyLoad.modalReferText}>Refer a Friend</Text>
+                    
                     <Text style={StyleCollectMyLoad.modalShareText}>{Constants.ShareAppUsing}</Text>
 
                     <View style={StyleCollectMyLoad.textInput_container}>
@@ -145,14 +154,21 @@ export default class CollectMyLoad extends React.Component {
                             </View>
                             <TextInput placeholder='Enter Email Id'
                                 style={StyleCollectMyLoad.textInput_style}
-                                value={this.state.email_id}
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                                value={this.state.refer_emailId}
                                 onChangeText={(newText) => {
-                                    this.setState({ email_id: newText })
+                                    this.setState({ refer_emailId: newText })
                                 }}
                             />
                         </View>
                         <View style={{ width: '25%' }}>
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                disabled={ this.state.refer_emailId=="" ? true : false }
+                                onPress={()=>{
+                                    this.referFriendApiCall(0)  // 0 = email
+                                }}
+                            >
                                 <Image source={require('../images/send.png')}
                                     style={{ width: 70, height: 50, resizeMode: 'cover', }}
                                 />
@@ -170,14 +186,23 @@ export default class CollectMyLoad extends React.Component {
                             <TextInput placeholder='Enter Mobile Number'
                                 keyboardType="number-pad"
                                 style={StyleCollectMyLoad.textInput_style}
-                                value={this.state.mobile_number}
+                                value={this.state.refer_mobile_number}
                                 onChangeText={(newText) => {
-                                    this.setState({ mobile_number: newText })
+                                    if(!isNaN(newText)){
+                                        this.setState({ refer_mobile_number: newText })
+                                    }else{
+                                        this.setState({ refer_mobile_number: ""})
+                                    }
                                 }}
                             />
                         </View>
                         <View style={{ width: '25%' }}>
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                disabled={ this.state.refer_mobile_number=="" ? true : false }
+                                onPress={()=>{
+                                    this.referFriendApiCall(1)  // 1 = mobile
+                                }}
+                            >
                                 <Image source={require('../images/send.png')}
                                     style={{ width: 70, height: 50, resizeMode: 'cover', }}
                                 />
@@ -195,25 +220,57 @@ export default class CollectMyLoad extends React.Component {
         this.presenter.callGetApi(ApiConstants.getDashboardData, "", true);
         this.presenter.callGetApi(ApiConstants.getCMLTruckCategory,"",true);
     }
+
+    referFriendApiCall(type){
+        // type = 0 then refer friend by email
+        // type = 1 then refer friend by mobile number
+        let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+        if(type==0){
+            if(!emailRegex.test(this.state.refer_emailId)){
+                alert("Please enter correct email Id.")
+            }else{
+                let params = {
+                    "type" : 0,
+                    "email_id" : this.state.refer_emailId,
+                    "mobile_no":""
+                }
+                this.presenter.callPostApi(ApiConstants.referFriend, params, true)
+            }
+        }
+        if(type==1){
+            if(this.state.refer_mobile_number.length!=10){
+                alert("Please enter correct mobile number.")
+            }else{
+                let params ={
+                    "type" : 1,
+                    "email_id" :"",
+                    "mobile_no":this.state.refer_mobile_number
+                }
+                this.presenter.callPostApi(ApiConstants.referFriend, params, true)
+            }
+        }
+    }
+
     onResponse(apiConstant, data) {
         switch (apiConstant) {
-            case ApiConstants.getDashboardData:
-                if (data.status) {
-                    if (data && data.dashboard_data && data.dashboard_data.cml_booking) {
-                        let current_trips = data.dashboard_data.cml_booking.current_trips;
-                        let upcoming_trips = data.dashboard_data.cml_booking.upcoming_trips;
-                        let localArray = [
-                            { title: "Current Trips", type: "current", desc: data.dashboard_data.referral_content, percent: current_trips ? current_trips : 0 },
-                            { title: "Upcoming Trips", type: "upcoming", desc: data.dashboard_data.referral_content, percent: upcoming_trips ? upcoming_trips : 0 },
-                        ]
-                        this.setState({
-                            collectMyLoadData: localArray
-                        })
+                case ApiConstants.getDashboardData:{
+                    if (data.status) {
+                        if (data && data.dashboard_data && data.dashboard_data.cml_booking) {
+                            let current_trips = data.dashboard_data.cml_booking.current_trips;
+                            let upcoming_trips = data.dashboard_data.cml_booking.upcoming_trips;
+                            let localArray = [
+                                { title: "Current Trips", type: "current", desc: data.dashboard_data.referral_content, percent: current_trips ? current_trips : 0 },
+                                { title: "Upcoming Trips", type: "upcoming", desc: data.dashboard_data.referral_content, percent: upcoming_trips ? upcoming_trips : 0 },
+                            ]
+                            this.setState({
+                                collectMyLoadData: localArray
+                            })
+                        }
+                    } else {
+                        alert(data.message)
                     }
-                } else {
-                    alert(data.message)
+                    break;
                 }
-                break;
                 case ApiConstants.getCMLTruckCategory:{
                     if(data.status){
                         console.log(data);
@@ -225,32 +282,52 @@ export default class CollectMyLoad extends React.Component {
 
                     break;
                 }
-                   
                 case ApiConstants.getRateCard:{
                         if(data.status){
                             console.log("Other Services Data===>"+ JSON.stringify(data.booking_rates.other_service));
-                            console.log("Other Services Data===>"+ JSON.stringify(data.booking_rates));
-                           let  truckTableData=[];
-                           let otherServicesData=[];
-                        //    data.booking_rates.truck_type.forEach((currentItem,index)=>{
-                        //     currentItem.category_list.forEach(child=>{
-                        //           let temp=[index , currentItem.truck_type_name , child.categoty_name, child.rate]
-                        //           truckTableData.push(temp);
-                        //     })
-                        //     })
-                        //     this.setState({truckTableData:truckTableData});
+                            // console.log("Other Services Data===>"+ JSON.stringify(data.booking_rates));
+                           var  truckTableData=[];
+                           var otherServices_Data=[];
+                           data.booking_rates.truck_type.forEach((currentItem,index)=>{
+                            currentItem.category_list.forEach(child=>{
+                                truckTableData[index]=[index+1 , currentItem.truck_type_name , child.categoty_name, child.rate]
+                                  
+                            })
+                            })
+                            this.setState({truckTableData:truckTableData});
+
+                            console.log("=mayure =====>"+ JSON.stringify(data.booking_rates.other_service));
+
+                                         data.booking_rates.other_service.forEach((currentItem,index) => {
+                                          otherServices_Data[index]=[index+1,currentItem.other_service, currentItem.rate]
+                                      console.log("msjhfkjahkajhfkjbkfjbakbafbamnbamn======>"+otherServices_Data);
+
+                                             
+                                         });
+
+                            
+
+                            this.setState({otherServicesData:otherServices_Data});
+                            console.log("======>"+ this.state.otherServicesData);
                           }else{
                             console.log(data.message);
                           }
+                        break;
+                }
+                case ApiConstants.referFriend:{
+                    this.setState({ModalVisible_referFriend:false, refer_emailId:"", refer_mobile_number:""})
+                    if(data.status){
+                        alert(data.message)
+                    }else{
+                        alert(data.message)
                     }
-                       
-            default:
-                break;
+                    break;
+                }       
+                default:
+                    break;
         }
     }
 
-
-   
     render() {
         let { navigation } = this.props;
         return (
@@ -306,9 +383,6 @@ export default class CollectMyLoad extends React.Component {
                     }
                 />
 
-
-                
-
                 <View style={StyleCollectMyLoad.ServicesView}>
 
                     <Text style={[StyleCollectMyLoad.labelText, { textTransform: "uppercase", fontSize: Constants.FONT_SIZE_LARGE }]}>{Constants.CollectMyloadOtherServices}</Text>
@@ -354,8 +428,8 @@ export default class CollectMyLoad extends React.Component {
 
                 <Modal
                     transparent={true}
-                    // visible={this.state.modalVisible_RateCard}
-                    visible={false}
+                    visible={this.state.modalVisible_RateCard}
+                    // visible={false}
                     animationType='fade'
                 >
                     {
