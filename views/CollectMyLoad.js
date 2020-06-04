@@ -23,8 +23,8 @@ export default class CollectMyLoad extends React.Component {
             ModalVisible_referFriend: false,
             truckList: [],
             collectMyLoadData: [
-                { title: "New Booking", type: "new", },
-                  { title: "My Booking", type: "my", desc: "fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent: 70 }, 
+                // { title: "New Booking", type: "new", },
+                //   { title: "My Booking", type: "my", desc: "fnsldfn fnsldfn fnsldfn fnsldfn fnsldfn lorempipsom", percent: 70 }, 
             ],
 
             truckdata_Head:[

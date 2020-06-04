@@ -25,7 +25,10 @@ export default class BookingSummary extends React.Component{
     }
     constructor(props){
         super(props)
-
+        this.other_servicesData=[];
+        this.other_servicesData_display=[];
+        this.discountCoupon_amount=0;
+        this.discountCoupon_id=0;
         this.state={
             pick_up_address: "",
             pick_up_address_lat:"",
@@ -59,6 +62,7 @@ export default class BookingSummary extends React.Component{
             // contact_number_additional:"",
             discountVoucher:0,
             discountAmount:0,
+            Discount_status:false,
             discountAmount_ID:0,
             booking_amount:"",
             grand_total:0,
@@ -79,7 +83,6 @@ export default class BookingSummary extends React.Component{
     }
 
     componentDidMount(){
-    this.getcalculatingBooking();
         this.initServices(); 
     }
 async initServices(){
@@ -131,8 +134,10 @@ async initServices(){
             // name:`${this.userInfo.first_name} ${this.userInfo.last_name}`,
             // contact_number:`${this.userInfo.contact}`
 
-        }) 
+        });
+       this.getcalculatingBooking();
     }
+
 isValid(){
    
     if(this.state.pick_up_address==""){
@@ -188,20 +193,36 @@ async getOtherServices(){
         "pickup_date":this.state.pickup_date,
         "pickup_time":this.state.pick_time,
         "instructions":this.state.instructions,
-        "other_services":[{"service_id" : 1, "qty": 23}],
-        // this.state.otherServiceSelected,
+        "other_services":this.other_servicesData,
         "booking_amount":this.state.booking_amount,
         "discount":this.state.discountAmount,
         "grand_total":this.state.grand_total,
         "coupon_id":this.state.discountAmount_ID,
         "load_category_id":this.state.load_category_id,
-        "name":this.state.name,
-        "contact_number":this.state.contact_number,
+
+
+        // "pickup_address":"test 1",
+        // "pickup_latlng":"18.5590, 73.7868",
+        // "drop1_address":"road 123 highway",
+        // "drop1_latlng":"18.5590, 73.7868",
+        // "drop2_address":"road 124 highway",
+        // "drop2_latlng":"18.5590, 73.7868",
+        // "truck_type_id":"2",
+        // "pickup_date":"2029-12-12",
+        // "pickup_time":"12:30",
+        // "instructions":"no instructions",
+        // "other_services":[{"service_id" : 1, "qty": 23}],
+        // "booking_amount":"1200",
+        // "discount":"10",
+        // "grand_total":"1100",
+        // "coupon_id":"1",
+        // "load_category_id":"1",
+        
        }
        await this.presenter.callPostApi(ApiConstants.bookCMLTrip,params,true);
    }
    
-   async getcalculatingBooking(item){
+   async getcalculatingBooking(){
        let params=  {
         "pickup_latlng":{
             "latitude": this.state.pick_up_address_lat,
@@ -219,10 +240,10 @@ async getOtherServices(){
         "pickup_date": this.state.pick_time,
         "load_category_id":this.state.load_category_id , 
         
-        "other_services" : this.state.otherServiceSelected,
-        "coupon_id":item==[]?this.state.discountAmount_ID:item.coupon_id,
+        "other_services" :this.other_servicesData,
+        "coupon_id":this.discountCoupon_id,
 
-        "discount" :item==[]?this.state.discountAmount:item.coupon_desc,  
+        "discount" :this.discountCoupon_amount,  
         
     }
 
@@ -288,6 +309,8 @@ getAddress(flag){
                             pick_up_address_lat:resp.results[0].geometry.location.lat,
                             pick_up_address_long:resp.results[0].geometry.location.lng
                                 });
+                           this.getcalculatingBooking();
+
                       }
                       if(flag=="2"){
                             this.setState({
@@ -295,6 +318,8 @@ getAddress(flag){
                             drop_off_address_lat:resp.results[0].geometry.location.lat,
                             drop_off_address_long:resp.results[0].geometry.location.lng
                             });
+                    this.getcalculatingBooking();
+
                       }
                       if(flag=='3'){
                         this.setState({
@@ -302,6 +327,8 @@ getAddress(flag){
                             drop_off_address_1_lat:resp.results[0].geometry.location.lat,
                             drop_off_address_1_long:resp.results[0].geometry.location.lng
                             });
+                      this.getcalculatingBooking();
+
                     }
          }
     })
@@ -325,6 +352,8 @@ getAddress(flag){
         } catch ({ code, message }) {
           console.warn('Cannot open date picker', message);
         }
+        this.getcalculatingBooking();
+
     }
  
     async openTimer(){
@@ -358,7 +387,10 @@ applyDiscount(amount){
 }
 
 removeDiscount(){
-    this.setState({discountAmount:0})
+    this.setState({discountAmount:0,discountAmount_ID:0,Discount_status:false});
+    this.discountCoupon_amount=0,
+    this.discountCoupon_id=0,
+    this.getcalculatingBooking();
 }
 
     render(){
@@ -690,6 +722,11 @@ removeDiscount(){
 
                                     <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={StyleBookingSummary.priceTxt}>{Constants.OtherServices}</Text>
+                                        {
+                                            this.other_servicesData_display.map((curetitem,index)=>{
+                                            <Text style={StyleBookingSummary.priceVol}>{curetitem.service_name}-{curetitem.qty}</Text>
+                                            })
+                                        }
                                         <Text style={StyleBookingSummary.priceVol}>{this.state.otherServices_amount}</Text>
                                     </View>
                                     
@@ -703,9 +740,11 @@ removeDiscount(){
                                         <Text style={[StyleBookingSummary.priceVol,{width:'20%',}]}> R  {this.state.discountAmount} </Text>
                                         <TouchableOpacity
                                             style={{width:30, justifyContent:'center', alignItems:'center', marginRight:5, marginTop:5}}
-                                            onPress={()=>{this.removeDiscount()}}
+                                            onPress={()=>{
+                                                this.removeDiscount();
+                                            }}
                                         >
-                                            <Image style={ this.state.discountAmount==0?{display:"none"}:{width:20, height:20, resizeMode:'stretch'}}
+                                            <Image style={this.state.Discount_status?{width:20, height:20, resizeMode:'stretch'}:{display:"none"}}
                                                 source={require('../images/remove.png')} />
                                         </TouchableOpacity>
                                     </View>
@@ -721,10 +760,13 @@ removeDiscount(){
                                      onPress={()=>{
                                         this.props.navigation.navigate('DiscountVouchers',{'isOrder':true, getAmount:(item)=>{
                                             //  console.log("discount Amount==>"+JSON.stringify(item.coupon_id));
-                                            this.setState({discountAmount:item.coupon_desc,discountAmount_ID:item.coupon_id});
-                                            // console.log("discount Amount==>"+JSON.stringify(item.coupon_id));
+                                            this.setState({Discount_status:true,discountAmount:item.coupon_desc,discountAmount_ID:item.coupon_id});
+                                            this.discountCoupon_amount=item.coupon_desc;
+                                            this.discountCoupon_id=item.coupon_id;
+                                            console.log("discoun coupon value and ID"+  this.discountCoupon_amount+" , "+ this.discountCoupon_id);
+                                            console.log("discount Amount==>"+JSON.stringify("coupon details"+item));
                                            
-                                            this.getcalculatingBooking(item);
+                                            this.getcalculatingBooking();
                                             }})
                                     }}
                                     style={StyleBookingSummary.discntBtn}
@@ -794,29 +836,18 @@ removeDiscount(){
                                                                     selectedValue={this.state.selectedOtherService_value[index].qty}
                                                                     onValueChange={(value) => {
                                                                         let tempArry=this.state.selectedOtherService_value
-                                                                            tempArry[index].qty=value
-                                                                                // let selected_value=new Set();
-                                                                                this.state.otherServiceSelected.set({service_id:item.id,qty:value});
+                                                                            tempArry[index].qty=value;
                                                                         this.setState({selectedOtherService_value:tempArry});
                                                                         console.log("othe service selected value and id==>"+value+","+tempArry[index].id);
-                                                                      
-                                                                        let temp=this.state.otherServiceSelected;
-                                                                        let arry = Array.from(temp);
-                                                                        console.log("Selected Value Array ==> "+JSON.stringify(arry)); 
-
-                                                                        //   -----------array to share on API------
-                                                                                                                         
-                                                                            let arry1=new Map();
-
-                                                                            arry1.set(item.id,{service_id:item.id,qty:value});
-                                                                           
-                                                                                let rt=arry1.entries();
+                                                                     // -------------------------------------------------------------------
+                                                                        this.state.otherServiceSelected.set(item.id, {"service_id":item.id,"qty":value});
+                                                                        let temp_array=this.state.otherServiceSelected.values();
+                                                                        let array1=Array.from(temp_array);
+                                                                        console.log("Selected Value Array ==> "+JSON.stringify(array1)); 
+                                                                        this.other_servicesData=array1;
+                                                                    // -------------------------------------------------------------------
                                                                         
-                                                                            console.log("array shree====>"+JSON.stringify(rt));
-                                                                        //   -----------array to share on API------EOF----
-
-                                                        
-                                                                    }}
+                                                                }}
                                                                 >
                                                                     <Picker.Item label='Select' value='-1' />
                                                                 {
@@ -837,10 +868,7 @@ removeDiscount(){
                                                       )}
 
                                                         /> 
-                                                 
-                                                 
-                                                 
-
+                
                                                        
                                                     <TouchableOpacity  
                                                             onPress={()=>{
