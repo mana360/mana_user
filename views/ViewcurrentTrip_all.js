@@ -25,6 +25,10 @@ export default class ViewUpcomingTripAll extends React.Component {
         }
     }
 
+    componentDidMount(){
+        
+    }
+
 
     delete_trip() {
         return (

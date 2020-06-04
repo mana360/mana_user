@@ -99,7 +99,9 @@ export default class UpcomingTrip extends React.Component {
                     renderItem={({ item }, index) => {
                         return (
                             <TouchableOpacity style={StyleUpcomingTrip.row} onPress={() => {
-                                this.props.navigation.navigate('ViewUpcomingTrip',{item:this.state.truckData,flag_upcoming_Trip:1},);
+                                this.props.navigation.navigate('ViewUpcomingTrip',
+                                {'booking_id':item.truck_booking_id,'service_type_id':1,
+                                    flag_upcoming_Trip:1},);
                             }}>
 
                                 <View style={StyleUpcomingTrip.col1}>

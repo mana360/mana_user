@@ -10,9 +10,13 @@ import HeaderBar from '../config/HeaderBar';
 import Invoice from './InvoiceView';
 import { Tabs, Tab } from "native-base";
 import Splash from './Splash'
+import { MainPresenter } from '../config/MainPresenter';
+
 export default class ViewUpcomingTrip extends React.Component {
     constructor(props) {
         super(props);
+        this.service_type_id = 0,
+        this.booking_id = 0,
         this.state = {
             starCount: null,
             inputLabelTrip: '',
@@ -20,10 +24,45 @@ export default class ViewUpcomingTrip extends React.Component {
             invoiceModal_Visible: false,
             cancelModal_Visible: false,
             isSuccesfull: false,
+            truckData: '',
             Profile_data: [{ partnerName: 'ABC Service' }],
 
         }
     }
+
+    componentDidMount(){
+
+        this.service_type_id = this.props.navigation.getParam('service_type_id')
+        this.booking_id = this.props.navigation.getParam('booking_id')
+
+        console.log('bookig_id  ' + JSON.stringify(this.booking_id))
+
+    this.presenter.callPostApi(ApiConstants.getBookingDetails, {'service_type_id':this.service_type_id,'booking_id':this.booking_id}, true)
+}
+
+async onResponse(apiConstant, data) {
+    switch (apiConstant) {
+        case ApiConstants.getBookingDetails: {
+            if (data.status) {
+                if (data.truck_booking_details.length != 0) {
+                    this.setState({
+                            truckData: data.truck_booking_details[0],
+                        }) 
+                        
+                }else {
+                    this.setState({
+                        truckData: '',
+                    })
+                    
+                }
+            } else {
+                alert(data.message)
+            }
+
+            break;
+        }
+    }
+}
 
 
     delete_trip() {
@@ -93,6 +132,8 @@ export default class ViewUpcomingTrip extends React.Component {
         return (
             <View style={{ flex: 1 }}>
                 <HeaderBar title="VIEW UPCOMING TRIP" isBack={true} isLogout={true} navigation={navigation} />
+                <MainPresenter ref={(ref) => { this.presenter = ref }}
+                                onResponse={this.onResponse.bind(this)} />
                 <View style={{ flex: 1 }}>
 
                     <ScrollView style={{ width: '100%' }} bounces={false}>
@@ -137,11 +178,10 @@ export default class ViewUpcomingTrip extends React.Component {
                         </View>
 
 
-                        {serviceData.map((result) => {
-                            return (
+                        
                                 <View>
 
-                                    <Text style={StyleViewUpcomingTrip.title}>{result.title}</Text>
+                                    <Text style={StyleViewUpcomingTrip.title}>{this.state.truckData.title}</Text>
                                     <View style={StyleViewUpcomingTrip.bottomLine}></View>
 
 
@@ -150,7 +190,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.BookingId}</Text>
                                         </View>
                                         <View style={StyleViewUpcomingTrip.col2}>
-                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.booking_id}</Text>
+                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.truck_booking_id}</Text>
                                         </View>
                                     </View>
 
@@ -159,7 +199,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Status}</Text>
                                         </View>
                                         <View style={StyleViewUpcomingTrip.col2}>
-                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.status}</Text>
+                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.current_status}</Text>
                                         </View>
                                     </View>
 
@@ -181,7 +221,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                     <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PartnerName}</Text>
                                                 </View>
                                                 <View style={StyleViewUpcomingTrip.col2}>
-                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.partner_name}</Text>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.partner_name}</Text>
                                                 </View>
                                             </View>
 
@@ -190,7 +230,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                     <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.ContactNumber}</Text>
                                                 </View>
                                                 <View style={StyleViewUpcomingTrip.col2}>
-                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.contact_number}</Text>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.contact_number}</Text>
                                                 </View>
                                             </View>
 
@@ -210,7 +250,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DateOfPickUp}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.dateOF_pickUp}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.date_of_pickup}</Text>
                                                         </View>
                                                     </View>
 
@@ -219,7 +259,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpTime}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.pickup_time}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{/*this.state.truckData.pickup_time*/}</Text>
                                                         </View>
                                                     </View>
 
@@ -228,7 +268,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpLocation}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.pickup_location}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.pickup_location}</Text>
                                                         </View>
                                                     </View>
 
@@ -237,7 +277,8 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DestinationLocation}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.destination_location}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{
+                                                            this.state.truckData == ''?"":this.state.truckData.drop_location.drop_location[0]}</Text>
                                                         </View>
                                                     </View>
 
@@ -246,7 +287,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AarrivalDate}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.arrival_date}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{/*this.state.truckData.arrival_date*/}</Text>
                                                         </View>
                                                     </View>
 
@@ -255,7 +296,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AarrivalTime}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.arrivalTime}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{/*this.state.truckData.arrival_time*/}</Text>
                                                         </View>
                                                     </View>
 
@@ -264,7 +305,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TruckName}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.truck_name}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.truck_name}</Text>
                                                         </View>
                                                     </View>
 
@@ -284,7 +325,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.MidPoint1}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.mid_point1}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{/*this.state.truckData.mid_point1*/}</Text>
                                                         </View>
                                                     </View>
 
@@ -293,7 +334,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TruckId}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.truckID}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{/*this.state.truckData.truckID*/}</Text>
                                                         </View>
                                                     </View>
                                                 </View>
@@ -312,7 +353,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DateOfPickUp}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.dateOF_pickUp}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.dateOF_pickUp}</Text>
                                                             </View>
                                                         </View>
 
@@ -321,7 +362,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpTime}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.pickup_time}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.pickup_time}</Text>
                                                             </View>
                                                         </View>
 
@@ -330,7 +371,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpLocation}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.pickup_location}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.pickup_location}</Text>
                                                             </View>
                                                         </View>
 
@@ -339,7 +380,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DestinationLocation}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.destination_location}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.destination_location}</Text>
                                                             </View>
                                                         </View>
 
@@ -348,7 +389,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AarrivalDate}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.arrival_date}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.arrival_date}</Text>
                                                             </View>
                                                         </View>
 
@@ -357,7 +398,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AarrivalTime}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.arrivalTime}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.arrivalTime}</Text>
                                                             </View>
                                                         </View>
 
@@ -366,7 +407,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TruckName}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.truck_name}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.truck_name}</Text>
                                                             </View>
                                                         </View>
 
@@ -386,7 +427,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.MidPoint1}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.mid_point1}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.mid_point1}</Text>
                                                             </View>
                                                         </View>
 
@@ -395,7 +436,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TruckId}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.truckID}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.truckID}</Text>
                                                             </View>
                                                         </View>
                                                     </View>
@@ -420,7 +461,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.WarehouseId}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.warehouse_id}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.warehouse_id}</Text>
                                                         </View>
                                                     </View>
 
@@ -429,7 +470,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.WarehoueType}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.warehouse_type}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.warehouse_type}</Text>
                                                         </View>
                                                     </View>
 
@@ -438,7 +479,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.StorageType}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.storage_type}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.storage_type}</Text>
                                                         </View>
                                                     </View>
 
@@ -447,7 +488,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CostPerSqm}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.costPer_sqm}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.costPer_sqm}</Text>
                                                         </View>
                                                     </View>
 
@@ -456,7 +497,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.warehouseLocation}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.warehouse_location}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.warehouse_location}</Text>
                                                             <TouchableOpacity style={{ position: 'absolute', right: 5, alignSelf: 'center' }}
                                                              onPress={()=>{
                                                                 this.props.navigation.navigate('MapViews',{})
@@ -472,7 +513,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DurationStorage}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{result.duration_ofstorage}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.duration_ofstorage}</Text>
                                                         </View>
                                                     </View>
                                                 </View>
@@ -493,7 +534,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.WarehouseId}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.warehouse_id}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.warehouse_id}</Text>
                                                             </View>
                                                         </View>
 
@@ -502,7 +543,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.WarehoueType}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.warehouse_type}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.warehouse_type}</Text>
                                                             </View>
                                                         </View>
 
@@ -511,7 +552,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.StorageType}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.storage_type}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.storage_type}</Text>
                                                             </View>
                                                         </View>
 
@@ -520,7 +561,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CostPerSqm}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.costPer_sqm}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.costPer_sqm}</Text>
                                                             </View>
                                                         </View>
 
@@ -529,7 +570,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.warehouseLocation}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.warehouse_location}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.warehouse_location}</Text>
                                                                 <TouchableOpacity style={service_name=='3'?{display:'none'}:{ position: 'absolute', right: 5, alignSelf: 'center' }}>
                                                                     <Image style={{ width: 25, height: 25, }} source={require('../images/location_1.png')} />
                                                                 </TouchableOpacity>
@@ -541,7 +582,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DurationStorage}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.duration_ofstorage}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.duration_ofstorage}</Text>
                                                             </View>
                                                         </View>
                                                     </View>
@@ -562,7 +603,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoType}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargo_type}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargo_type}</Text>
                                                     </View>
                                                 </View>
 
@@ -571,7 +612,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoDesc}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargo_description}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargo_description}</Text>
                                                     </View>
                                                 </View>
 
@@ -580,7 +621,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoHandling}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargo_handling}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargo_handling}</Text>
                                                     </View>
                                                 </View>
 
@@ -589,7 +630,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.NumberOfUSer}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.numberUsers}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.numberUsers}</Text>
                                                     </View>
                                                 </View>
 
@@ -598,7 +639,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Quantity}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.quantity}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.quantity}</Text>
                                                     </View>
                                                 </View>
 
@@ -607,7 +648,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoInssurance}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargo_insurance}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargo_insurance}</Text>
                                                     </View>
                                                 </View>
 
@@ -616,7 +657,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Dimension}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.dimensions}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.dimensions}</Text>
                                                     </View>
                                                 </View>
 
@@ -625,7 +666,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.VolumetricWeight}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.Volumetric_weight}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.Volumetric_weight}</Text>
                                                     </View>
                                                 </View>
 
@@ -634,7 +675,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.ValueOfLload}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{result.valueof_load}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.valueof_load}</Text>
                                                     </View>
                                                 </View>
 
@@ -669,7 +710,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.RecurringRequirement}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.recursing_requirement}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.recursing_requirement}</Text>
                                                             </View>
                                                         </View>
 
@@ -678,7 +719,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CostOfRecurring}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.costOf_recurring}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.costOf_recurring}</Text>
                                                             </View>
                                                         </View>
 
@@ -687,7 +728,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoHandlingcost}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargoHandling_cost}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargoHandling_cost}</Text>
                                                             </View>
                                                         </View>
 
@@ -696,7 +737,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Service_Frequency}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.service_frquency}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.service_frquency}</Text>
                                                             </View>
                                                         </View>
 
@@ -705,7 +746,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.InsuranceRate}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.insurance_rate}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.insurance_rate}</Text>
                                                             </View>
                                                         </View>
 
@@ -714,7 +755,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Discount}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.discount}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.discount}</Text>
                                                             </View>
                                                         </View>
                                                     </View>
@@ -730,7 +771,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoHandlingcost}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargoHandling_cost}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargoHandling_cost}</Text>
                                                             </View>
                                                         </View>
 
@@ -739,7 +780,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.InsuranceRate}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.insurance_rate}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.insurance_rate}</Text>
                                                             </View>
                                                         </View>
 
@@ -748,7 +789,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Discount}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.discount}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.discount}</Text>
                                                             </View>
                                                         </View>
 
@@ -759,7 +800,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TotalAmount}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.total_amount}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.total_amount}</Text>
                                                             </View>
                                                         </View>
 
@@ -768,7 +809,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Tript_Amount}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{result.trip_amount}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.trip_amount}</Text>
                                                             </View>
                                                         </View>
 
@@ -781,7 +822,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                     <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoHandlingcost}</Text>
                                                                 </View>
                                                                 <View style={StyleViewUpcomingTrip.col2}>
-                                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.cargoHandling_cost}</Text>
+                                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargoHandling_cost}</Text>
                                                                 </View>
                                                             </View>
 
@@ -790,7 +831,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                     <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.InsuranceRate}</Text>
                                                                 </View>
                                                                 <View style={StyleViewUpcomingTrip.col2}>
-                                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.insurance_rate}</Text>
+                                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.insurance_rate}</Text>
                                                                 </View>
                                                             </View>
 
@@ -799,7 +840,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                     <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Discount}</Text>
                                                                 </View>
                                                                 <View style={StyleViewUpcomingTrip.col2}>
-                                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.discount}</Text>
+                                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.discount}</Text>
                                                                 </View>
                                                             </View>
 
@@ -810,7 +851,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                     <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TotalAmount}</Text>
                                                                 </View>
                                                                 <View style={StyleViewUpcomingTrip.col2}>
-                                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.total_amount}</Text>
+                                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.total_amount}</Text>
                                                                 </View>
                                                             </View>
 
@@ -819,7 +860,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                     <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Tript_Amount}</Text>
                                                                 </View>
                                                                 <View style={StyleViewUpcomingTrip.col2}>
-                                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{result.trip_amount}</Text>
+                                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.trip_amount}</Text>
                                                                 </View>
                                                             </View>
 
@@ -833,8 +874,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                     </Tabs>
 
                                 </View>
-                            )
-                        })}
+                           
 
 
 
