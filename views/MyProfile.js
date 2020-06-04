@@ -1,16 +1,21 @@
 /* screen -MANAPPCUS108,36,37
     design by -mayur s
-    api by Udayraj (changePassword)
- */
+    api by Udayraj (changePassword, getMyProfile)
+
+    REQUIRED NOTES
+    1) user_type = 1 means company profile
+    2) user type = 2 means individual profile
+
+*/
 import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput, FlatList } from 'react-native';
 import { StyleMyProfile } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import HeaderBar from '../config/HeaderBar';
 import Constants from '../config/Constants';
-import { MainPresenter } from '../config/MainPresenter';
+import {MainPresenter} from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
-
+import {getUserData, setUserData} from '../config/AppSharedPreference'
 export default class MyProfile extends React.Component {
     
     constructor(props) {
@@ -23,12 +28,7 @@ export default class MyProfile extends React.Component {
             screen_title: 'UserProfile', //CompanyProfile, UserProfile
             modalVisible_Changepassword: false,
             modalVisible_SavedMsg: false,
-            companyProfile_data: [
-                { title: 'IBM', company_name: 'IBM', company_contactPerson: 'PMO', company_contactPositiion: 'PMO', company_telephoneNo: '+56 1245521425', email: 'ibmn@ibm.com', address: 'NYC,Lane 345,street 2.', country:'India', city: 'Johnasburg', province: 'AAA', zipcode: '4561258' }
-            ],
-            userProfileData: [
-                { title: "Jimmy Dager", first_name: 'Jimmy123', last_name: 'Dager', title_1: 'Mr', telephone_no: '+56 454567874651', rsa_id: '4561323784251', street_address: 'NYC,Lane 345,street2', country:'India', province: 'AAA', city: 'johnsburg', zipcode: '442301', email: 'vty2@gkml.com' }
-            ],
+            userData:"",
             userProfile_image: [
                 { image_name: "", image_path: require('../images/Profile_pic.png') },
                 { image_name: "", image_path: require('../images/Trucking+Warehouse.png') },
@@ -38,27 +38,32 @@ export default class MyProfile extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.presenter.callGetApi(ApiConstants.getMyProfile, "", true)
+    async componentDidMount() {
+        this.presenter.callPostApi(ApiConstants.getMyProfile, "", true)
     }
 
-    callMarkAsReadApi(updated_profile_url) {
-        this.presenter.callPostApi(ApiConstants.updateProfilePic, {
-                        profile_image:updated_profile_url,
-                      })
+    async updateUserObject(data){
+        await setUserData(data)
+        let new_data = await getUserData()
+        this.setState({userData : new_data})
+        console.log("updated user data====> "+this.state.userData)
     }
 
-    async onResponse(apiConstant, data) {
+    onResponse(apiConstant, data) {
         switch (apiConstant) {
-            case ApiConstants.getMyProfile: {
-                if (data.status) {
-                } else {
-                    alert(data.message)
+            case ApiConstants.getMyProfile:{
+                if(data.status){
+                    if(data.user_data.user_type==1){
+                        this.setState({screen_title:"CompanyProfile"})
+                    }else{
+                        this.setState({screen_title:"UserProfile"})
+                    }
+                    this.updateUserObject(data.user_data)           // storing user details in local db
+                }else{
+                    alert(data.msg)
                 }
-    
                 break;
             }
-    
             case ApiConstants.updateProfilePic: {
                 if (data.status) {
                 } else {
@@ -67,7 +72,15 @@ export default class MyProfile extends React.Component {
     
                 break;
             }
-    
+            case ApiConstants.changePassword:{
+                if(data.status){
+                    this.setState({ modalVisible_Changepassword: false, current_password:"", new_password:"", confirm_password:"" })
+                    alert(data.message)
+                }else{
+                    alert(data.message)
+                }
+                break;
+            }
         }
     }
 
@@ -80,10 +93,10 @@ export default class MyProfile extends React.Component {
                         <Image source={require('../images/company_name.png')}
                             style={StyleMyProfile.Icon}
                         />
-                        <Text style={StyleMyProfile.col1Text}>{Constants.CompanyName}</Text>
+                        <Text style={StyleMyProfile.col1Text}> {Constants.CompanyName} </Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].company_name}</Text>
+                        <Text style={StyleMyProfile.col2Text}> { this.state.userData.company_name!=undefined ? this.state.userData.company_name : "" } </Text>
                     </View>
                 </View>
 
@@ -95,7 +108,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.CompanyContactPerson}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].company_contactPerson}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{ this.state.userData.comp_cont_person!=undefined ? this.state.userData.comp_cont_person : "" }</Text>
                     </View>
                 </View>
 
@@ -107,7 +120,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.CompanyContactPosition}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].company_contactPositiion}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.company_cont_position!=undefined ? this.state.userData.company_cont_position : ""}</Text>
                     </View>
                 </View>
 
@@ -119,7 +132,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.CompanyTelephonenumber}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].company_telephoneNo}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.tele_number!=undefined ? this.state.userData.tele_number : "" }</Text>
                     </View>
                 </View>
 
@@ -131,7 +144,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.EmailAddress}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].email}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.email!=undefined ? this.state.userData.email : ""}</Text>
                     </View>
                 </View>
 
@@ -143,7 +156,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.StreetAddress}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].address}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.address!=undefined ? this.state.userData.address : ""}</Text>
                     </View>
                 </View>
 
@@ -155,7 +168,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.City}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].city}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.city_name!=undefined ? this.state.userData.city_name : ""}</Text>
                     </View>
                 </View>
 
@@ -167,7 +180,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.SELECT_COUNTRY}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].country}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.country_name!=undefined ? this.state.userData.country_name : ""}</Text>
                     </View>
                 </View>
 
@@ -179,7 +192,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.SelectProvince}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].province}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.province_name!=undefined ? this.state.userData.province_name : ""}</Text>
                     </View>
                 </View>
 
@@ -191,7 +204,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.ZipCode}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.companyProfile_data[0].zipcode}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.zipcode!=undefined ? this.state.userData.zipcode : ""}</Text>
                     </View>
                 </View>
 
@@ -212,7 +225,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.FirstName}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].first_name}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.first_name!=undefined ? this.state.userData.first_name : ""}</Text>
                     </View>
                 </View>
 
@@ -224,7 +237,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.LastName}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].last_name}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.last_name!=undefined ? this.state.userData.last_name : ""}</Text>
                     </View>
                 </View>
 
@@ -236,7 +249,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.Title}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].title_1}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.title!=undefined ? this.state.userData.title : ""}</Text>
                     </View>
                 </View>
 
@@ -248,7 +261,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.TelephoneNo}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].telephone_no}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.tele_number!=undefined ? this.state.userData.tele_number : ""}</Text>
                     </View>
                 </View>
 
@@ -260,11 +273,11 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.RSAIDPassNO}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].rsa_id}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.rsa_id!=undefined ? this.state.userData.rsa_id : ""}</Text>
                     </View>
                 </View>
 
-                <View style={[StyleMyProfile.row, { flexDirection: "column" }]}>
+                <View style={[StyleMyProfile.row, { flexDirection: "column", display:'none' }]}>
                     <Text style={[StyleMyProfile.col1Text, {}]}>Document Images</Text>
                     <FlatList
                         numColumns={1}
@@ -301,7 +314,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.StreetAddress}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].street_address}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.street_name!=undefined ? this.state.userData.street_name : ""}</Text>
                     </View>
                 </View>
 
@@ -313,7 +326,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.SELECT_COUNTRY}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].country}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.country_name!=undefined ? this.state.userData.country_name : ""}</Text>
                     </View>
                 </View>
 
@@ -325,7 +338,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.SelectProvince}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].province}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.province_name!=undefined ? this.state.userData.province_name : ""}</Text>
                     </View>
                 </View>
 
@@ -337,7 +350,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.SelectCity}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].city}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.city_name!=undefined ? this.state.userData.city_name : ""}</Text>
                     </View>
                 </View>
 
@@ -349,7 +362,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.ZipCode}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].zipcode}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.zipcode!=undefined ? this.state.userData.zipcode : ""}</Text>
                     </View>
                 </View>
 
@@ -361,7 +374,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.EmailAddress}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userProfileData[0].email}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.email!=undefined ? this.state.userData.email : ""}</Text>
                     </View>
                 </View>
 
@@ -382,31 +395,31 @@ export default class MyProfile extends React.Component {
     isValidPasswords(){
         if(this.state.current_password==""){
             alert("Please enter current password")
-            this.input_current_password.focus()
             return false
         }
         if(this.state.new_password==""){
             alert("Please enter new password")
-            this.input_new_password.focus()
             return false
         }
         if(this.state.confirm_password==""){
             alert("Please enter confirm passowrd")
-            this.input_confirm_password.focus()
             return false
         }
         if(this.state.new_password != this.state.confirm_password){
             alert("New and Confirm password doesn't matched.")
-            this.input_confirm_password.focus()
             return false
         }
-
         return true
     }
+
     updatePassword(){
         if(this.isValidPasswords()){
             //----- api call for change password
-            this.setState({modalVisible_Changepassword:false})
+            let params = {
+                "current_password" : this.state.current_password,
+                "new_password": this.state.new_password
+            }
+            this.presenter.callPostApi(ApiConstants.changePassword,params ,true)
         }
     }
 
@@ -418,7 +431,7 @@ export default class MyProfile extends React.Component {
                     
                     <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
                         onPress={() => {
-                            this.setState({ modalVisible_Changepassword: false })
+                            this.setState({ modalVisible_Changepassword: false, current_password:"", new_password:"", confirm_password:"" })
                         }}
                     >
                         <Image source={require('../images/close.png')}
@@ -488,7 +501,22 @@ export default class MyProfile extends React.Component {
 
                     </View>
 
-                    <TouchableOpacity style={[StyleMyProfile.ButtonView, { width: '90%' }]}
+                    <TouchableOpacity style={[StyleMyProfile.ButtonView, { width: '90%',
+                        backgroundColor : this.state.current_password=="" ? Constants.COLOR_GREY_LIGHT
+                            :
+                            this.state.new_password=="" ? Constants.COLOR_GREY_LIGHT
+                            :
+                            this.state.confirm_password=="" ? Constants.COLOR_GREY_LIGHT
+                            : Constants.COLOR_GREEN
+                        }]}
+                        disabled={
+                            this.state.current_password=="" ? true
+                            :
+                            this.state.new_password=="" ? true
+                            :
+                            this.state.confirm_password=="" ? true
+                            : false
+                        }
                         onPress={() => { this.updatePassword() }}
                     >
                         <Text style={StyleMyProfile.ButtonLabel}>{Constants.Update}</Text>
@@ -530,14 +558,6 @@ export default class MyProfile extends React.Component {
         )
     }
 
-    onResponse(apiConstant,data){
-        switch(apiConstant){
-            case ApiConstants :{
-                break;
-            }
-        }
-    }
-
     render() {
         let { navigation } = this.props
         return (
@@ -545,16 +565,18 @@ export default class MyProfile extends React.Component {
 
                 <HeaderBar title="MY profile" isBack={true} isLogout={true} navigation={navigation} />
                 
-                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation}/>
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
                 
                 <View style={{ flex: 1 }}>
                     
                     <ScrollView style={{ width: '100%', flex: 1 }} bounces={false}>
 
                         <View style={{ marginBottom: 2 }}>
+
                             <View style={StyleMyProfile.topCircle} />
 
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+
                                 <TouchableOpacity style={StyleMyProfile.sideImageView}
                                     onPress={() => {
                                         this.setState({ modalVisible_Changepassword: true })
@@ -565,8 +587,8 @@ export default class MyProfile extends React.Component {
                                     />
                                 </TouchableOpacity>
 
-
-                                <Image source={require('../images/Profile_pic.png')}
+                                <Image 
+                                    source ={require('../images/Profile_pic.png')}
                                     style={StyleMyProfile.ProfileImage}
                                 />
 
@@ -579,30 +601,31 @@ export default class MyProfile extends React.Component {
                                         style={StyleMyProfile.sideImage}
                                     />
                                 </TouchableOpacity>
+                            
                             </View>
 
                         </View>
 
-                        <Text style={StyleMyProfile.label}>{this.state.screen_title == 'UserProfile' ? this.state.userProfileData[0].title : this.state.companyProfile_data[0].title}</Text>
-                        
+                        <Text style={StyleMyProfile.label}>
+                            {
+                                this.state.screen_title == 'UserProfile' 
+                                ? this.state.userData.first_name+" "+ this.state.userData.last_name
+                                : this.state.userData.company_name
+                            }
+                        </Text>
+
                         <View style={StyleMyProfile.bottomline}></View>
 
                         {
                             this.state.screen_title == "UserProfile"
-                                ?
-                                this.user_Profile()
-                                :
-                                this.state.screen_title == "CompanyProfile"
-                                    ?
-                                    this.company_Profile()
-                                    :
-                                    null
+                            ? this.user_Profile()
+                            : this.state.screen_title == "CompanyProfile"
+                            ? this.company_Profile()
+                            : null
                         }
 
                         <TouchableOpacity style={StyleMyProfile.UpdateBtn_view}
-                         onPress={()=>{
-                             this.setState({modalVisible_Changepassword:true})
-                         }}
+                            onPress={()=>{ this.setState({modalVisible_Changepassword:true}) }}
                         >
                             <Text style={StyleMyProfile.UpdateBtn_text}>Change Password</Text>
                         </TouchableOpacity>

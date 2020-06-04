@@ -481,7 +481,6 @@ getAddress(flag){
                               
                             </View>
 
-
                             <TouchableOpacity
                                 onPress={() => {
                                  
