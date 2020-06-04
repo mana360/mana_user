@@ -83,7 +83,7 @@ export default class CurrentTrip extends React.Component {
                             <TouchableOpacity style={StyleCurrentTrip.row} onPress={() =>
 
                              {this.props.navigation.navigate('ViewCurrentTrip',
-                             {'booking_id':item.truck_booking_id,'service_type_id':this.service_type_id}) }}>
+                             {'booking_id':item.truck_booking_id,'service_type_id':1}) }}>
 
                                 <View style={StyleCurrentTrip.col1}>
                                     <Image
