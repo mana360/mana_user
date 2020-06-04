@@ -38,15 +38,16 @@ export default class MyProfile extends React.Component {
         }
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         this.presenter.callPostApi(ApiConstants.getMyProfile, "", true)
     }
 
     async updateUserObject(data){
         await setUserData(data)
         let new_data = await getUserData()
-        this.setState({userData : new_data})
-        console.log("updated user data====> "+this.state.userData)
+        this.setState({userData : data})
+        console.log("updated user data====> "+JSON.stringify(this.state.userData))
+        console.log("name=====> "+this.state.userData.first_name)
     }
 
     onResponse(apiConstant, data) {
@@ -587,10 +588,32 @@ export default class MyProfile extends React.Component {
                                     />
                                 </TouchableOpacity>
 
-                                <Image 
-                                    source ={require('../images/Profile_pic.png')}
-                                    style={StyleMyProfile.ProfileImage}
-                                />
+                                {
+                                    this.state.userData.profile_picture!=undefined
+                                    ?
+                                    <Image 
+                                        source ={{uri: this.state.userData.profile_picture}}
+                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="UserProfile" ? 'flex' : 'none'}]}
+                                    />
+                                    :
+                                    <Image 
+                                        source ={require('../images/Profile_pic.png')}
+                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="UserProfile" ? 'flex' : 'none'}]}
+                                    />
+                                }
+                                {
+                                    this.state.userData.company_logo!=undefined
+                                    ?
+                                    <Image 
+                                        source ={{uri: this.state.userData.company_logo}}
+                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="CompanyProfile" ? 'flex' : 'none'}]}
+                                    />
+                                    :
+                                    <Image 
+                                        source ={require('../images/Profile_pic.png')}
+                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="CompanyProfile" ? 'flex' : 'none'}]}
+                                    />
+                                }
 
                                 <TouchableOpacity style={StyleMyProfile.sideImageView}
                                     onPress={() => {

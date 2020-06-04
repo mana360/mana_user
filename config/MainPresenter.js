@@ -110,6 +110,110 @@ export class MainPresenter extends React.Component {
 
     }
 
+    async setupProfileCompany(apiConstant, params, loader) {
+        if (await !this._isNetworkAvailable()) {
+            alert("No Network")
+            return
+        }
+        let authToken = await getAuthToken()
+        this._initLoader(loader)
+        let URL = this.BASE_URL + apiConstant
+        let options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: authToken
+            },
+            body: this._createFormDataForCompanyProfile(apiConstant, params)
+        }
+        console.log(' Multi part request 1 :  '+JSON.stringify(options.body))
+
+        fetch(URL, options).then(it => it.json(), (e) => { console.log(e) })
+            .then(it => this._setResponse(apiConstant, it))
+            .catch(e => console.error(e))
+            .finally(() => { this._stopLoader() })
+
+    }
+    _createFormDataForCompanyProfile(apiConstant, body) {
+        const data = new FormData();
+        let photo = body.profile_pic;
+        delete body.profile_pic;
+
+        Object.keys(body).forEach(key => {
+            data.append(key, body[key]);
+        });
+        switch (apiConstant) {
+            case ApiConstants.profileSetup: {
+                data.append("profile_pic", {
+                    name: photo.fileName,
+                    type: photo.type,
+                    uri: Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
+                });
+                break;    
+            }
+        }
+        return data
+    }
+
+    async setupProfileIndividual(apiConstant, params, loader) {
+        if (await !this._isNetworkAvailable()) {
+            alert("No Network")
+            return
+        }
+        let authToken = await getAuthToken()
+        this._initLoader(loader)
+        let URL = this.BASE_URL + apiConstant
+        let options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: authToken
+            },
+            body: this._createFormDataForIndividualProfile(apiConstant, params)
+        }
+        console.log(' Multi part request 1 :  '+JSON.stringify(options.body))
+
+        fetch(URL, options).then(it => it.json(), (e) => { console.log(e) })
+            .then(it => this._setResponse(apiConstant, it))
+            .catch(e => console.error(e))
+            .finally(() => { this._stopLoader() })
+
+    }
+    _createFormDataForIndividualProfile(apiConstant, body) {
+        const data = new FormData();
+        let photo = body.profile_photo;
+        delete body.profile_photo;
+        let rsa = body.rsa_file;
+        delete body.rsa_file;
+        let passport = body.passport_file;
+        delete body.passport_file;
+
+        Object.keys(body).forEach(key => {
+            data.append(key, body[key]);
+        });
+        switch (apiConstant) {
+            case ApiConstants.profileSetup: {
+                data.append("profile_photo", {
+                    name: photo.fileName,
+                    type: photo.type,
+                    uri: Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
+                });
+                data.append("rsa_file", {
+                    name: rsa.fileName,
+                    type: rsa.type,
+                    uri: Platform.OS === "android" ? rsa.uri : rsa.uri.replace("file://", "")
+                });
+                data.append("passport_file", {
+                    name: passport.fileName,
+                    type: passport.type,
+                    uri: Platform.OS === "android" ? passport.uri : passport.uri.replace("file://", "")
+                });
+                break;    
+            }
+        }
+        return data
+    }
+
     async upload(apiConstant, params, loader) {
         
         if (await !this._isNetworkAvailable()) {
@@ -142,7 +246,7 @@ export class MainPresenter extends React.Component {
             .then(it => this._setResponse(apiConstant, it))
             .catch(e => console.error(e))
             .finally(() => { this._stopLoader() })
-      }
+    }
 
     /* -------------EOF Public method------------- */
 

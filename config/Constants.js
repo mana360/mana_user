@@ -8,6 +8,9 @@ const Constants = {
 
     EMAIL_REGX:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
 
+    IMAGE_MAX_SIZE:2000000,
+    IMAGE_MAX_SIZE_EXCEED_MESSAGE:"Image should be less than 2 MB.",
+    
     //fonts
     FONT_SIZE_SMALL: 10,
     FONT_SIZE__MEDIUM: 12,

@@ -27,7 +27,7 @@ export default class EditProfile extends React.Component {
             isProfileUpdatedModal:false,
             modalVisible_Changepassword: false,
             modalVisible_successMsg: false,
-            customerType: 'company_profile',//user_profile,company_profile
+            customerType: '',//user_profile,company_profile
             current_password: '',
             new_password: '',
             confirm_password: '',
@@ -91,19 +91,12 @@ export default class EditProfile extends React.Component {
     }
 
     componentDidMount(){
-        this.updateUserObject()
+        this.presenter.callPostApi(ApiConstants.getMyProfile, "", true)
     }
 
-    async updateUserObject(){
+    async updateUserObject(data){
         let new_data = await getUserData()
-        this.setState({userData : new_data})
-        console.log("user data ===> "+new_data)
-        console.log("user data ===> "+new_data.user_type)
-        if(new_data.user_type==1){
-            this.setState({customerType:"company_profile"})
-        }else{
-            this.setState({customerType:"user_profile"})
-        }
+        this.setState({userData : data})
     }
     
     OpenImagePicker() {
@@ -154,6 +147,7 @@ export default class EditProfile extends React.Component {
                 const source = { uri: response.uri };
                 console.log('response-->', source);
                 this.setState({ user_filename: source, company_logo:response.uri, company_logo_data:response})
+                console.log("calling api")
                 let params = {
                     "file" : response
                 }
@@ -1222,6 +1216,7 @@ export default class EditProfile extends React.Component {
           case ApiConstants.updateProfilePic:{
               if(data.status){
                 alert(data.message)
+                this.presenter.callPostApi(ApiConstants.getMyProfile, "", true)
               }
               else {
                   alert(data.message)
@@ -1241,8 +1236,32 @@ export default class EditProfile extends React.Component {
               if(data.status){
                   this.setState({isProfileUpdatedModal:true})
               }else{
-                  alert(data.msg)
+                  alert(data.message)
               }
+              break;
+          }
+          case ApiConstants.getMyProfile:{
+            if(data.status){
+                if(data.user_data.user_type==1){
+                    this.setState({
+                        customerType:"company_profile",
+                        company_name:data.user_data.company_name,
+                        company_telephoneNo:data.user_data.tele_number,
+                        company_email:data.user_data.email
+                    })
+                }else{
+                    this.setState({
+                        customerType:"user_profile",
+                        user_first_name:data.user_data.first_name,
+                        user_last_name:data.user_data.last_name,
+                        user_telephoneNo:data.user_data.tele_number,
+                        email_id:data.user_data.email
+                    })
+                }
+                this.updateUserObject(data.user_data)           // storing user details in local db
+            }else{
+                alert(data.msg)
+            }
               break;
           }
         }
@@ -1262,6 +1281,7 @@ export default class EditProfile extends React.Component {
                 console.log('response-->', source);
                 this.setState({ profileImagePath: source })
                 this.setState({ user_filename: source, user_profile_photo:response.uri})
+                console.log("calling api =====> ")
                 let params = {
                     "file" : response
                 }
@@ -1296,20 +1316,24 @@ export default class EditProfile extends React.Component {
         }
     }
 
-      render() {
+    render() {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1 }}>
 
                 <HeaderBar title="EDIT PROFILE" isBack={true} isLogout={true} navigation={navigation} />
+
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
+
                 <View style={{ flex: 1 }}>
                     <ScrollView style={{ width: '100%', flex: 1 }} bounces={false}>
 
                         <View style={{ marginBottom: 2 }}>
+
                             <View style={StyleEditProfile.topCircle} />
 
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                
                                 <TouchableOpacity style={StyleEditProfile.sideImageView}
                                     onPress={() => {
                                         this.setState({ modalVisible_Changepassword: true })
@@ -1321,20 +1345,30 @@ export default class EditProfile extends React.Component {
                                 </TouchableOpacity>
                                 
                                 {
-                                    this.state.customerType=="company_profile" ? 
-                                        <Image
-                                            source={ this.state.company_logo==""? require('../images/Profile_pic.png') : { uri: this.state.company_logo }}
-                                            style={StyleEditProfile.ProfileImage}
-                                        />
-                                    :null
+                                    this.state.userData.profile_picture!=undefined
+                                    ?
+                                    <Image 
+                                        source ={{uri: this.state.userData.profile_picture}}
+                                        style={[StyleEditProfile.ProfileImage,{display: this.state.customerType=="user_profile" ? 'flex' : 'none'}]}
+                                    />
+                                    :
+                                    <Image 
+                                        source ={require('../images/Profile_pic.png')}
+                                        style={[StyleEditProfile.ProfileImage,{display: this.state.customerType=="user_profile" ? 'flex' : 'none'}]}
+                                    />
                                 }
                                 {
-                                    this.state.customerType=="user_profile" ? 
-                                        <Image
-                                            source={ this.state.user_profile_photo==""? require('../images/Profile_pic.png') : { uri: this.state.user_profile_photo }}
-                                            style={StyleEditProfile.ProfileImage}
-                                        />
-                                    :null
+                                    this.state.userData.company_logo!=undefined
+                                    ?
+                                    <Image 
+                                        source ={{uri: this.state.userData.company_logo}}
+                                        style={[StyleEditProfile.ProfileImage,{display: this.state.customerType=="company_profile" ? 'flex' : 'none'}]}
+                                    />
+                                    :
+                                    <Image 
+                                        source ={require('../images/Profile_pic.png')}
+                                        style={[StyleEditProfile.ProfileImage,{display: this.state.customerType=="company_profile" ? 'flex' : 'none'}]}
+                                    />
                                 }
 
                                 <TouchableOpacity style={StyleEditProfile.sideImageView}
@@ -1350,23 +1384,27 @@ export default class EditProfile extends React.Component {
                                         style={StyleEditProfile.sideImage}
                                     />
                                 </TouchableOpacity>
+                            
                             </View>
+
                         </View>
 
-                        {this.state.customerType == 'user_profile'
-                            ? <Text style={StyleEditProfile.label}>{this.state.first_name}&nbsp;{this.state.last_name}</Text>
+                        {
+                            this.state.customerType == 'user_profile'
+                            ? <Text style={StyleEditProfile.label}>{this.state.userData.first_name}&nbsp;{this.state.userData.last_name}</Text>
                             : this.state.customerType == 'company_profile'
-                                ? <Text style={StyleEditProfile.label}>{this.state.company_name}</Text>
-                                : null
+                            ? <Text style={StyleEditProfile.label}>{this.state.userData.company_name}</Text>
+                            : null
                         }
                         <View style={StyleEditProfile.bottomline}></View>
 
                         <View style={{ marginTop: 10 }}>
-                            {this.state.customerType == 'user_profile'
+                            {
+                                this.state.customerType == 'user_profile'
                                 ? this.user_Profile()
                                 : this.state.customerType == 'company_profile'
-                                    ? this.company_Profile()
-                                    : null
+                                ? this.company_Profile()
+                                : null
                             }
 
                             <TouchableOpacity style={{ backgroundColor: Constants.COLOR_GREEN, paddingHorizontal: 25, borderRadius: 50, marginVertical: 15, alignSelf: 'flex-end', marginRight: 15 }}
@@ -1376,14 +1414,11 @@ export default class EditProfile extends React.Component {
                             >
                                 <Text style={{ textTransform: 'uppercase', color: 'white', paddingVertical: 12 }}>Change Password</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={StyleEditProfile.ButtonView}
-                                onPress={() => {
-                                    this.updateProfile();
-                                    // this.setState({ modalVisible_successMsg: true })
-                                }}
-                            >
+                            
+                            <TouchableOpacity style={StyleEditProfile.ButtonView} onPress={() => { this.updateProfile();}}>
                                 <Text style={StyleEditProfile.ButtonLabel}>{Constants.Update}</Text>
                             </TouchableOpacity>
+                        
                         </View>
 
                     </ScrollView>

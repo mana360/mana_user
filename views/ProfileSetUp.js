@@ -29,6 +29,8 @@ export default class ProfileSetUp extends React.Component {
             user_rsaPassport: '',
             user_passport_number:'',
             user_doc_image:'',
+            user_doc_image_data:"",
+            user_passport_image_data:"",
 
             user_img_arry: [],
             user_filename: '',
@@ -46,6 +48,7 @@ export default class ProfileSetUp extends React.Component {
             user_confirmPassword: '',
             user_docType:"0",
             user_profile_image:"",
+            user_profile_image_data:"",
 
             company_contactPerson: '',
             company_name: '',
@@ -65,6 +68,7 @@ export default class ProfileSetUp extends React.Component {
             company_password: '',
             company_confirmPass: '',
             company_profile_image:"",
+            company_profile_image_data:"",
 
             countryList:[],
             isCountryListFilled:0,
@@ -88,6 +92,7 @@ export default class ProfileSetUp extends React.Component {
 
         }
     }
+    
     uploadUserProfile() {
         ImagePicker.showImagePicker(this.options, (response) => {
             if (response.didCancel) {
@@ -97,9 +102,15 @@ export default class ProfileSetUp extends React.Component {
             } else if (response.customButton) {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
-                const source = { uri: response.uri };
-                console.log('response-->', source);
-                this.setState({user_profile_image : response.uri})
+                if(response.fileSize>Constants.IMAGE_MAX_SIZE){
+                    alert(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
+                    this.setState({user_profile_image : "", user_profile_image_data:""})
+                }
+                else{
+                    const source = { uri: response.uri };
+                    console.log("SIZE ======> "+response.fileSize)
+                    this.setState({user_profile_image : response.uri, user_profile_image_data:response})
+                }
             }
             }
         )
@@ -114,16 +125,20 @@ export default class ProfileSetUp extends React.Component {
             } else if (response.customButton) {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
-                const source = { uri: response.uri };
-                console.log('response-->', source);
-                this.setState({company_profile_image : response.uri})
+                if(response.fileSize>Constants.IMAGE_MAX_SIZE){
+                    alert(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
+                    this.setState({company_profile_image : "", company_profile_image_data : ""})
+                }else{
+                    const source = { uri: response.uri };
+                    console.log('response-->', source);
+                    this.setState({company_profile_image : response.uri, company_profile_image_data : response})
+                }
             }
             }
         )
     }
 
     OpenImagePicker() {
-        if (this.state.user_img_arry.length < 4 || this.state.company_img_arry.length < 4) {
             ImagePicker.showImagePicker(this.options, (response) => {
                 console.log('response==', response);
                 if (response.didCancel) {
@@ -133,18 +148,43 @@ export default class ProfileSetUp extends React.Component {
                 } else if (response.customButton) {
                     console.log('User tapped custom button: ', response.customButton);
                 } else {
+                    if(response.fileSize>Constants.IMAGE_MAX_SIZE){
+                        alert(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
+                        this.setState({user_doc_image:"", user_doc_image_data:""})
+                    }else{
+                        const source = { uri: response.uri };
+                        console.log('response-->', source);
+                        this.setState({ user_filename: source })
+                        this.setState({user_doc_image:response.uri, user_doc_image_data:response})
+                        //this.uploadImage(response.uri);
+                    }
+                }
+            })
+    }
+
+    OpenImagePickerPassport() {
+        ImagePicker.showImagePicker(this.options, (response) => {
+            console.log('response==', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                if(response.fileSize>Constants.IMAGE_MAX_SIZE){
+                    alert(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
+                    this.setState({user_doc_image:"", user_passport_image_data:""})
+                }else{
                     const source = { uri: response.uri };
                     console.log('response-->', source);
                     this.setState({ user_filename: source })
-                    this.uploadImage(response.uri);
+                    this.setState({user_doc_image:response.uri, user_passport_image_data:response})
+                    //this.uploadImage(response.uri);
                 }
-
-            })
-        } else {
-            alert('maximum 4 image selected');
-
-        }
-    }
+            }
+        })
+}
 
     uploadImage(uri) {
         if (this.state.customerType == 'Individual') {
@@ -701,7 +741,7 @@ export default class ProfileSetUp extends React.Component {
 
                         </View>
 
-                        <TouchableOpacity style={{ paddingLeft: 10 }} onPress={() => { this.OpenImagePicker(); }}>
+                        <TouchableOpacity style={{ paddingLeft: 10 }} onPress={() => { this.OpenImagePickerPassport(); }}>
                             <Image style={{ width: 35, height: 35, }}
                                 source={require('../images/Upload_file.png')} />
                         </TouchableOpacity>
@@ -1035,12 +1075,12 @@ export default class ProfileSetUp extends React.Component {
                     this.input_user_telephone_number.focus()
                     return false
             }
-            if(this.state.user_rsaPassport==""){
+            if(this.state.user_rsaPassport=="" && this.state.user_docType=="1"){
                     alert("Please enter RSA Id")
                     this.input_user_rsa_id.focus()
                     return false
             }
-            if(this.state.user_passport_number==""){
+            if(this.state.user_passport_number=="" && this.state.user_docType=="2"){
                 alert("Please enter passport number")
                 this.input_user_passport.focus()
                 return false
@@ -1211,10 +1251,10 @@ export default class ProfileSetUp extends React.Component {
                     "title":this.state.user_title,
                     "telephone_number":this.state.user_telephoneNumber,    // missing param in api
                     "rsa_id":   this.state.user_docType=="1" ? this.state.user_rsaPassport : 0,
-                    "rsa_file": this.state.user_docType=="1" ? this.state.user_doc_image : "",
-                    "passport_no" : this.state.user_docType=="2" ? user_passport_number : 0,
-                    "passport_file":this.state.user_docType=="2" ? this.state.user_doc_image : "",
-                    "profile_photo":this.state.user_profile_image,
+                    "rsa_file": this.state.user_docType=="1" ? this.state.user_doc_image_data : "",
+                    "passport_no" : this.state.user_docType=="2" ? this.state.user_passport_number : 0,
+                    "passport_file":this.state.user_docType=="2" ? this.state.user_passport_image_data : "",
+                    "profile_photo":this.state.user_profile_image_data,
                     "email_id":this.state.user_email,
                     "password":this.state.user_confirmPassword,
                     //"address":this.state.user_address,                     // missing param in api
@@ -1226,7 +1266,7 @@ export default class ProfileSetUp extends React.Component {
                     "registration_type":2,                                  // 1 for company,   2 for individual
                     "terms_accepted":this.state.policyRadio_button? 1 : 0,
                 }
-                this.presenter.callMultipartApi(ApiConstants.profileSetup, params, true);
+                this.presenter.setupProfileIndividual(ApiConstants.profileSetup, params, true);
             }
         }
         else{
@@ -1236,7 +1276,7 @@ export default class ProfileSetUp extends React.Component {
                     "company_name":this.state.company_name,
                     "comp_cont_person":this.state.company_contactPerson,
                     "comp_cont_position":this.state.company_contactPosition,
-                    "profile_pic":this.state.company_profile_image,
+                    "profile_pic":this.state.company_profile_image_data,
                     "telephone_number":this.state.company_telephoneNo,        // missing param in api
                     "email_id":this.state.company_emailId,
                     //"password":this.state.company_confirmPass,                // missing param in api
@@ -1248,7 +1288,7 @@ export default class ProfileSetUp extends React.Component {
                     "registration_type":1,                                    // 1 for company,   2 for individual
                     "terms_accepted": this.state.policyRadio_button? 1 : 0,
                 }
-                this.presenter.callMultipartApi(ApiConstants.profileSetup, params, true);
+                this.presenter.setupProfileCompany(ApiConstants.profileSetup, params, true);
             }
         }
     }
@@ -1287,7 +1327,7 @@ export default class ProfileSetUp extends React.Component {
                         style={StyleForgotPassword.ModaltextInput}
                         value={this.state.otp_code}
                         keyboardType="number-pad"
-                        maxLength={6}
+                        maxLength={4}
                         placeholder='000000'
                         onChangeText={(Text) => {
                             if(!isNaN(Text))
@@ -1307,8 +1347,8 @@ export default class ProfileSetUp extends React.Component {
                     <View style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'center', marginVertical: 15 }}>
                                 
                         <TouchableOpacity
-                            style={ this.state.otp_code.length ==6 ? StyleForgotPassword.modalButtonView : [StyleForgotPassword.modalButtonView,{backgroundColor:Constants.COLOR_GREY_LIGHT}]}
-                            disabled={ this.state.otp_code.length ==6 ? false : true}
+                            style={ this.state.otp_code.length ==4 ? StyleForgotPassword.modalButtonView : [StyleForgotPassword.modalButtonView,{backgroundColor:Constants.COLOR_GREY_LIGHT}]}
+                            disabled={ this.state.otp_code.length ==4 ? false : true}
                             onPress={()=>{
                                 //this.verifyOTP();
                                 this.presenter.callPostApi(ApiConstants.verifyOTP, {mobile_otp : this.state.otp_code}, true);
