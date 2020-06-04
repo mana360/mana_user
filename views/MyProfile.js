@@ -597,7 +597,7 @@ export default class MyProfile extends React.Component {
                                     />
                                     :
                                     <Image 
-                                        source ={require('../images/Profile_pic.png')}
+                                        source ={require('../images/user_name.png')}
                                         style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="UserProfile" ? 'flex' : 'none'}]}
                                     />
                                 }
@@ -610,7 +610,7 @@ export default class MyProfile extends React.Component {
                                     />
                                     :
                                     <Image 
-                                        source ={require('../images/Profile_pic.png')}
+                                        source ={require('../images/user_name.png')}
                                         style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="CompanyProfile" ? 'flex' : 'none'}]}
                                     />
                                 }

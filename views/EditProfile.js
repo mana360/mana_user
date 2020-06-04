@@ -1353,7 +1353,7 @@ export default class EditProfile extends React.Component {
                                     />
                                     :
                                     <Image 
-                                        source ={require('../images/Profile_pic.png')}
+                                        source ={require('../images/user_name.png')}
                                         style={[StyleEditProfile.ProfileImage,{display: this.state.customerType=="user_profile" ? 'flex' : 'none'}]}
                                     />
                                 }
@@ -1366,7 +1366,7 @@ export default class EditProfile extends React.Component {
                                     />
                                     :
                                     <Image 
-                                        source ={require('../images/Profile_pic.png')}
+                                        source ={require('../images/user_name.png')}
                                         style={[StyleEditProfile.ProfileImage,{display: this.state.customerType=="company_profile" ? 'flex' : 'none'}]}
                                     />
                                 }
