@@ -1,6 +1,10 @@
 /* screen -MANAPPCUS039,107
     design by -mayur s
     API : Udayraj (country, cityList, profileImage upload)
+
+    REQUIRED NOTES
+    1) user_type = 1 means company profile
+    2) user type = 2 means individual profile
  */
 import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput,FlatList } from 'react-native';
@@ -12,12 +16,14 @@ import HeaderBar from '../config/HeaderBar';
 import Constants from '../config/Constants';
 import ApiConstants from '../config/ApiConstants';
 import {MainPresenter} from '../config/MainPresenter';
+import {getUserData, setUserData} from '../config/AppSharedPreference'
 
 export default class EditProfile extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            userData:"",
             isProfileUpdatedModal:false,
             modalVisible_Changepassword: false,
             modalVisible_successMsg: false,
@@ -81,6 +87,22 @@ export default class EditProfile extends React.Component {
 
             defaultProfileImagePath:require('../images/Profile_pic.png'),
 
+        }
+    }
+
+    componentDidMount(){
+        this.updateUserObject()
+    }
+
+    async updateUserObject(){
+        let new_data = await getUserData()
+        this.setState({userData : new_data})
+        console.log("user data ===> "+new_data)
+        console.log("user data ===> "+new_data.user_type)
+        if(new_data.user_type==1){
+            this.setState({customerType:"company_profile"})
+        }else{
+            this.setState({customerType:"user_profile"})
         }
     }
     
@@ -1151,11 +1173,6 @@ export default class EditProfile extends React.Component {
         )
     }
 
-    componentDidMount(){
-        //this.getProvinceList()
-        //this.getCountryList()
-    }
-
     async getCountryList(){
         await this.presenter.callGetApi(ApiConstants.countryList, "", true);
     }
@@ -1257,7 +1274,7 @@ export default class EditProfile extends React.Component {
         if(this.state.customerType=="user_profile"){
             if(this.isUserFormValid()){
                 let params={
-                    "registration_type":1,
+                    "registration_type":2,                  // individual profile
                     "first_name":this.state.user_first_name,
                     "last_name":this.state.user_last_name,
                     "email_id":this.state.email_id,
@@ -1269,7 +1286,7 @@ export default class EditProfile extends React.Component {
             //for company
             if(this.isCompanyFormValid()){
                 let params={
-                    "registration_type":2,
+                    "registration_type":1,                  // company profile
                     "company_name":this.state.company_name,
                     "company_contact":this.state.company_contactPerson,
                     "email_id":this.state.company_email,

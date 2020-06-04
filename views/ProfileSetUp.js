@@ -1223,7 +1223,7 @@ export default class ProfileSetUp extends React.Component {
                     "state_id":this.state.user_Province_id,
                     "city_id":this.state.user_city_id,
                     "zipcode":this.state.user_zipCode,
-                    "registration_type":1,
+                    "registration_type":2,                                  // 1 for company,   2 for individual
                     "terms_accepted":this.state.policyRadio_button? 1 : 0,
                 }
                 this.presenter.callMultipartApi(ApiConstants.profileSetup, params, true);
@@ -1245,7 +1245,7 @@ export default class ProfileSetUp extends React.Component {
                     "state_id": parseInt(this.state.company_province_id),
                     "zipcode": parseInt(this.state.company_zipCode),
                     "street_address":this.state.company_streetAddress,
-                    "registration_type":2,
+                    "registration_type":1,                                    // 1 for company,   2 for individual
                     "terms_accepted": this.state.policyRadio_button? 1 : 0,
                 }
                 this.presenter.callMultipartApi(ApiConstants.profileSetup, params, true);
