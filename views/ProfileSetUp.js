@@ -240,7 +240,6 @@ export default class ProfileSetUp extends React.Component {
                         value={this.state.company_name}
                         ref={(ref)=>{this.input_company_name = ref}}
                         onChangeText={(text) => { this.setState({ company_name: text }) }}
-                        onBlur={()=>{this.input_company_contact_person.focus()}}
                     />
                 </View>
 
@@ -256,7 +255,6 @@ export default class ProfileSetUp extends React.Component {
                         value={this.state.company_contactPerson}
                         ref={(ref)=>{this.input_company_contact_person = ref}}
                         onChangeText={(text) => { this.setState({ company_contactPerson: text }) }}
-                        onBlur={()=>{this.input_company_contact_position.focus()}}
                     />
                 </View>
 
@@ -274,7 +272,6 @@ export default class ProfileSetUp extends React.Component {
                                 value={this.state.company_contactPosition}
                                 ref={(ref)=>{this.input_company_contact_position = ref}}
                                 onChangeText={(text) => { this.setState({ company_contactPosition: text }) }}
-                                onBlur={()=>{this.input_company_telephone_number.focus()}}
                             />
                         </View>
                         {/* if required image upload in company profile,make TextInputView width small */}
@@ -329,7 +326,6 @@ export default class ProfileSetUp extends React.Component {
                                 this.setState({ company_telephoneNo: '' })
                             }
                         }}
-                        onBlur={()=>{this.input_company_emailId.focus()}}
                     />
                 </View>
 
@@ -346,7 +342,6 @@ export default class ProfileSetUp extends React.Component {
                         value={this.state.company_emailId}
                         ref={(ref)=>{this.input_company_emailId = ref}}
                         onChangeText={(text) => { this.setState({ company_emailId: text }) }}
-                        onBlur={()=>{this.input_company_street_address.focus()}}
                     />
                 </View>
 
@@ -500,7 +495,6 @@ export default class ProfileSetUp extends React.Component {
                         value={this.state.company_zipCode}
                         ref={(ref)=>{this.input_company_zipcode = ref}}
                         onChangeText={(text) => { this.setState({ company_zipCode: text }) }}
-                        onBlur={()=>{this.input_company_new_password.focus()}}
                     />
                 </View>
 
@@ -516,7 +510,6 @@ export default class ProfileSetUp extends React.Component {
                         secureTextEntry={true}
                         ref={(ref)=>{this.input_company_new_password = ref}}
                         onChangeText={(text) => { this.setState({ company_password: text }) }}
-                        onBlur={()=>{this.input_company_confirm_password.focus()}}
                     />
                 </View>
 
@@ -555,7 +548,6 @@ export default class ProfileSetUp extends React.Component {
                         value={this.state.user_firstName}
                         ref={(ref)=>{this.input_user_first_name=ref}}
                         onChangeText={(text) => { this.setState({ user_firstName: text }) }}
-                        onBlur={()=>{this.input_user_last_name.focus()}}
                     />
                 </View>
 
@@ -611,7 +603,6 @@ export default class ProfileSetUp extends React.Component {
                                 this.setState({ user_telephoneNumber: '' })
                             }
                         }}
-                        onBlur={()=>{this.input_user_rsa_id.focus()}}
                     />
                 </View>
 
@@ -677,7 +668,6 @@ export default class ProfileSetUp extends React.Component {
                                 ref={(ref)=>{this.input_user_rsa_id=ref}}
                                 value={this.state.user_rsaPassport}
                                 onChangeText={(text) => { this.setState({ user_rsaPassport: text }) }}
-                                onBlur={()=>{this.input_user_emailId.focus()}}
                             />
 
                         </View>
@@ -736,7 +726,6 @@ export default class ProfileSetUp extends React.Component {
                                 ref={(ref)=>{this.input_user_passport=ref}}
                                 value={this.state.user_passport_number}
                                 onChangeText={(text) => { this.setState({ user_passport_number: text }) }}
-                                onBlur={()=>{this.input_user_emailId.focus()}}
                             />
 
                         </View>
@@ -770,7 +759,6 @@ export default class ProfileSetUp extends React.Component {
                         autoCapitalize="none"
                         keyboardType="email-address"
                         onChangeText={(text) => { this.setState({ user_email: text }) }}
-                        onBlur={()=>{this.input_user_address.focus()}}
                     />
                 </View>
 
@@ -785,7 +773,6 @@ export default class ProfileSetUp extends React.Component {
                         value={this.state.user_address}
                         ref={(ref)=>{this.input_user_address=ref}}
                         onChangeText={(text) => { this.setState({ user_address: text }) }}
-                        onBlur={()=>{this.input_user_street_address.focus()}}
                     />
                 </View>
 
@@ -909,7 +896,6 @@ export default class ProfileSetUp extends React.Component {
                         value={this.state.user_zipCode}
                         ref={(ref)=>{this.input_user_zipcode=ref}}
                         onChangeText={(text) => { this.setState({ user_zipCode: text }) }}
-                        onBlur={()=>{this.input_user_new_password.focus()}}
                     />
                 </View>
 
@@ -925,7 +911,6 @@ export default class ProfileSetUp extends React.Component {
                         autoCapitalize="none"
                         ref={(ref)=>{this.input_user_new_password=ref}}
                         onChangeText={(text) => { this.setState({ user_password: text }) }}
-                        onBlur={()=>{this.input_user_confirm_password.focus()}}
                     />
                 </View>
 

@@ -181,6 +181,7 @@ showOTpModal() {
                   <View style={{ justifyContent: 'center', flexDirection: 'row', alignItems: 'center', marginVertical: 15 }}>
                               
                       <TouchableOpacity style={StyleForgotPassword.modalButtonView}
+                        disabled={ this.state.otp_code.length ==4 ? false : true}
                           onPress={()=>{
                               this.verifyOTP();
                           }}
