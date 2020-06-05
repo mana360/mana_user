@@ -22,6 +22,7 @@ export default class TruckingWarehouseCurrentService extends React.Component {
     componentDidMount(){
         this.trucking_warehouseService=this.props.navigation.getParam('flag_trucking_warehouse_services')
         this.service_type_id = this.props.navigation.getParam('service_type_id')
+       
         if(this.trucking_warehouseService){
             this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':this.service_type_id,'flag':1,
             'start_index':0,'total_count':10}, true)
@@ -66,7 +67,7 @@ export default class TruckingWarehouseCurrentService extends React.Component {
                     data={this.state.dataSource}
                     renderItem={({ item }, index) => {
                         return (
-                            <TouchableOpacity style={StyleCurrentTrip.row} onPress={() => { this.props.navigation.navigate('TruckingWarehouseCurrentTripDetails') }}>
+                            <TouchableOpacity style={StyleCurrentTrip.row} onPress={() => { this.props.navigation.navigate('TruckingWarehouseCurrentTripDetails',{}) }}>
 
                                 <View style={StyleCurrentTrip.col1}>
                                     <Image

@@ -175,7 +175,10 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
 
                         <TouchableOpacity style={{ backgroundColor: Constants.COLOR_GREEN, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', width: '50%', marginVertical: 25, borderRadius: 50 }}
                             onPress={() => {
-                                this.props.navigation.navigate('ViewCurrentTripAll', { item: this.state.warehouseTrucking_data, flag_CurrentTrip: 3 })
+                                // this.props.navigation.navigate('ViewCurrentTripAll', { item: this.state.warehouseTrucking_data, flag_CurrentTrip: 3 })
+                                this.props.navigation.navigate('ViewUpcomingTrip',{item:this.state.warehouseTrucking_data,Flag_currentTtrip:false,flag_upcoming_Trip:"3"});
+
+                                
                             }}
                         >
                             <Text style={{ color: Constants.COLOR_WHITE, paddingVertical: 10, fontSize: Constants.FONT_SIZE_EXTRA_LARGE }}>View More</Text>
