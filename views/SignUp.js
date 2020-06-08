@@ -9,7 +9,7 @@ import Constants from '../config/Constants';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { MainPresenter } from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
-import { setUserData, setAuthToken, clearAllData, getFirebaseToken, getUserData } from '../config/AppSharedPreference';
+import { setUserData, setAuthToken, clearAllData,} from '../config/AppSharedPreference';
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -206,6 +206,9 @@ onClickSignup(){
   if(!this.isValid()){
     return
   }
+
+  global.temp_emailId = this.state.emailId;
+  global.temp_password = this.state.password;
 
   let params = {
     "email_id":this.state.emailId,

@@ -34,6 +34,10 @@ export default class SignIn extends Component {
      if (!this.isValid()) {
        return
      }
+     
+     global.temp_emailId = this.state.input_email_id;
+     global.temp_password = this.state.input_password;
+
      let fbToken=await getFirebaseToken()
      let params = {
        "username": this.state.input_email_id,

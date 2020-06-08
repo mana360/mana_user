@@ -182,32 +182,53 @@ export class MainPresenter extends React.Component {
     _createFormDataForIndividualProfile(apiConstant, body) {
         const data = new FormData();
         let photo = body.profile_photo;
+        let rsa = ""
+        let passport =""
         delete body.profile_photo;
-        let rsa = body.rsa_file;
-        delete body.rsa_file;
-        let passport = body.passport_file;
-        delete body.passport_file;
+
+        if(body.rsa_id==0){
+            console.log("rsa delete req")
+            //let rsa = body.rsa_file;
+            delete body.rsa_file;
+        }else{
+            rsa = body.rsa_file;
+            delete body.rsa_file;
+        }
+        if(body.passport_no==0){
+            console.log("pass delete req")
+            //let passport = body.passport_file;
+            delete body.passport_file;
+        }else{
+            passport = body.passport_file;
+            delete body.passport_file;
+        }
 
         Object.keys(body).forEach(key => {
             data.append(key, body[key]);
         });
         switch (apiConstant) {
             case ApiConstants.profileSetup: {
-                data.append("profile_photo", {
+                data.append("profile_pic", {
                     name: photo.fileName,
                     type: photo.type,
                     uri: Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
                 });
-                data.append("rsa_file", {
-                    name: rsa.fileName,
-                    type: rsa.type,
-                    uri: Platform.OS === "android" ? rsa.uri : rsa.uri.replace("file://", "")
-                });
-                data.append("passport_file", {
-                    name: passport.fileName,
-                    type: passport.type,
-                    uri: Platform.OS === "android" ? passport.uri : passport.uri.replace("file://", "")
-                });
+
+                if(body.rsa_id!=0){
+                    data.append("rsa_file", {
+                        name: rsa.fileName,
+                        type: rsa.type,
+                        uri: Platform.OS === "android" ? rsa.uri : rsa.uri.replace("file://", "")
+                    });
+                }
+
+                if(body.passport_no!=0){
+                    data.append("passport_file", {
+                        name: passport.fileName,
+                        type: passport.type,
+                        uri: Platform.OS === "android" ? passport.uri : passport.uri.replace("file://", "")
+                    });
+                }
                 break;    
             }
         }
