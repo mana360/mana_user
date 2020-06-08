@@ -1313,7 +1313,7 @@ export default class ProfileSetUp extends React.Component {
                         value={this.state.otp_code}
                         keyboardType="number-pad"
                         maxLength={4}
-                        placeholder='000000'
+                        placeholder='0000'
                         onChangeText={(Text) => {
                             if(!isNaN(Text))
                                 this.setState({ otp_code: Text })
