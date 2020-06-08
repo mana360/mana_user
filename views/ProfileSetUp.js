@@ -12,7 +12,7 @@ import Constants from '../config/Constants';
 import { StyleSetUpProfile, StyleSignUp,StyleForgotPassword } from '../config/CommonStyles';
 import ApiConstants from '../config/ApiConstants';
 import {MainPresenter} from '../config/MainPresenter';
-import { setUserData, clearAllData } from '../config/AppSharedPreference';
+import { setUserData, getUserData, clearAllData } from '../config/AppSharedPreference';
 import { StackActions, NavigationActions } from 'react-navigation';
 
 export default class ProfileSetUp extends React.Component {
@@ -91,6 +91,10 @@ export default class ProfileSetUp extends React.Component {
             resp_user_id:'',
 
         }
+    }
+
+    componentDidMount(){
+        this.getCountryList()
     }
     
     uploadUserProfile() {
@@ -329,7 +333,7 @@ export default class ProfileSetUp extends React.Component {
                     />
                 </View>
 
-                <View style={StyleSetUpProfile.TextInputView}>
+                {/* <View style={StyleSetUpProfile.TextInputView}>
                     <View style={StyleSetUpProfile.LabelView}>
                         <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>Email ID</Text>
                         <Text style={{ color: 'red' }}>*</Text>
@@ -343,7 +347,7 @@ export default class ProfileSetUp extends React.Component {
                         ref={(ref)=>{this.input_company_emailId = ref}}
                         onChangeText={(text) => { this.setState({ company_emailId: text }) }}
                     />
-                </View>
+                </View> */}
 
                 <View style={{flex:6, flexDirection:'row', width:'90%', height: 50, marginVertical:0, marginHorizontal:25, backgroundColor: Constants.COLOR_WHITE, alignItems:'center', justifyContent:'center'}}>
                     <View style={{flex:2}}>
@@ -498,7 +502,7 @@ export default class ProfileSetUp extends React.Component {
                     />
                 </View>
 
-                <View style={[StyleSetUpProfile.TextInputView]}>
+                {/* <View style={[StyleSetUpProfile.TextInputView]}>
                     <View style={StyleSetUpProfile.LabelView}>
                         <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.NewPassword}</Text>
                     </View>
@@ -511,9 +515,9 @@ export default class ProfileSetUp extends React.Component {
                         ref={(ref)=>{this.input_company_new_password = ref}}
                         onChangeText={(text) => { this.setState({ company_password: text }) }}
                     />
-                </View>
+                </View> */}
 
-                <View style={[StyleSetUpProfile.TextInputView]}>
+                {/* <View style={[StyleSetUpProfile.TextInputView]}>
                     <View style={StyleSetUpProfile.LabelView}>
                         <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.ConfirmPassword}</Text>
                     </View>
@@ -526,7 +530,7 @@ export default class ProfileSetUp extends React.Component {
                         ref={(ref)=>{this.input_company_confirm_password = ref}}
                         onChangeText={(text) => { this.setState({ company_confirmPass: text }) }}
                     />
-                </View>
+                </View> */}
 
             </View>
 
@@ -746,7 +750,7 @@ export default class ProfileSetUp extends React.Component {
 
                 </View>
 
-                <View style={StyleSetUpProfile.TextInputView}>
+                {/* <View style={StyleSetUpProfile.TextInputView}>
                     <View style={StyleSetUpProfile.LabelView}>
                         <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.EmailAddress}</Text>
                         <Text style={{ color: 'red' }}>*</Text>
@@ -760,7 +764,7 @@ export default class ProfileSetUp extends React.Component {
                         keyboardType="email-address"
                         onChangeText={(text) => { this.setState({ user_email: text }) }}
                     />
-                </View>
+                </View> */}
 
                 <View style={StyleSetUpProfile.TextInputView}>
                     <View style={StyleSetUpProfile.LabelView}>
@@ -899,7 +903,7 @@ export default class ProfileSetUp extends React.Component {
                     />
                 </View>
 
-                <View style={StyleSetUpProfile.TextInputView}>
+                {/* <View style={StyleSetUpProfile.TextInputView}>
                     <View style={StyleSetUpProfile.LabelView}>
                         <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.NewPassword}</Text>
                     </View>
@@ -912,9 +916,9 @@ export default class ProfileSetUp extends React.Component {
                         ref={(ref)=>{this.input_user_new_password=ref}}
                         onChangeText={(text) => { this.setState({ user_password: text }) }}
                     />
-                </View>
+                </View> */}
 
-                <View style={StyleSetUpProfile.TextInputView}>
+                {/* <View style={StyleSetUpProfile.TextInputView}>
                     <View style={StyleSetUpProfile.LabelView}>
                         <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>{Constants.ConfirmPassword}</Text>
                     </View>
@@ -927,7 +931,7 @@ export default class ProfileSetUp extends React.Component {
                         ref={(ref)=>{this.input_user_confirm_password=ref}}
                         onChangeText={(text) => { this.setState({ user_confirmPassword: text }) }}
                     />
-                </View>
+                </View> */}
             
             </View>
         )
@@ -1070,16 +1074,16 @@ export default class ProfileSetUp extends React.Component {
                 this.input_user_passport.focus()
                 return false
             }
-            if(this.state.user_email==""){
-                    alert("Please enter email Id")
-                    this.input_user_emailId.focus()
-                    return false
-            }
-            if(!emailRegex.test(this.state.user_email)){
-                    alert("Please enter valid email Id")
-                    this.input_user_emailId.focus()
-                    return false
-            }
+            // if(this.state.user_email==""){
+            //         alert("Please enter email Id")
+            //         this.input_user_emailId.focus()
+            //         return false
+            // }
+            // if(!emailRegex.test(this.state.user_email)){
+            //         alert("Please enter valid email Id")
+            //         this.input_user_emailId.focus()
+            //         return false
+            // }
             if(this.state.user_address==""){
                     alert("Please enter address")
                     this.input_user_address.focus()
@@ -1110,26 +1114,26 @@ export default class ProfileSetUp extends React.Component {
                     this.input_user_zipcode.focus()
                     return false
             }
-            if(this.state.user_password==""){
-                    alert("Please enter password")
-                    this.input_user_new_password.focus()
-                    return false
-            }
-            if(this.state.user_password.length<=7){
-                    alert("Please enter strong password")
-                    this.input_user_new_password.focus()
-                    return false
-            }
-            if(this.state.user_confirmPassword==""){
-                    alert("Please enter confirm password")
-                    this.input_user_confirm_password.focus()
-                    return false
-            }
-            if(this.state.user_confirmPassword != this.state.user_password){
-                    alert("Please enter confirm password matching with new password")
-                    this.input_user_confirm_password.focus()
-                    return false
-            }
+            // if(this.state.user_password==""){
+            //         alert("Please enter password")
+            //         this.input_user_new_password.focus()
+            //         return false
+            // }
+            // if(this.state.user_password.length<=7){
+            //         alert("Please enter strong password")
+            //         this.input_user_new_password.focus()
+            //         return false
+            // }
+            // if(this.state.user_confirmPassword==""){
+            //         alert("Please enter confirm password")
+            //         this.input_user_confirm_password.focus()
+            //         return false
+            // }
+            // if(this.state.user_confirmPassword != this.state.user_password){
+            //         alert("Please enter confirm password matching with new password")
+            //         this.input_user_confirm_password.focus()
+            //         return false
+            // }
         }
         return true
     }
@@ -1167,16 +1171,16 @@ export default class ProfileSetUp extends React.Component {
                 this.input_company_telephone_number.focus()
                 return false
             }
-            if(this.state.company_emailId==""){
-                alert("Please enter email Id")
-                this.input_company_emailId.focus()
-                return false
-            }
-            if(!emailRegex.test(this.state.company_emailId)){
-                alert("Please enter valid email Id")
-                this.input_company_emailId.focus()
-                return false
-            }
+            // if(this.state.company_emailId==""){
+            //     alert("Please enter email Id")
+            //     this.input_company_emailId.focus()
+            //     return false
+            // }
+            // if(!emailRegex.test(this.state.company_emailId)){
+            //     alert("Please enter valid email Id")
+            //     this.input_company_emailId.focus()
+            //     return false
+            // }
             if(this.state.company_streetAddress==""){
                 alert("Please enter street address")
                 this.input_company_street_address.focus()
@@ -1202,26 +1206,26 @@ export default class ProfileSetUp extends React.Component {
                 this.input_company_zipcode.focus()
                 return false
             }
-            if(this.state.company_password==""){
-                alert("Please enter password")
-                this.input_company_new_password.focus()
-                return false
-            }
-            if(this.state.company_password.length <=7){
-                alert("Please enter strong password")
-                this.input_company_new_password.focus()
-                return false
-            }
-            if(this.state.company_confirmPass==""){
-                alert("Please enter confirm password")
-                this.input_company_confirm_password.focus()
-                return false
-            }
-            if(this.state.company_confirmPass!= this.state.company_password){
-                alert("Please enter confirm password matching with new password")
-                this.input_company_confirm_password.focus()
-                return false
-            }
+            // if(this.state.company_password==""){
+            //     alert("Please enter password")
+            //     this.input_company_new_password.focus()
+            //     return false
+            // }
+            // if(this.state.company_password.length <=7){
+            //     alert("Please enter strong password")
+            //     this.input_company_new_password.focus()
+            //     return false
+            // }
+            // if(this.state.company_confirmPass==""){
+            //     alert("Please enter confirm password")
+            //     this.input_company_confirm_password.focus()
+            //     return false
+            // }
+            // if(this.state.company_confirmPass!= this.state.company_password){
+            //     alert("Please enter confirm password matching with new password")
+            //     this.input_company_confirm_password.focus()
+            //     return false
+            // }
         }
         return true
     }
@@ -1363,11 +1367,6 @@ export default class ProfileSetUp extends React.Component {
     closeOTPModal(){
         clearInterval(this.timer)
         this.setState({otp_modal_visible:false, isOtpTimerVisible:false, otp_code:''})
-    }
-  
-    componentDidMount(){
-        //this.getProvinceList()
-        this.getCountryList()
     }
 
     render() {
