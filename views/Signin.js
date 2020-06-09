@@ -94,6 +94,10 @@ export default class SignIn extends Component {
               actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
             }))
         }else{
+            // 203 = profile setup incomplete
+            // 204 = inactive / not verified
+            // 205 = deactivated by admin
+            // 206 = other errors
             if(data.status_code == 203){
               // incomplete profile setup
               this.props.navigation.dispatch(
