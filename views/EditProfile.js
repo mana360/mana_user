@@ -841,11 +841,11 @@ export default class EditProfile extends React.Component {
                 alert("Please enter correct telephone number")
                 return false
             }
-            if(this.state.company_emailId==""){
+            if(this.state.company_email==""){
                 alert("Please enter email Id")
                 return false
             }
-            if(!emailRegex.test(this.state.company_emailId)){
+            if(!emailRegex.test(this.state.company_email)){
                 alert("Please enter valid email Id")
                 return false
             }
@@ -1308,7 +1308,7 @@ export default class EditProfile extends React.Component {
                 let params={
                     "registration_type":1,                  // company profile
                     "company_name":this.state.company_name,
-                    "company_contact":this.state.company_contactPerson,
+                    "company_contact":this.state.company_telephoneNo,
                     "email_id":this.state.company_email,
                 }
                 this.presenter.callPostApi(ApiConstants.updateProfile, params, true)
