@@ -1,23 +1,14 @@
 /** 
- * 
  *  Dependency  required
  * "@react-native-community/async-storage": "^1.8.1",
- * 
  * */
 
 import AsyncStorage from '@react-native-community/async-storage';
-/* ----------Storage Key Constants------------ */
+
 const AUTH_TOKEN = "auth_token"
 const USER_DATA = "user_data"
 const FIREBASE_TOKEN="firebase_token"
 
-
-/* ----------EOF Storage Key Constants------------ */
-
-
-
-
-/* ----------- Public Export Methods ---------- */
 export async function getAuthToken() {
     let value = await _getData(AUTH_TOKEN)
     return value

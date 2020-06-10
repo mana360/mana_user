@@ -12,7 +12,7 @@ import Constants from '../config/Constants';
 import { StyleSetUpProfile, StyleSignUp,StyleForgotPassword } from '../config/CommonStyles';
 import ApiConstants from '../config/ApiConstants';
 import {MainPresenter} from '../config/MainPresenter';
-import { setUserData, clearAllData } from '../config/AppSharedPreference';
+import { clearAllData } from '../config/AppSharedPreference';
 import { StackActions, NavigationActions } from 'react-navigation';
 
 export default class ProfileSetUp extends React.Component {
@@ -91,6 +91,18 @@ export default class ProfileSetUp extends React.Component {
             resp_user_id:'',
 
         }
+    }
+
+    componentDidMount(){
+        this.setState({
+            company_emailId : global.temp_emailId,
+            company_password : global.temp_password,
+            company_confirmPass : global.temp_password,
+            user_email : global.temp_emailId,
+            user_password : global.temp_emailId,
+            user_confirmPassword : global.temp_emailId,
+        })
+        this.getCountryList()
     }
     
     uploadUserProfile() {
@@ -337,6 +349,7 @@ export default class ProfileSetUp extends React.Component {
                     <TextInput
                         placeholder="Enter Email Id"
                         style={StyleSetUpProfile.TextInput}
+                        editable={false}
                         keyboardType="email-address"
                         autoCapitalize="none"
                         value={this.state.company_emailId}
@@ -504,6 +517,7 @@ export default class ProfileSetUp extends React.Component {
                     </View>
                     <TextInput
                         placeholder="Enter Password"
+                        editable={false}
                         style={StyleSetUpProfile.TextInput}
                         autoCapitalize="none"
                         value={this.state.company_password}
@@ -519,6 +533,7 @@ export default class ProfileSetUp extends React.Component {
                     </View>
                     <TextInput
                         placeholder="Enter Confirm Password"
+                        editable={false}
                         style={StyleSetUpProfile.TextInput}
                         autoCapitalize="none"
                         value={this.state.company_confirmPass}
@@ -753,6 +768,7 @@ export default class ProfileSetUp extends React.Component {
                     </View>
                     <TextInput
                         placeholder="Enter Email Address"
+                        editable={false}
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_email}
                         ref={(ref)=>{this.input_user_emailId=ref}}
@@ -905,6 +921,7 @@ export default class ProfileSetUp extends React.Component {
                     </View>
                     <TextInput
                         placeholder="Enter Password"
+                        editable={false}
                         secureTextEntry={true}
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_password}
@@ -920,6 +937,7 @@ export default class ProfileSetUp extends React.Component {
                     </View>
                     <TextInput
                         placeholder="Enter Confirm Password"
+                        editable={false}
                         secureTextEntry={true}
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_confirmPassword}
@@ -1251,6 +1269,14 @@ export default class ProfileSetUp extends React.Component {
                     "registration_type":2,                                  // 1 for company,   2 for individual
                     "terms_accepted":this.state.policyRadio_button? 1 : 0,
                 }
+                if(this.state.user_docType=="1"){
+                    delete params.passport_file
+                    console.log("passport param deleted")
+                }
+                if(this.state.user_docType=="2"){
+                    delete params.rsa_file
+                    console.log("rsa param deleted")
+                }
                 this.presenter.setupProfileIndividual(ApiConstants.profileSetup, params, true);
             }
         }
@@ -1313,7 +1339,7 @@ export default class ProfileSetUp extends React.Component {
                         value={this.state.otp_code}
                         keyboardType="number-pad"
                         maxLength={4}
-                        placeholder='000000'
+                        placeholder='0000'
                         onChangeText={(Text) => {
                             if(!isNaN(Text))
                                 this.setState({ otp_code: Text })
@@ -1363,11 +1389,6 @@ export default class ProfileSetUp extends React.Component {
     closeOTPModal(){
         clearInterval(this.timer)
         this.setState({otp_modal_visible:false, isOtpTimerVisible:false, otp_code:''})
-    }
-  
-    componentDidMount(){
-        //this.getProvinceList()
-        this.getCountryList()
     }
 
     render() {
@@ -1525,8 +1546,11 @@ export default class ProfileSetUp extends React.Component {
                             <Text style={StyleSetUpProfile.modalMsg}>{Constants.ProfileSetUPDoneSuccessFul}</Text>
                             <Text style={[StyleSetUpProfile.modalMsg, { fontWeight: 'normal' }]}>{Constants.YouwillRevicefromourSupportTeam}</Text>
                             <TouchableOpacity style={StyleSetUpProfile.modalButton}
-                                onPress={() => {
+                                onPress={async() => {
                                     this.setState({ Modal_visible: false })
+                                    global.temp_emailId=""
+                                    global.temp_password=""
+                                    await clearAllData()
                                     this.props.navigation.dispatch(
                                         StackActions.reset({
                                             index :0,

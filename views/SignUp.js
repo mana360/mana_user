@@ -9,7 +9,7 @@ import Constants from '../config/Constants';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { MainPresenter } from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
-import { setUserData, setAuthToken, clearAllData, getFirebaseToken } from '../config/AppSharedPreference';
+import { setUserData, setAuthToken, clearAllData,} from '../config/AppSharedPreference';
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -68,8 +68,8 @@ export default class SignUp extends Component {
         if (data.status) {  
           console.log(data);
           this.setState({otp_modal_visible:true, resp_otp_code:data.email_otp, resp_user_id:data.user_id, resp_temp_token:data.access_token});
-          await setAuthToken(data.access_token);  //token required for temp purpose only.
-          //await setUserData(data)
+          //await setAuthToken(data.access_token);  //token required for temp purpose only.
+          await setUserData(data)
           // this.timer = setInterval(()=>{
           //   this.setState({modalVisible_welcome:false})
           //   clearInterval(this.timer)
@@ -206,6 +206,9 @@ onClickSignup(){
   if(!this.isValid()){
     return
   }
+
+  global.temp_emailId = this.state.emailId;
+  global.temp_password = this.state.password;
 
   let params = {
     "email_id":this.state.emailId,

@@ -34,6 +34,10 @@ export default class SignIn extends Component {
      if (!this.isValid()) {
        return
      }
+     
+     global.temp_emailId = this.state.input_email_id;
+     global.temp_password = this.state.input_password;
+
      let fbToken=await getFirebaseToken()
      let params = {
        "username": this.state.input_email_id,
@@ -90,6 +94,10 @@ export default class SignIn extends Component {
               actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
             }))
         }else{
+            // 203 = profile setup incomplete
+            // 204 = inactive / not verified
+            // 205 = deactivated by admin
+            // 206 = other errors
             if(data.status_code == 203){
               // incomplete profile setup
               this.props.navigation.dispatch(
