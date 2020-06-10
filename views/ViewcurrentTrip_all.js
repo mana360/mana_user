@@ -10,9 +10,11 @@ import HeaderBar from '../config/HeaderBar';
 import Invoice from './InvoiceView';
 import { Tabs, Tab } from "native-base";
 
-export default class ViewUpcomingTripAll extends React.Component {
+export default class ViewCurrentTripAll extends React.Component {
     constructor(props) {
         super(props);
+        this.serviceData=[];
+        this.service_name=0;
         this.state = {
             starCount: null,
             inputLabelTrip: '',
@@ -21,11 +23,15 @@ export default class ViewUpcomingTripAll extends React.Component {
             cancelModal_Visible: false,
             isSuccesfull: false,
             Profile_data: [{ partnerName: 'ABC Service' }],
+            
 
         }
     }
 
     componentDidMount(){
+        this.serviceData =this.props.navigation.getParam('item');
+        this.service_name = this.props.navigation.getParam('flag_CurrentTrip');// 1 = currentTrip_truking, 2 = currentTrip_warehouse, 3 = currentTrip_warehouse_trucking,
+            alert(this.service_name);
         
     }
 
@@ -89,14 +95,15 @@ export default class ViewUpcomingTripAll extends React.Component {
         )
 
     }
+    
     render() {
         const { navigation } = this.props
-        const serviceData = navigation.getParam('item');
-        const service_name = navigation.getParam('flag_CurrentTrip');// 1 = currentTrip_truking, 2 = currentTrip_warehouse, 3 = currentTrip_warehouse_trucking,
+        // const serviceData = navigation.getParam('item');
+        // const this.service_name = navigation.getParam('flag_CurrentTrip');// 1 = currentTrip_truking, 2 = currentTrip_warehouse, 3 = currentTrip_warehouse_trucking,
 
         return (
             <View style={{ flex: 1 }}>
-                <HeaderBar title={service_name == '3' ? "TRUCKING + WAREHOUSE CURRENT TRIP DETAILS" : "VIEW CURRENT TRIP"} isBack={true} isLogout={true} navigation={navigation} />
+                <HeaderBar title={this.service_name == 3 ? "TRUCKING + WAREHOUSE CURRENT TRIP DETAILS" : "VIEW CURRENT TRIP"} isBack={true} isLogout={true} navigation={navigation} />
                 <View style={{ flex: 1 }}>
 
                     <ScrollView style={{ width: '100%' }} bounces={false}>
@@ -116,17 +123,17 @@ export default class ViewUpcomingTripAll extends React.Component {
                                 </TouchableOpacity>
 
                                 <Image source={
-                                    service_name == '1'
+                                    this.service_name == 1
                                         ? require('../images/current_trips.png')
-                                        : service_name == '2'
+                                        : this.service_name == 2
                                             ? require('../images/WarehouseServices_copy.png')
-                                            : service_name == '3'
+                                            :this.service_name == 3
                                                 ? require('../images/Trucking_+Warehouse.png')
                                                 : null
 
                                 }
 
-                                    style={service_name == '1' ? [StyleViewCurrentTrip.ImageCurrentTrip, { marginRight: 95 }] : StyleViewCurrentTrip.ImageCurrentTrip}
+                                    style={this.service_name == 1 ? [StyleViewCurrentTrip.ImageCurrentTrip, { marginRight: 95 }] : StyleViewCurrentTrip.ImageCurrentTrip}
                                 />
                                 <TouchableOpacity style={{ marginTop: 25, }}
                                     onPress={() => {
@@ -134,14 +141,15 @@ export default class ViewUpcomingTripAll extends React.Component {
                                     }}
                                 >
                                     <Image source={require('../images/support_icon.png')}
-                                        style={service_name == '1' ? { display: 'none' } : StyleViewCurrentTrip.sideImage}
+                                        style={this.service_name == 1 ? { display: 'none' } : StyleViewCurrentTrip.sideImage}
                                     />
                                 </TouchableOpacity>
                             </View>
                         </View>
 
 
-                        {serviceData.map((result) => {
+                        {this.serviceData==[]?null:
+                        this.serviceData.map((result) => {
                             return (
                                 <View>
 
@@ -202,7 +210,7 @@ export default class ViewUpcomingTripAll extends React.Component {
 
                                         {
 
-                                            service_name == '1' ?
+                                            this.service_name == 1 ?
 
                                                 <Tab heading='TRUCK TRIP DETAILS'
                                                     tabStyle={StyleViewUpcomingTrip.tab}
@@ -305,7 +313,7 @@ export default class ViewUpcomingTripAll extends React.Component {
                                                     </View>
 
                                                 </Tab>
-                                                : service_name == '3'
+                                                : this.service_name == 1
                                                     ? <Tab heading='TRUCK TRIP DETAILS'
                                                         tabStyle={StyleViewUpcomingTrip.tab}
                                                         activeTabStyle={StyleViewUpcomingTrip.tab_active}
@@ -404,13 +412,14 @@ export default class ViewUpcomingTripAll extends React.Component {
                                                                     <Text style={StyleViewUpcomingTrip.col2Text}>{result.truckID}</Text>
                                                                 </View>
                                                             </View>
+                                                    
                                                         </View>
 
                                                     </Tab>
                                                     : null
                                         }
 
-                                        {service_name == '2' ?
+                                        {this.service_name == 1 ?
                                             <Tab heading='Warehouse details'
 
                                                 tabStyle={StyleViewUpcomingTrip.tab}
@@ -483,7 +492,7 @@ export default class ViewUpcomingTripAll extends React.Component {
                                                     </View>
                                                 </View>
                                             </Tab>
-                                            : service_name == '3'
+                                            : this.service_name == 2
                                                 ? <Tab heading='Warehouse details'
 
                                                     tabStyle={StyleViewUpcomingTrip.tab}
@@ -550,6 +559,7 @@ export default class ViewUpcomingTripAll extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col2Text}>{result.duration_ofstorage}</Text>
                                                             </View>
                                                         </View>
+                                                  
                                                     </View>
 
                                                 </Tab>
@@ -667,7 +677,7 @@ export default class ViewUpcomingTripAll extends React.Component {
                                             <View>
 
                                                 {/*payment details for truking*/}
-                                                {service_name == '1'
+                                                {this.service_name == 1
                                                     ? <View>
                                                         <View style={StyleViewUpcomingTrip.row}>
                                                             <View style={StyleViewUpcomingTrip.col1}>
@@ -726,7 +736,7 @@ export default class ViewUpcomingTripAll extends React.Component {
                                                     : null}
 
                                                 {/*payment details for warehouse */}
-                                                {service_name == '2'
+                                                {this.service_name == 2
                                                     ? <View>
 
                                                         <View style={StyleViewUpcomingTrip.row}>
@@ -756,7 +766,7 @@ export default class ViewUpcomingTripAll extends React.Component {
                                                             </View>
                                                         </View>
 
-                                                        <View style={service_name == '2'
+                                                        <View style={this.service_name == 2
                                                             ? StyleViewUpcomingTrip.row
                                                             : { display: 'none' }}>
                                                             <View style={StyleViewUpcomingTrip.col1}>
@@ -767,7 +777,7 @@ export default class ViewUpcomingTripAll extends React.Component {
                                                             </View>
                                                         </View>
 
-                                                        <View style={service_name == '3' ? StyleViewUpcomingTrip.row : { display: 'none' }}>
+                                                        <View style={this.service_name == 3 ? StyleViewUpcomingTrip.row : { display: 'none' }}>
                                                             <View style={StyleViewUpcomingTrip.col1}>
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Tript_Amount}</Text>
                                                             </View>
@@ -777,7 +787,7 @@ export default class ViewUpcomingTripAll extends React.Component {
                                                         </View>
 
                                                     </View>
-                                                    : service_name == '3'
+                                                    : this.service_name == 3
                                                         ? <View>
 
                                                             <View style={StyleViewUpcomingTrip.row}>
@@ -807,7 +817,7 @@ export default class ViewUpcomingTripAll extends React.Component {
                                                                 </View>
                                                             </View>
 
-                                                            <View style={service_name == '2'
+                                                            <View style={this.service_name == 2
                                                                 ? StyleViewUpcomingTrip.row
                                                                 : { display: 'none' }}>
                                                                 <View style={StyleViewUpcomingTrip.col1}>
@@ -818,7 +828,7 @@ export default class ViewUpcomingTripAll extends React.Component {
                                                                 </View>
                                                             </View>
 
-                                                            <View style={service_name == '3' ? StyleViewUpcomingTrip.row : { display: 'none' }}>
+                                                            <View style={this.service_name == 3 ? StyleViewUpcomingTrip.row : { display: 'none' }}>
                                                                 <View style={StyleViewUpcomingTrip.col1}>
                                                                     <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Tript_Amount}</Text>
                                                                 </View>

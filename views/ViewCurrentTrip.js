@@ -25,18 +25,21 @@ export default class ViewCurrentTrip extends React.Component {
             invoiceModal_Visible: false,
             truck_data: [],
             truckData: '',
+            driver_telephone_no:123454654654,
+            partner_telephone_no:123454654654,
+
         }
     }
 
-    dialCall = () => {
+    dialCall = (number) => {
  
         let phoneNumber = '';
      
         if (Platform.OS === 'android') {
-          phoneNumber = 'tel:${1234567890}';
+          phoneNumber = `tel:${number}`;
         }
         else {
-          phoneNumber = 'telprompt:${1234567890}';
+          phoneNumber =  `telprompt::${number}`;
         }
      
         Linking.openURL(phoneNumber);
@@ -177,7 +180,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.driver_contact}</Text>
                                             <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}
                                              onPress={()=>{
-                                                this.dialCall();
+                                                this.dialCall(this.state.driver_telephone_no);
                                             }}
                                             >
                                                 <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
@@ -202,7 +205,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.partner_no}</Text>
                                             <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}
                                                onPress={()=>{
-                                                   this.dialCall();
+                                                   this.dialCall(this.state.partner_telephone_no);
                                                }}
                                             >
                                                 <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
@@ -232,7 +235,10 @@ export default class ViewCurrentTrip extends React.Component {
                             </TouchableOpacity>
                             <TouchableOpacity style={[StyleViewCurrentTrip.bottomButton, { width: '40%' }]}
                                 onPress={() => {
-                                        this.props.navigation.navigate('ViewCurrentTripAll',{item:this.state.truckData,flag_CurrentTrip:1})
+                
+                                        // this.props.navigation.navigate('ViewUpcomingTripAll',{item:this.state.truckData,flag_CurrentTrip:1})
+                                this.props.navigation.navigate('ViewUpcomingTrip',{item:this.state.truckData,Flag_currentTtrip:false,flag_upcoming_Trip:"1"});
+
                                 }}
                             >
 

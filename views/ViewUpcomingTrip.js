@@ -17,12 +17,14 @@ export default class ViewUpcomingTrip extends React.Component {
         super(props);
         this.service_type_id = 0,
         this.booking_id = 0,
+        
         this.state = {
             starCount: null,
             inputLabelTrip: '',
             reviewTrip: '',
             invoiceModal_Visible: false,
             cancelModal_Visible: false,
+            isModalVisible_driverDetails:false,
             isSuccesfull: false,
             truckData: '',
             Profile_data: [{ partnerName: 'ABC Service' }],
@@ -34,6 +36,7 @@ export default class ViewUpcomingTrip extends React.Component {
 
         this.service_type_id = this.props.navigation.getParam('service_type_id')
         this.booking_id = this.props.navigation.getParam('booking_id')
+        // this.setState({Flag_currentTtrip:this.props.navigation.getParam('Flag_currentTtrip')});
 
         console.log('bookig_id  ' + JSON.stringify(this.booking_id))
 
@@ -124,14 +127,38 @@ async onResponse(apiConstant, data) {
         )
 
     }
+
+
+driverDetails(){
+    return (
+        <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+            <View style={StyleViewUpcomingTrip.cancelModalView}>
+                <TouchableOpacity style={{ alignSelf: 'flex-end', marginBottom: 5 }}
+                    onPress={() => {
+                        this.setState({ isModalVisible_driverDetails: false });
+                        
+                    }}
+                >
+                    <Image source={require('../images/close.png')}
+                        style={{ width: 15, height: 15 }} />
+                </TouchableOpacity>
+
+               <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 10 }]}>Driver Details</Text> */}
+            </View>
+        </View>
+    )
+    }
+
     render() {
         const { navigation } = this.props
+
+        const Flag_currentTtrip=this.props.navigation.getParam('Flag_currentTtrip')
         const serviceData = navigation.getParam('item');
         const service_name = navigation.getParam('flag_upcoming_Trip');// 1 = upcomingtrip_truking, 2 = upcomingtrip_warehouse, 3 = upcomingtrip_warehouse_trucking,
 
         return (
             <View style={{ flex: 1 }}>
-                <HeaderBar title="VIEW UPCOMING TRIP" isBack={true} isLogout={true} navigation={navigation} />
+                <HeaderBar title={Flag_currentTtrip==false?"VIEW CURRENT TRIP DETAILS":"VIEW UPCOMING TRIP DETAILS"} isBack={true} isLogout={true} navigation={navigation} />
                 <MainPresenter ref={(ref) => { this.presenter = ref }}
                                 onResponse={this.onResponse.bind(this)} />
                 <View style={{ flex: 1 }}>
@@ -875,10 +902,7 @@ async onResponse(apiConstant, data) {
 
                                 </View>
                            
-
-
-
-                        <TouchableOpacity style={[StyleViewUpcomingTrip.bottomButton, { width: '90%', }]}
+                        <TouchableOpacity style={Flag_currentTtrip==false?{display:"none"}:[StyleViewUpcomingTrip.bottomButton, { width: '90%', }]}
                             onPress={() => {
                                 this.setState({ cancelModal_Visible: true })
                             }}
@@ -910,12 +934,28 @@ async onResponse(apiConstant, data) {
                 <Modal
                     animationType='fade'
                     transparent={true}
-                    visible={this.state.invoiceModal_Visible}
+                    visible={this.state.isModalVisible_driverDetails}
                 >
                     <Invoice clickCallback={() => {
                         this.setState({ invoiceModal_Visible: false });
                     }} />
                 </Modal>
+
+
+
+                <Modal
+                    animationType='fade'
+                    transparent={true}
+                    visible={this.state.cancelModal_Visible}
+                    style={{ flex: 1 }}
+                >
+                   {
+                       this.driverDetails()
+                   }
+                </Modal>
+
+
+
 
             </View>
         )
