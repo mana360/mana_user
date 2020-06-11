@@ -3,15 +3,161 @@
     api by  Udayraj
  */
 import React, { Component } from 'react';
-import { View, Image } from 'react-native'
+import { View, Image, Platform } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { StackActions, NavigationActions } from 'react-navigation';
-import { getAuthToken, clearAllData } from '../config/AppSharedPreference';
+import { getAuthToken, clearAllData, setFirebaseToken, getFirebaseToken} from '../config/AppSharedPreference';
 import { MainPresenter } from '../config/MainPresenter'
 import ApiConstants from '../config/ApiConstants';
+import firebase from '@react-native-firebase/app'
+import messaging from '@react-native-firebase/messaging'
+
 export default class Splash extends React.Component {
 
+    channel=""
+
+    constructor(props){
+        super(props)
+        this.state={
+            isNotifcation:false
+        }
+    }
+
     componentDidMount() {
+        if(Platform.OS=="android"){
+            this.notif()
+            //this.firebaseForAndroid()
+        }
+        if(Platform.OS=="ios"){
+            //this.firebaseForIOS()
+        }
+        this.init()
+    }
+
+    async notif(){
+        //let app = await firebase.initializeApp()
+        let token = await messaging().getToken()
+        messaging().onMessage( (payload)=>{
+            console.log("payload ====> "+JSON.stringify(payload))
+        } )
+        console.log("token ====> "+token)
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer)
+        this.notificationListener;
+        this.notificationOpenedListener;
+    }
+
+    firebaseForAndroid(){
+        this.checkPermission();
+        this.messageListener();
+
+       // Build a channel
+        channel = new firebase.notifications.Android.Channel(
+         "daily",
+         "Daily Reminders",
+         firebase.notifications.Android.Importance.High
+       ).setDescription("Reminds you...");
+   
+       // Create the channel
+       firebase.notifications().android.createChannel(channel);
+    }
+
+    checkPermission = async () => {
+        const enabled = await firebase.messaging().hasPermission();
+        if (enabled) {
+            this.getFcmToken();
+        } else {
+            this.requestPermission();
+        }
+    }
+
+    getFcmToken = async () => {
+        const fcmToken = await firebase.messaging().getToken();
+        if (fcmToken) {
+          await setFirebaseToken(fcmToken)
+          console.log("Device Token = "  +fcmToken);
+          this.openHomePage()
+        } else {
+          console.log('Failed', 'No token received');
+        }
+    }
+
+    requestPermission = async () => {
+        try {
+          await firebase.messaging().requestPermission();
+          // User has authorised
+        } catch (error) {
+          console.log(error);
+        }
+    }
+
+    messageListener = async () => {
+        //Triggered when a particular notification has been received in foreground
+        this.notificationListener = firebase.notifications().onNotification((notification) => {
+            const { title, body } = notification;
+            console.log("1  ==== "+ notification.title)
+            this.displayNotification(notification)
+        });
+    
+        //If your app is in background, you can listen for when a notification is clicked / tapped / opened as follows:
+      
+        this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
+          if (notificationOpen) {
+            const { title, body } = notificationOpen.notification;
+            console.log("2 === "+ title)
+            this.displayNotification(notificationOpen.notification)
+            this.props.navigation.navigate("Notification")
+        }   
+        });
+    
+        //If your app is closed, you can check if it was opened by a notification being clicked / tapped / opened as follows:
+      
+        const notificationOpen = await firebase.notifications().getInitialNotification();
+        if (notificationOpen) {
+            const { title, body } = notificationOpen.notification;
+            console.log("3 === "+ title)
+            this.displayNotification(notificationOpen.notification)
+            this.props.navigation.navigate("Notification")
+           
+        }
+
+        //Triggered for data only payload in foreground
+        this.messageListener = firebase.messaging().onMessage((message) => {
+          console.log(JSON.stringify(message));
+        });
+    }
+
+    displayNotification(notification){
+        this.setState({isNotifcation:"true"})
+        const localNotification = new firebase.notifications.Notification({
+          show_in_foreground:true,
+        })
+          .setNotificationId('notification_id')
+          .setTitle(notification.title)
+          .setBody(notification.body) 
+          .android.setChannelId(channel)
+          .android.setSmallIcon('ic_launcher')
+          .android.setPriority(firebase.notifications.Android.Priority.High) 
+          .setData(notification.data);
+        
+          firebase.notifications()
+          .displayNotification(localNotification) 
+          .catch(err => console.log("Notification Builder Error == "+err))
+    
+        //   if(notification.title != null){
+        //       this.props.navigation.navigate("Notification")
+        //   }else if(notification.type == "Promocode"){
+        //     this.props.navigation.navigate("Notification")
+        //   }
+        this.props.navigation.navigate("Notification")
+    }
+
+    firebaseForIOS(){
+    }
+
+    init(){
         let count = 0;
         this.timer = setInterval(async () => {
             count+=1;
@@ -21,10 +167,6 @@ export default class Splash extends React.Component {
             }
         }
         , 1000);
-    }
-    
-    componentWillUnmount() {
-        clearInterval(this.timer)
     }
 
     async checkUser(){
