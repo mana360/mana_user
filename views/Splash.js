@@ -25,22 +25,12 @@ export default class Splash extends React.Component {
 
     componentDidMount() {
         if(Platform.OS=="android"){
-            this.notif()
-            //this.firebaseForAndroid()
+            this.firebaseForAndroid()
         }
         if(Platform.OS=="ios"){
-            //this.firebaseForIOS()
+
         }
         this.init()
-    }
-
-    async notif(){
-        //let app = await firebase.initializeApp()
-        let token = await messaging().getToken()
-        messaging().onMessage( (payload)=>{
-            console.log("payload ====> "+JSON.stringify(payload))
-        } )
-        console.log("token ====> "+token)
     }
 
     componentWillUnmount() {
@@ -49,49 +39,56 @@ export default class Splash extends React.Component {
         this.notificationOpenedListener;
     }
 
-    firebaseForAndroid(){
-        this.checkPermission();
-        this.messageListener();
+    async firebaseForAndroid(){
+        this.checkFirebasePermission()
+        this.getFirebaseMessageListener()
 
-       // Build a channel
-        channel = new firebase.notifications.Android.Channel(
-         "daily",
-         "Daily Reminders",
-         firebase.notifications.Android.Importance.High
-       ).setDescription("Reminds you...");
-   
-       // Create the channel
-       firebase.notifications().android.createChannel(channel);
+        messaging().onMessage( (notification)=>{
+            //when app is working in foreground
+            console.log("notification ====> "+JSON.stringify(notification))
+        } )
+
+        messaging().setBackgroundMessageHandler((notification)=>{
+            //when app is working in background
+        })
     }
 
-    checkPermission = async () => {
-        const enabled = await firebase.messaging().hasPermission();
-        if (enabled) {
-            this.getFcmToken();
-        } else {
-            this.requestPermission();
+    async checkFirebasePermission(){
+        let enabled = await messaging().hasPermission();
+        if(enabled){
+            this.getFirebaseToken()
+        }else{
+            this.getFirebasePermission()
         }
     }
 
-    getFcmToken = async () => {
-        const fcmToken = await firebase.messaging().getToken();
-        if (fcmToken) {
-          await setFirebaseToken(fcmToken)
-          console.log("Device Token = "  +fcmToken);
-          this.openHomePage()
-        } else {
-          console.log('Failed', 'No token received');
+    async getFirebaseToken(){
+        let fcm_token = await messaging().getToken()
+        console.log("fcm token ====> "+fcm_token)
+        await setFirebaseToken(fcm_token)
+    }
+
+    async getFirebasePermission(){
+        try{
+            await messaging().requestPermission();
+        }catch(error){
+
         }
     }
 
-    requestPermission = async () => {
-        try {
-          await firebase.messaging().requestPermission();
-          // User has authorised
-        } catch (error) {
-          console.log(error);
-        }
+    async getFirebaseMessageListener(){
+        this.notificationListener = messaging().onNotificationOpenedApp( (notification)=>{
+            const {title, body} = notification;
+            console.log("Notif Title ===> "+title)
+            this.displayFirebaseNotification(notification)
+        })
     }
+
+    displayFirebaseNotification(notification){
+
+    }
+
+
 
     messageListener = async () => {
         //Triggered when a particular notification has been received in foreground
