@@ -143,7 +143,7 @@ driverDetails(){
                         style={{ width: 15, height: 15 }} />
                 </TouchableOpacity>
 
-               <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 10 }]}>Driver Details</Text> */}
+               <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 10 }]}>Driver Details</Text>
             </View>
         </View>
     )
@@ -941,21 +941,17 @@ driverDetails(){
                     }} />
                 </Modal>
 
-
-
                 <Modal
                     animationType='fade'
                     transparent={true}
-                    visible={this.state.cancelModal_Visible}
+                    // visible={this.state.cancelModal_Visible}
+                     visible={false}
                     style={{ flex: 1 }}
                 >
                    {
                        this.driverDetails()
                    }
                 </Modal>
-
-
-
 
             </View>
         )
