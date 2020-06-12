@@ -13,17 +13,21 @@ export async function getAuthToken() {
     let value = await _getData(AUTH_TOKEN)
     return value
 }
+
 export async function setAuthToken(value, callback = undefined) {
      await _setData(AUTH_TOKEN, value, callback)
 }
+
 export async function getUserData(){
     let value= await _getData(USER_DATA)
     return value
 }
 
 export async function setUserData(userObj){
+    let data =[]
+    data.push(userObj)
     await setAuthToken(userObj.access_token)
-    await _setData(USER_DATA,JSON.stringify(userObj))
+    await _setData(USER_DATA,JSON.stringify(data))
 }
 
 export async function setFirebaseToken(token){

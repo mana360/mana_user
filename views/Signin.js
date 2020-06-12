@@ -3,7 +3,7 @@
     api by - Udayraj
  */
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput,Platform } from 'react-native';
 import { StyleSignIn, StyleSignUp } from '../config/CommonStyles'
 import Constants from '../config/Constants';
 import { StackActions, NavigationActions } from 'react-navigation';
@@ -42,7 +42,7 @@ export default class SignIn extends Component {
      let params = {
        "username": this.state.input_email_id,
        "password": this.state.input_password,
-       "device_type": "2",
+       "device_type": Platform.OS=="android" ? 2 : Platform.OS=="ios" ? 3 : 1,
        "device_token": fbToken==null ?'no-token':fbToken ,
        "app_version": "1"
      }
