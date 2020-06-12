@@ -170,7 +170,6 @@ export default class Splash extends React.Component {
         if (await getAuthToken()) {
             this.presenter.callGetApi(ApiConstants.userStatus, "", true);   // checking for the status of user account
         }else{
-            await clearAllData()
             this.props.navigation.dispatch(
                 StackActions.reset({
                     index: 0,
