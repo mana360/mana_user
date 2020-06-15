@@ -2960,18 +2960,19 @@ const StyleBookingSummary = StyleSheet.create({
         alignItems:'center',
     },
     priceTxt:{
-        width:'75%',
+        width:'50%',
         paddingTop:7,
         fontFamily: "Roboto-Medium",
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
         color:Constants.COLOR_FOOTER_GREY,
     },
     priceVol:{
-        width:'20%',
+        width:'40%',
         paddingTop:7,
         fontFamily: "Roboto-Medium",
         fontSize:20,
         color:Constants.COLOR_FOOTER_GREY,
+        textAlign:'right'
     },
     discntBtn:{
         alignItems:'center',
@@ -3050,7 +3051,6 @@ const StyleBookingSummary = StyleSheet.create({
         marginBottom:10,
     },
     grayBox:{
-        flexDirection:'row',
         backgroundColor:Constants.COLOR_GREY,
         borderRadius:6,
         padding:15,

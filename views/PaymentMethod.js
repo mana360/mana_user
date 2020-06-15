@@ -151,10 +151,7 @@ export default class PaymentMethod extends React.Component {
                         </View>
                     </View>
                 </Modal>
-                {/* pay */}
 
-         
-           
                 <FooterBar navigation={navigation} />
 
             </View>
