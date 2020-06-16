@@ -8,9 +8,12 @@ import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import Invoice from './InvoiceView';
+import { MainPresenter } from '../config/MainPresenter';
+import ApiConstants from '../config/ApiConstants';
 export default class TruckingWarehouseCurrentTripDetails extends React.Component {
     constructor(props) {
         super(props);
+        this.tripDetails=[];
         this.state = {
             starCount: null,
             inputLabelTrip: '',
@@ -18,29 +21,73 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
             modal_Visible: false,
             invoiceModal_Visible: false,
             Truckwarehouse_data: [{ title: 'NYC - SYS', partnername: 'ABC Services', TelephoneNumber: '+56 89232021', Estimated_timetocomplete: '11 PM', estimated_datetocomplete: '11/12/2019', Driver_name: 'Amanda.P', phone_number: '+56 4521241512', }],
-
+            driver_telephonNumber:"",
+            partner_telephoneNumber:"",
+            
             warehouseTrucking_data: [
                 {
-                    title: 'PVR service', booking_id: '1851', status: 'Not yet started', partner_name: 'ABC Service', contact_number: '+56 784520141',
-                    cargo_type: 'Cargo Type 1', cargo_description: 'Lorem ipsomeLorem ipsomeLorem ipsomeLorem ', cargo_handling: 'Yes', numberUsers: '2', quantity: '10', cargo_insurance: 'Yes', dimensions: '10*50*50', Volumetric_weight: '200kg', valueof_load: 'R 200',
-                    dateOF_pickUp: '11/04/2019', pickup_time: '11.00 AM', pickup_location: '275 N Marr Road,CA', destination_location: 'Block no 2,Jackson street', arrival_date: '11/04/2019', arrivalTime: '12.00 AM', truck_name: '407 TATA', mid_point1: 'Lorem ipsome', truckID: '1010',
-                    warehouse_id: '1234', warehouse_type: 'Public', storage_type: 'Refregirator', costPer_sqm: 'R 35', warehouse_location: 'Street 45,Lane2', duration_ofstorage: '11/09/2019 to 15/10/2020',
-                    recursing_requirement: 'Yes', costOf_recurring: 'R 100', cargoHandling_cost: 'R 100', service_frquency: 'Daily', insurance_rate: 'R 500', discount: '10', trip_amount: 'R 500'
+                    // title: 'PVR service', booking_id: '1851', status: 'Not yet started', partner_name: 'ABC Service', contact_number: '+56 784520141',
+                    // cargo_type: 'Cargo Type 1', cargo_description: 'Lorem ipsomeLorem ipsomeLorem ipsomeLorem ', cargo_handling: 'Yes', numberUsers: '2', quantity: '10', cargo_insurance: 'Yes', dimensions: '10*50*50', Volumetric_weight: '200kg', valueof_load: 'R 200',
+                    // dateOF_pickUp: '11/04/2019', pickup_time: '11.00 AM', pickup_location: '275 N Marr Road,CA', destination_location: 'Block no 2,Jackson street', arrival_date: '11/04/2019', arrivalTime: '12.00 AM', truck_name: '407 TATA', mid_point1: 'Lorem ipsome', truckID: '1010',
+                    // warehouse_id: '1234', warehouse_type: 'Public', storage_type: 'Refregirator', costPer_sqm: 'R 35', warehouse_location: 'Street 45,Lane2', duration_ofstorage: '11/09/2019 to 15/10/2020',
+                    // recursing_requirement: 'Yes', costOf_recurring: 'R 100', cargoHandling_cost: 'R 100', service_frquency: 'Daily', insurance_rate: 'R 500', discount: '10', trip_amount: 'R 500'
                 }
             ]
         }
     }
+componentDidMount(){
+    // this.initServices(service_type_id);
+   this.tripDetails= this.props.navigation.getParam("bookingItem");
+}
+// -------------------API------------------
+async initServices(service_type_id){
+    let param={
+    'service_type_id':service_type_id,
+    'flag':1,
+    'start_index':0,
+    'total_count':10},
+    await this.presenter.callPostApi(ApiConstants.getMyBookings, param, true);
+}
+async onResponse(apiConstant, data) {
+    switch (apiConstant) {
+        case ApiConstants.getMyBookings: {
+            if (data.status) {
+                this.setState({dataSource: data.warehouseTrucking_data});
+            //     if(this.truckBooingStatus){
+            //         if (data.truck_booking_list.length != 0) {
+
+                        
+            //             this.setState({
+            //                 dataSource: data.truck_booking_list,
+            //             }) 
+            //     }
+            // }else {
+            //         this.setState({
+            //             dataSource: [],
+            //         })
+                    
+            //     }
+            } else {
+                alert(data.message)
+            }
+
+            break;
+        }
+    }
+}
+
+// ----------------------------------------
 
 
-    dialCall = () => {
+    dialCall = (number) => {
 
         let phoneNumber = '';
 
         if (Platform.OS === 'android') {
-            phoneNumber = 'tel:${1234567890}';
+            phoneNumber = `tel:${number}`;
         }
         else {
-            phoneNumber = 'telprompt:${1234567890}';
+            phoneNumber = `telprompt:${number}`;
         }
 
         Linking.openURL(phoneNumber);
@@ -49,7 +96,8 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
         let { navigation } = this.props
         return (
             <View style={{ flex: 1 }}>
-
+ <MainPresenter ref={(ref) => { this.presenter = ref }}
+                    onResponse={this.onResponse.bind(this)} />
                 <HeaderBar title="TRUCKING + WAREHOUSE  CURRENT TRIP DETAILS" isBack={true} isLogout={true} navigation={navigation} />
                 <View style={{ flex: 1 }}>
 
@@ -106,7 +154,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.Telephonenumber}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.TelephoneNumber}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.partner_contact}</Text>
                                         </View>
                                     </View>
 
@@ -115,7 +163,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                             <Text style={StyleViewCurrentTrip.col1Text}>Estimated time to completion of trip</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.Estimated_timetocomplete}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.date_of_drop}</Text>
                                         </View>
                                     </View>
 
@@ -124,7 +172,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                             <Text style={StyleViewCurrentTrip.col1Text}>Estimated Date for completion of trip</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.estimated_datetocomplete}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.date_of_drop}</Text>
                                         </View>
                                     </View>
 
@@ -133,7 +181,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.DriverName}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.Driver_name}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.driver_name}</Text>
                                         </View>
                                     </View>
 
@@ -142,10 +190,10 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.PhoneNumber}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.phone_number}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.driver_contact}</Text>
                                             <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}
                                             onPress={()=>{
-                                                this.dialCall();
+                                                this.dialCall(result.phone_number);
                                             }}
                                             >
                                                 <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
@@ -159,7 +207,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                                         </View>
                                         <TouchableOpacity style={StyleViewCurrentTrip.col2}
                                             onPress={() => {
-                                                this.props.navigation.navigate('MapViews', { flag: 'truckingWarehouse' })
+                                                this.props.navigation.navigate('MapViews', { flag: 'truckingWarehouse',"latlong":"" })
 
                                             }}
                                         >
@@ -176,7 +224,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
                         <TouchableOpacity style={{ backgroundColor: Constants.COLOR_GREEN, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', width: '50%', marginVertical: 25, borderRadius: 50 }}
                             onPress={() => {
                                 // this.props.navigation.navigate('ViewCurrentTripAll', { item: this.state.warehouseTrucking_data, flag_CurrentTrip: 3 })
-                                this.props.navigation.navigate('ViewUpcomingTrip',{item:this.state.warehouseTrucking_data,Flag_currentTtrip:false,flag_upcoming_Trip:"3"});
+                                this.props.navigation.navigate('ViewUpcomingTrip',{'booking_id':result.truck_booking_id,Flag_currentTtrip:true,flag_upcoming_Trip:"3"});
 
                                 
                             }}

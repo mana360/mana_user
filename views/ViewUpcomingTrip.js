@@ -158,7 +158,7 @@ driverDetails(){
 
         return (
             <View style={{ flex: 1 }}>
-                <HeaderBar title={Flag_currentTtrip==false?"VIEW CURRENT TRIP DETAILS":"VIEW UPCOMING TRIP DETAILS"} isBack={true} isLogout={true} navigation={navigation} />
+                <HeaderBar title={Flag_currentTtrip==true?"VIEW CURRENT TRIP DETAILS":"VIEW UPCOMING TRIP DETAILS"} isBack={true} isLogout={true} navigation={navigation} />
                 <MainPresenter ref={(ref) => { this.presenter = ref }}
                                 onResponse={this.onResponse.bind(this)} />
                 <View style={{ flex: 1 }}>
@@ -902,7 +902,7 @@ driverDetails(){
 
                                 </View>
                            
-                        <TouchableOpacity style={Flag_currentTtrip==false?{display:"none"}:[StyleViewUpcomingTrip.bottomButton, { width: '90%', }]}
+                        <TouchableOpacity style={Flag_currentTtrip==true?{display:"none"}:[StyleViewUpcomingTrip.bottomButton, { width: '90%', }]}
                             onPress={() => {
                                 this.setState({ cancelModal_Visible: true })
                             }}
