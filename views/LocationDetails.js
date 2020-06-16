@@ -49,27 +49,24 @@ export default class LocationDetails extends React.Component {
             isLoadCategoryFilled:0,
             countList:[],
             otherServicesList:[],
-        }
-        this.userDetails="";
+        };
+        this.truck_type_id="";
+        this.load_category_id="";
+        this.other_flag="";
+        this.category_name="";
 
-        }
-componentDidMount(){
-    this.inItService();
-}
-
- async inItService(){
+    }
     
-     this.userDetails=this.props.navigation.getParam('userDetails');
-     console.log("UserDetails===>"+ JSON.stringify(this.userDetails));
-    let i=1
-        for(i=1;i<=15;i++){
-      this.state.countList.push(i);
-      console.log("count==>"+i);
+    componentDidMount(){
+        this.initService();
+    }
 
-        }
+    async initService(){
+     this.truck_type_id=this.props.navigation.getParam('truck_type_id');    
     this.getloadCategoryList();
     await this.presenter.callGetApi(ApiConstants.getotherServices,"",true);
-}
+    }
+
     async openCalender() {
         console.log("called")
         try {
@@ -82,7 +79,7 @@ componentDidMount(){
             if (action !== DatePickerAndroid.dismissedAction) {
                 const finalDate = `${month + 1}/${day}/${year}`;
                 console.log(finalDate)
-                this.setState({ pickup_date: moment(finalDate).format('DD/MM/YYYY') })
+                this.setState({ pickup_date: moment(finalDate).format('YYYY-MM-DD') })
                 console.log("selected date ===>" + this.state.pickup_date)
             }
 
@@ -93,29 +90,30 @@ componentDidMount(){
 
     async openTimer() {
         console.log("Timer called")
-        var { action, minute, hour } = await TimePickerAndroid.open({
-            is24Hour: false,
+        var { action, minute, hour, second } = await TimePickerAndroid.open({
+            is24Hour: true,
         });
         if (action === TimePickerAndroid.dismissedAction) {
             this.setState({ pickup_time: "" })
             return;
         }
         // setting AM/PM and hour to 12 by checking condition
-        let am_pm = 'AM';
+        // let am_pm = 'AM';
 
-        if (hour > 11) {
-            am_pm = 'PM';
-            if (hour > 12) {
-                hour = hour - 12;
-            }
-        }
+        // if (hour > 11) {
+        //     am_pm = 'PM';
+        //     if (hour > 12) {
+        //         hour = hour - 12;
+        //     }
+        // }
 
-        if (hour == 0) {
-            hour = 12;
-        }
-        const selectedTime = `${hour}:${minute} ${am_pm}`;
-        this.setState({ pickup_time: selectedTime })
+        // if (hour == 0) {
+        //     hour = 12;
+        // }
+        const selectedTime = hour+":"+minute+":00";
+        this.setState({ pickup_time:  selectedTime})
     }
+
     getMapInfo(resp) {
         console.log("RESP AALA RE ====>" + resp.results[1].formatted_address);
     }
@@ -124,7 +122,6 @@ componentDidMount(){
         switch (apiConstant) {
           case ApiConstants.LoadCategoryList: {
               if(data.status){
-                  console.log("LoadCategory List => " + JSON.stringify(data.load_category));
                   this.setState({loadCategoryList : data.load_category,isLoadCategoryFilled:1});
 
                 }
@@ -137,7 +134,6 @@ componentDidMount(){
           case ApiConstants.getotherServices:{
               if(data.status){
                         this.setState({otherServicesList:data.other_services});
-                        console.log("service List ===>"+JSON.stringify(this.state.otherServicesList));
               }else{
 
               }
@@ -181,34 +177,34 @@ componentDidMount(){
     this.presenter.callGetApi(ApiConstants.LoadCategoryList,"",true);
     }
 
-getAddress(flag){
-    this.props.navigation.navigate('MapViews', {
-        flag_location:flag, address: (resp) => {
-            console.log("callback flag==>"+flag);
-                      if(flag=="1"){
-                        this.setState({
-                            pick_up_address:resp.results[0].formatted_address,
-                            pick_up_address_lat:resp.results[0].geometry.location.lat,
-                            pick_up_address_long:resp.results[0].geometry.location.lng
-                                });
-                      }
-                      if(flag=="2"){
+    getAddress(flag){
+        this.props.navigation.navigate('MapViews', {
+            flag_location:flag, address: (resp) => {
+                console.log("callback flag==>"+flag);
+                        if(flag=="1"){
                             this.setState({
-                            drop_off_address:resp.results[0].formatted_address,
-                            drop_off_address_lat:resp.results[0].geometry.location.lat,
-                            drop_off_address_long:resp.results[0].geometry.location.lng
-                            });
-                      }
-                      if(flag=='3'){
-                        this.setState({
-                            drop_off_address_1:resp.results[0].formatted_address,
-                            drop_off_address_1_lat:resp.results[0].geometry.location.lat,
-                            drop_off_address_1_long:resp.results[0].geometry.location.lng
-                            });
-                    }
-         }
-    })
-}
+                                pick_up_address:resp.results[0].formatted_address,
+                                pick_up_address_lat:resp.results[0].geometry.location.lat,
+                                pick_up_address_long:resp.results[0].geometry.location.lng
+                                    });
+                        }
+                        if(flag=="2"){
+                                this.setState({
+                                drop_off_address:resp.results[0].formatted_address,
+                                drop_off_address_lat:resp.results[0].geometry.location.lat,
+                                drop_off_address_long:resp.results[0].geometry.location.lng
+                                });
+                        }
+                        if(flag=='3'){
+                            this.setState({
+                                drop_off_address_1:resp.results[0].formatted_address,
+                                drop_off_address_1_lat:resp.results[0].geometry.location.lat,
+                                drop_off_address_1_long:resp.results[0].geometry.location.lng
+                                });
+                        }
+            }
+        })
+    }
 
     render() {
 
@@ -216,14 +212,14 @@ getAddress(flag){
         return (
             <View style={{ flex: 1, }}>
 
-                {/* Header Start */}
                 <HeaderBar title="Location Details" isBack={true} isLogout={true} navigation={navigation} />
-                {/* Header Close */}
+
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
 
-                {/* Main Body Start */}
                 <ScrollView bounces={false} style={{ width: wp('100%') }}>
+
                     <View style={{ flex: 1, backgroundColor: Constants.COLOR_WHITE }}>
+
                         <View style={StyleLocationDetails.locationWrapp}>
 
                             <View style={StyleLocationDetails.inputContainer}>
@@ -254,6 +250,7 @@ getAddress(flag){
                                 </TouchableOpacity>
 
                             </View>
+                            
                             <View style={StyleLocationDetails.inputContainer}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.AddressDetails}</Text>
@@ -270,7 +267,6 @@ getAddress(flag){
                                     }
                                     style={StyleLocationDetails.inputBox} />
                             </View>
-
 
                             <View style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 20, width: '94%' }] : [StyleLocationDetails.inputContainer, { marginBottom: 20 }]}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
@@ -298,6 +294,7 @@ getAddress(flag){
                                 </TouchableOpacity>
 
                             </View>
+                            
                             <View style={StyleLocationDetails.inputContainer}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.AddressDetails}</Text>
@@ -314,7 +311,6 @@ getAddress(flag){
                                     }
                                     style={StyleLocationDetails.inputBox} />
                             </View>
-
 
                             <TouchableOpacity
                                 style={this.state.add_nextAddress == '1' ? { position: "absolute", right: 10, top: '22%', } : { display: "none" }}
@@ -351,6 +347,7 @@ getAddress(flag){
                                 
 
                             </View>
+                            
                             <View  style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 35,paddingLeft:15 }] : { display: 'none' }}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.AddressDetails}</Text>
@@ -367,7 +364,6 @@ getAddress(flag){
                                     }
                                     style={StyleLocationDetails.inputBox} />
                             </View>
-
 
                             <TouchableOpacity style={this.state.add_nextAddress?{display:'none'}:StyleLocationDetails.nextAddrBtn}
                                 onPress={() => {
@@ -435,7 +431,7 @@ getAddress(flag){
                                     <Text style={[StyleLocationDetails.labelTextNew, { textTransform: 'capitalize' }]}>{Constants.LOAD_CATEGORY}</Text>
                                 </View>
                                 <Picker
-                                     ref={(ref)=>{this.input_loadcategory = ref}}
+                                    ref={(ref)=>{this.input_loadcategory = ref}}
                                     mode='dropdown'
                                     style={{ color: Constants.COLOR_GREY_DARK, width: '95%', alignSelf: 'center', paddingVertical: 20 }}
                                     selectedValue={this.state.load_category}
@@ -444,14 +440,17 @@ getAddress(flag){
                                         console.log(value);
                                         this.state.loadCategoryList.map((Item,index)=>{
                                            if(value==Item.category_name){
-                                            console.log("ID++>"+Item.category_id);
-                                               this.setState({load_category_id:Item.category_id,other_flag:Item.other_flag});
-                                               console.log("ID++>"+Item.category_id);
+                                                this.load_category_id=Item.category_id;
+                                                this.other_flag=Item.other_flag
+                                                this.category_name=Item.category_name
+                                                this.setState({load_category_id:Item.category_id,other_flag:Item.other_flag});
+                                                console.log("id===> "+this.load_category_id)
+                                                console.log("flag===> "+this.other_flag)
                                            }
                                         })
                                     }}
                                 >
-                                    <Picker.Item label='Select Load Category' value='-1' />
+                                    <Picker.Item key={0} label='Select Load Category' value='-1' />
                                  {
                                      this.state.isLoadCategoryFilled==1
                                      ?
@@ -470,21 +469,20 @@ getAddress(flag){
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.LOAD_CATEGORY}</Text>
                                 </View>
                                 <TextInput 
-                                placeholder='Enter Load Category' 
-                                style={[StyleLocationDetails.inputBox, { width: '90%',paddingLeft:15 }]}
+                                    placeholder='Enter Load Category'
+                                    style={[StyleLocationDetails.inputBox, { width: '90%',paddingLeft:15 }]}
                                     value={this.state.load_Category_Manualtext}
                                     onChangeText={(value)=>{
                                         this.setState({load_Category_Manualtext:value});
                                     }}
-                                    
                                 />
                               
                             </View>
 
                             <TouchableOpacity
                                 onPress={() => {
-                                 
-                                    let user_data={
+                                    let booking_data={
+                                        "truck_trip_id" : this.truck_type_id,
                                         "pick_up_address": this.state.pick_up_address,
                                         "pick_up_address_lat":this.state.pick_up_address_lat,
                                         "pick_up_address_long":this.state.pick_up_address_long,
@@ -500,24 +498,20 @@ getAddress(flag){
                                         "drop_off_address_1_long":this.state.drop_off_address_1_long,
                                         "drop_off_address_1Details": this.state. drop_off_address_1Details,
 
-
                                         "pickupDate":this.state.pickup_date,
                                         "pickupTime":this.state.pickup_time,
                                         "instruction":this.state.instruction_1,
+                                        "category_name":this.category_name,
                                         "load_category":this.state.other_flag==1?this.state.load_Category_Manualtext:this.state.load_category,
-                                        "load_category_id":this.state.other_flag==0?this.state.load_category_id:this.state.other_flag,
-                                       " other_flag":this.state.other_flag,
-                                        
+                                        "load_category_id":this.other_flag==0?this.load_category_id:this.other_flag,
+                                       " other_flag":this.other_flag,
                                     }
-                                  
 
                                     if(!this.isValid()){
                                     }else{
-                                    this.props.navigation.navigate('BookingSummary',{userDetails_1:this.userDetails,userDetails_2:user_data});
+                                    this.props.navigation.navigate('BookingSummary',{'booking_data':booking_data});
                                     }
                                     // this.props.navigation.navigate('BookingSummary',{userDetails_1:this.userDetails,userDetails_2:user_data});
-
-
                                 }}
                                 style={StyleLocationDetails.logButton}
                             >
@@ -527,11 +521,8 @@ getAddress(flag){
                         </View>
                     </View>
                 </ScrollView>
-                {/* Main Body Close */}
 
-                {/* Footer Start */}
                 <FooterBar navigation={navigation} />
-                {/* Footer Close */}
 
             </View>
         )

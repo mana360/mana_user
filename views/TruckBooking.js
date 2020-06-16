@@ -28,7 +28,7 @@ export default class TruckBooking extends React.Component {
 
     }
     componentDidMount() {
-        this.presenter.callGetApi(ApiConstants.getDashboardData, "", true)
+        this.presenter.callGetApi(ApiConstants.getDashboardData, "", true);
     }
     onResponse(apiConstant, data) {
         // console.log("kj")
@@ -85,6 +85,7 @@ export default class TruckBooking extends React.Component {
                                             {(fill) => (<Text style={{ color: "#9ABD08" }}> {item.percent} </Text>)}
                                         </AnimatedCircularProgress>
                                     </View>
+                                  
                                     <View style={StyleTruckBooking.col2}>
                                         <Text style={[StyleTruckBooking.labelText2]}>{item.title}</Text>
                                         <Text style={StyleTruckBooking.descText}> {item.desc} </Text>
@@ -100,6 +101,7 @@ export default class TruckBooking extends React.Component {
                                             <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>
                                         </TouchableOpacity>
                                     </View>
+                             
                                 </View>
                             </View>
 

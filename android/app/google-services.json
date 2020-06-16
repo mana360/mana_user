@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "184064753592",
+    "firebase_url": "https://mana360cust.firebaseio.com",
+    "project_id": "mana360cust",
+    "storage_bucket": "mana360cust.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184064753592:android:c1d7277dfec4558b6a194d",
+        "android_client_info": {
+          "package_name": "com.mana360_customeruser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184064753592-lsk2vt097f3p1t32fq9ebk7r3ds2f9c5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI-HnXdaQCUdebzBwpFBBBo1Dfcw4e6T8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "184064753592-lsk2vt097f3p1t32fq9ebk7r3ds2f9c5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

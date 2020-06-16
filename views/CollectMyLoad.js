@@ -125,6 +125,7 @@ export default class CollectMyLoad extends React.Component {
             // </View>
         )
     }
+
     ReferAFriend() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)', }}>
@@ -215,6 +216,7 @@ export default class CollectMyLoad extends React.Component {
             </View>
         )
     }
+
     componentDidMount() {
         this.presenter.callGetApi(ApiConstants.getRateCard, "", true);
         this.presenter.callGetApi(ApiConstants.getDashboardData, "", true);
@@ -336,13 +338,13 @@ export default class CollectMyLoad extends React.Component {
                 <FlatList
                     data={this.state.collectMyLoadData}
                     extraData={this.state}
-                    keyExtractor={(index) => { index.toString() }}
+                    keyExtractor={(index) =>index.toString()}
                     numColumns={1}
                     renderItem={
                         ({ item, index }) =>
-                            <View style={StyleTruckBooking.row}>
+                            <View style={[StyleTruckBooking.row,{paddingVertical:20,paddingBottom:18}]}>
                                 
-                                <View style={StyleTruckBooking.col1}>
+                                {/* <View style={StyleTruckBooking.col1}>
                                     
                                     <AnimatedCircularProgress
                                         size={90}
@@ -356,15 +358,13 @@ export default class CollectMyLoad extends React.Component {
                                         {(fill) => (<Text style={{ color: "#9ABD08" }}> {item.percent} </Text>)}
                                     </AnimatedCircularProgress>
 
-                                </View>
+                                </View> */}
 
                                 <View style={StyleTruckBooking.col2}>
                                     
-                                    <Text style={[StyleTruckBooking.labelText2]}>{item.title}</Text>
                                     
-                                    <Text style={StyleTruckBooking.descText}>{item.desc}</Text>
                                     
-                                    <TouchableOpacity style={StyleTruckBooking.button}
+                                    <TouchableOpacity style={[StyleTruckBooking.button,{paddingHorizontal:15,width:'75%',alignSelf:'center'}]}
                                         onPress={() => {
                                             item.type == "upcoming"
                                                 ?
@@ -374,7 +374,9 @@ export default class CollectMyLoad extends React.Component {
                                                 null
                                         }}
                                     >
-                                        <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>
+                                    <Text style={[StyleTruckBooking.labelText2,{color:Constants.COLOR_WHITE}]}>{item.type=="upcoming"?"New Bookings":"My Bookings"}</Text>
+                                        
+                                        {/* <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text> */}
                                     </TouchableOpacity>
                                 
                                 </View>
@@ -445,9 +447,7 @@ export default class CollectMyLoad extends React.Component {
                 </Modal>
 
                 <RBSheet
-                    ref={ref => {
-                        this.RBSheet = ref;
-                    }}
+                    ref={ref => { this.RBSheet = ref; }}
                     height={600}
                     duration={250}
                     customStyles={{
@@ -502,9 +502,9 @@ export default class CollectMyLoad extends React.Component {
                                                 <TouchableOpacity
                                                     onPress={() => {
                                                         this.RBSheet.close();
-                                                        this.props.navigation.navigate('LocationDetails',{userDetails:item});
+                                                        this.props.navigation.navigate('LocationDetails',{'truck_type_id':item.category_id});
                                                     }}
-                                                    style={StyleCollectMyLoad.truckBtn}>
+                                                    style={[StyleCollectMyLoad.truckBtn]}>
                                                     <Text style={StyleCollectMyLoad.truckBtnText}>Select Truck</Text>
                                                 </TouchableOpacity>
                                             

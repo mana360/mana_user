@@ -68,7 +68,7 @@ export default class WarehouseServicesCurrentTrip extends React.Component {
                     renderItem={({ item }, index) => {
                         return (
                             <TouchableOpacity style={StyleCurrentTrip.row} onPress={() => {
-                                 this.props.navigation.navigate('ViewCurrentTripAll',{item:this.state.warehouse_data,flag_CurrentTrip:2}) }}>
+                                 this.props.navigation.navigate('ViewUpcomingTrip',{item:this.state.warehouse_data,Flag_currentTtrip:false,flag_upcoming_Trip:"2"}) }}>
 
                                 <View style={StyleCurrentTrip.col1}>
                                     <Image
@@ -78,6 +78,7 @@ export default class WarehouseServicesCurrentTrip extends React.Component {
                                 </View>
 
                                 <View style={StyleCurrentTrip.col2}>
+
                                     <View style={StyleCurrentTrip.bottomLine}>
                                         <Text style={StyleCurrentTrip.title}>{item.title}</Text>
                                     </View>
@@ -103,6 +104,7 @@ export default class WarehouseServicesCurrentTrip extends React.Component {
                                         <Text style={StyleCurrentTrip.labeltext}>{Constants.PickUpTime}</Text>
                                         <Text style={StyleCurrentTrip.datacss}>{item.dropUpTime}</Text>
                                     </View>
+                               
                                 </View>
 
                                 <View style={StyleCurrentTrip.col3}>

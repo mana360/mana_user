@@ -22,15 +22,13 @@ export default class CurrentTrip extends React.Component {
         }
     }
 
-     componentDidMount() {
+   async  componentDidMount() {
 
         this.truckBooingStatus = this.props.navigation.getParam('flag_truck_booking')
         this.service_type_id = this.props.navigation.getParam('service_type_id') 
-  
-        if( this.truckBooingStatus){
-            this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':this.service_type_id,'flag':1,
+   
+      await this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':1,'flag':1,
              'start_index':0,'total_count':10}, true)
-         }
          
     }
 
@@ -40,6 +38,8 @@ export default class CurrentTrip extends React.Component {
                 if (data.status) {
                     if(this.truckBooingStatus){
                         if (data.truck_booking_list.length != 0) {
+
+                            
                             this.setState({
                                 dataSource: data.truck_booking_list,
                             }) 
@@ -94,28 +94,39 @@ export default class CurrentTrip extends React.Component {
                               
                                 <View style={StyleCurrentTrip.col2}>
                                     <View style={StyleCurrentTrip.bottomLine}>
-                                        <Text style={StyleCurrentTrip.title}>{item.title}</Text>
+                                        <Text style={StyleCurrentTrip.title}>{item.truck_booking_id}</Text>
                                     </View>
 
                                     <View style={{ flexDirection: 'row', paddingTop: 3 }}>
+                                        <View style={{flexDirection:"row"}}>
                                         <Image source={require('../images/date_icon.png')}
                                             style={[StyleCurrentTrip.imageIcon]}
                                         />
-                                        <Text style={StyleCurrentTrip.labeltext}>{Constants.Date}</Text>
+                        
+                                        <Text style={StyleCurrentTrip.labeltext}>{Constants.pickupDate}:</Text>
+                                        <Text style={[StyleCurrentTrip.datacss,{paddingRight:10}]}>{item.date_of_pickup}</Text>
+                                        </View>
+                                        <View style={{flexDirection:"row"}}>
+                                        <Image source={require('../images/date_icon.png')}
+                                            style={[StyleCurrentTrip.imageIcon]}
+                                        />
+                        
+                                        <Text style={StyleCurrentTrip.labeltext}>{Constants.PickUpTime}:</Text>
                                         <Text style={StyleCurrentTrip.datacss}>{item.date}</Text>
+                                        </View>
                                     </View>
 
                                     <View style={{ flexDirection: 'row' }}>
-                                        <Image source={require('../images/time_icon.png')}
+                                        <Image source={require('../images/date_icon.png')}
                                             style={StyleCurrentTrip.imageIcon}
                                         />
-                                        <Text style={StyleCurrentTrip.labeltext}>{Constants.PickUpTime}</Text>
+                                        <Text style={StyleCurrentTrip.labeltext}>{Constants.dropoffDate}:</Text>
                                         <Text style={StyleCurrentTrip.datacss}>{item.pickUpTime}</Text>
 
                                         <Image source={require('../images/time_icon.png')}
                                             style={[StyleCurrentTrip.imageIcon, { marginLeft: 10 }]}
                                         />
-                                        <Text style={StyleCurrentTrip.labeltext}>{Constants.PickUpTime}</Text>
+                                        <Text style={StyleCurrentTrip.labeltext}>{Constants.DropUpTime}:</Text>
                                         <Text style={StyleCurrentTrip.datacss}>{item.dropUpTime}</Text>
                                     </View>
                                 </View>

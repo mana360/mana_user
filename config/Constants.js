@@ -70,8 +70,11 @@ const Constants = {
     PartnerName: "Partner's Name",
     Telephonenumber: 'Telephone Number',
     DateOfPickUp: 'Date of Pick up',
-    PickUpTime: 'Pick up Time',
-    DropUpTime: 'Drop up Time',
+    pickupDate:"Pickup Date",
+    dropoffDate:"Dropoff Date",
+
+    PickUpTime: 'Pickup Time',
+    DropUpTime: 'Dropoff Time',
     ArrivalTime: 'Arrival Time',
     PickUpLocation: 'Pick up Location',
     frequency: 'Frequency',

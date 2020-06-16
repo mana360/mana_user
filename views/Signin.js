@@ -3,7 +3,7 @@
     api by - Udayraj
  */
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput,Platform } from 'react-native';
 import { StyleSignIn, StyleSignUp } from '../config/CommonStyles'
 import Constants from '../config/Constants';
 import { StackActions, NavigationActions } from 'react-navigation';
@@ -34,11 +34,15 @@ export default class SignIn extends Component {
      if (!this.isValid()) {
        return
      }
+     
+     global.temp_emailId = this.state.input_email_id;
+     global.temp_password = this.state.input_password;
+
      let fbToken=await getFirebaseToken()
      let params = {
        "username": this.state.input_email_id,
        "password": this.state.input_password,
-       "device_type": "2",
+       "device_type": Platform.OS=="android" ? 2 : Platform.OS=="ios" ? 3 : 1,
        "device_token": fbToken==null ?'no-token':fbToken ,
        "app_version": "1"
      }
@@ -90,6 +94,10 @@ export default class SignIn extends Component {
               actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
             }))
         }else{
+            // 203 = profile setup incomplete
+            // 204 = inactive / not verified
+            // 205 = deactivated by admin
+            // 206 = other errors
             if(data.status_code == 203){
               // incomplete profile setup
               this.props.navigation.dispatch(
