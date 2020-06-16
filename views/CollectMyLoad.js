@@ -125,6 +125,7 @@ export default class CollectMyLoad extends React.Component {
             // </View>
         )
     }
+
     ReferAFriend() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)', }}>
@@ -215,6 +216,7 @@ export default class CollectMyLoad extends React.Component {
             </View>
         )
     }
+
     componentDidMount() {
         this.presenter.callGetApi(ApiConstants.getRateCard, "", true);
         this.presenter.callGetApi(ApiConstants.getDashboardData, "", true);
@@ -336,7 +338,7 @@ export default class CollectMyLoad extends React.Component {
                 <FlatList
                     data={this.state.collectMyLoadData}
                     extraData={this.state}
-                    keyExtractor={(index) => { index.toString() }}
+                    keyExtractor={(index) =>index.toString()}
                     numColumns={1}
                     renderItem={
                         ({ item, index }) =>
@@ -445,9 +447,7 @@ export default class CollectMyLoad extends React.Component {
                 </Modal>
 
                 <RBSheet
-                    ref={ref => {
-                        this.RBSheet = ref;
-                    }}
+                    ref={ref => { this.RBSheet = ref; }}
                     height={600}
                     duration={250}
                     customStyles={{
@@ -502,9 +502,9 @@ export default class CollectMyLoad extends React.Component {
                                                 <TouchableOpacity
                                                     onPress={() => {
                                                         this.RBSheet.close();
-                                                        this.props.navigation.navigate('LocationDetails',{userDetails:item});
+                                                        this.props.navigation.navigate('LocationDetails',{'truck_type_id':item.category_id});
                                                     }}
-                                                    style={StyleCollectMyLoad.truckBtn}>
+                                                    style={[StyleCollectMyLoad.truckBtn]}>
                                                     <Text style={StyleCollectMyLoad.truckBtnText}>Select Truck</Text>
                                                 </TouchableOpacity>
                                             
