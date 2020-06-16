@@ -1,16 +1,16 @@
 /* screen -MANAPPCUS069
     design by -Harshad 
     redesign by Udayraj (call for calendar, timer and map)
+    dev + api by Udayraj (place booking order)
  */
 import React, { Component } from 'react';
-import {View, Text, TouchableOpacity, Image, ScrollView, TextInput, Modal, DatePickerAndroid, TimePickerAndroid} from 'react-native';
+import {View, Text, TouchableOpacity, Image, ScrollView, TextInput, Modal, DatePickerAndroid, TimePickerAndroid, TouchableHighlight} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {StyleBookingSummary, StyleLocationDetails} from '../config/CommonStyles';
+import {StyleBookingSummary, StyleLocationDetails, StylePaymentMethod} from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import Textarea from 'react-native-textarea';
-import { Dropdown } from 'react-native-material-dropdown';
 import moment from 'moment'
 import { MainPresenter } from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
@@ -30,6 +30,7 @@ export default class BookingSummary extends React.Component{
         this.discountCoupon_amount=0;
         this.discountCoupon_id=0;
         this.state={
+            paymentSuccessModal:false,
             pick_up_address: "",
             pick_up_address_lat:"",
             pick_up_address_long:"",
@@ -273,8 +274,17 @@ export default class BookingSummary extends React.Component{
        await this.presenter.callPostApi(ApiConstants.calculateBooking,params,true);
     }
 
+    doPayment(resp){
+        this.props.navigation.navigate("PaymentMethod", {paymentSuccess : ()=>{
+            console.log("payment callback received")
+            this.setState({paymentSuccessModal:true})
+            }
+        })
+    }
+
    async onResponse(apiConstant, data) {
        switch (apiConstant) {
+
          case ApiConstants.getotherServices: {
            if (data.status) { 
                console.log(data);
@@ -284,13 +294,12 @@ export default class BookingSummary extends React.Component{
              }
              break;
          }
+
          case ApiConstants.bookCMLTrip:{
              if(data.status){
-               //this.props.navigation.navigate('PaymentMethod');
+               this.doPayment(data)
              }else{
                  alert(data.message);
-            //    this.props.navigation.navigate('PaymentMethod');
-
              }
              break;
          }
@@ -873,7 +882,7 @@ export default class BookingSummary extends React.Component{
                                                                     // -------------------------------------------------------------------
                                                                 }}
                                                                 >
-                                                                    <Picker.Item label='Select' value='-1' />
+                                                                    <Picker.Item label='Select' value='0' />
                                                                 {
                                                                     this.state.countList.map((item,index)=>
                                                                     
@@ -911,9 +920,44 @@ export default class BookingSummary extends React.Component{
                                             </View>
                                         </View>
                                     </Modal>
-                
-                <FooterBar navigation={navigation}/>            
-        
+                    <Modal
+                        animationType="fade"
+                        transparent={true}
+                        visible={this.state.paymentSuccessModal}
+                    >
+                        <View style={StylePaymentMethod.popmodule}>
+
+                            <View style={StylePaymentMethod.popmain}>
+                                
+                                <TouchableHighlight
+                                    style={StylePaymentMethod.popclose}
+                                    onPress={() => {
+                                        this.setState({paymentSuccessModal:false})
+                                        this.props.navigation.navigate('Dashboard')
+                                    }}
+                                >
+                                    <Image style={StylePaymentMethod.popcloseimg} source={require('../images/close.png')}></Image>
+                                </TouchableHighlight>
+
+                                <View style={StylePaymentMethod.popbody}>
+                                    <Image style={StylePaymentMethod.popbodythanksimg} source={require('../images/thank.jpg')}></Image>
+                                    <Text style={StylePaymentMethod.popbodythankstxt}>Thank You For Booking with us! </Text>
+                                    <View style={StylePaymentMethod.popbodynotification}>
+                                        <Text style={StylePaymentMethod.popbodynotificationtxt}>
+                                            A Driver will be assigned approximately an hour before arriving on {this.state.pickup_date} {this.state.pick_time}
+                                        </Text>
+                                    </View>
+                                    <View style={StylePaymentMethod.popbodynotification}>
+                                        <Text style={StylePaymentMethod.popbodynotificationtxt}>
+                                            You will receive an OTP shortly. Kindly share the OTP with the driver for verification
+                                        </Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    </Modal>
+
+                <FooterBar navigation={navigation}/>
         </View>
         )
     }

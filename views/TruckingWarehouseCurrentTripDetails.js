@@ -45,7 +45,7 @@ async initServices(service_type_id){
     'service_type_id':service_type_id,
     'flag':1,
     'start_index':0,
-    'total_count':10},
+    'total_count':10}
     await this.presenter.callPostApi(ApiConstants.getMyBookings, param, true);
 }
 async onResponse(apiConstant, data) {
@@ -96,9 +96,11 @@ async onResponse(apiConstant, data) {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1 }}>
- <MainPresenter ref={(ref) => { this.presenter = ref }}
-                    onResponse={this.onResponse.bind(this)} />
-                <HeaderBar title="TRUCKING + WAREHOUSE  CURRENT TRIP DETAILS" isBack={true} isLogout={true} navigation={navigation} />
+            
+            <MainPresenter ref={(ref) => { this.presenter = ref }} 
+                            onResponse={this.onResponse.bind(this)}
+                            navigation={this.props.navigation} />
+                            <HeaderBar title="TRUCKING + WAREHOUSE  CURRENT TRIP DETAILS" isBack={true} isLogout={true} navigation={navigation} />
                 <View style={{ flex: 1 }}>
 
                     <ScrollView style={{ width: '100%' }} bounces={false}>

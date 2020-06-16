@@ -36,10 +36,11 @@ export default class CurrentTrip extends React.Component {
 
     async initServices(service_type_id){
         let param={
-        'service_type_id':service_type_id,
-        'flag':1,
-        'start_index':0,
-        'total_count':10},
+            'service_type_id':service_type_id,
+            'flag':1,
+            'start_index':0,
+            'total_count':10
+        }
         await this.presenter.callPostApi(ApiConstants.getMyBookings, param, true);
     }
     async onResponse(apiConstant, data) {
@@ -79,6 +80,9 @@ export default class CurrentTrip extends React.Component {
 
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
+            <MainPresenter ref={(ref) => { this.presenter = ref }} 
+                onResponse={this.onResponse.bind(this)}
+                 navigation={this.props.navigation} />
                 <HeaderBar 
                     title="Current Trips"
                     isBack={true} isLogout={true} navigation={navigation} />

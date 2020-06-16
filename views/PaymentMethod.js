@@ -14,34 +14,27 @@ export default class PaymentMethod extends React.Component {
 
     constructor() {
         super();
+        this.payment_method="",
         this.state = {
-
-            support_subject: "Lorem ipsum",
-            support_message: "",
-            support_contact_number: "8866114477",
-            modal_Visible: false,
-            isUser: '',
-            isTruck: '',
-            modal_cancel: false,
+            payment_method:"",
             modalVisible: false,
             secondmodalVisible: false,
 
         }
     }
 
-    setModalVisible(visible) {
-        this.setState({ modalVisible: visible });
+    onPaymentSucess(){
+        this.props.navigation.goBack()
+        this.props.navigation.state.params.paymentSuccess()
     }
-    secondmodalVisible(visible) {
-        this.setState({ modalVisible: false });
-        this.setState({ secondmodalVisible: visible });
-    }
-    render() {
 
+    render() {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, }}>
+
                 <HeaderBar title="Payment Method" isBack={true} isPaymentBack={true} isNotification={true} navigation={navigation} />
+                
                 <ScrollView bounces={false} style={{ width: wp('100%'), }}>
                     {/* <View style={StylePaymentMethod.paymentamount}>
                 
@@ -67,28 +60,47 @@ export default class PaymentMethod extends React.Component {
                     </View> */}
 
                     <View style={StylePaymentMethod.paymentmethod}>
+
                         <Text style={StylePaymentMethod.choosetext}>CHOOSE YOUR PAYMENT METHOD </Text>
+                        
                         <View style={StylePaymentMethod.choosetype}>
 
-                            <TouchableOpacity style={ this.state.payment_method=="cash" ? StylePaymentMethod.onlinepay : StylePaymentMethod.cashpickup}
-                                onPress={()=>{this.setState({payment_method:"cash",secondmodalVisible:true})}}>
+                            <TouchableOpacity 
+                                style={ this.state.payment_method=="cash" ? StylePaymentMethod.onlinepay : StylePaymentMethod.cashpickup}
+                                onPress={()=>{
+                                    this.payment_method="cash"
+                                    this.setState({payment_method:"cash"})
+                                }}
+                            >
                                 <Text style={ this.state.payment_method=="cash" ? StylePaymentMethod.onlinepaytxt : StylePaymentMethod.cashpickuptxt}>Cash On Pick Up</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={StylePaymentMethod.onlinepay} onPress={() => { this.setModalVisible(true); }} underlayColor='#fff'>
-                                <Text style={StylePaymentMethod.onlinepaytxt}>Online Payment </Text>
+                            
+                            <TouchableOpacity 
+                                style={ this.state.payment_method=="online" ? StylePaymentMethod.onlinepay : StylePaymentMethod.cashpickup}
+                                onPress={() => { 
+                                    this.payment_method="online"
+                                    this.setState({payment_method:"online",}) 
+                                }}
+                                underlayColor='#fff'
+                            >
+                                <Text style={this.state.payment_method=="online" ? StylePaymentMethod.onlinepaytxt : StylePaymentMethod.cashpickuptxt}>Online Payment </Text>
                             </TouchableOpacity>
 
                         </View>
 
                         <View style={StylePaymentMethod.paymentmethodpaybtn}>
-                            <TouchableOpacity style={StylePaymentMethod.paybtn}
-                                onPress={()=>{this.setState({ modalVisible:true})}}
+                            <TouchableOpacity 
+                                style={[StylePaymentMethod.paybtn,{backgroundColor : this.state.payment_method=="" ? Constants.COLOR_GREY_LIGHT  : Constants.COLOR_GREEN,}]}
+                                disabled={this.state.payment_method=="" ? true : false}
+                                onPress={()=>{
+                                    this.payment_method=="cash" ? this.onPaymentSucess() : this.setState({modalVisible:true})
+                                }}
                             >
                                 <Text style={StylePaymentMethod.paybtntxt}>Pay</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                
+
                 </ScrollView>
 
                 {/* PaymentGetway */}
@@ -98,55 +110,27 @@ export default class PaymentMethod extends React.Component {
                     visible={this.state.modalVisible}
                 >
                     <View style={StylePaymentMethod.popmodule}>
+
                         <View style={StylePaymentMethod.popmain}>
-                            <TouchableHighlight style={StylePaymentMethod.popclose} onPress={() => { this.setModalVisible(!this.state.modalVisible); }}>
+
+                            <TouchableHighlight style={StylePaymentMethod.popclose} onPress={() => { this.setState({modalVisible:false}) }}>
                                 <Image style={StylePaymentMethod.popcloseimg} source={require('../images/close.png')}></Image>
                             </TouchableHighlight>
 
                             <View style={StylePaymentMethod.popbody}>
                                 <Image style={StylePaymentMethod.popbodyimg} source={require('../images/onlinepay.jpg')}></Image>
                                 <Text style={StylePaymentMethod.popbodytxt}>Redirecting to Payment Gateway.</Text>
+                                
                                 <TouchableOpacity
-                                    onPress={() => { this.secondmodalVisible(true); }}
+                                    onPress={() => {
+                                        this.setState({modalVisible:false})
+                                        this.onPaymentSucess()
+                                    }}
                                     style={StylePaymentMethod.popbtnwidth}
                                     underlayColor='#fff'>
                                     <Text style={StylePaymentMethod.popgrnbtn}>OK</Text>
                                 </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
 
-                <Modal
-                    animationType="fade"
-                    transparent={true}
-                    visible={this.state.secondmodalVisible}
-                >
-                    <View style={StylePaymentMethod.popmodule}>
-                        <View style={StylePaymentMethod.popmain}>
-                            <TouchableHighlight
-                                style={StylePaymentMethod.popclose}
-                                onPress={() => {
-                                    this.secondmodalVisible(false);
-                                    this.props.navigation.navigate('Dashboard')
-                                }}
-                            >
-                                <Image style={StylePaymentMethod.popcloseimg} source={require('../images/close.png')}></Image>
-                            </TouchableHighlight>
-
-                            <View style={StylePaymentMethod.popbody}>
-                                <Image style={StylePaymentMethod.popbodythanksimg} source={require('../images/thank.jpg')}></Image>
-                                <Text style={StylePaymentMethod.popbodythankstxt}>Thank You For Booking with us! </Text>
-                                <View style={StylePaymentMethod.popbodynotification}>
-                                    <Text style={StylePaymentMethod.popbodynotificationtxt}>
-                                        A Driver will be assigned approximately an hour before arriving on "Pick up Date & Time
-                                    </Text>
-                                </View>
-                                <View style={StylePaymentMethod.popbodynotification}>
-                                    <Text style={StylePaymentMethod.popbodynotificationtxt}>
-                                        You will receive an OTP shortly. Kindly share the OTP with the driver for verification
-                                    </Text>
-                                </View>
                             </View>
                         </View>
                     </View>
