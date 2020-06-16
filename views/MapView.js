@@ -172,8 +172,6 @@ export default class MapViews extends React.Component {
                   }}
                   coordinate={{latitude:this.state.current_latitude,longitude:this.state.current_longitude}}
                 />
-                
-            
 
           </MapView>
   }

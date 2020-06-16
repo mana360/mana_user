@@ -10,6 +10,7 @@ import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import constants from 'jest-haste-map/build/constants';
 import { MainPresenter } from '../config/MainPresenter';
+import ApiConstants from '../config/ApiConstants';
 export default class UpcomingTrip extends React.Component {
     constructor(props) {
         super(props);
@@ -17,6 +18,7 @@ export default class UpcomingTrip extends React.Component {
         this.warehouseService = false,
         this.truckAndWareHouse = false,
         this.collectMyLoad = false,
+        this.service_type_id=0,
         this.state = {
             dataSource: [],
             truckData: []
@@ -30,52 +32,66 @@ export default class UpcomingTrip extends React.Component {
 
         console.log('status 1234 : ' + this.truckBooingStatus)
 
-        let isWarehouse=this.props.navigation.getParam('flag_warehouse_services')
-        let isTruckingWarehouse=this.props.navigation.getParam('flag_Trucking_warehouse')
+        // let isWarehouse=this.props.navigation.getParam('flag_warehouse_services')
+        // let isTruckingWarehouse=this.props.navigation.getParam('flag_Trucking_warehouse')
         let service_type_id = this.props.navigation.getParam('service_type_id') //service_type_id
+        this.initService(service_type_id);
         
-        if(this.truckBooingStatus){
-            this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':service_type_id,'flag':2,
-             'start_index':0,'total_count':10}, true)
-         }else if(isWarehouse){
-            this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':service_type_id,'flag':2,
-            'start_index':0,'total_count':10}, true)
-         }else if(isTruckingWarehouse){
-            this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':service_type_id,'flag':2,
-            'start_index':0,'total_count':10}, true)
-         }
+        // if(this.truckBooingStatus){
+        //     this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':service_type_id,'flag':2,
+        //      'start_index':0,'total_count':10}, true)
+        //  }else if(isWarehouse){
+        //     this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':service_type_id,'flag':2,
+        //     'start_index':0,'total_count':10}, true)
+        //  }else if(isTruckingWarehouse){
+        //     this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':service_type_id,'flag':2,
+        //     'start_index':0,'total_count':10}, true)
+        //  }
+        
          
+    }
+    async initService(service_type_id){
+        let param={
+            'service_type_id':service_type_id,
+            'flag':2,
+             'start_index':0,
+             'total_count':10
+            }
+     await this.presenter.callPostApi(ApiConstants.getMyBookings, param, true)
+      
     }
 
     async onResponse(apiConstant, data) {
         switch (apiConstant) {
             case ApiConstants.getMyBookings: {
                 if (data.status) {
-                    if(this.truckBooingStatus){
-                        if (data.truck_booking_list.length != 0) {
-                            this.setState({
-                                dataSource: data.truck_booking_list,
-                            }) 
-                    }
-                }else if(this.warehouseService){
-                        if (data.truck_booking_list.length != 0) {
-                            this.setState({
-                                dataSource: data.truck_booking_list,
-                            })
-                    }
-                }else if(this.truckAndWareHouse){
-                        if (data.truck_booking_list.length != 0) {
-                            this.setState({
-                                dataSource: data.truck_booking_list,
-                            })
-                    } 
-                }
-                    else {
-                        this.setState({
-                            dataSource: [],
-                        })
+                    this.setState({dataSource: data.truck_booking_list}) 
+                //     if(this.truckBooingStatus){
+                //         if (data.truck_booking_list.length != 0) {
+                //             this.setState({
+                //                 dataSource: data.truck_booking_list,
+                //             }) 
+                //     }
+                // }else if(this.warehouseService){
+                //         if (data.truck_booking_list.length != 0) {
+                //             this.setState({
+                //                 dataSource: data.truck_booking_list,
+                //             })
+                //     }
+                // }else if(this.truckAndWareHouse){
+                //         if (data.truck_booking_list.length != 0) {
+                //             this.setState({
+                //                 dataSource: data.truck_booking_list,
+                //             })
+                //     } 
+                // }
+                //     else {
+                //         this.setState({
+                //             dataSource: [],
+                //         })
                         
-                    }
+                //     }
+             
                 } else {
                     alert(data.message)
                 }
@@ -98,10 +114,11 @@ export default class UpcomingTrip extends React.Component {
                     data={this.state.dataSource}
                     renderItem={({ item }, index) => {
                         return (
-                            <TouchableOpacity style={StyleUpcomingTrip.row} onPress={() => {
+                            <TouchableOpacity style={StyleUpcomingTrip.row} 
+                            onPress={() => {  
                                 this.props.navigation.navigate('ViewUpcomingTrip',
                                 {'booking_id':item.truck_booking_id,'service_type_id':1,
-                                    flag_upcoming_Trip:1},);
+                                flag_upcoming_Trip:1},);
                             }}>
 
                                 <View style={StyleUpcomingTrip.col1}>

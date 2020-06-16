@@ -16,6 +16,7 @@ export default class ViewCurrentTrip extends React.Component {
         super(props);
         this.service_type_id = 0,
         this.booking_id = 0,
+        this.tripDetails=[];
         this.state = {
             starCount: null,
             inputLabelTrip: '',
@@ -24,7 +25,7 @@ export default class ViewCurrentTrip extends React.Component {
             live_geopin: true, 
             invoiceModal_Visible: false,
             truck_data: [],
-            truckData: '',
+            truckData: [],
             driver_telephone_no:123454654654,
             partner_telephone_no:123454654654,
 
@@ -50,9 +51,11 @@ export default class ViewCurrentTrip extends React.Component {
 
             this.service_type_id = this.props.navigation.getParam('service_type_id')
             this.booking_id = this.props.navigation.getParam('booking_id')
-            console.log('bookig_id  ' + JSON.stringify(this.booking_id))
+            console.log('bookig_id  ' + JSON.stringify(this.booking_id));
+            this.tripDetails= this.props.navigation.getParam("bookingItem");
+            this.setState({truckData:this.tripDetails});
     
-        this.presenter.callPostApi(ApiConstants.getBookingDetails, {'service_type_id':this.service_type_id,'booking_id':this.booking_id}, true)
+        // this.presenter.callPostApi(ApiConstants.getBookingDetails, {'service_type_id':this.service_type_id,'booking_id':this.booking_id}, true)
     }
 
     async onResponse(apiConstant, data) {
@@ -237,7 +240,7 @@ export default class ViewCurrentTrip extends React.Component {
                                 onPress={() => {
                 
                                         // this.props.navigation.navigate('ViewUpcomingTripAll',{item:this.state.truckData,flag_CurrentTrip:1})
-                                this.props.navigation.navigate('ViewUpcomingTrip',{item:this.state.truckData,Flag_currentTtrip:false,flag_upcoming_Trip:"1"});
+                                this.props.navigation.navigate('ViewUpcomingTrip',{item:this.state.truckData,Flag_currentTtrip:true,flag_upcoming_Trip:"1",booking_id});
 
                                 }}
                             >

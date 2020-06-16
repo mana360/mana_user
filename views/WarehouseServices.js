@@ -79,9 +79,9 @@ export default class WarehouseServices extends React.Component {
                                         onPress={() => {
                                             item.type == "current"
                                                 ?
-                                                this.props.navigation.navigate('WarehouseServicesCurrentTrip',{'flag_warehouse_services':true,'service_type_id':2})
+                                                this.props.navigation.navigate('CurrentTrip',{'flag_truck_booking':true,'service_type_id':2})
                                                 :
-                                                this.props.navigation.navigate('WarehouseServiceUpcomingTrip',{'flag_warehouse_services':true,'service_type_id':2})
+                                                this.props.navigation.navigate('UpcomingTrip',{'flag_truck_booking':true,'service_type_id':2})
                                         }}
                                     >
                                         <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>
