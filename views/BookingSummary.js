@@ -184,21 +184,29 @@ export default class BookingSummary extends React.Component{
     }
    
    async bookCMLtrip(){
-       let dropoff_list =[{
-           "drop_location":this.state.drop_off_address_1Details+","+this.state.drop_off_address,
-           "drop_latlng":this.state.drop_off_address_lat+","+this.state.drop_off_address_long,
-           "drop_address":this.state.drop_off_address_1Details+","+this.state.drop_off_address,
+
+         
+        // let dropoff_list = [{ "drop_location":"test 123","drop_latlng":"18.5590, 73.7868", "drop_address":"test 123"}, 
+        // { "drop_location":"test 123", "drop_latlng":"18.5590, 73.7868", "drop_address":"test 123"}]
+        
+       
+    let dropoff_list =    [{
+            "drop_location":this.state.drop_off_address_1Details+","+this.state.drop_off_address,
+            "drop_latlng":this.state.drop_off_address_lat+","+this.state.drop_off_address_long,
+            "drop_address":this.state.drop_off_address_1Details+","+this.state.drop_off_address,
        }]
+
+       //console.log('Drop of list : -->' + JSON.stringify(dropoff_list.replace("'\'","")))
 
        this.state.otherServicesdata.map((item)=>{
            delete item.service_name
        })
 
     let params={
-        "drop_list" : JSON.stringify(dropoff_list),
-        "other_services":JSON.stringify(this.state.otherServicesdata),
         "pickup_address":`${this.state.pick_up_addressDetails},${this.state.pick_up_address}`,
         "pickup_latlng":`${this.state.pick_up_address_lat},${this.state.pick_up_address_long}`,
+        "drop_list" : dropoff_list,
+        "other_services":JSON.stringify(this.state.otherServicesdata),
         "drop1_address":`${this.state.drop_off_addressDetails},${this.state.drop_off_address}`,
         "drop1_latlng":`${this.state.drop_off_address_lat},${this.state.drop_off_address_long}`,
         "drop2_address":`${this.state.drop_off_address_1Details},${this.state.drop_off_address_1}`,
@@ -278,7 +286,7 @@ export default class BookingSummary extends React.Component{
          }
          case ApiConstants.bookCMLTrip:{
              if(data.status){
-            //    this.props.navigation.navigate('PaymentMethod');
+               //this.props.navigation.navigate('PaymentMethod');
              }else{
                  alert(data.message);
             //    this.props.navigation.navigate('PaymentMethod');
