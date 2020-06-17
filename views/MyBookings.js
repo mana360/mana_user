@@ -1,6 +1,7 @@
 /*
     screen no :- MANAPPCUS080,80-1
     design by :  Udayraj
+    dev + api :  Udayraj
  */
 import React,{Component} from 'react'
 import {View,Text,Image,TouchableOpacity,FlatList} from 'react-native'
@@ -20,6 +21,7 @@ export default class MyBookings extends React.Component{
             current_booking_data:[],
             upcoming_booking_data:[],
             past_booking_data:[],
+            resp_handler:"1",           // 1 ongoing    2 upcoming      3 past
         }
     }
 
@@ -28,6 +30,7 @@ export default class MyBookings extends React.Component{
     }
 
     getCurrentBookingList(){
+        this.setState({resp_handler:"1"})
         let param = {
             'service_type_id':4,
             'flag':1,   // ongoing
@@ -38,6 +41,7 @@ export default class MyBookings extends React.Component{
     }
 
     getPastBookingList(){
+        this.setState({resp_handler:"3"})
         let param = {
             'service_type_id':4,
             'flag':3,   // past
@@ -52,11 +56,15 @@ export default class MyBookings extends React.Component{
 
             case ApiConstants.getMyBookings: {
                 if(data.status){
-                    console.log("Available data : "+ JSON.stringify(this.state.current_booking_data))
-                    this.setState({ current_booking_data : data.cml_booking_list, })
+                    this.state.resp_handler=="1"
+                    ? this.setState({ current_booking_data : data.cml_booking_list, })
+                    : this.state.resp_handler=="3"
+                    ? this.setState({ past_booking_data : data.cml_booking_list, })
+                    : null
                 }else{
                     alert(data.message)
                 }
+                this.state.resp_handler=="1" ? this.getPastBookingList() : null
                 break;
             }
         }
@@ -215,7 +223,7 @@ export default class MyBookings extends React.Component{
                                                 <Text style={StyleMyBooking.labelText}>{Constants.EXPECTED_PICKUP}</Text>
                                             </View>
                                             <View style={{flex:1}}>
-                                                <Text style={StyleMyBooking.valueText}>{item.expected_pickup}</Text>
+                                                <Text style={StyleMyBooking.valueText}>{item.pickup_date} {item.pickup_time}</Text>
                                             </View>
                                         </View>
         
@@ -224,7 +232,7 @@ export default class MyBookings extends React.Component{
                                                 <Text style={StyleMyBooking.labelText}>{Constants.TOTAL_PRICE}</Text>
                                             </View>
                                             <View style={{flex:1}}>
-                                                <Text style={[StyleMyBooking.valueText,{color:Constants.COLOR_GREEN, fontWeight:'bold'}]}>R {item.price}</Text>
+                                                <Text numberOfLines={1} style={[StyleMyBooking.valueText,{color:Constants.COLOR_GREEN, fontWeight:'bold'}]}>R {item.grand_total}</Text>
                                             </View>
                                         </View>
         
@@ -242,7 +250,7 @@ export default class MyBookings extends React.Component{
                                                 <Text style={StyleMyBooking.labelText}>{Constants.DRIVER_NUMBER}</Text>
                                             </View>
                                             <View style={{flex:1}}>
-                                                <Text style={StyleMyBooking.valueText}>{item.driver_number}</Text>
+                                                <Text style={StyleMyBooking.valueText}>{item.driver_contact}</Text>
                                             </View>
                                         </View>
         
@@ -289,7 +297,7 @@ export default class MyBookings extends React.Component{
                                 activeTextStyle={StyleMyBooking.tab_active_text}    
                             >
                                 {
-                                    this.state.past_booking_data=="" ? this.getNewBookingView() : this.getPastBookingView()
+                                    this.state.past_booking_data.length==0 ? this.getNewBookingView() : this.getPastBookingView()
                                 }
 
                             </Tab>
