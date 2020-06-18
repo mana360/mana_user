@@ -8,10 +8,12 @@ import { StyleUpcomingTrip } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
-import constants from 'jest-haste-map/build/constants';
 import { MainPresenter } from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
+import moment from 'moment'
+
 export default class UpcomingTrip extends React.Component {
+
     constructor(props) {
         super(props);
         this.truckBooingStatus = false,
@@ -21,16 +23,16 @@ export default class UpcomingTrip extends React.Component {
         this.service_type_id=0,
         this.state = {
             dataSource: [],
-            truckData: []
+            truckData: [],
+            truck_booking_list:[]
         }
     }
-
     
     componentDidMount() {
         
         this.truckBooingStatus = this.props.navigation.getParam('flag_truck_booking')
 
-        console.log('status 1234 : ' + this.truckBooingStatus)
+        //console.log('status 1234 : ' + this.truckBooingStatus)
 
         // let isWarehouse=this.props.navigation.getParam('flag_warehouse_services')
         // let isTruckingWarehouse=this.props.navigation.getParam('flag_Trucking_warehouse')
@@ -50,13 +52,14 @@ export default class UpcomingTrip extends React.Component {
         
          
     }
+
     async initService(service_type_id){
         let param={
             'service_type_id':service_type_id,
             'flag':2,
-             'start_index':0,
-             'total_count':10
-            }
+            'start_index':0,
+            'total_count':10
+        }
      await this.presenter.callPostApi(ApiConstants.getMyBookings, param, true)
       
     }
@@ -65,7 +68,8 @@ export default class UpcomingTrip extends React.Component {
         switch (apiConstant) {
             case ApiConstants.getMyBookings: {
                 if (data.status) {
-                    this.setState({dataSource: data.truck_booking_list}) 
+                    this.setState({truck_booking_list: data.truck_booking_list})
+                    //console.log("truck ====> "+JSON.stringify(this.state.truck_booking_list))
                 //     if(this.truckBooingStatus){
                 //         if (data.truck_booking_list.length != 0) {
                 //             this.setState({
@@ -105,21 +109,24 @@ export default class UpcomingTrip extends React.Component {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
+
                 <HeaderBar title="UPCOMING TRIPS" isBack={true} isLogout={true} navigation={navigation} />
-                <MainPresenter ref={(ref) => { this.presenter = ref }}
-                    onResponse={this.onResponse.bind(this)} />
+                
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
+                
                 <FlatList
                     style={{ marginVertical: 15 }}
                     numColumns={1}
-                    data={this.state.dataSource}
+                    data={this.state.truck_booking_list}
+                    extraData={this.state}
+                    keyExtractor={index => index.toString()}
                     renderItem={({ item }, index) => {
                         return (
                             <TouchableOpacity style={StyleUpcomingTrip.row} 
-                            onPress={() => {  
-                                this.props.navigation.navigate('ViewUpcomingTrip',
-                                {'booking_id':item.truck_booking_id,'service_type_id':1,
-                                flag_upcoming_Trip:1},);
-                            }}>
+                                onPress={() => {
+                                    this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':item.truck_booking_id, 'service_type_id':1, 'flag_upcoming_Trip':1})
+                                }}
+                            >
 
                                 <View style={StyleUpcomingTrip.col1}>
                                     <Image
@@ -129,8 +136,9 @@ export default class UpcomingTrip extends React.Component {
                                 </View>
 
                                 <View style={StyleUpcomingTrip.col2}>
+                                    
                                     <View style={StyleUpcomingTrip.bottomLine}>
-                                        <Text style={StyleUpcomingTrip.title}>{item.title}</Text>
+                                        <Text style={StyleUpcomingTrip.title}>{item.pickup_location}</Text>
                                     </View>
 
                                     <View style={{ flexDirection: 'row', paddingTop: 3 }}>
@@ -138,7 +146,7 @@ export default class UpcomingTrip extends React.Component {
                                             style={[StyleUpcomingTrip.imageIcon]}
                                         />
                                         <Text style={StyleUpcomingTrip.labeltext}>{Constants.Date}</Text>
-                                        <Text style={StyleUpcomingTrip.datacss}>{item.pickedup_date_time}</Text>
+                                        <Text style={StyleUpcomingTrip.datacss}>{ moment(item.date_of_pickup).format("DD MMM YYYY")}</Text>
                                     </View>
 
                                     <View style={{ flexDirection: 'row' }}>
@@ -146,14 +154,15 @@ export default class UpcomingTrip extends React.Component {
                                             style={StyleUpcomingTrip.imageIcon}
                                         />
                                         <Text style={StyleUpcomingTrip.labeltext}>{Constants.PickUpTime}</Text>
-                                        <Text style={StyleUpcomingTrip.datacss}>{item.pickUpTime}</Text>
+                                        <Text style={StyleUpcomingTrip.datacss}>{moment(item.date_of_pickup).format("hh:mm A")}</Text>
 
                                         <Image source={require('../images/time_icon.png')}
                                             style={[StyleUpcomingTrip.imageIcon, { marginLeft: 10 }]}
                                         />
-                                        <Text style={StyleUpcomingTrip.labeltext}>{Constants.PickUpTime}</Text>
-                                        <Text style={StyleUpcomingTrip.datacss}>{item.dropUpTime}</Text>
+                                        <Text style={StyleUpcomingTrip.labeltext}>{Constants.DropUpTime}</Text>
+                                        <Text style={StyleUpcomingTrip.datacss}>{moment(item.date_of_pickup).format("hh:mm A")}</Text>
                                     </View>
+                                
                                 </View>
 
                                 <View style={StyleUpcomingTrip.col3}>
@@ -167,8 +176,6 @@ export default class UpcomingTrip extends React.Component {
 
                         )
                     }}
-                    extraData={this.state}
-                    keyExtractor={item => item.id}
                 />
                 <FooterBar navigation={navigation} />
             </View>

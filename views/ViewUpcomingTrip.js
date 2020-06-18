@@ -11,8 +11,10 @@ import Invoice from './InvoiceView';
 import { Tabs, Tab } from "native-base";
 import Splash from './Splash'
 import { MainPresenter } from '../config/MainPresenter';
+import moment from 'moment'
 
 export default class ViewUpcomingTrip extends React.Component {
+    
     constructor(props) {
         super(props);
         this.service_type_id = 0,
@@ -28,45 +30,37 @@ export default class ViewUpcomingTrip extends React.Component {
             isSuccesfull: false,
             truckData: '',
             Profile_data: [{ partnerName: 'ABC Service' }],
-
+            showDestinationLocations:false,
+            driverDetailsModalVisible:false,
         }
     }
 
     componentDidMount(){
-
         this.service_type_id = this.props.navigation.getParam('service_type_id')
         this.booking_id = this.props.navigation.getParam('booking_id')
         // this.setState({Flag_currentTtrip:this.props.navigation.getParam('Flag_currentTtrip')});
+        //console.log('bookig_id  ' + JSON.stringify(this.booking_id))
+        this.presenter.callPostApi(ApiConstants.getBookingDetails, {'service_type_id':this.service_type_id,'booking_id':this.booking_id}, true)
+    }
 
-        console.log('bookig_id  ' + JSON.stringify(this.booking_id))
-
-    this.presenter.callPostApi(ApiConstants.getBookingDetails, {'service_type_id':this.service_type_id,'booking_id':this.booking_id}, true)
-}
-
-async onResponse(apiConstant, data) {
-    switch (apiConstant) {
-        case ApiConstants.getBookingDetails: {
-            if (data.status) {
-                if (data.truck_booking_details.length != 0) {
-                    this.setState({
-                            truckData: data.truck_booking_details[0],
-                        }) 
-                        
-                }else {
-                    this.setState({
-                        truckData: '',
-                    })
-                    
+    async onResponse(apiConstant, data) {
+        switch (apiConstant) {
+            case ApiConstants.getBookingDetails: {
+                if (data.status) {
+                    if (data.truck_booking_details.length != 0) {
+                        this.setState({ truckData: data.truck_booking_details[0]})   
+                        console.log("resp ===> "+JSON.stringify(this.state.truckData))
+                    }else {
+                        this.setState({ truckData: ''})
+                    }
+                } else {
+                    alert(data.message)
                 }
-            } else {
-                alert(data.message)
-            }
 
-            break;
+                break;
+            }
         }
     }
-}
-
 
     delete_trip() {
         return (
@@ -74,7 +68,7 @@ async onResponse(apiConstant, data) {
                 <View style={StyleViewUpcomingTrip.cancelModalView}>
                     <TouchableOpacity style={{ alignSelf: 'flex-end', marginBottom: 5 }}
                         onPress={() => {
-                            this.setState({ cancelModal_Visible: false })
+                            this.setState({ cancelModal_Visible: false, isSuccesfull: false, })
                         }}
                     >
                         <Image source={require('../images/close.png')}
@@ -104,6 +98,7 @@ async onResponse(apiConstant, data) {
             </View>
         )
     }
+
     TripCancelledSuccessfully() {
         return (
             <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
@@ -128,39 +123,70 @@ async onResponse(apiConstant, data) {
 
     }
 
+    driverDetails(){
+        return (
+            <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                
+                <View style={StyleViewUpcomingTrip.cancelModalView}>
 
-driverDetails(){
-    return (
-        <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-            <View style={StyleViewUpcomingTrip.cancelModalView}>
-                <TouchableOpacity style={{ alignSelf: 'flex-end', marginBottom: 5 }}
-                    onPress={() => {
-                        this.setState({ isModalVisible_driverDetails: false });
-                        
-                    }}
-                >
-                    <Image source={require('../images/close.png')}
-                        style={{ width: 15, height: 15 }} />
-                </TouchableOpacity>
+                    <TouchableOpacity style={{ alignSelf: 'flex-end', marginBottom: 5 }}
+                        onPress={() => { this.setState({ driverDetailsModalVisible: false });}}
+                    >
+                        <Image source={require('../images/close.png')} style={{ width: 15, height: 15 }} />
+                    </TouchableOpacity>
 
-               <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 10 }]}>Driver Details</Text>
+                    <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 10 }]}>Driver Details</Text>
+
+                    <Image
+                        source={require('../images/person.png')}
+                        style={{width:50, height:50, resizeMode:'cover', alignSelf:'center'}}
+                    />
+
+                    <View style={StyleViewUpcomingTrip.row}>
+                        <View style={StyleViewUpcomingTrip.col1}>
+                            <Text style={StyleViewUpcomingTrip.col1Text}>Name</Text>
+                        </View>
+                        <View style={StyleViewUpcomingTrip.col2}>
+                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.driver_name}</Text>
+                        </View>
+                    </View>
+
+                    <View style={StyleViewUpcomingTrip.row}>
+                        <View style={StyleViewUpcomingTrip.col1}>
+                            <Text style={StyleViewUpcomingTrip.col1Text}>License No.</Text>
+                        </View>
+                        <View style={StyleViewUpcomingTrip.col2}>
+                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.driver_license_no}</Text>
+                        </View>
+                    </View>
+
+                    <View style={StyleViewUpcomingTrip.row}>
+                        <View style={StyleViewUpcomingTrip.col1}>
+                            <Text style={StyleViewUpcomingTrip.col1Text}>Year of Exp.</Text>
+                        </View>
+                        <View style={StyleViewUpcomingTrip.col2}>
+                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.driver_year_of_exp}</Text>
+                        </View>
+                    </View>
+                
+                </View>
             </View>
-        </View>
-    )
+        )
     }
 
     render() {
         const { navigation } = this.props
-
-        const Flag_currentTtrip=this.props.navigation.getParam('Flag_currentTtrip')
+        const Flag_currentTtrip=this.props.navigation.getParam('Flag_currentTtrip');
         const serviceData = navigation.getParam('item');
         const service_name = navigation.getParam('flag_upcoming_Trip');// 1 = upcomingtrip_truking, 2 = upcomingtrip_warehouse, 3 = upcomingtrip_warehouse_trucking,
 
         return (
             <View style={{ flex: 1 }}>
+                
                 <HeaderBar title={Flag_currentTtrip==true?"VIEW CURRENT TRIP DETAILS":"VIEW UPCOMING TRIP DETAILS"} isBack={true} isLogout={true} navigation={navigation} />
-                <MainPresenter ref={(ref) => { this.presenter = ref }}
-                                onResponse={this.onResponse.bind(this)} />
+                
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
+ 
                 <View style={{ flex: 1 }}>
 
                     <ScrollView style={{ width: '100%' }} bounces={false}>
@@ -204,11 +230,9 @@ driverDetails(){
                             </View>
                         </View>
 
-
-                        
                                 <View>
 
-                                    <Text style={StyleViewUpcomingTrip.title}>{this.state.truckData.title}</Text>
+                                    <Text style={StyleViewUpcomingTrip.title}>{this.state.truckData.pickup_location}</Text>
                                     <View style={StyleViewUpcomingTrip.bottomLine}></View>
 
 
@@ -217,7 +241,11 @@ driverDetails(){
                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.BookingId}</Text>
                                         </View>
                                         <View style={StyleViewUpcomingTrip.col2}>
-                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.truck_booking_id}</Text>
+                                            <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                {
+                                                    this.state.truckData.truck_booking_id
+                                                }
+                                            </Text>
                                         </View>
                                     </View>
 
@@ -226,7 +254,17 @@ driverDetails(){
                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Status}</Text>
                                         </View>
                                         <View style={StyleViewUpcomingTrip.col2}>
-                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.current_status}</Text>
+                                            <Text style={StyleViewUpcomingTrip.col2Text}>
+                                            {
+                                                 this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_DRIVER_DISPATCHED ? "Driver Dispatched"
+                                                :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_PICKUP_LOCATION ? "Arrived at Pickup Location"
+                                                :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_ON_ROUTE_TO_DESTINATION ? "On- route to destination"
+                                                :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION ? "Arrived at Destination"
+                                                :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_TRIP_COMPLETED_CARGO_OFFLOADED ? "Trip completed, cargo offloaded"
+                                                :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In storage"
+                                                :null
+                                            }
+                                            </Text>
                                         </View>
                                     </View>
 
@@ -263,7 +301,7 @@ driverDetails(){
 
                                         </Tab>
 
-                                        {service_name == '1' ?
+                                        {this.state.truckData.service_type_id == 1 ?
 
                                             <Tab heading='TRUCK TRIP DETAILS'
                                                 tabStyle={StyleViewUpcomingTrip.tab}
@@ -277,7 +315,7 @@ driverDetails(){
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DateOfPickUp}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.date_of_pickup}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{ moment(this.state.truckData.date_of_pickup).format("DD MMM YYYY")}</Text>
                                                         </View>
                                                     </View>
 
@@ -286,11 +324,11 @@ driverDetails(){
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpTime}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{/*this.state.truckData.pickup_time*/}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{moment(this.state.truckData.date_of_pickup).format("DD MMM YYYY")}</Text>
                                                         </View>
                                                     </View>
 
-                                                    <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={[StyleViewUpcomingTrip.row,{}]}>
                                                         <View style={StyleViewUpcomingTrip.col1}>
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpLocation}</Text>
                                                         </View>
@@ -299,13 +337,35 @@ driverDetails(){
                                                         </View>
                                                     </View>
 
-                                                    <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={[StyleViewUpcomingTrip.row,{borderBottomWidth:0}]}>
                                                         <View style={StyleViewUpcomingTrip.col1}>
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DestinationLocation}</Text>
                                                         </View>
-                                                        <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{
-                                                            this.state.truckData == ''?"":this.state.truckData.drop_location.drop_location[0]}</Text>
+                                                        <View style={[StyleViewUpcomingTrip.col2,{justifyContent:'flex-end', alignItems:'flex-end'}]}>
+                                                            <TouchableOpacity style={{justifyContent:'flex-end', alignItems:'flex-end', alignSelf:'flex-end'}}
+                                                                onPress={()=>{ this.setState({showDestinationLocations :!this.state.showDestinationLocations}) }}
+                                                            >
+                                                            <Image
+                                                                source={ this.state.showDestinationLocations ? require('../images/ArrowUp.png') : require('../images/ArrowDown.png')}
+                                                                style={{width:20, height:20, resizeMode:'cover', tintColor:Constants.COLOR_GREEN}}
+                                                            />
+                                                            </TouchableOpacity>
+                                                        </View>
+                                                    </View>
+
+                                                    <View style={[StyleViewUpcomingTrip.row,{display : this.state.showDestinationLocations ? 'flex' : 'none'}]}>
+                                                        <View style={StyleViewUpcomingTrip.col1}>
+                                                            <Text style={StyleViewUpcomingTrip.col1Text}></Text>
+                                                        </View>
+                                                        <View style={[StyleViewUpcomingTrip.col2,{flexDirection:'column'}]}>
+                                                                {
+                                                                    this.state.truckData == '' ? "" :
+                                                                    this.state.truckData.drop_location.drop_location.map((item)=>
+                                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{item}</Text>
+                                                                    )
+                                                                    //this.state.truckData.drop_location.drop_location[0]
+                                                                }
+                                                            
                                                         </View>
                                                     </View>
 
@@ -329,6 +389,15 @@ driverDetails(){
 
                                                     <View style={StyleViewUpcomingTrip.row}>
                                                         <View style={StyleViewUpcomingTrip.col1}>
+                                                            <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TruckId}</Text>
+                                                        </View>
+                                                        <View style={StyleViewUpcomingTrip.col2}>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{/*this.state.truckData.truckID*/}</Text>
+                                                        </View>
+                                                    </View>
+
+                                                    <View style={StyleViewUpcomingTrip.row}>
+                                                        <View style={StyleViewUpcomingTrip.col1}>
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TruckName}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
@@ -341,7 +410,7 @@ driverDetails(){
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DriverDEtails}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <TouchableOpacity>
+                                                            <TouchableOpacity onPress={()=>{this.setState({driverDetailsModalVisible:true})}}>
                                                                 <Text style={[StyleViewUpcomingTrip.col2Text, { color: Constants.COLOR_GREEN, textDecorationLine: 'underline' }]}>View</Text>
                                                             </TouchableOpacity>
                                                         </View>
@@ -356,19 +425,13 @@ driverDetails(){
                                                         </View>
                                                     </View>
 
-                                                    <View style={StyleViewUpcomingTrip.row}>
-                                                        <View style={StyleViewUpcomingTrip.col1}>
-                                                            <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TruckId}</Text>
-                                                        </View>
-                                                        <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{/*this.state.truckData.truckID*/}</Text>
-                                                        </View>
-                                                    </View>
                                                 </View>
 
                                             </Tab>
-                                            : service_name == '3'
-                                                ? <Tab heading='TRUCK TRIP DETAILS'
+                                            : 
+                                            this.state.truckData.service_type_id == '3'
+                                            ? 
+                                            <Tab heading='TRUCK TRIP DETAILS'
                                                     tabStyle={StyleViewUpcomingTrip.tab}
                                                     activeTabStyle={StyleViewUpcomingTrip.tab_active}
                                                     textStyle={StyleViewUpcomingTrip.tab_text}
@@ -468,11 +531,11 @@ driverDetails(){
                                                         </View>
                                                     </View>
 
-                                                </Tab>
-                                                : null
+                                            </Tab>
+                                            : null
                                         }
 
-                                        {service_name == '2' ?
+                                        {this.state.truckData.service_type_id == '2' ?
                                             <Tab heading='Warehouse details'
 
                                                 tabStyle={StyleViewUpcomingTrip.tab}
@@ -545,8 +608,10 @@ driverDetails(){
                                                     </View>
                                                 </View>
                                             </Tab>
-                                            : service_name == '3'
-                                                ? <Tab heading='Warehouse details'
+                                            : 
+                                            this.state.truckData.service_type_id == '3'
+                                            ?
+                                                <Tab heading='Warehouse details'
 
                                                     tabStyle={StyleViewUpcomingTrip.tab}
                                                     activeTabStyle={StyleViewUpcomingTrip.tab_active}
@@ -639,7 +704,7 @@ driverDetails(){
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoDesc}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargo_description}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargo_desc}</Text>
                                                     </View>
                                                 </View>
 
@@ -648,11 +713,17 @@ driverDetails(){
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoHandling}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargo_handling}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                        {
+                                                            this.state.truckData.cargo_handling_req == 0 ? "No"
+                                                            :this.state.truckData.cargo_handling_req == 1 ? "Yes"
+                                                            :null
+                                                        }
+                                                        </Text>
                                                     </View>
                                                 </View>
 
-                                                <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={[StyleViewUpcomingTrip.row,{display : this.state.truckData.cargo_handling_req == 1 ? 'flex' : 'none'}]}>
                                                     <View style={StyleViewUpcomingTrip.col1}>
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.NumberOfUSer}</Text>
                                                     </View>
@@ -675,7 +746,12 @@ driverDetails(){
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoInssurance}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargo_insurance}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                        {
+                                                            this.state.truckData.insurance_required==1?"Yes"
+                                                            :this.state.truckData.insurance_required==0?"No" : null
+                                                        }
+                                                        </Text>
                                                     </View>
                                                 </View>
 
@@ -684,7 +760,7 @@ driverDetails(){
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Dimension}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.dimensions}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargo_size_l} * {this.state.truckData.cargo_size_b} * {this.state.truckData.cargo_size_h}</Text>
                                                     </View>
                                                 </View>
 
@@ -693,7 +769,7 @@ driverDetails(){
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.VolumetricWeight}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.Volumetric_weight}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.volumetric_weight}</Text>
                                                     </View>
                                                 </View>
 
@@ -708,15 +784,54 @@ driverDetails(){
 
                                                 <View style={StyleViewUpcomingTrip.row}>
                                                     <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>Invoice</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Image 
+                                                            source={{uri:this.state.truckData.cargo_img}}
+                                                            //source={require('../images/generator.jpeg')}
+                                                            style={{ width: 50, height: 50, resizeMode: 'cover', borderWidth: 2, borderColor: Constants.COLOR_GREY_LIGHT ,padding: 15 }}/>
+                                                    </View>
+                                                </View>
+                                                
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>Image</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Image source={require('../images/generator.jpeg')} style={{
-                                                            width: 100, height: 100, resizeMode: 'stretch', borderWidth: 2, borderColor: Constants.COLOR_GREY_LIGHT
-                                                            , padding: 15
-                                                        }} />
+                                                        <TouchableOpacity onPress={()=>{  }}>
+                                                            <Text style={[StyleViewUpcomingTrip.col2Text, { color: Constants.COLOR_GREEN, textDecorationLine: 'underline' }]}>View Gallery</Text>
+                                                        </TouchableOpacity>
                                                     </View>
                                                 </View>
+
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>Recurring Requirement</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}> </Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>Service Frequency</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>Weekly</Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>Service Day</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>Monday</Text>
+                                                    </View>
+                                                </View>
+
                                             </View>
                                         </Tab>
 
@@ -726,18 +841,18 @@ driverDetails(){
                                             textStyle={StyleViewUpcomingTrip.tab_text}
                                             activeTextStyle={StyleViewUpcomingTrip.tab_active_text}
                                         >
-
                                             <View>
-
                                                 {/*payment details for truking*/}
-                                                {service_name == '1'
-                                                    ? <View>
+                                                {this.state.truckData.service_type_id == '1'
+                                                    ?
+                                                    <View>
+
                                                         <View style={StyleViewUpcomingTrip.row}>
                                                             <View style={StyleViewUpcomingTrip.col1}>
-                                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.RecurringRequirement}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoHandlingcost}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.recursing_requirement}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargoHandling_cost}</Text>
                                                             </View>
                                                         </View>
 
@@ -752,19 +867,28 @@ driverDetails(){
 
                                                         <View style={StyleViewUpcomingTrip.row}>
                                                             <View style={StyleViewUpcomingTrip.col1}>
-                                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoHandlingcost}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col1Text}>Trip Amount</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargoHandling_cost}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}></Text>
                                                             </View>
                                                         </View>
 
                                                         <View style={StyleViewUpcomingTrip.row}>
                                                             <View style={StyleViewUpcomingTrip.col1}>
-                                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Service_Frequency}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col1Text}>Discount (%)</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.service_frquency}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}></Text>
+                                                            </View>
+                                                        </View>
+
+                                                        <View style={StyleViewUpcomingTrip.row}>
+                                                            <View style={StyleViewUpcomingTrip.col1}>
+                                                                <Text style={StyleViewUpcomingTrip.col1Text}>Discounted price</Text>
+                                                            </View>
+                                                            <View style={StyleViewUpcomingTrip.col2}>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}></Text>
                                                             </View>
                                                         </View>
 
@@ -779,18 +903,49 @@ driverDetails(){
 
                                                         <View style={StyleViewUpcomingTrip.row}>
                                                             <View style={StyleViewUpcomingTrip.col1}>
-                                                                <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Discount}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col1Text}>Total</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.discount}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}></Text>
                                                             </View>
                                                         </View>
+
+                                                        <View style={StyleViewUpcomingTrip.row}>
+                                                            <View style={StyleViewUpcomingTrip.col1}>
+                                                                <Text style={StyleViewUpcomingTrip.col1Text}>VAT(%)</Text>
+                                                            </View>
+                                                            <View style={StyleViewUpcomingTrip.col2}>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}></Text>
+                                                            </View>
+                                                        </View>
+
+                                                        <View style={StyleViewUpcomingTrip.row}>
+                                                            <View style={StyleViewUpcomingTrip.col1}>
+                                                                <Text style={StyleViewUpcomingTrip.col1Text}>Final Paid Cost</Text>
+                                                            </View>
+                                                            <View style={StyleViewUpcomingTrip.col2}>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}></Text>
+                                                            </View>
+                                                        </View>
+
+                                                        <View style={StyleViewUpcomingTrip.row}>
+                                                            <View style={StyleViewUpcomingTrip.col1}>
+                                                                <Text style={StyleViewUpcomingTrip.col1Text}>Invoice</Text>
+                                                            </View>
+                                                            <View style={StyleViewUpcomingTrip.col2}>
+                                                                <Image 
+                                                                    source={{uri:this.state.truckData.cargo_img}}
+                                                                    //source={require('../images/generator.jpeg')}
+                                                                    style={{ width: 50, height: 50, resizeMode: 'cover', borderWidth: 2, borderColor: Constants.COLOR_GREY_LIGHT ,padding: 15 }}/>
+                                                            </View>
+                                                        </View>
+
                                                     </View>
                                                     : null}
 
 
                                                 {/*payment details for warehouse */}
-                                                {service_name == '2'
+                                                {this.state.truckData.service_type_id == '2'
                                                     ? <View>
 
                                                         <View style={StyleViewUpcomingTrip.row}>
@@ -841,8 +996,9 @@ driverDetails(){
                                                         </View>
 
                                                     </View>
-                                                    : service_name == '3'
-                                                        ? <View>
+                                                    : 
+                                                    this.state.truckData.service_type_id == '3'
+                                                    ? <View>
 
                                                             <View style={StyleViewUpcomingTrip.row}>
                                                                 <View style={StyleViewUpcomingTrip.col1}>
@@ -892,7 +1048,7 @@ driverDetails(){
                                                             </View>
 
                                                         </View>
-                                                        : null
+                                                    : null
                                                 }
 
                                             </View>
@@ -903,9 +1059,7 @@ driverDetails(){
                                 </View>
                            
                         <TouchableOpacity style={Flag_currentTtrip==true?{display:"none"}:[StyleViewUpcomingTrip.bottomButton, { width: '90%', }]}
-                            onPress={() => {
-                                this.setState({ cancelModal_Visible: true })
-                            }}
+                            onPress={() => { this.setState({ cancelModal_Visible: true }) }}
                         >
                             <Text style={StyleViewUpcomingTrip.buttonText}>{Constants.CANCELTRIP}</Text>
                         </TouchableOpacity>
@@ -944,8 +1098,7 @@ driverDetails(){
                 <Modal
                     animationType='fade'
                     transparent={true}
-                    // visible={this.state.cancelModal_Visible}
-                     visible={false}
+                    visible={this.state.driverDetailsModalVisible}
                     style={{ flex: 1 }}
                 >
                    {
