@@ -2,7 +2,7 @@
     design by -mayur s
  */
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, Modal, TouchableOpacity, TouchableHighlightBase, TouchableOpacityBase } from 'react-native';
+import { View, Text, Image, ScrollView, Modal, TouchableOpacity, FlatList } from 'react-native';
 import { StyleViewUpcomingTrip, StyleViewCurrentTrip } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
@@ -32,6 +32,27 @@ export default class ViewUpcomingTrip extends React.Component {
             Profile_data: [{ partnerName: 'ABC Service' }],
             showDestinationLocations:false,
             driverDetailsModalVisible:false,
+            goodsPhotoGalleryVisible:false,
+            goodsPhotoGalleryList:[
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+                { path : require('../images/person.png') },
+            ],
         }
     }
 
@@ -775,6 +796,15 @@ export default class ViewUpcomingTrip extends React.Component {
 
                                                 <View style={StyleViewUpcomingTrip.row}>
                                                     <View style={StyleViewUpcomingTrip.col1}>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>Packeting/Protection Details</Text>
+                                                    </View>
+                                                    <View style={StyleViewUpcomingTrip.col2}>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}></Text>
+                                                    </View>
+                                                </View>
+
+                                                <View style={StyleViewUpcomingTrip.row}>
+                                                    <View style={StyleViewUpcomingTrip.col1}>
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.ValueOfLload}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
@@ -799,7 +829,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>Image</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <TouchableOpacity onPress={()=>{  }}>
+                                                        <TouchableOpacity onPress={()=>{ this.state.goodsPhotoGalleryList=="" ? alert('Gallery is empty now.') : this.setState({goodsPhotoGalleryVisible:true}) }}>
                                                             <Text style={[StyleViewUpcomingTrip.col2Text, { color: Constants.COLOR_GREEN, textDecorationLine: 'underline' }]}>View Gallery</Text>
                                                         </TouchableOpacity>
                                                     </View>
@@ -1104,6 +1134,36 @@ export default class ViewUpcomingTrip extends React.Component {
                    {
                        this.driverDetails()
                    }
+                </Modal>
+
+                <Modal
+                    animationType='fade'
+                    transparent={true}
+                    visible={this.state.goodsPhotoGalleryVisible}
+                    style={{ flex: 1 }}
+                >
+                   <View style={{backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                        <View style={{ width:'90%', maxHeight:250, borderRadius: 5, padding:10, backgroundColor: Constants.COLOR_WHITE, alignSelf: 'center', justifyContent: 'center' }}>
+                            <TouchableOpacity style={{alignSelf:'flex-end', justifyContent: 'center', alignItems: 'center',}} onPress={()=>{ this.setState({goodsPhotoGalleryVisible:false}) }}>
+                                <Image source={require('../images/close.png')} style={{width:15, height:15, resizeMode:'cover'}}/>
+                            </TouchableOpacity>
+                            <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 20 }]}>Photo Gallery</Text>
+                            <FlatList
+                                data={this.state.goodsPhotoGalleryList}
+                                numColumns={3}
+                                extraData={this.state}
+                                keyExtractor={index => index.toString()}
+                                bounces={false}
+                                style={{alignSelf:'center'}}
+                                renderItem={
+                                    ({item})=>
+                                    <View style={{width:'30%', margin:5, borderWidth:0.5, borderColor:Constants.COLOR_GREY_LIGHT, justifyContent: 'center', alignItems: 'center',}}>
+                                        <Image source={item.path} style={{width:50, height:50, resizeMode:'cover'}}/>
+                                    </View>
+                                }
+                            />
+                        </View>
+                   </View>
                 </Modal>
 
             </View>
