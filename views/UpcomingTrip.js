@@ -24,7 +24,8 @@ export default class UpcomingTrip extends React.Component {
         this.state = {
             dataSource: [],
             truckData: [],
-            truck_booking_list:[]
+            truck_booking_list:[],
+            warehouse_booking_list:[]
         }
     }
     
@@ -36,8 +37,8 @@ export default class UpcomingTrip extends React.Component {
 
         // let isWarehouse=this.props.navigation.getParam('flag_warehouse_services')
         // let isTruckingWarehouse=this.props.navigation.getParam('flag_Trucking_warehouse')
-        let service_type_id = this.props.navigation.getParam('service_type_id') //service_type_id
-        this.initService(service_type_id);
+        this.service_type_id = this.props.navigation.getParam('service_type_id') //service_type_id
+        this.initService(this.service_type_id);
         
         // if(this.truckBooingStatus){
         //     this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':service_type_id,'flag':2,
@@ -68,7 +69,11 @@ export default class UpcomingTrip extends React.Component {
         switch (apiConstant) {
             case ApiConstants.getMyBookings: {
                 if (data.status) {
-                    this.setState({truck_booking_list: data.truck_booking_list})
+                    if(this.service_type_id==1){
+                        this.setState({truck_booking_list: data.truck_booking_list})
+                    }else if(this.service_type_id==2){
+                        this.setState({warehouse_booking_list: data.warehouse_booking_list})
+                    }
                     //console.log("truck ====> "+JSON.stringify(this.state.truck_booking_list))
                 //     if(this.truckBooingStatus){
                 //         if (data.truck_booking_list.length != 0) {
@@ -117,14 +122,23 @@ export default class UpcomingTrip extends React.Component {
                 <FlatList
                     style={{ marginVertical: 15 }}
                     numColumns={1}
-                    data={this.state.truck_booking_list}
+                    data={
+                          this.service_type_id==1 ? this.state.truck_booking_list
+                        : this.service_type_id==2 ? this.state.warehouse_booking_list
+                        : []
+                        }
                     extraData={this.state}
                     keyExtractor={index => index.toString()}
                     renderItem={({ item }, index) => {
                         return (
                             <TouchableOpacity style={StyleUpcomingTrip.row} 
                                 onPress={() => {
-                                    this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':item.truck_booking_id, 'service_type_id':1, 'flag_upcoming_Trip':1})
+                                    if(this.service_type_id==1){
+                                        this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':item.truck_booking_id, 'service_type_id':this.service_type_id, 'flag_upcoming_Trip':1})
+                                    }
+                                    if(this.service_type_id==2){
+                                        this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':item.warehouse_booking_id, 'service_type_id':this.service_type_id, 'flag_upcoming_Trip':1})
+                                    }
                                 }}
                             >
 
@@ -138,7 +152,14 @@ export default class UpcomingTrip extends React.Component {
                                 <View style={StyleUpcomingTrip.col2}>
                                     
                                     <View style={StyleUpcomingTrip.bottomLine}>
-                                        <Text style={StyleUpcomingTrip.title}>{item.pickup_location}</Text>
+                                        <Text style={StyleUpcomingTrip.title}>
+                                            {    this.service_type_id==1
+                                                ?item.pickup_location
+                                                :this.service_type_id==2
+                                                ?item.warehouse_type_name
+                                                :""
+                                            }
+                                        </Text>
                                     </View>
 
                                     <View style={{ flexDirection: 'row', paddingTop: 3 }}>
@@ -146,7 +167,14 @@ export default class UpcomingTrip extends React.Component {
                                             style={[StyleUpcomingTrip.imageIcon]}
                                         />
                                         <Text style={StyleUpcomingTrip.labeltext}>{Constants.Date}</Text>
-                                        <Text style={StyleUpcomingTrip.datacss}>{ moment(item.date_of_pickup).format("DD MMM YYYY")}</Text>
+                                        <Text style={StyleUpcomingTrip.datacss}>
+                                            {   this.service_type_id==1
+                                                ? moment(item.date_of_pickup).format("DD MMM YYYY")
+                                                : this.service_type_id==2
+                                                ? moment(item.service_start_date,"YYYY-mm-dd").format("DD MMM YYYY")
+                                                :''
+                                            }
+                                        </Text>
                                     </View>
 
                                     <View style={{ flexDirection: 'row' }}>
@@ -154,13 +182,19 @@ export default class UpcomingTrip extends React.Component {
                                             style={StyleUpcomingTrip.imageIcon}
                                         />
                                         <Text style={StyleUpcomingTrip.labeltext}>{Constants.PickUpTime}</Text>
-                                        <Text style={StyleUpcomingTrip.datacss}>{moment(item.date_of_pickup).format("hh:mm A")}</Text>
-
+                                        <Text style={StyleUpcomingTrip.datacss}>
+                                            {   this.service_type_id==1
+                                                ? moment(item.date_of_pickup).format("hh:mm A")
+                                                :this.service_type_id==2
+                                                ? moment(item.pickup_time).format("hh:mm A")
+                                                :''
+                                            }
+                                        </Text>
                                         <Image source={require('../images/time_icon.png')}
-                                            style={[StyleUpcomingTrip.imageIcon, { marginLeft: 10 }]}
+                                            style={[StyleUpcomingTrip.imageIcon, { marginLeft: 10, display : this.service_type_id==2 ? 'none' : 'flex'}]}
                                         />
-                                        <Text style={StyleUpcomingTrip.labeltext}>{Constants.DropUpTime}</Text>
-                                        <Text style={StyleUpcomingTrip.datacss}>{moment(item.date_of_pickup).format("hh:mm A")}</Text>
+                                        <Text style={[StyleUpcomingTrip.labeltext,{display : this.service_type_id==2 ? 'none' : 'flex'}]}>{Constants.DropUpTime}</Text>
+                                        <Text style={[StyleUpcomingTrip.datacss,  {display : this.service_type_id==2 ? 'none' : 'flex'}]}>{moment(item.date_of_pickup).format("hh:mm A")}</Text>
                                     </View>
                                 
                                 </View>

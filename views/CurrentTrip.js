@@ -23,15 +23,11 @@ export default class CurrentTrip extends React.Component {
         }
     }
 
-   async  componentDidMount() {
+    componentDidMount() {
 
         this.truckBooingStatus = this.props.navigation.getParam('flag_truck_booking');
         this.service_type_id = this.props.navigation.getParam('service_type_id');
-        this.initServices(service_type_id);
-   
-    //   await this.presenter.callPostApi(ApiConstants.getMyBookings, {'service_type_id':1,'flag':1,
-    //          'start_index':0,'total_count':10}, true)
-         
+        this.initServices(this.service_type_id);         
     }
 
     async initServices(service_type_id){
@@ -43,11 +39,17 @@ export default class CurrentTrip extends React.Component {
         }
         await this.presenter.callPostApi(ApiConstants.getMyBookings, param, true);
     }
+
     async onResponse(apiConstant, data) {
         switch (apiConstant) {
             case ApiConstants.getMyBookings: {
                 if (data.status) {
-                    this.setState({dataSource: data.truck_booking_list});
+                    if(this.service_type_id==1){
+                        this.setState({dataSource: data.truck_booking_list});
+                    }
+                    else if(this.service_type_id==2){
+                        this.setState({dataSource: data.warehouse_booking_list});
+                    }
                 //     if(this.truckBooingStatus){
                 //         if (data.truck_booking_list.length != 0) {
 
@@ -80,19 +82,20 @@ export default class CurrentTrip extends React.Component {
 
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
-            <MainPresenter ref={(ref) => { this.presenter = ref }} 
-                onResponse={this.onResponse.bind(this)}
-                 navigation={this.props.navigation} />
-                <HeaderBar 
-                    title="Current Trips"
-                    isBack={true} isLogout={true} navigation={navigation} />
-                    <MainPresenter ref={(ref) => { this.presenter = ref }}
-                    onResponse={this.onResponse.bind(this)} />
-                    
+
+            <MainPresenter ref={(ref) => { this.presenter = ref }}  onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
+            
+            <HeaderBar title="Current Trips" isBack={true} isLogout={true} navigation={navigation} />
+
+            <View style={{ display : this.state.dataSource=="" ? 'flex' : 'none', flex:1, justifyContent:'center', alignItems:'center' }}>
+                <Text style={{fontSize:16}}> No trip is available. </Text>
+            </View>
                 <FlatList
-                    style={{ marginVertical: 15 }}
+                    style={{ display: this.state.dataSource=="" ? 'none' : 'flex', marginVertical: 15}}
                     numColumns={1}
                     data={this.state.dataSource}
+                    extraData={this.state}
+                    keyExtractor={index => index.toString()}
                     renderItem={({ item }, index) => {
                         return (
                             <TouchableOpacity style={StyleCurrentTrip.row} onPress={() =>{
@@ -122,7 +125,14 @@ export default class CurrentTrip extends React.Component {
                               
                                 <View style={StyleCurrentTrip.col2}>
                                     <View style={StyleCurrentTrip.bottomLine}>
-                                        <Text style={StyleCurrentTrip.title}>{item.truck_booking_id}</Text>
+                                        <Text style={StyleCurrentTrip.title}>
+                                            {     this.service_type_id==1 
+                                                ? item.truck_booking_id
+                                                : this.service_type_id==2
+                                                ? item.warehouse_booking_id
+                                                :''
+                                            }
+                                        </Text>
                                     </View>
 
                                     <View style={{ flexDirection: 'row', paddingTop: 3 }}>
@@ -170,8 +180,6 @@ export default class CurrentTrip extends React.Component {
 
                         )
                     }}
-                    extraData={this.state}
-                    keyExtractor={item => item.id}
                 />
                
                 <FooterBar navigation={navigation} />

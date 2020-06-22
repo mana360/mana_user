@@ -29,6 +29,7 @@ export default class ViewUpcomingTrip extends React.Component {
             isModalVisible_driverDetails:false,
             isSuccesfull: false,
             truckData: '',
+            warehouse_booking_detailsi:'',
             Profile_data: [{ partnerName: 'ABC Service' }],
             showDestinationLocations:false,
             driverDetailsModalVisible:false,
@@ -68,12 +69,17 @@ export default class ViewUpcomingTrip extends React.Component {
         switch (apiConstant) {
             case ApiConstants.getBookingDetails: {
                 if (data.status) {
-                    if (data.truck_booking_details.length != 0) {
-                        this.setState({ truckData: data.truck_booking_details[0]})   
-                        console.log("resp ===> "+JSON.stringify(this.state.truckData))
-                    }else {
-                        this.setState({ truckData: ''})
+                    if(this.service_type_id==1){
+                        if (data.truck_booking_details.length != 0) {
+                            this.setState({ truckData: data.truck_booking_details[0]})   
+                            console.log("resp ===> "+JSON.stringify(this.state.truckData))
+                        }else {
+                            this.setState({ truckData: ''})
+                        }
+                    }else{
+                        this.setState({warehouse_booking_detailsi:data.warehouse_booking_detailsi[0]})
                     }
+                    
                 } else {
                     alert(data.message)
                 }
@@ -216,28 +222,24 @@ export default class ViewUpcomingTrip extends React.Component {
                             <View style={StyleViewUpcomingTrip.topCircle} />
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <TouchableOpacity style={{ marginTop: 25, }}
-                                    onPress={() => {
-                                        return (
-                                            this.setState({ invoiceModal_Visible: true })
-                                        )
-                                    }}
+                                    onPress={() => {return ( this.setState({ invoiceModal_Visible: true }))}}
                                 >
                                     <Image source={require('../images/invoice_details.png')}
                                         style={StyleViewCurrentTrip.sideImage} />
                                 </TouchableOpacity>
 
                                 <Image source={
-                                    service_name == '1'
+                                    this.service_type_id == '1'
                                         ? require('../images/current_trips.png')
-                                        : service_name == '2'
+                                        : this.service_type_id == '2'
                                             ? require('../images/WarehouseServices_copy.png')
-                                            : service_name == '3'
+                                            : this.service_type_id == '3'
                                                 ? require('../images/Trucking_+Warehouse.png')
                                                 : null
 
                                 }
 
-                                    style={service_name == '1' ? [StyleViewCurrentTrip.ImageCurrentTrip, { marginRight: 95 }] : StyleViewCurrentTrip.ImageCurrentTrip}
+                                    style={this.service_type_id == '1' ? [StyleViewCurrentTrip.ImageCurrentTrip, { marginRight: 95 }] : StyleViewCurrentTrip.ImageCurrentTrip}
                                 />
                                 <TouchableOpacity style={{ marginTop: 25, }}
                                     onPress={() => {
@@ -253,7 +255,15 @@ export default class ViewUpcomingTrip extends React.Component {
 
                                 <View>
 
-                                    <Text style={StyleViewUpcomingTrip.title}>{this.state.truckData.pickup_location}</Text>
+                                    <Text style={StyleViewUpcomingTrip.title}>
+                                        {
+                                              this.service_type_id==1
+                                            ? this.state.truckData.pickup_location
+                                            : this.service_type_id==2 
+                                            ? this.state.warehouse_booking_detailsi.warehouse_type_name
+                                            : ''
+                                        }
+                                    </Text>
                                     <View style={StyleViewUpcomingTrip.bottomLine}></View>
 
 
@@ -264,7 +274,11 @@ export default class ViewUpcomingTrip extends React.Component {
                                         <View style={StyleViewUpcomingTrip.col2}>
                                             <Text style={StyleViewUpcomingTrip.col2Text}>
                                                 {
-                                                    this.state.truckData.truck_booking_id
+                                                      this.service_type_id==1 
+                                                    ? this.state.truckData.truck_booking_id
+                                                    : this.service_type_id==2
+                                                    ? this.state.warehouse_booking_detailsi.warehouse_booking_id
+                                                    :''
                                                 }
                                             </Text>
                                         </View>
@@ -275,7 +289,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Status}</Text>
                                         </View>
                                         <View style={StyleViewUpcomingTrip.col2}>
-                                            <Text style={StyleViewUpcomingTrip.col2Text}>
+                                            <Text style={[StyleViewUpcomingTrip.col2Text,{ display : this.service_type_id==1 ? 'flex' :'none'}]}>
                                             {
                                                  this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_DRIVER_DISPATCHED ? "Driver Dispatched"
                                                 :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_PICKUP_LOCATION ? "Arrived at Pickup Location"
@@ -286,6 +300,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                 :null
                                             }
                                             </Text>
+
                                         </View>
                                     </View>
 
@@ -1118,7 +1133,7 @@ export default class ViewUpcomingTrip extends React.Component {
                 <Modal
                     animationType='fade'
                     transparent={true}
-                    visible={this.state.isModalVisible_driverDetails}
+                    visible={this.state.invoiceModal_Visible}
                 >
                     <Invoice clickCallback={() => {
                         this.setState({ invoiceModal_Visible: false });
