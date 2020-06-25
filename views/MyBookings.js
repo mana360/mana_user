@@ -297,7 +297,7 @@ export default class MyBookings extends React.Component{
                                 activeTextStyle={StyleMyBooking.tab_active_text}    
                             >
                                 {
-                                    this.state.past_booking_data.length==0 ? this.getNewBookingView() : this.getPastBookingView()
+                                    this.state.past_booking_data=="" ? this.getNewBookingView() : this.getPastBookingView()
                                 }
 
                             </Tab>

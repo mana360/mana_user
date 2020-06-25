@@ -2,7 +2,7 @@
     design by -mayur s
  */
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, Modal, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, Image, ScrollView, Modal, TouchableOpacity, FlatList, PermissionsAndroid, Platform } from 'react-native';
 import { StyleViewUpcomingTrip, StyleViewCurrentTrip } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
@@ -12,6 +12,7 @@ import { Tabs, Tab } from "native-base";
 import Splash from './Splash'
 import { MainPresenter } from '../config/MainPresenter';
 import moment from 'moment'
+import RNFetchBlob from 'rn-fetch-blob';
 
 export default class ViewUpcomingTrip extends React.Component {
     
@@ -34,26 +35,7 @@ export default class ViewUpcomingTrip extends React.Component {
             showDestinationLocations:false,
             driverDetailsModalVisible:false,
             goodsPhotoGalleryVisible:false,
-            goodsPhotoGalleryList:[
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-                { path : require('../images/person.png') },
-            ],
+            goodsPhotoGalleryList:"",
         }
     }
 
@@ -70,9 +52,11 @@ export default class ViewUpcomingTrip extends React.Component {
             case ApiConstants.getBookingDetails: {
                 if (data.status) {
                     if(this.service_type_id==1){
-                        if (data.truck_booking_details.length != 0) {
-                            this.setState({ truckData: data.truck_booking_details[0]})   
-                            console.log("resp ===> "+JSON.stringify(this.state.truckData))
+                        if (data.truck_booking_list.length != 0) {
+                            this.setState({
+                                truckData: data.truck_booking_list[0],
+                                goodsPhotoGalleryList:data.truck_booking_list[0].goods_image_list
+                            })
                         }else {
                             this.setState({ truckData: ''})
                         }
@@ -164,10 +148,20 @@ export default class ViewUpcomingTrip extends React.Component {
 
                     <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 10 }]}>Driver Details</Text>
 
-                    <Image
-                        source={require('../images/person.png')}
-                        style={{width:50, height:50, resizeMode:'cover', alignSelf:'center'}}
-                    />
+                    {
+                        this.state.truckData.driver_profile_picture==""
+                        ?
+                            <Image
+                                source={require('../images/person.png')}
+                                style={{width:50, height:50, resizeMode:'cover', alignSelf:'center'}}
+                            />
+                        :
+                            <Image
+                                source ={{uri: this.state.truckData.driver_profile_picture}}
+                                style={{width:50, height:50, resizeMode:'cover', alignSelf:'center'}}
+                            />
+    
+                    }
 
                     <View style={StyleViewUpcomingTrip.row}>
                         <View style={StyleViewUpcomingTrip.col1}>
@@ -183,7 +177,7 @@ export default class ViewUpcomingTrip extends React.Component {
                             <Text style={StyleViewUpcomingTrip.col1Text}>License No.</Text>
                         </View>
                         <View style={StyleViewUpcomingTrip.col2}>
-                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.driver_license_no}</Text>
+                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.driver_license_number}</Text>
                         </View>
                     </View>
 
@@ -199,6 +193,56 @@ export default class ViewUpcomingTrip extends React.Component {
                 </View>
             </View>
         )
+    }
+
+    getExtention(filename){
+        return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
+    }
+
+    getDownloadFile(file_path){
+        var date = new Date();
+        var image_URL = file_path;
+        var ext = this.getExtention(image_URL);
+        ext = "." + ext[0];
+        const { config, fs } = RNFetchBlob;
+        let DownloadDir = fs.dirs.DownloadDir
+        let options = {
+            fileCache: true,
+            addAndroidDownloads: {
+                useDownloadManager: true,
+                notification: true,
+                path: DownloadDir + "/Mana" + Math.floor(date.getTime()+ date.getSeconds() / 2) + ext,
+                description: 'Mana invoice file'
+            }
+        }
+        config(options).fetch('GET', image_URL).then((res) => {
+            alert("File is downloaded successfully.");
+        });
+    }
+
+    async requestFilePermission(file_path){
+        try {
+            const granted = await PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+              {
+                'title': 'File Storage Permission',
+                'message': 'App needs access to your file storage to download file.'
+              }
+            )
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                // permission granted
+                this.getDownloadFile(file_path)
+                return true
+            }
+            else {
+                // permission denied
+                alert("File downloading faild.");
+                return false
+            }
+          } catch (err) {
+            console.warn(err)
+          }
+          return false
     }
 
     render() {
@@ -222,13 +266,19 @@ export default class ViewUpcomingTrip extends React.Component {
                             <View style={StyleViewUpcomingTrip.topCircle} />
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <TouchableOpacity style={{ marginTop: 25, }}
-                                    onPress={() => {return ( this.setState({ invoiceModal_Visible: true }))}}
+                                    onPress={()=>{
+                                        //return ( this.setState({ invoiceModal_Visible: true }))
+                                        this.state.truckData.invoice_url!=""
+                                        ?
+                                        Platform.OS=="android" ? this.requestFilePermission(this.state.truckData.invoice_url) : this.getDownloadFile(this.state.truckData.invoice_url)
+                                        : null
+                                    }}
                                 >
                                     <Image source={require('../images/invoice_details.png')}
                                         style={StyleViewCurrentTrip.sideImage} />
                                 </TouchableOpacity>
-
-                                <Image source={
+                                <Image 
+                                    source={
                                     this.service_type_id == '1'
                                         ? require('../images/current_trips.png')
                                         : this.service_type_id == '2'
@@ -236,9 +286,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                             : this.service_type_id == '3'
                                                 ? require('../images/Trucking_+Warehouse.png')
                                                 : null
-
-                                }
-
+                                    }
                                     style={this.service_type_id == '1' ? [StyleViewCurrentTrip.ImageCurrentTrip, { marginRight: 95 }] : StyleViewCurrentTrip.ImageCurrentTrip}
                                 />
                                 <TouchableOpacity style={{ marginTop: 25, }}
@@ -331,14 +379,14 @@ export default class ViewUpcomingTrip extends React.Component {
                                                     <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.ContactNumber}</Text>
                                                 </View>
                                                 <View style={StyleViewUpcomingTrip.col2}>
-                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.contact_number}</Text>
+                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.partner_contact}</Text>
                                                 </View>
                                             </View>
 
                                         </Tab>
 
-                                        {this.state.truckData.service_type_id == 1 ?
-
+                                        {
+                                            this.state.truckData.service_type_id == 1 ?
                                             <Tab heading='TRUCK TRIP DETAILS'
                                                 tabStyle={StyleViewUpcomingTrip.tab}
                                                 activeTabStyle={StyleViewUpcomingTrip.tab_active}
@@ -397,7 +445,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 {
                                                                     this.state.truckData == '' ? "" :
                                                                     this.state.truckData.drop_location.drop_location.map((item)=>
-                                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{item}</Text>
+                                                                        <Text style={[StyleViewUpcomingTrip.col2Text,{marginBottom:5}]}>{item}</Text>
                                                                     )
                                                                     //this.state.truckData.drop_location.drop_location[0]
                                                                 }
@@ -410,7 +458,9 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AarrivalDate}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{/*this.state.truckData.arrival_date*/}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                { moment(this.state.truckData.arrivalDateAndTime,"YY-MM-DD h:m:s").format("DD/MM/YYYY")}
+                                                                </Text>
                                                         </View>
                                                     </View>
 
@@ -419,7 +469,9 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AarrivalTime}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{/*this.state.truckData.arrival_time*/}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                { moment(this.state.truckData.arrivalDateAndTime,"YY-MM-DD h:m:s").format("h:m A")}
+                                                            </Text>
                                                         </View>
                                                     </View>
 
@@ -428,7 +480,9 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TruckId}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{/*this.state.truckData.truckID*/}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                {this.state.truckData.truckId}
+                                                            </Text>
                                                         </View>
                                                     </View>
 
@@ -454,10 +508,31 @@ export default class ViewUpcomingTrip extends React.Component {
 
                                                     <View style={StyleViewUpcomingTrip.row}>
                                                         <View style={StyleViewUpcomingTrip.col1}>
-                                                            <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.MidPoint1}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col1Text}>Start Point</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{/*this.state.truckData.mid_point1*/}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.drop_location.drop_address[0]}</Text>
+                                                        </View>
+                                                    </View>
+                                                    {
+                                                        this.state.truckData.drop_location.drop_address == '' ? "" :
+                                                        this.state.truckData.drop_location.drop_address.map((item,index)=>
+                                                            <View style={StyleViewUpcomingTrip.row}>
+                                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                                    <Text style={StyleViewUpcomingTrip.col1Text}>Mid Point {index+1}</Text>
+                                                                </View>
+                                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{item}</Text>
+                                                                </View>
+                                                            </View>
+                                                        )
+                                                    }
+                                                    <View style={StyleViewUpcomingTrip.row}>
+                                                        <View style={StyleViewUpcomingTrip.col1}>
+                                                            <Text style={StyleViewUpcomingTrip.col1Text}>End Point</Text>
+                                                        </View>
+                                                        <View style={StyleViewUpcomingTrip.col2}>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.drop_location.drop_address[this.state.truckData.drop_location.drop_address.length-1]}</Text>
                                                         </View>
                                                     </View>
 
@@ -571,7 +646,8 @@ export default class ViewUpcomingTrip extends React.Component {
                                             : null
                                         }
 
-                                        {this.state.truckData.service_type_id == '2' ?
+                                        {
+                                            this.state.truckData.service_type_id == '2' ?
                                             <Tab heading='Warehouse details'
 
                                                 tabStyle={StyleViewUpcomingTrip.tab}
@@ -647,7 +723,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                             : 
                                             this.state.truckData.service_type_id == '3'
                                             ?
-                                                <Tab heading='Warehouse details'
+                                             <Tab heading='Warehouse details'
 
                                                     tabStyle={StyleViewUpcomingTrip.tab}
                                                     activeTabStyle={StyleViewUpcomingTrip.tab_active}
@@ -716,7 +792,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                     </View>
 
                                                 </Tab>
-                                                : null
+                                            : null
                                         }
 
                                         <Tab heading='GOODS DETAILS'
@@ -731,7 +807,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoType}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargo_type}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.corgo_type}</Text>
                                                     </View>
                                                 </View>
 
@@ -814,7 +890,9 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>Packeting/Protection Details</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}></Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                            {this.state.truckData.packeting_details}
+                                                        </Text>
                                                     </View>
                                                 </View>
 
@@ -823,7 +901,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.ValueOfLload}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.valueof_load}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.value_of_load}</Text>
                                                     </View>
                                                 </View>
 
@@ -832,10 +910,21 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>Invoice</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Image 
-                                                            source={{uri:this.state.truckData.cargo_img}}
-                                                            //source={require('../images/generator.jpeg')}
-                                                            style={{ width: 50, height: 50, resizeMode: 'cover', borderWidth: 2, borderColor: Constants.COLOR_GREY_LIGHT ,padding: 15 }}/>
+                                                    {
+                                                        this.state.truckData.invoice_goods!=""
+                                                        ?
+                                                            <TouchableOpacity 
+                                                                onPress={()=>{
+                                                                    Platform.OS=="android" ? this.requestFilePermission(this.state.truckData.invoice_goods) : this.getDownloadFile(this.state.truckData.invoice_goods)
+                                                                }}
+                                                            >
+                                                                <Image 
+                                                                    source={require('../images/Download_file.png')}
+                                                                    style={{ width: 30, height: 30, resizeMode: 'cover', padding:5 }}
+                                                                />
+                                                            </TouchableOpacity>
+                                                        :null
+                                                    }
                                                     </View>
                                                 </View>
                                                 
@@ -855,7 +944,11 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>Recurring Requirement</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}> </Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                        {
+                                                            this.state.truckData.recurring_req=="0" ? "No" : "Yes"
+                                                        }
+                                                        </Text>
                                                     </View>
                                                 </View>
 
@@ -864,16 +957,23 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>Service Frequency</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>Weekly</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                            {
+                                                                this.state.truckData.service_frequency=="0" ? "Daily"
+                                                                :this.state.truckData.service_frequency=="1" ? "Weekly"
+                                                                :this.state.truckData.service_frequency=="2" ? "Monthly"
+                                                                : null
+                                                            }
+                                                        </Text>
                                                     </View>
                                                 </View>
 
-                                                <View style={StyleViewUpcomingTrip.row}>
+                                                <View style={[StyleViewUpcomingTrip.row,{ display: this.state.truckData.recurring_req=="0"?'none':'flex' }]}>
                                                     <View style={StyleViewUpcomingTrip.col1}>
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>Service Day</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>Monday</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.service_day}</Text>
                                                     </View>
                                                 </View>
 
@@ -888,7 +988,8 @@ export default class ViewUpcomingTrip extends React.Component {
                                         >
                                             <View>
                                                 {/*payment details for truking*/}
-                                                {this.state.truckData.service_type_id == '1'
+                                                {
+                                                    this.state.truckData.service_type_id == '1'
                                                     ?
                                                     <View>
 
@@ -897,11 +998,16 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoHandlingcost}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargoHandling_cost}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                    {
+                                                                        this.state.truckData.cargo_handling_req=="0"?"No":"Yes"
+                                                                    }
+                                                                </Text>
                                                             </View>
                                                         </View>
 
-                                                        <View style={StyleViewUpcomingTrip.row}>
+                                                        <View style={[StyleViewUpcomingTrip.row,{
+                                                            display:this.state.truckData.recurring_req=="0"?'none':'flex'}]}>
                                                             <View style={StyleViewUpcomingTrip.col1}>
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CostOfRecurring}</Text>
                                                             </View>
@@ -915,7 +1021,9 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>Trip Amount</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}></Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                    {this.state.truckData.trip_amount}
+                                                                </Text>
                                                             </View>
                                                         </View>
 
@@ -924,7 +1032,9 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>Discount (%)</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}></Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                    {this.state.truckData.discount_percentage}
+                                                                </Text>
                                                             </View>
                                                         </View>
 
@@ -933,7 +1043,9 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>Discounted price</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}></Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                    {this.state.truckData.discounted_amount}
+                                                                </Text>
                                                             </View>
                                                         </View>
 
@@ -942,7 +1054,9 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.InsuranceRate}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.insurance_rate}</Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                    {this.state.truckData.insurance_rate}
+                                                                </Text>
                                                             </View>
                                                         </View>
 
@@ -951,7 +1065,9 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>Total</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}></Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                    {this.state.truckData.total}
+                                                                </Text>
                                                             </View>
                                                         </View>
 
@@ -960,7 +1076,9 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>VAT(%)</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}></Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                    {this.state.truckData.vat_percentage}
+                                                                </Text>
                                                             </View>
                                                         </View>
 
@@ -969,7 +1087,9 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>Final Paid Cost</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}></Text>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                    {this.state.truckData.final_paid_amount}
+                                                                </Text>
                                                             </View>
                                                         </View>
 
@@ -978,10 +1098,19 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>Invoice</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Image 
-                                                                    source={{uri:this.state.truckData.cargo_img}}
-                                                                    //source={require('../images/generator.jpeg')}
-                                                                    style={{ width: 50, height: 50, resizeMode: 'cover', borderWidth: 2, borderColor: Constants.COLOR_GREY_LIGHT ,padding: 15 }}/>
+                                                                {
+                                                                    this.state.truckData.invoice_url!=""
+                                                                    ?
+                                                                        <TouchableOpacity onPress={()=>{
+                                                                            Platform.OS=="android" ? this.requestFilePermission(this.state.truckData.invoice_url) : this.getDownloadFile(this.state.truckData.invoice_url)
+                                                                        }}>
+                                                                        <Image 
+                                                                            source={require('../images/Download_file.png')}
+                                                                            style={{ width: 30, height: 30, resizeMode: 'cover', padding:5 }}
+                                                                        />
+                                                                        </TouchableOpacity>
+                                                                    : null
+                                                                }
                                                             </View>
                                                         </View>
 
@@ -1173,7 +1302,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                 renderItem={
                                     ({item})=>
                                     <View style={{width:'30%', margin:5, borderWidth:0.5, borderColor:Constants.COLOR_GREY_LIGHT, justifyContent: 'center', alignItems: 'center',}}>
-                                        <Image source={item.path} style={{width:50, height:50, resizeMode:'cover'}}/>
+                                        <Image source={{uri:item.image_of_good}} style={{width:50, height:50, resizeMode:'cover'}}/>
                                     </View>
                                 }
                             />
