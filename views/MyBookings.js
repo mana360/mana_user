@@ -12,6 +12,7 @@ import {StyleMyBooking} from '../config/CommonStyles'
 import {Tab, Tabs, Card, CardItem,} from 'native-base'
 import { MainPresenter } from '../config/MainPresenter'
 import ApiConstants from '../config/ApiConstants';
+import moment from 'moment'
 
 export default class MyBookings extends React.Component{
 
@@ -40,6 +41,17 @@ export default class MyBookings extends React.Component{
         this.presenter.callPostApi(ApiConstants.getMyBookings, param, true)
     }
 
+    getOngoingBookingList(){
+        this.setState({resp_handler:"2"})
+        let param = {
+            'service_type_id':4,
+            'flag':2,   // ongoing
+            'start_index':0,
+            'total_count':10
+        }
+        this.presenter.callPostApi(ApiConstants.getMyBookings, param, true)
+    }
+
     getPastBookingList(){
         this.setState({resp_handler:"3"})
         let param = {
@@ -60,11 +72,17 @@ export default class MyBookings extends React.Component{
                     ? this.setState({ current_booking_data : data.cml_booking_list, })
                     : this.state.resp_handler=="3"
                     ? this.setState({ past_booking_data : data.cml_booking_list, })
-                    : null
+                    : this.state.resp_handler=="2"
+                    ? this.setState({ current_booking_data : data.cml_booking_list, })
+                    :null
                 }else{
                     alert(data.message)
                 }
-                this.state.resp_handler=="1" ? this.getPastBookingList() : null
+                this.state.resp_handler=="1"
+                ? this.getOngoingBookingList()
+                : this.state.resp_handler=="2"
+                ? this.getPastBookingList()
+                :null
                 break;
             }
         }
@@ -111,28 +129,24 @@ export default class MyBookings extends React.Component{
                                         </View>
                                         <View style={{flex:1}}>
                                             <Text style={
-                                                item.status=="order_placed"?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
+                                                item.booking_status== Constants.BOOKING_STATUS_NEW ?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
                                                 :
-                                                item.status=="driver_assigned"?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_GREEN}]
+                                                item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
                                                 :
-                                                item.status=="picked_up"?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
+                                                item.booking_status==Constants.BOOKING_STATUS_DELIVERED?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_GREEN}]
                                                 :
-                                                item.status=="in_process"?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_RED}]
+                                                item.booking_status==Constants.BOOKING_STATUS_CANCELLED?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_RED}]
                                                 :
                                                 null
                                             }>
                                                 {
-                                                    item.status=="order_placed"?"Order Placed"
+                                                    item.booking_status==Constants.BOOKING_STATUS_NEW?"Order Placed"
                                                     :
-                                                    item.status=="driver_assigned"?"Driver Assigned"
-                                                    :
-                                                    item.status=="picked_up"?"Picked Up"
-                                                    :
-                                                    item.status=="in_process"?"In Process"
+                                                    item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?"Driver Assigned"
                                                     :   
-                                                    item.status=="delivered"?"Delivered"
+                                                    item.booking_status==Constants.BOOKING_STATUS_DELIVERED?"Delivered"
                                                     :
-                                                    item.status=="cancelled"?"Cancelled"
+                                                    item.booking_status==Constants.BOOKING_STATUS_CANCELLED?"Cancelled"
                                                     :null
                                                 }
                                                 </Text>
@@ -144,7 +158,9 @@ export default class MyBookings extends React.Component{
                                             <Text style={StyleMyBooking.labelText}>{item.status=='order_placed'?Constants.EXPECTED_PICKUP:Constants.PICKUP_DATE_TIME}</Text>
                                         </View>
                                         <View style={{flex:1}}>
-                                            <Text style={StyleMyBooking.valueText}>{item.expected_pickup}</Text>
+                                            <Text style={StyleMyBooking.valueText}>
+                                                { moment(item.pickup_date,"YYYY-MM-DD").format("DD MMM. YYYY")} { moment(item.pickup_time,"h:m:s").format("h:m A")}
+                                            </Text>
                                         </View>
                                     </View>
 
@@ -153,7 +169,7 @@ export default class MyBookings extends React.Component{
                                             <Text style={StyleMyBooking.labelText}>{Constants.TOTAL_PRICE}</Text>
                                         </View>
                                         <View style={{flex:1}}>
-                                            <Text style={[StyleMyBooking.valueText,{color:Constants.COLOR_GREEN, fontWeight:'bold'}]}>R {item.price}</Text>
+                                            <Text style={[StyleMyBooking.valueText,{color:Constants.COLOR_GREEN, fontWeight:'bold'}]}>R {item.grand_total}</Text>
                                         </View>
                                     </View>
 
@@ -171,7 +187,7 @@ export default class MyBookings extends React.Component{
                                             <Text style={StyleMyBooking.labelText}>{Constants.DRIVER_NUMBER}</Text>
                                         </View>
                                         <View style={{flex:1}}>
-                                            <Text style={StyleMyBooking.valueText}>{item.driver_number}</Text>
+                                            <Text style={StyleMyBooking.valueText}>{item.driver_contact}</Text>
                                         </View>
                                     </View>
 
@@ -202,41 +218,58 @@ export default class MyBookings extends React.Component{
                             <Card>
                                 <CardItem>
                                     <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-        
+    
                                         <View style={{flex:2, flexDirection:'row', paddingBottom:10, marginBottom:7, borderBottomWidth:0.5, borderBottomColor:"rgba(64,64,64,0.5)"}}>
                                             <View style={{flex:1}}>
                                                 <Text style={StyleMyBooking.bookingId}>Booking id #{item.booking_id}</Text>
                                             </View>
                                             <View style={{flex:1}}>
                                                 <Text style={
-                                                    item.status=="delivered"?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_GREEN}]
+                                                    item.booking_status== Constants.BOOKING_STATUS_NEW ?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
                                                     :
-                                                    item.status=="cancelled"?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_RED}]
+                                                    item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
+                                                    :
+                                                    item.booking_status==Constants.BOOKING_STATUS_DELIVERED?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_GREEN}]
+                                                    :
+                                                    item.booking_status==Constants.BOOKING_STATUS_CANCELLED?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_RED}]
                                                     :
                                                     null
-                                                }>{item.status}</Text>
+                                                }>
+                                                    {
+                                                        item.booking_status==Constants.BOOKING_STATUS_NEW?"Order Placed"
+                                                        :
+                                                        item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?"Driver Assigned"
+                                                        :   
+                                                        item.booking_status==Constants.BOOKING_STATUS_DELIVERED?"Delivered"
+                                                        :
+                                                        item.booking_status==Constants.BOOKING_STATUS_CANCELLED?"Cancelled"
+                                                        :null
+                                                    }
+                                                    </Text>
                                             </View>
                                         </View>
-        
+    
                                         <View style={{flex:2, flexDirection:'row', marginVertical:4}}>
                                             <View style={{flex:1}}>
-                                                <Text style={StyleMyBooking.labelText}>{Constants.EXPECTED_PICKUP}</Text>
+                                                <Text style={StyleMyBooking.labelText}>{item.status=='order_placed'?Constants.EXPECTED_PICKUP:Constants.PICKUP_DATE_TIME}</Text>
                                             </View>
                                             <View style={{flex:1}}>
-                                                <Text style={StyleMyBooking.valueText}>{item.pickup_date} {item.pickup_time}</Text>
+                                                <Text style={StyleMyBooking.valueText}>
+                                                    { moment(item.pickup_date,"YYYY-MM-DD").format("DD MMM. YYYY")} { moment(item.pickup_time,"h:m:s").format("h:m A")}
+                                                </Text>
                                             </View>
                                         </View>
-        
+    
                                         <View style={{flex:2, flexDirection:'row',  marginVertical:4}}>
                                             <View style={{flex:1}}>
                                                 <Text style={StyleMyBooking.labelText}>{Constants.TOTAL_PRICE}</Text>
                                             </View>
                                             <View style={{flex:1}}>
-                                                <Text numberOfLines={1} style={[StyleMyBooking.valueText,{color:Constants.COLOR_GREEN, fontWeight:'bold'}]}>R {item.grand_total}</Text>
+                                                <Text style={[StyleMyBooking.valueText,{color:Constants.COLOR_GREEN, fontWeight:'bold'}]}>R {item.grand_total}</Text>
                                             </View>
                                         </View>
-        
-                                        <View style={{flex:2, flexDirection:'row',  marginVertical:4}}>
+    
+                                        <View style={item.status=="order_placed"?{display:'none'}:{flex:2, flexDirection:'row',  marginVertical:4}}>
                                             <View style={{flex:1}}>
                                                 <Text style={StyleMyBooking.labelText}>{Constants.DRIVER_NAME}</Text>
                                             </View>
@@ -244,8 +277,8 @@ export default class MyBookings extends React.Component{
                                                 <Text style={StyleMyBooking.valueText}>{item.driver_name}</Text>
                                             </View>
                                         </View>
-        
-                                        <View style={{flex:2, flexDirection:'row',  marginVertical:4}}>
+    
+                                        <View style={item.status=="order_placed"?{display:'none'}:{flex:2, flexDirection:'row',  marginVertical:4}}>
                                             <View style={{flex:1}}>
                                                 <Text style={StyleMyBooking.labelText}>{Constants.DRIVER_NUMBER}</Text>
                                             </View>
@@ -253,7 +286,7 @@ export default class MyBookings extends React.Component{
                                                 <Text style={StyleMyBooking.valueText}>{item.driver_contact}</Text>
                                             </View>
                                         </View>
-        
+    
                                     </View>
                                 </CardItem>
                             </Card>

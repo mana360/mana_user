@@ -24,10 +24,10 @@ export default class Notification extends React.Component {
     }
     
     componentDidMount() {
-        this.presenter.callGetApi(ApiConstants.getNotifications, "", true)
+        this.getAllNotification()
     }
 
-    async getAllNotification(){
+    getAllNotification(){
         this.presenter.callGetApi(ApiConstants.getNotifications, "", true)
     }
 
@@ -38,7 +38,6 @@ export default class Notification extends React.Component {
 
         this.presenter.callPostApi(ApiConstants.readNotification, param,true)
     }
-
 
     callRemoveNotification(notification_id) {
         this.presenter.callPostApi(ApiConstants.removeNotification, {
@@ -112,12 +111,9 @@ export default class Notification extends React.Component {
                 
                 <HeaderBar title="Notifications" isBack={true} isLogout={true} navigation={navigation} />
                 
-                <MainPresenter ref={(ref) => { this.presenter = ref }} 
-                onResponse={this.onResponse.bind(this)}
-                 navigation={this.props.navigation} />
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
                 
-                <Text style={{ flex: 1, textAlignVertical: 'center', textAlign: 'center',
-                 display: this.state.noNotificationTextVisibility ? 'flex' : 'none' }}>No New Notification</Text>
+                <Text style={{ flex: 1, textAlignVertical: 'center', textAlign: 'center', display: this.state.noNotificationTextVisibility ? 'flex' : 'none' }}>No New Notification</Text>
                 
                 <FlatList
                     style={{ marginVertical: 15, display: !this.state.noNotificationTextVisibility ? 'flex' : 'none' }}
@@ -129,13 +125,13 @@ export default class Notification extends React.Component {
                         return (
                             <TouchableOpacity style={StyleNotification.row}
                                 onPress={() => {
-                                
                                     if (item.is_read == 1) {
-                                       this.props.navigation.navigate('RateAndReview', { notif_id: item.id });
+                                       //this.props.navigation.navigate('RateAndReview', { notif_id: item.id });
                                     } else  {
                                         this.callMarkAsReadApi(item.noti_id)
                                     }
-                                }}  >
+                                }}>
+
                                 <View style={StyleNotification.col1}>
                                      <Image
                                         source={require('../images/notification-icon.png')}
@@ -147,25 +143,26 @@ export default class Notification extends React.Component {
                                     <Text style={StyleNotification.title}>{item.title} </Text>
                                     <Text style={StyleNotification.desc}>{item.message}
                                     </Text>
-                                    <Text style={StyleNotification.dateTime}>{moment(item.datetime).format("DD MMM YYYY hh:mm:A")}</Text>
+                                    <Text style={StyleNotification.dateTime}>{moment(item.data,"YYYY-MM-DD h:m:s").format("DD MMM YYYY hh:mm:A")}</Text>
                                 </View>
 
                                 <View style={StyleNotification.col1}>
-                                <TouchableOpacity onPress = {()=>{
-                                            if(item.is_read==1){
-                                                this.callRemoveNotification(item.noti_id)
-                                            }
-                                 }}>
-                                    {item.is_read == 0 ? <Image
-                                        source={require('../images/forward_icon.png')}
-                                        style={StyleNotification.arrow} />
-                                        :<Image
-                                        source={require('../images/remove.png')}
-                                        style={StyleNotification.arrow}
-                                    />
-                                    }
+                                
+                                    <TouchableOpacity onPress = {()=>{
+                                                if(item.is_read==1){
+                                                    this.callRemoveNotification(item.noti_id)
+                                                }
+                                    }}>
+                                        {item.is_read == 0 ? <Image
+                                            source={require('../images/forward_icon.png')}
+                                            style={StyleNotification.arrow} />
+                                            :<Image
+                                            source={require('../images/remove.png')}
+                                            style={StyleNotification.arrow}
+                                        />
+                                        }
 
-                                    </TouchableOpacity>
+                                        </TouchableOpacity>
                                     
                                 </View>
 

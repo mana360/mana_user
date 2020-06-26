@@ -106,9 +106,9 @@ export default class MyBookingDetails extends React.Component {
 
           case ApiConstants.getBookingDetails: {
               this.setState({
-                  truck_booking_details : data.pml_booking_details,
-                  load_category : JSON.stringify(data.pml_booking_details[0].load_category[0].category_name),
-                  other_services :data.pml_booking_details[0].other_services
+                  truck_booking_details : data.cml_booking_list,
+                  load_category : JSON.stringify(data.cml_booking_list[0].load_category[0].category_name),
+                  other_services :data.cml_booking_list[0].other_services
                 })
               this.setState({ truck_booking_details : this.state.truck_booking_details[0] })
                 console.log("other =====> "+JSON.stringify(this.state.other_services))
@@ -124,10 +124,12 @@ export default class MyBookingDetails extends React.Component {
             <View style={{ flex: 1, }}>
 
                 <HeaderBar isBack={true} title="my bookings" isNotification={true} navigation={navigation} />
+                
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
+                
                 <ScrollView bounces={false} style={{ width: '100%', paddingTop: 15, paddingBottom: 15, }}>
 
-                     <View style={StyleMyBookingDetails.detailsRow}>
+                    <View style={StyleMyBookingDetails.detailsRow}>
                         <View style={{ flex: 1 }}>
                             <Text style={StyleMyBookingDetails.detailsKey}>{Constants.BOOKING_ID}</Text>
                         </View>
@@ -278,7 +280,7 @@ export default class MyBookingDetails extends React.Component {
                             <Text style={StyleMyBookingDetails.detailsKey}>{Constants.TRUCK_TYPE}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>{}</Text>
+                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.truck_type}</Text>
                         </View>
                     </View>
 

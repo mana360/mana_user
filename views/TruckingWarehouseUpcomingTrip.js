@@ -58,10 +58,21 @@ export default class TruckingWarehouseUpcomingTrip extends React.Component {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, backgroundColor: Constants.COLOR_GREY }}>
+                
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
+                
                 <HeaderBar title="UPCOMING SERVICES" isBack={true} isLogout={true} navigation={navigation} />
+                
+                <View style={{flex:1, justifyContent:'center', alignItems:'center', display: 
+                    this.state.dataSource=="" ? 'flex'
+                    : this.state.truckBookingList=="" ? 'flex'
+                    :'none'
+                    }}>
+                    <Text style={{fontSize:16, textAlign:'center'}}>No trip available</Text>
+                </View>
+
                 <FlatList
-                    style={{ marginVertical: 15 }}
+                    style={{ marginVertical: 15, display: this.state.dataSource=="" ? 'none' : 'flex'}}
                     numColumns={1}
                     data={this.state.dataSource}
                     renderItem={({ item }, index) => {
