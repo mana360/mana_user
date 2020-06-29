@@ -14,10 +14,13 @@ import Textarea from 'react-native-textarea';
 import {MainPresenter} from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
 import {Picker} from 'native-base';
+import {getUserData} from '../config/AppSharedPreference'
 
 export default class HelpAndSupport extends React.Component {
+
     constructor(props) {
         super(props);
+        this.subject_id="",
         this.state = {
             support_subject: "",
             support_message: "",
@@ -26,35 +29,35 @@ export default class HelpAndSupport extends React.Component {
             modal_Visible: false,
             isUser:true,  //help and suport(user)=true ,trip help and support(company)=false
 
-            supportSubjectList:[]
+            supportSubjectList:[],
+            userData:'',
         }
     }
     
-
     componentDidMount(){
+        this.getUserLocalInfo()
+    }
+
+    async getUserLocalInfo(){
+        let data = JSON.parse(await getUserData())
+        if(data[0].user_type==1){
+            this.setState({isUser:false})
+        }else{
+            this.setState({isUser:true})
+        }
+        this.setState({userData : data[0]})
+
         if(this.state.isUser){
             this.setState({
-                supportSubjectList:[{
-                    subject_id:new Date().getTime(),
-                    subject_name:'Cargo Lost'
-                },
-                {
-                    subject_id:new Date().getTime(),
-                    subject_name:'Late Delivery'
-                },
-                {
-                    subject_id:new Date().getTime(),
-                    subject_name:'Driver not in contact'
-                },
-                {
-                    subject_id:new Date().getTime(),
-                    subject_name:'Others'
-                }
-            ]
+                supportSubjectList:[
+                    { subject_id:0, subject_name:'Cargo Lost'},
+                    { subject_id:1, subject_name:'Late Delivery'},
+                    { subject_id:2, subject_name:'Driver not in contact'},
+                    { subject_id:3, subject_name:'Others'}
+                ]
             })
         }else{
             this.getSupportSubjectList()
-
         }
     }
 
@@ -63,11 +66,19 @@ export default class HelpAndSupport extends React.Component {
     }
 
     async sendMessage(){
-        await this.presenter.callPostApi(ApiConstants.addSupportData,
-            {'booking_id':0},
-            {'service_type_id':0},
-            {'subject_id':0},
-            {'message':'test message'}, true);
+        if(this.subject_id=="-1"){
+            alert("Please select subject")
+        }else if(this.state.support_message==""){
+            alert("Please enter subject")
+        }else{
+            let param ={
+                'booking_id':0,
+                'service_type_id':0,
+                'subject_id':this.subject_id,
+                'message': this.state.support_message
+            }
+            await this.presenter.callPostApi(ApiConstants.addSupportData, param, true);
+        }
     }
 
     onResponse(apiConstant, data) {
@@ -99,8 +110,11 @@ export default class HelpAndSupport extends React.Component {
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, }}>
+                
                 <HeaderBar title={this.state.isUser ? "Help & Support" : "Trip-Help & support"} isBack={true} isLogout={true} navigation={navigation}/>
+                
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
+                
                 <ScrollView bounces={false} style={{ width: wp('100%') }}>
                    
                     <View style={{ flex: 1, backgroundColor: Constants.colorGrey }}>
@@ -121,7 +135,11 @@ export default class HelpAndSupport extends React.Component {
                                         style={StyleHelpAndSupport.icon}
                                         source={require('../images/person.png')}
                                     />
-                                    <Text style={StyleHelpAndSupport.name}>John Henry</Text>
+                                    <Text style={StyleHelpAndSupport.name}>
+                                    {
+                                        this.state.userData.user_type==1 ? this.state.userData.company_name : this.state.userData.first_name+ " "+this.state.userData.last_name
+                                    }
+                                    </Text>
                                 </View>
                                 
                                 <View style={{ flexDirection: 'row', paddingLeft: 10, marginVertical: 5 }}>
@@ -129,7 +147,8 @@ export default class HelpAndSupport extends React.Component {
                                         style={StyleHelpAndSupport.icon}
                                         source={require('../images/email_id.png')}
                                     />
-                                    <Text style={StyleHelpAndSupport.name}>{this.state.support_email}</Text>
+                                    <Text style={[StyleHelpAndSupport.name,{width:'70%'}]}> { this.state.userData.email}
+                                    </Text>
                                 </View>
 
                             </View>
@@ -168,14 +187,17 @@ export default class HelpAndSupport extends React.Component {
                                     mode="dropdown"
                                     placeholder="Select Support Subject"
                                     selectedValue={this.state.support_subject}
-                                    onValueChange={ (value)=>{ this.setState({support_subject:value})} }
+                                    onValueChange={ (value)=>{
+                                        this.subject_id= value
+                                        this.setState({support_subject:value})
+                                        } }
                                 >
                                     <Picker.Item key="-1" label="Select Support Subject" value="-1"/>
                                     {
                                         this.state.supportSubjectList!=""
                                         ?
                                             this.state.supportSubjectList.map((item)=>
-                                                <Picker.Item key={item.subject_id} value={item.subject_name} label={item.subject_name}/>
+                                                <Picker.Item key={item.subject_id} value={item.subject_id} label={item.subject_name}/>
                                             )
                                         : null
                                     }
@@ -188,6 +210,7 @@ export default class HelpAndSupport extends React.Component {
                                     <Text style={StyleHelpAndSupport.messageTitle}>{Constants.Message}</Text>
                                 </View>
                                     <Textarea
+                                        value={this.state.support_message}
                                         containerStyle={StyleHelpAndSupport.messageText}
                                         style={[{ marginTop:-120, height:150, maxHeight:150,}]}
                                         onChangeText={(value)=>{this.setState({support_message:value})}}
@@ -223,7 +246,9 @@ export default class HelpAndSupport extends React.Component {
                                         StyleHelpAndSupport.buttonView 
                                         //: { display: 'flex' }
                                         }
-                                        onPress={() => {this.sendMessage()}}
+                                        onPress={() => {
+                                            this.sendMessage()
+                                        }}
                                     >
                                         <Text style={StyleHelpAndSupport.buttonText}>{Constants.SEND}</Text>
                                     </TouchableOpacity>

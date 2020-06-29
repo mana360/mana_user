@@ -2,7 +2,7 @@
     design by -Harshad 
  */
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, DatePickerAndroid, TimePickerAndroid, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, DatePickerAndroid, TimePickerAndroid, TextInput, Modal, FlatList} from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { StyleLocationDetails } from '../config/CommonStyles';
 import { Picker, List } from "native-base";
@@ -49,6 +49,15 @@ export default class LocationDetails extends React.Component {
             isLoadCategoryFilled:0,
             countList:[],
             otherServicesList:[],
+            isTimerError:true,
+
+            selectedItems:[],
+            LoadCategoryItems:[],
+            LoadCategoryItemsTemp:'',
+            LoadCategoryItemsSelected:[],
+            isLoadCategoryVisible:false,
+            isOtherLoadCategorySelected:false,
+            otherLoadCategoryText:"",
         };
         this.truck_type_id="";
         this.load_category_id="";
@@ -111,19 +120,45 @@ export default class LocationDetails extends React.Component {
         //     hour = 12;
         // }
         const selectedTime = hour+":"+minute+":00";
-        this.setState({ pickup_time:  selectedTime})
+        if(this.state.pickup_date == new moment().format('YYYY-MM-DD')){
+            if(new moment().format('h:m:s')>selectedTime)
+            {
+                //validation for today for past time.
+                this.setState({isTimerError:true})
+                alert("Enter correct time.")
+            }
+            else{
+                this.setState({ pickup_time:  selectedTime, isTimerError:false})
+            }
+        }else{
+            this.setState({ pickup_time:  selectedTime, isTimerError:false})
+        }
+        
     }
 
     getMapInfo(resp) {
         console.log("RESP AALA RE ====>" + resp.results[1].formatted_address);
     }
+    onSelectedItemsChange = selectedItems => {
+        this.setState({ selectedItems });
+        console.log("new item ===> "+JSON.stringify(selectedItems))
+      };
 
     onResponse(apiConstant, data) {
         switch (apiConstant) {
           case ApiConstants.LoadCategoryList: {
               if(data.status){
                   this.setState({loadCategoryList : data.load_category,isLoadCategoryFilled:1});
-
+                  let cat=""
+                  this.state.loadCategoryList.map((item)=>{
+                      cat ={
+                          "category_id" : item.category_id,
+                          "category_name": item.category_name,
+                          "isChecked":false
+                      }
+                      this.state.LoadCategoryItems.push(cat)
+                      cat=""
+                  })
                 }
               else {
                   alert(data.message);
@@ -170,6 +205,10 @@ export default class LocationDetails extends React.Component {
             alert("Please Enter Instruction");
             return false;
         }
+        // if(this.state.isTimerError==false){
+        //     alert("Please enter correct time")
+        //     return false
+        // }
         return true
     }
     
@@ -204,6 +243,24 @@ export default class LocationDetails extends React.Component {
                         }
             }
         })
+    }
+
+    closeCategoryModal(){
+        this.setState({isLoadCategoryVisible:false,})
+        let cat=""
+        this.state.LoadCategoryItems.map((item)=>{
+            cat ={
+                "category_id" : item.category_id,
+                "category_name": item.category_name
+            }
+            if(item.category_name=="Others" && item.isChecked){
+                this.setState({isOtherLoadCategorySelected:true})
+            }else{
+                this.setState({isOtherLoadCategorySelected:false, otherLoadCategoryText:""})
+            }
+            item.isChecked ? this.state.LoadCategoryItemsSelected.push(cat) : null
+        })
+        console.log("item selected are ====>"+JSON.stringify(this.state.LoadCategoryItemsSelected))
     }
 
     render() {
@@ -426,11 +483,17 @@ export default class LocationDetails extends React.Component {
                                 />
                             </View>
 
-                            <View style={[StyleLocationDetails.inputContainer,]}>
+                            <View style={[StyleLocationDetails.inputContainer,{}]}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={[StyleLocationDetails.labelTextNew, { textTransform: 'capitalize' }]}>{Constants.LOAD_CATEGORY}</Text>
                                 </View>
-                                <Picker
+                                <TouchableOpacity style={{justifyContent:'center', alignItems:'center', marginTop:15}}
+                                    onPress={()=>{ this.setState({isLoadCategoryVisible:true}) }}
+                                >
+                                    <Text style={{textAlign:'center'}}>Select category</Text>
+                                </TouchableOpacity>
+
+                                {/* <Picker
                                     ref={(ref)=>{this.input_loadcategory = ref}}
                                     mode='dropdown'
                                     style={{ color: Constants.COLOR_GREY_DARK, width: '95%', alignSelf: 'center', paddingVertical: 20 }}
@@ -460,10 +523,30 @@ export default class LocationDetails extends React.Component {
                                      )
                                      :null 
                                     }
-                                </Picker>
-
+                                </Picker> */}
                             </View>
 
+                            <View style={[StyleLocationDetails.inputContainer,{display : this.state.isOtherLoadCategorySelected ?'flex':'none'}]}>
+                                <View style={StyleLocationDetails.labelBoxNew}>
+                                    <Text style={[StyleLocationDetails.labelTextNew, { textTransform: 'capitalize' }]}>Other category</Text>
+                                </View>
+                                <TouchableOpacity style={{justifyContent:'center', alignItems:'center', marginTop:1}}
+                                    onPress={()=>{ this.setState({isLoadCategoryVisible:true}) }}
+                                >
+                                    <TextInput
+                                        placeholder='Enter other category'
+                                        placeholderTextColor="#a4a4a4"
+                                        value={this.state.otherLoadCategoryText}
+                                        onChangeText={
+                                            (value) => {
+                                                this.setState({ otherLoadCategoryText: value })
+                                            }
+                                        }
+                                        style={StyleLocationDetails.inputBox}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                                    
                             <View style={this.state.other_flag==1?[StyleLocationDetails.inputContainer,{justifyContent:"center",paddingLeft:25}]:{display:'none'}}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.LOAD_CATEGORY}</Text>
@@ -481,6 +564,15 @@ export default class LocationDetails extends React.Component {
 
                             <TouchableOpacity
                                 onPress={() => {
+                                    if(this.state.isOtherLoadCategorySelected){
+                                        this.state.LoadCategoryItemsSelected.map((item)=>{
+                                            if(item.category_name=="Others"){
+                                                item.category_name=this.state.otherLoadCategoryText
+                                            }
+                                        })
+                                    }
+                                    console.log("sending cat ===>"+JSON.stringify(this.state.LoadCategoryItemsSelected))
+
                                     let booking_data={
                                         "truck_trip_id" : this.truck_type_id,
                                         "pick_up_address": this.state.pick_up_address,
@@ -502,8 +594,9 @@ export default class LocationDetails extends React.Component {
                                         "pickupTime":this.state.pickup_time,
                                         "instruction":this.state.instruction_1,
                                         "category_name":this.category_name,
-                                        "load_category":this.state.other_flag==1?this.state.load_Category_Manualtext:this.state.load_category,
-                                        "load_category_id":this.other_flag==0?this.load_category_id:this.other_flag,
+                                        "load_category":this.state.LoadCategoryItemsSelected,
+                                        //"load_category":this.state.other_flag==1?this.state.load_Category_Manualtext:this.state.load_category,
+                                        //"load_category_id":this.other_flag==0?this.load_category_id:this.other_flag,
                                        " other_flag":this.other_flag,
                                     }
 
@@ -521,6 +614,49 @@ export default class LocationDetails extends React.Component {
                         </View>
                     </View>
                 </ScrollView>
+
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={this.state.isLoadCategoryVisible}
+                >
+                    <View style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'rgba(52, 52, 52, 0.8)'}}>
+                        <View style={{width:'90%', maxHeight:300, backgroundColor:'white', padding:10, margin:15}}>
+                            <TouchableOpacity style={{justifyContent:'flex-end', alignItems:'flex-end'}}
+                                onPress={()=>{ this.closeCategoryModal()}}>
+                                <Image source={require('../images/close.png')} style={{width:20, height:20, resizeMode:'cover'}}/>
+                            </TouchableOpacity>
+                                <Text style={{color:Constants.COLOR_GREY_DARK, fontSize:16, fontWeight:'bold', textAlign:'center'}}>Select category</Text>
+                                <FlatList
+                                    data={this.state.LoadCategoryItems}
+                                    extraData={this.state}
+                                    keyExtractor={(item, index)=>index.toString()}
+                                    numColumns={1}
+                                    renderItem={
+                                        ({item,index})=>
+                                        <TouchableOpacity style={{flexDirection:'row', padding:5, marginVertical:5}}
+                                            onPress={()=>{
+                                                const temp =[...this.state.LoadCategoryItems]
+                                                temp[index].isChecked = ! temp[index].isChecked
+                                                this.setState({LoadCategoryItems : temp})
+                                            }}
+                                        >
+                                            <Image
+                                                source={ item.isChecked ? require("../images/radio_buttons_selected.png") : require("../images/radio_buttons.png")}
+                                                style={{width:20, height:20, resizeMode:'cover'}}
+                                            />
+                                            <Text style={{fontSize:14, marginLeft:10}}>{item.category_name} </Text>
+                                        </TouchableOpacity>
+                                    }
+                                />
+                                <TouchableOpacity style={{width:200, paddingVertical:7, alignSelf:'center', justifyContent:'center', alignItems:'center', backgroundColor:Constants.COLOR_GREEN}}
+                                    onPress={()=>{this.closeCategoryModal()}}
+                                >
+                                    <Text style={{textAlign:'center', fontSize:16, color:Constants.COLOR_WHITE}}>Submit</Text>
+                                </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
 
                 <FooterBar navigation={navigation} />
 

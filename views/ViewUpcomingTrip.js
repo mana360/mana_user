@@ -13,6 +13,8 @@ import Splash from './Splash'
 import { MainPresenter } from '../config/MainPresenter';
 import moment from 'moment'
 import RNFetchBlob from 'rn-fetch-blob';
+import RBSheet from "react-native-raw-bottom-sheet";
+import Carousel from "react-native-carousel";
 
 export default class ViewUpcomingTrip extends React.Component {
     
@@ -35,7 +37,7 @@ export default class ViewUpcomingTrip extends React.Component {
             showDestinationLocations:false,
             driverDetailsModalVisible:false,
             goodsPhotoGalleryVisible:false,
-            goodsPhotoGalleryList:"",
+            goodsPhotoGalleryList:[],
         }
     }
 
@@ -372,6 +374,15 @@ export default class ViewUpcomingTrip extends React.Component {
                                                 :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION ? "Arrived at Destination"
                                                 :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_TRIP_COMPLETED_CARGO_OFFLOADED ? "Trip completed, cargo offloaded"
                                                 :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In storage"
+                                                :null
+                                            }
+                                            </Text>
+                                            <Text style={[StyleViewUpcomingTrip.col2Text,{ display : this.service_type_id==2 ? 'flex' :'none'}]}>
+                                            {
+                                                 this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_STATUS_NEW ? "New"
+                                                :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_STATUS_PICKED_UP ? "Picked up"
+                                                :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_STATUS_DELIVERED ? "Delivered"
+                                                :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_STATUS_CANCELLED ? "Cancelled"
                                                 :null
                                             }
                                             </Text>
@@ -1076,7 +1087,13 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>Image</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <TouchableOpacity onPress={()=>{ this.state.goodsPhotoGalleryList=="" ? alert('Gallery is empty now.') : this.setState({goodsPhotoGalleryVisible:true}) }}>
+                                                        <TouchableOpacity onPress={()=>{ 
+                                                                this.state.goodsPhotoGalleryList==""
+                                                                ? alert('Gallery is empty now.')
+                                                                :
+                                                                //this.setState({goodsPhotoGalleryVisible:true})
+                                                                this.RBSheet.open()
+                                                            }}>
                                                             <Text style={[StyleViewUpcomingTrip.col2Text, { color: Constants.COLOR_GREEN, textDecorationLine: 'underline' }]}>View Gallery</Text>
                                                         </TouchableOpacity>
                                                     </View>
@@ -1527,13 +1544,35 @@ export default class ViewUpcomingTrip extends React.Component {
                                 <Image source={require('../images/close.png')} style={{width:15, height:15, resizeMode:'cover'}}/>
                             </TouchableOpacity>
                             <Text style={[StyleViewUpcomingTrip.modalMsg, { marginBottom: 20 }]}>Photo Gallery</Text>
+
+                                <Carousel
+                                    indicatorAtBottom={true}
+                                    indicatorOffset={0}
+                                    delay={5000}
+                                    loop={true}
+                                    indicatorColor="#7bc145"
+                                    indicatorSpace={15}
+                                >
+                                    {
+                                    this.state.goodsPhotoGalleryList.map((item,index) =>
+                                        <View style={{flex:1, backgroundColor:'cyan', justifyContent:'center', alignItems:'center'}}>
+                                            <Image 
+                                                style={{width:100, height:50, resizeMode:'cover'}}
+                                                source={{uri:item.image_of_good}}
+                                            />
+                                        </View>
+                                        )
+                                    }
+                                </Carousel>
+                            
+                            
                             <FlatList
                                 data={this.state.goodsPhotoGalleryList}
                                 numColumns={3}
                                 extraData={this.state}
                                 keyExtractor={index => index.toString()}
                                 bounces={false}
-                                style={{alignSelf:'center'}}
+                                style={{alignSelf:'center', display:'none'}}
                                 renderItem={
                                     ({item})=>
                                     <View style={{width:'30%', margin:5, borderWidth:0.5, borderColor:Constants.COLOR_GREY_LIGHT, justifyContent: 'center', alignItems: 'center',}}>
@@ -1545,6 +1584,40 @@ export default class ViewUpcomingTrip extends React.Component {
                    </View>
                 </Modal>
 
+                <RBSheet
+                    ref={ref => { this.RBSheet = ref; }}
+                    height={400}
+                    duration={250}
+                    customStyles={{
+                        container: {
+                            borderTopLeftRadius: 0,
+                            borderTopRightRadius: 0,
+                            backgroundColor: 'transparent',
+                        }
+                    }}
+                >
+                    <View style={{height:400, backgroundColor:Constants.COLOR_WHITE}}>
+                        
+                        <Text style={{fontSize:16, color:Constants.COLOR_GREY_DARK, textAlign:'center', marginVertical:5}}> Photo Gallery</Text>
+                        
+                        <Carousel
+                            indicatorAtBottom={true}
+                            indicatorOffset={0}
+                            delay={5000}
+                            loop={true}
+                            indicatorColor="#7bc145"
+                            indicatorSpace={15}
+                        >
+                            {
+                                this.state.goodsPhotoGalleryList.map((item,index) =>
+                                    <View style={{flex:1, height:400, justifyContent: 'center', alignItems: 'center',}}>
+                                        <Image source={{uri:item.image_of_good}} style={{width:'90%', height:350, alignSelft:'center', resizeMode:'stretch'}}/>
+                                    </View>
+                                )
+                            }
+                        </Carousel>
+                    </View>
+                </RBSheet>
             </View>
         )
     }

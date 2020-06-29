@@ -101,7 +101,7 @@ export default class MyProfile extends React.Component {
                     </View>
                 </View>
 
-                <View style={StyleMyProfile.row}>
+                <View style={[StyleMyProfile.row,{display:'none'}]}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/person.png')}
                             style={StyleMyProfile.Icon}
@@ -113,7 +113,7 @@ export default class MyProfile extends React.Component {
                     </View>
                 </View>
 
-                <View style={StyleMyProfile.row}>
+                <View style={[StyleMyProfile.row,{display:'none'}]}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/designation.png')}
                             style={StyleMyProfile.Icon}
@@ -149,7 +149,7 @@ export default class MyProfile extends React.Component {
                     </View>
                 </View>
 
-                <View style={StyleMyProfile.row}>
+                <View style={[StyleMyProfile.row,{display:'none'}]}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/address.png')}
                             style={StyleMyProfile.Icon}
@@ -161,7 +161,7 @@ export default class MyProfile extends React.Component {
                     </View>
                 </View>
 
-                <View style={StyleMyProfile.row}>
+                <View style={[StyleMyProfile.row,{display:'none'}]}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/address.png')}
                             style={StyleMyProfile.Icon}
@@ -173,7 +173,7 @@ export default class MyProfile extends React.Component {
                     </View>
                 </View>
 
-                <View style={StyleMyProfile.row}>
+                <View style={[StyleMyProfile.row,{display:'none'}]}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/address.png')}
                             style={StyleMyProfile.Icon}
@@ -185,7 +185,7 @@ export default class MyProfile extends React.Component {
                     </View>
                 </View>
 
-                <View style={StyleMyProfile.row}>
+                <View style={[StyleMyProfile.row,{display:'none'}]}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/address.png')}
                             style={StyleMyProfile.Icon}
@@ -197,7 +197,7 @@ export default class MyProfile extends React.Component {
                     </View>
                 </View>
 
-                <View style={StyleMyProfile.row}>
+                <View style={[StyleMyProfile.row,{display:'none'}]}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/address.png')}
                             style={StyleMyProfile.Icon}
@@ -242,7 +242,7 @@ export default class MyProfile extends React.Component {
                     </View>
                 </View>
 
-                <View style={StyleMyProfile.row}>
+                <View style={[StyleMyProfile.row,{display:'none'}]}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/person.png')}
                             style={StyleMyProfile.Icon}
@@ -266,7 +266,7 @@ export default class MyProfile extends React.Component {
                     </View>
                 </View>
 
-                <View style={[StyleMyProfile.row, { borderBottomWidth: 0, }]}>
+                <View style={[StyleMyProfile.row, { borderBottomWidth: 0, display:'none'}]}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/designation.png')}
                             style={StyleMyProfile.Icon}
@@ -307,7 +307,7 @@ export default class MyProfile extends React.Component {
 
                 </View>
 
-                <View style={StyleMyProfile.row}>
+                <View style={[StyleMyProfile.row,{display:'none'}]}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/address.png')}
                             style={StyleMyProfile.Icon}
@@ -319,7 +319,7 @@ export default class MyProfile extends React.Component {
                     </View>
                 </View>
 
-                <View style={StyleMyProfile.row}>
+                <View style={[StyleMyProfile.row,{display:'none'}]}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/address.png')}
                             style={StyleMyProfile.Icon}
@@ -331,7 +331,7 @@ export default class MyProfile extends React.Component {
                     </View>
                 </View>
 
-                <View style={StyleMyProfile.row}>
+                <View style={[StyleMyProfile.row,{display:'none'}]}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/address.png')}
                             style={StyleMyProfile.Icon}
@@ -343,7 +343,7 @@ export default class MyProfile extends React.Component {
                     </View>
                 </View>
 
-                <View style={StyleMyProfile.row}>
+                <View style={[StyleMyProfile.row,{display:'none'}]}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/address.png')}
                             style={StyleMyProfile.Icon}
@@ -355,7 +355,7 @@ export default class MyProfile extends React.Component {
                     </View>
                 </View>
 
-                <View style={StyleMyProfile.row}>
+                <View style={[StyleMyProfile.row,{display:'none'}]}>
                     <View style={StyleMyProfile.col1}>
                         <Image source={require('../images/address.png')}
                             style={StyleMyProfile.Icon}
@@ -629,7 +629,7 @@ export default class MyProfile extends React.Component {
 
                         </View>
 
-                        <Text style={StyleMyProfile.label}>
+                        <Text style={[StyleMyProfile.label,{textTransform:'capitalize'}]}>
                             {
                                 this.state.screen_title == 'UserProfile' 
                                 ? this.state.userData.first_name+" "+ this.state.userData.last_name

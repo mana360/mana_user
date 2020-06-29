@@ -144,7 +144,13 @@ export default class UpcomingTrip extends React.Component {
 
                                 <View style={StyleUpcomingTrip.col1}>
                                     <Image
-                                        source={require('../images/Truck_Bookings_copy.png')}
+                                        source={
+                                            this.service_type_id==1
+                                            ?require('../images/Truck_Bookings_copy.png')
+                                            : this.service_type_id==2
+                                            ?require('../images/WarehouseServices_copy.png')
+                                            :require('../images/Trucking_+Warehouse.png')
+                                        }
                                         style={StyleUpcomingTrip.icon}
                                     />
                                 </View>
@@ -171,7 +177,7 @@ export default class UpcomingTrip extends React.Component {
                                             {   this.service_type_id==1
                                                 ? moment(item.date_of_pickup).format("DD MMM YYYY")
                                                 : this.service_type_id==2
-                                                ? moment(item.service_start_date,"YYYY-mm-dd").format("DD MMM YYYY")
+                                                ? moment(item.service_start_date).format("DD MMM YYYY")
                                                 :''
                                             }
                                         </Text>
@@ -186,7 +192,7 @@ export default class UpcomingTrip extends React.Component {
                                             {   this.service_type_id==1
                                                 ? moment(item.date_of_pickup).format("hh:mm A")
                                                 :this.service_type_id==2
-                                                ? moment(item.pickup_time).format("hh:mm A")
+                                                ? item.pickup_time
                                                 :''
                                             }
                                         </Text>

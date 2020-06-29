@@ -95,7 +95,7 @@ export default class BookingSummary extends React.Component{
         this.setState({name : user_data[0].first_name+ " "+user_data[0].last_name, contact_number:user_data[0].contact})
         
         let i=1
-        for(i=1;i<=15;i++){
+        for(i=1;i<=5;i++){
                 this.state.countList.push(i);
         }
         // this.userInfo = await getUserData();
@@ -447,7 +447,17 @@ export default class BookingSummary extends React.Component{
                                     <Text style={StyleBookingSummary.topinnTxt}>Truck Type -{this.state.truck_Type_id}</Text>
                                         </View>
                                         <View style={StyleBookingSummary.topinnBox}>
-                                       <Text style={StyleBookingSummary.topinnTxt}>Load Category -{this.state.load_category}</Text>
+                                       <Text style={StyleBookingSummary.topinnTxt}>Load Category - 
+                                            {
+                                                this.state.load_category!=""
+                                                ?
+                                                this.state.load_category.map((item)=>
+                                                    <Text>{item.category_name}, </Text>
+                                                )
+                                                :null
+                                                //JSON.stringify(this.state.load_category)
+                                            }
+                                        </Text>
                                         </View>
                                    </View>
                                 
@@ -857,7 +867,7 @@ export default class BookingSummary extends React.Component{
                                                         keyExtractor={(item, index)=>index.toString()}
                                                         renderItem={({item,index})=>(
                                                            
-                                                     <View style={{flex:1,flexDirection:'row',paddingBottom:20}}>
+                                                     <View style={{flex:1,flexDirection:'row',paddingBottom:10}}>
                                                         <View style={{paddingVertical:10,width:'60%'}}>
                                                         <Text style={[StyleLocationDetails.labelTextNew, {fontSize:13,} ]}>{item.service_name}</Text>
                                                       </View>

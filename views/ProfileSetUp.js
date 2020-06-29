@@ -737,7 +737,7 @@ export default class ProfileSetUp extends React.Component {
                             <TextInput
                                 placeholder="Enter Number"
                                 style={StyleSetUpProfile.TextInput}
-                                keyboardType="number-pad"
+                                keyboardType="email-address"
                                 ref={(ref)=>{this.input_user_passport=ref}}
                                 value={this.state.user_passport_number}
                                 onChangeText={(text) => { this.setState({ user_passport_number: text }) }}
@@ -1485,7 +1485,7 @@ export default class ProfileSetUp extends React.Component {
                                         }}
 
                                     >
-                                        <Text style={StyleSignUp.PolicyLabel}>{Constants.PaymentPolicy}</Text>
+                                        <Text style={StyleSignUp.PolicyLabel}>{Constants.PrivacyPolicy}</Text>
                                     </TouchableOpacity>
                                 
                                 </View>
