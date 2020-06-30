@@ -133,7 +133,7 @@ export default class BookingSummary extends React.Component{
                 instructions:this.booking_data.instruction,
                 load_category:this.booking_data.load_category,
                 other_flag:this.booking_data.other_flag,
-                load_category_id:this.booking_data.load_category_id,
+                load_category_id:this.booking_data.loadCategoryString,
                 truck_Type_id:this.booking_data.truck_trip_id,
                 // name:`${this.userInfo.first_name} ${this.userInfo.last_name}`,
                 // contact_number:`${this.userInfo.contact}`

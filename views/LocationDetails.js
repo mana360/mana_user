@@ -17,6 +17,7 @@ import { MainPresenter } from '../config/MainPresenter';
 export default class LocationDetails extends React.Component {
     constructor(props) {
         super(props)
+        this.loadCategoryString="";
 
         this.state = {
             pick_up_address: "",
@@ -98,7 +99,6 @@ export default class LocationDetails extends React.Component {
     }
 
     async openTimer() {
-        console.log("Timer called")
         var { action, minute, hour, second } = await TimePickerAndroid.open({
             is24Hour: true,
         });
@@ -120,8 +120,10 @@ export default class LocationDetails extends React.Component {
         //     hour = 12;
         // }
         const selectedTime = hour+":"+minute+":00";
+        console.log("selected = time ==> "+selectedTime)
+        console.log("clock time =======> "+new moment().format('h:m:s'))
         if(this.state.pickup_date == new moment().format('YYYY-MM-DD')){
-            if(new moment().format('h:m:s')>selectedTime)
+            if(new moment().format('h:m:s')>=selectedTime)
             {
                 //validation for today for past time.
                 this.setState({isTimerError:true})
@@ -139,10 +141,11 @@ export default class LocationDetails extends React.Component {
     getMapInfo(resp) {
         console.log("RESP AALA RE ====>" + resp.results[1].formatted_address);
     }
+    
     onSelectedItemsChange = selectedItems => {
         this.setState({ selectedItems });
         console.log("new item ===> "+JSON.stringify(selectedItems))
-      };
+    };
 
     onResponse(apiConstant, data) {
         switch (apiConstant) {
@@ -180,10 +183,13 @@ export default class LocationDetails extends React.Component {
     }
 
     isValid(){
-        if(this.state.load_category=="-1"){
-            alert("please Select Load Category");
-            this.input_loadcategory.focus();     
-        return false
+        if(this.state.LoadCategoryItemsSelected==""){
+            alert("Please Select Load Category");
+            return false
+        }
+        if(this.state.isOtherLoadCategorySelected && this.state.otherLoadCategoryText==""){
+            alert("Please Enter Other Load Category");
+            return false
         }
         if(this.state.pick_up_address==""){
             alert("Please Enter Pickup Address");
@@ -246,7 +252,6 @@ export default class LocationDetails extends React.Component {
     }
 
     closeCategoryModal(){
-        this.setState({isLoadCategoryVisible:false,})
         let cat=""
         this.state.LoadCategoryItems.map((item)=>{
             cat ={
@@ -258,9 +263,14 @@ export default class LocationDetails extends React.Component {
             }else{
                 this.setState({isOtherLoadCategorySelected:false, otherLoadCategoryText:""})
             }
-            item.isChecked ? this.state.LoadCategoryItemsSelected.push(cat) : null
+            if(item.isChecked){
+                this.state.LoadCategoryItemsSelected.push(cat)
+                this.loadCategoryString = this.loadCategoryString+item.category_id+","
+            }
         })
         console.log("item selected are ====>"+JSON.stringify(this.state.LoadCategoryItemsSelected))
+        console.log("load cat ==="+this.loadCategoryString)
+        this.setState({isLoadCategoryVisible:false,})
     }
 
     render() {
@@ -488,7 +498,9 @@ export default class LocationDetails extends React.Component {
                                     <Text style={[StyleLocationDetails.labelTextNew, { textTransform: 'capitalize' }]}>{Constants.LOAD_CATEGORY}</Text>
                                 </View>
                                 <TouchableOpacity style={{justifyContent:'center', alignItems:'center', marginTop:15}}
-                                    onPress={()=>{ this.setState({isLoadCategoryVisible:true}) }}
+                                    onPress={()=>{ 
+                                        this.setState({isLoadCategoryVisible:true, LoadCategoryItemsSelected:[]}) 
+                                    }}
                                 >
                                     <Text style={{textAlign:'center'}}>Select category</Text>
                                 </TouchableOpacity>
@@ -572,6 +584,8 @@ export default class LocationDetails extends React.Component {
                                         })
                                     }
                                     console.log("sending cat ===>"+JSON.stringify(this.state.LoadCategoryItemsSelected))
+                                    this.loadCategoryString = this.loadCategoryString.slice(0,-1)
+                                    console.log("string====> "+this.loadCategoryString)
 
                                     let booking_data={
                                         "truck_trip_id" : this.truck_type_id,
@@ -595,6 +609,7 @@ export default class LocationDetails extends React.Component {
                                         "instruction":this.state.instruction_1,
                                         "category_name":this.category_name,
                                         "load_category":this.state.LoadCategoryItemsSelected,
+                                        "loadCategoryString":this.loadCategoryString,
                                         //"load_category":this.state.other_flag==1?this.state.load_Category_Manualtext:this.state.load_category,
                                         //"load_category_id":this.other_flag==0?this.load_category_id:this.other_flag,
                                        " other_flag":this.other_flag,
@@ -602,9 +617,8 @@ export default class LocationDetails extends React.Component {
 
                                     if(!this.isValid()){
                                     }else{
-                                    this.props.navigation.navigate('BookingSummary',{'booking_data':booking_data});
+                                        this.props.navigation.navigate('BookingSummary',{'booking_data':booking_data});
                                     }
-                                    // this.props.navigation.navigate('BookingSummary',{userDetails_1:this.userDetails,userDetails_2:user_data});
                                 }}
                                 style={StyleLocationDetails.logButton}
                             >

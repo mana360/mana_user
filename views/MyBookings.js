@@ -140,7 +140,7 @@ export default class MyBookings extends React.Component{
                                                 null
                                             }>
                                                 {
-                                                    item.booking_status==Constants.BOOKING_STATUS_NEW?"Order Placed"
+                                                    item.booking_status==Constants.BOOKING_STATUS_NEW?"New"
                                                     :
                                                     item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?"Driver Assigned"
                                                     :   
