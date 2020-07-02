@@ -423,10 +423,10 @@ export default class LocationDetails extends React.Component {
                                     placeholder='Enter DropOff Address Details'
                                     placeholderTextColor="#a4a4a4"
                                     // ref={(ref) => { this.pick_up_address_Details = ref }}
-                                    value={this.state.pick_up_addressDetails}
+                                    value={this.state.drop_off_address_1Details}
                                     onChangeText={
                                         (value) => {
-                                            this.setState({ pick_up_addressDetails: value })
+                                            this.setState({ drop_off_address_1Details: value })
                                         }
                                     }
                                     style={StyleLocationDetails.inputBox} />
@@ -587,12 +587,27 @@ export default class LocationDetails extends React.Component {
                                     this.loadCategoryString = this.loadCategoryString.slice(0,-1)
                                     console.log("string====> "+this.loadCategoryString)
 
+                                    let drop_list =[
+                                        {
+                                            'drop_location': this.state.drop_off_address,
+                                            'drop_latlng'  : this.state.drop_off_address_lat+","+this.state. drop_off_address_long,
+                                            'drop_address' : this.state.drop_off_addressDetails
+                                        },
+                                        {
+                                            'drop_location': this.state.drop_off_address_1,
+                                            'drop_latlng'  : this.state.drop_off_address_1_lat+","+this.state. drop_off_address_long,
+                                            'drop_address' : this.state. drop_off_address_1Details
+                                        }
+                                    ]
+
                                     let booking_data={
                                         "truck_trip_id" : this.truck_type_id,
                                         "pick_up_address": this.state.pick_up_address,
                                         "pick_up_address_lat":this.state.pick_up_address_lat,
                                         "pick_up_address_long":this.state.pick_up_address_long,
                                         "pick_up_addressDetails":this.state.pick_up_addressDetails,
+
+                                        "drop_list" : drop_list,
 
                                         "drop_off_address":this.state.drop_off_address,
                                         "drop_off_address_lat":this.state.drop_off_address_lat,
@@ -602,7 +617,7 @@ export default class LocationDetails extends React.Component {
                                         "drop_off_address_1": this.state.drop_off_address_1,
                                         "drop_off_address_1_lat":this.state.drop_off_address_1_lat,
                                         "drop_off_address_1_long":this.state.drop_off_address_1_long,
-                                        "drop_off_address_1Details": this.state. drop_off_address_1Details,
+                                        "drop_off_address_1Details": this.state.drop_off_address_1Details,
 
                                         "pickupDate":this.state.pickup_date,
                                         "pickupTime":this.state.pickup_time,

@@ -36,16 +36,18 @@ export default class BookingSummary extends React.Component{
             pick_up_address_long:"",
             pick_up_addressDetails:"",
 
-            drop_off_address: "",
-            drop_off_address_lat:'',
-            drop_off_address_long:"",
-            drop_off_addressDetails:"",
+            drop_list:"",
+
+            // drop_off_address: "",
+            // drop_off_address_lat:'',
+            // drop_off_address_long:"",
+            // drop_off_addressDetails:"",
 
 
-            drop_off_address_1: "",
-            drop_off_address_1_lat:'',
-            drop_off_address_1_long:"",
-            drop_off_address_1Details:"",
+            // drop_off_address_1: "",
+            // drop_off_address_1_lat:'',
+            // drop_off_address_1_long:"",
+            // drop_off_address_1Details:"",
 
 
             modalVisible: false,
@@ -117,7 +119,7 @@ export default class BookingSummary extends React.Component{
                 pick_up_address_long:this.booking_data.pick_up_address_long,
                 pick_up_addressDetails:this.booking_data.pick_up_addressDetails,
                 
-
+                drop_list: this.booking_data.drop_list,
                 drop_off_address:this.booking_data.drop_off_address,
                 drop_off_address_lat:this.booking_data.drop_off_address_lat,
                 drop_off_address_long:this.booking_data.drop_off_address_long,
@@ -139,6 +141,7 @@ export default class BookingSummary extends React.Component{
                 // contact_number:`${this.userInfo.contact}`
 
             });
+            console.log("drop list ====> "+JSON.stringify(this.state.drop_list))
         this.getcalculatingBooking();
     }
 
@@ -191,11 +194,18 @@ export default class BookingSummary extends React.Component{
         // { "drop_location":"test 123", "drop_latlng":"18.5590, 73.7868", "drop_address":"test 123"}]
         
        
-    let dropoff_list =    [{
-            "drop_location":this.state.drop_off_address_1Details+","+this.state.drop_off_address,
+    let dropoff_list =    [
+        {
+            "drop_location":this.state.drop_off_addressDetails+","+this.state.drop_off_address,
             "drop_latlng":this.state.drop_off_address_lat+","+this.state.drop_off_address_long,
-            "drop_address":this.state.drop_off_address_1Details+","+this.state.drop_off_address,
-       }]
+            "drop_address":this.state.pick_up_addressDetails
+        },
+        {
+            "drop_location":this.state.drop_off_address_1Details+","+this.state.drop_off_address_1,
+            "drop_latlng":this.state.drop_off_address_1_lat+","+this.state.drop_off_address_1_long,
+            "drop_address":this.state.drop_off_address_1Details
+       }
+    ]
 
        //console.log('Drop of list : -->' + JSON.stringify(dropoff_list.replace("'\'","")))
 
@@ -507,7 +517,7 @@ export default class BookingSummary extends React.Component{
                                         <TextInput placeholder='Enter Dropoff Address' 
                                         placeholderTextColor="#a4a4a4"
                                         ref={(ref)=>{this.drop_off_address1=ref}}
-                                        value={this.state.drop_off_address}
+                                        value={this.state.drop_list[0]}
                                         onChangeText={
                                             (value)=>{
                                                 this.setState({drop_off_address:value})
