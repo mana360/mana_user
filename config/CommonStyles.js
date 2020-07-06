@@ -1635,10 +1635,10 @@ const StyleCollectMyLoad = StyleSheet.create({
         backgroundColor:Constants.COLOR_GREY_DARK,
         width:'100%',
         borderRadius:6,
-        paddingVertical:20,      
+        paddingVertical:10,      
         alignItems:"center",
-        marginTop:25,
-        marginBottom:35,
+        marginTop:20,
+        marginBottom:20,
     },
     maxTxt:{       
         color:'#fff',

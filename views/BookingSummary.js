@@ -79,6 +79,8 @@ export default class BookingSummary extends React.Component{
             otherServiceSelected:new Map(), 
             otherServices_amount:"0",
             truck_Type_id:"",
+            truck_name:"",
+            truck_desc:"",
         }
         // this.userInfo=[];
         this.userDetails_1={};
@@ -137,6 +139,8 @@ export default class BookingSummary extends React.Component{
                 other_flag:this.booking_data.other_flag,
                 load_category_id:this.booking_data.loadCategoryString,
                 truck_Type_id:this.booking_data.truck_trip_id,
+                truck_name:this.booking_data.truck_name,
+                truck_desc:this.booking_data.truck_desc,
                 // name:`${this.userInfo.first_name} ${this.userInfo.last_name}`,
                 // contact_number:`${this.userInfo.contact}`
 
@@ -390,7 +394,6 @@ export default class BookingSummary extends React.Component{
     }
  
     async openTimer(){
-
         var { action, minute, hour, second } = await TimePickerAndroid.open({
             is24Hour: true,
           });
@@ -398,24 +401,20 @@ export default class BookingSummary extends React.Component{
               this.setState({pick_time:""})
               return;
           }
-            //const selectedTime = `${hour}:${minute} ${am_pm}` ;
-            //this.setState({ pick_time:selectedTime})
-
             const selectedTime = hour+":"+minute;
-            console.log("selected = time ==> "+selectedTime)
-
-            let selectedDT = this.state.pickup_date+" "+selectedTime
-            selectedDT = new moment(selectedDT).format('YYYY-MM-DD H:m')
-            console.log("selected DT =====> "+selectedDT)
-
+            let currentHour = new moment().format('H')
+            let currentMinute = new moment().format('m')
+            
             if(this.state.pickup_date == new moment().format('YYYY-MM-DD')){
-
-                if(moment(selectedDT).isBefore(new moment().format('YYYY-MM-DD H:m'))){
-                    alert("Enter correct time.")
-                }
-                else{
-                    console.log("time correct")
-                    this.setState({ pick_time:  selectedTime+":00", isTimerError:false})
+                if(hour>=currentHour){
+                    if(minute>=currentMinute){
+                        console.log("Time is valid")
+                        this.setState({ pick_time:  selectedTime+":00", isTimerError:false})
+                    }else{
+                        alert('Enter correct time.')    
+                    }    
+                }else{
+                    alert('Enter correct time.')
                 }
             }else{
                 this.setState({ pick_time:  selectedTime, isTimerError:false})
@@ -460,10 +459,16 @@ export default class BookingSummary extends React.Component{
                                 <View style={StyleBookingSummary.booksumminnWrapp}>                            
                                    
                                    <View style={StyleBookingSummary.topBox}>
+                                        
                                         <View style={[StyleBookingSummary.topinnBox, { borderBottomColor:'#a9b0b5', borderBottomWidth:0.8,} ]}>
-                                    <Text style={StyleBookingSummary.topinnTxt}>Truck Type -{this.state.truck_Type_id}</Text>
+                                            <Text style={StyleBookingSummary.topinnTxt}>Truck Type - {this.state.truck_Type_id}</Text>
+                                            <Text style={StyleBookingSummary.topinnTxt}>Truck Name - {this.state.truck_name}</Text>
+                                            <Text style={StyleBookingSummary.topinnTxt}>Truck Description</Text>
+                                            <Text style={[StyleBookingSummary.topinnTxt,{fontSize:14, marginTop:10}]}>{this.state.truck_desc}</Text>
                                         </View>
+                                        
                                         <View style={StyleBookingSummary.topinnBox}>
+                                       
                                        <Text style={StyleBookingSummary.topinnTxt}>Load Category - 
                                             {
                                                 this.state.load_category!=""

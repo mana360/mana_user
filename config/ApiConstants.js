@@ -41,6 +41,8 @@ export default ApiConstants = {
     changePassword:'customer/changePassword',
     updateProfile:"customer/updateProfile",
     referFriend:"customer/referFriend",
+    cancelBooking:"customer/cancelBooking",
+    shareMyRide:"customer/shareMyRide",
 
 
     /* ------------Mayur----------- */

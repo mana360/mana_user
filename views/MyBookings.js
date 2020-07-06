@@ -117,7 +117,11 @@ export default class MyBookings extends React.Component{
                 renderItem={
                     ({item})=>
                     <TouchableOpacity style={StyleMyBooking.bookingRow}
-                        onPress={()=>{this.props.navigation.navigate('MyBookingDetails',{'book_item':item})}}
+                        onPress={()=>{this.props.navigation.navigate('MyBookingDetails',{'book_item':item, cancelTripCallback: ()=>{
+                            console.log("callback for cancell trip")
+                            this.getCurrentBookingList()
+                        }
+                        })}}
                     >
                         <Card>
                             <CardItem>

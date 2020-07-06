@@ -28,6 +28,11 @@ export default class MyBookingDetails extends React.Component {
             truck_booking_details:[],
             load_category:"",
             other_services:[],
+            
+            isShareMyRideModalVisible:false,
+            shareMyRideType:"",
+            shareByEmail:"",
+            shareByMobile:"",
         }
     }
 
@@ -37,19 +42,27 @@ export default class MyBookingDetails extends React.Component {
     }
 
     cancelOrder() {
-        this.setState({ reasonText: "", reasonSubmit: true })
+        this.setState({isReasonModalvisible: false})
+        let param = {
+            'booking_id': this.state.truck_booking_details.booking_id,
+            'reason' : this.state.reasonText
+        }
+        this.presenter.callPostApi(ApiConstants.cancelBooking,param,true)
     }
 
     showReasonView() {
         return (
             <View style={StyleMyBookingDetails.reasonView}>
+                
                 <TouchableWithoutFeedback
                     style={{ position: 'absolute', right: 5, top: 3, }}
                     onPress={() => { this.setState({ isReasonModalvisible: false }) }}
                 >
                     <Image source={require('../images/close.png')} style={StyleMyBookingDetails.reasonCloser} />
                 </TouchableWithoutFeedback>
+                
                 <Text style={StyleMyBookingDetails.reasonTitle}>{Constants.CANCEL_REASON}</Text>
+                
                 <View style={StyleMyBookingDetails.reasonTextView}>
                     <TextInput
                         style={StyleMyBookingDetails.reasonText}
@@ -60,8 +73,12 @@ export default class MyBookingDetails extends React.Component {
                         onChangeText={(value) => { this.setState({ reasonText: value }) }}
                     />
                 </View>
-                <Text style={StyleMyBookingDetails.reasonNote}>Note: Cancecellation charges will be levied based on the time prior to pick-up</Text>
-                <TouchableOpacity style={StyleMyBookingDetails.reasonButtonView}
+                
+                <Text style={StyleMyBookingDetails.reasonNote}>Note: Refund will be provided as per Cancellation Policy. Please refer Cancellation policy for further detail </Text>
+                
+                <TouchableOpacity 
+                    style={[StyleMyBookingDetails.reasonButtonView,{backgroundColor: this.state.reasonText =="" ? Constants.COLOR_GREY_LIGHT : Constants.COLOR_GREEN}]}
+                    disabled={ this.state.reasonText=="" ? true : false}
                     onPress={() => { this.cancelOrder() }}
                 >
                     <Text style={StyleMyBookingDetails.reasonButtonText}>{Constants.CANCEL_ORDER}</Text>
@@ -75,7 +92,12 @@ export default class MyBookingDetails extends React.Component {
             <View style={StyleMyBookingDetails.reasonView}>
                 <TouchableWithoutFeedback
                     style={{ position: 'absolute', right: 5, top: 3, }}
-                    onPress={() => { this.setState({ isReasonModalvisible: false }) }}
+                    onPress={() => { 
+                            this.setState({ isReasonModalvisible: false, reasonSubmit: false }) 
+                            this.props.navigation.goBack();
+                            this.props.navigation.state.params.cancelTripCallback();
+                        }
+                    }
                 >
                     <Image source={require('../images/close.png')} style={StyleMyBookingDetails.reasonCloser} />
                 </TouchableWithoutFeedback>
@@ -85,6 +107,8 @@ export default class MyBookingDetails extends React.Component {
                 <TouchableOpacity style={StyleMyBookingDetails.reasonButtonView}
                     onPress={() => {
                         this.setState({ isReasonModalvisible: false, reasonSubmit: false })
+                        this.props.navigation.goBack();
+                        this.props.navigation.state.params.cancelTripCallback();
                     }}
                 >
                     <Text style={StyleMyBookingDetails.reasonButtonText}>{Constants.OK}</Text>
@@ -102,10 +126,52 @@ export default class MyBookingDetails extends React.Component {
         await this.presenter.callPostApi(ApiConstants.getBookingDetails, params, true);
     }
 
-    onResponse(apiConstant, data) {
-        switch (apiConstant) {
+    shareMyRide(){
+        this.setState({isShareMyRideModalVisible:false,})
+        let param =""
+        if(this.state.shareMyRideType=="1"){
+            // 1 email
+            param = {
+                'booking_id':this.state.truck_booking_details.booking_id,
+                'share_type' : 1,
+                'email_id': this.state.shareByEmail
+            }
+        }
+        if(this.state.shareMyRideType=="2"){
+            // 2 mobile
+            param = {
+                'booking_id':this.state.truck_booking_details.booking_id,
+                'share_type' : 0,
+                'mobile_number': this.state.shareByMobile
+            }
+        }
+        this.presenter.callPostApi(ApiConstants.shareMyRide, param, true)
+    }
 
-          case ApiConstants.getBookingDetails: {
+    onResponse(apiConstant, data) {
+    
+    switch (apiConstant) {
+
+        case ApiConstants.shareMyRide:{
+            this.setState({shareByEmail:"", shareByMobile:"", shareMyRideType:""})
+            if(data.status){
+
+            }else{
+                alert(data.message)
+            }
+            break;
+        }
+
+        case ApiConstants.cancelBooking:{
+            if(data.status){
+                this.setState({ isReasonModalvisible: true, reasonText: "", reasonSubmit: true })
+            }else{
+                alert(data.message)
+            }
+            break;
+        }
+
+        case ApiConstants.getBookingDetails: {
               this.setState({
                   truck_booking_details : data.cml_booking_list,
                   load_category : JSON.stringify(data.cml_booking_list[0].load_category[0].category_name),
@@ -114,7 +180,7 @@ export default class MyBookingDetails extends React.Component {
               this.setState({ truck_booking_details : this.state.truck_booking_details[0] })
                 console.log("other =====> "+JSON.stringify(this.state.other_services))
             break;
-          }
+        }
 
         }
     }
@@ -474,7 +540,7 @@ export default class MyBookingDetails extends React.Component {
                     <View style={this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW ? StyleMyBookingDetails.detailsRow : { display: "none" }}>
                         <View style={{ flex: 1 }}>
                             <TouchableOpacity style={{width:120, justifyContent:'center', alignItems:'center', backgroundColor:Constants.COLOR_GREEN, padding:10}}
-                                onPress={()=>{}}>
+                                onPress={()=>{ this.setState({isShareMyRideModalVisible:true}) }}>
                                 <Text style={{color:Constants.COLOR_WHITE, textAlign:'center'}}>Share my Ride</Text>
                             </TouchableOpacity>
                         </View>
@@ -550,6 +616,90 @@ export default class MyBookingDetails extends React.Component {
                             :
                             this.showReasonView()
                     }
+                </Modal>
+
+                <Modal
+                    isVisible={this.state.isShareMyRideModalVisible}
+                    animationIn={"fadeIn"}
+                    animationOut={"fadeOut"}
+                    transparent={true}
+                >
+                <View style={{justifyContent:'center', alignItems:'center', backgroundColor:'rgba(0,0,0,0.2)'}}>
+                    <View style={{width:'100%', backgroundColor:Constants.COLOR_WHITE, paddingVertical:20}}>
+                        
+                        <TouchableOpacity style={{justifyContent:'flex-end', alignItems:'flex-end', marginRight:15}}
+                            onPress={()=>{
+                                this.setState({isShareMyRideModalVisible:false})
+                            }}
+                        >
+                            <Image
+                                source={require('../images/close.png')}
+                                style={{width:15, height:15, resizeMode:'stretch'}}
+                            />
+                        </TouchableOpacity>
+                        
+                        <Text style={{color:Constants.COLOR_GREY_DARK, fontSize:16, textAlign:'center',}}> Share My Ride </Text>
+
+                        <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop:10}}>
+                            
+                            <TouchableOpacity style={{marginRight:40}}
+                                onPress={()=>{ this.setState({ shareMyRideType:"1", }) }}
+                            >
+                                <Image
+                                    source={require('../images/email_id.png')}
+                                    style={{width:40, height:40, resizeMode:'stretch'}}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={()=>{ this.setState({ shareMyRideType:"2", }) }}
+                            >
+                                <Image
+                                    source={require('../images/chat-icon.png')}
+                                    style={{width:40, height:40, resizeMode:'stretch', marginTop:3}}
+                                />
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={{ display: this.state.shareMyRideType=="1"? 'flex' : 'none', flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop:10}}>
+                            <TextInput
+                                value={this.state.shareByEmail}
+                                onChangeText={(value)=>{ this.setState({shareByEmail:value}) }}
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                                placeholder="Enter email id"
+                                style={{width:'60%', borderBottomWidth:0.5, borderBottomColor:Constants.COLOR_GREY_DARK}}
+                            />
+                            <TouchableOpacity
+                                onPress={()=>{ this.shareMyRide() }}
+                            >
+                                <Image
+                                    source={require('../images/send.png')}
+                                    style={{width:40, height:40, resizeMode:'stretch', marginTop:10}}
+                                />
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={{ display: this.state.shareMyRideType=="2"? 'flex' : 'none', flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop:10}}>
+                            <TextInput
+                                value={this.state.shareByMobile}
+                                onChangeText={(value)=>{ this.setState({shareByMobile:value}) }}
+                                keyboardType="number-pad"
+                                autoCapitalize="none"
+                                placeholder="Enter mobile number"
+                                style={{width:'60%', borderBottomWidth:0.5, borderBottomColor:Constants.COLOR_GREY_DARK}}
+                            />
+                            <TouchableOpacity
+                                onPress={()=>{ this.shareMyRide() }}
+                            >
+                                <Image
+                                    source={require('../images/send.png')}
+                                    style={{width:40, height:40, resizeMode:'stretch', marginTop:10}}
+                                />
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
+                </View>
                 </Modal>
 
             </View>

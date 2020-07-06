@@ -61,6 +61,8 @@ export default class LocationDetails extends React.Component {
             otherLoadCategoryText:"",
         };
         this.truck_type_id="";
+        this.truck_name="";
+        this.truck_desc="";
         this.load_category_id="";
         this.other_flag="";
         this.category_name="";
@@ -69,12 +71,16 @@ export default class LocationDetails extends React.Component {
     
     componentDidMount(){
         this.initService();
+        console.log("truck name ==> "+this.props.navigation.getParam('truck_category_name'))
     }
 
     async initService(){
      this.truck_type_id=this.props.navigation.getParam('truck_type_id');    
-    this.getloadCategoryList();
-    await this.presenter.callGetApi(ApiConstants.getotherServices,"",true);
+     this.truck_name = this.props.navigation.getParam('truck_category_name');
+     this.truck_desc = this.props.navigation.getParam('truck_desc');
+
+     this.getloadCategoryList();
+     await this.presenter.callGetApi(ApiConstants.getotherServices,"",true);
     }
 
     async openCalender() {
@@ -106,35 +112,32 @@ export default class LocationDetails extends React.Component {
             this.setState({ pickup_time: "" })
             return;
         }
-        // setting AM/PM and hour to 12 by checking condition
-        // let am_pm = 'AM';
-
-        // if (hour > 11) {
-        //     am_pm = 'PM';
-        //     if (hour > 12) {
-        //         hour = hour - 12;
-        //     }
-        // }
-
-        // if (hour == 0) {
-        //     hour = 12;
-        // }
         const selectedTime = hour+":"+minute;
         console.log("selected = time ==> "+selectedTime)
 
-        let selectedDT = this.state.pickup_date+" "+selectedTime
-        selectedDT = new moment(selectedDT).format('YYYY-MM-DD H:m')
-        console.log("selected DT =====> "+selectedDT)
+        let currentHour = new moment().format('H')
+        let currentMinute = new moment().format('m')
 
         if(this.state.pickup_date == new moment().format('YYYY-MM-DD')){
+            if(hour>=currentHour){
+                if(minute>=currentMinute){
+                    console.log("Time is valid")
+                    this.setState({ pickup_time:  selectedTime+":00", isTimerError:false})
+                }else{
+                    alert('Enter correct minutes in time.')    
+                }
 
-            if(moment(selectedDT).isBefore(new moment().format('YYYY-MM-DD H:m'))){
-                alert("Enter correct time.")
+            }else{
+                alert('Enter correct hours in time.')
             }
-            else{
-                console.log("time correct")
-                this.setState({ pickup_time:  selectedTime+":00", isTimerError:false})
-            }
+
+            // if(moment(selectedDT).isBefore(new moment().format('YYYY-MM-DD H:m'))){
+            //     alert("Enter correct time.")
+            // }
+            // else{
+            //     console.log("time correct")
+            //     this.setState({ pickup_time:  selectedTime+":00", isTimerError:false})
+            // }
         }else{
             this.setState({ pickup_time:  selectedTime, isTimerError:false})
         }
@@ -255,6 +258,7 @@ export default class LocationDetails extends React.Component {
     }
 
     closeCategoryModal(){
+        this.loadCategoryString=""
         let cat=""
         this.state.LoadCategoryItems.map((item)=>{
             cat ={
@@ -266,14 +270,28 @@ export default class LocationDetails extends React.Component {
             }else{
                 this.setState({isOtherLoadCategorySelected:false, otherLoadCategoryText:""})
             }
-            if(item.isChecked){
-                this.state.LoadCategoryItemsSelected.push(cat)
-                this.loadCategoryString = this.loadCategoryString+item.category_id+","
+            if(item.isChecked==true){
+                //check if already exists, if exists then remove
+                if(!this.isExists(item)){
+                    this.state.LoadCategoryItemsSelected.push(cat)
+                    this.loadCategoryString = this.loadCategoryString+item.category_id+","
+                }
             }
         })
         console.log("item selected are ====>"+JSON.stringify(this.state.LoadCategoryItemsSelected))
         console.log("load cat ==="+this.loadCategoryString)
         this.setState({isLoadCategoryVisible:false,})
+    }
+
+    isExists(e){
+        let isPresent = false
+        this.state.LoadCategoryItemsSelected.map((item)=>{
+            if(item.category_id == e.category_id){
+                //exists
+                isPresent = true
+            }
+        })
+        return isPresent
     }
 
     render() {
@@ -502,7 +520,7 @@ export default class LocationDetails extends React.Component {
                                 </View>
                                 <TouchableOpacity style={{justifyContent:'center', alignItems:'center', marginTop:15}}
                                     onPress={()=>{ 
-                                        this.setState({isLoadCategoryVisible:true, LoadCategoryItemsSelected:[]}) 
+                                        this.setState({LoadCategoryItemsSelected:[], isLoadCategoryVisible:true}) 
                                     }}
                                 >
                                     <Text style={{textAlign:'center'}}>Select category</Text>
@@ -605,6 +623,8 @@ export default class LocationDetails extends React.Component {
 
                                     let booking_data={
                                         "truck_trip_id" : this.truck_type_id,
+                                        "truck_name":this.truck_name,
+                                        "truck_desc":this.truck_desc,
                                         "pick_up_address": this.state.pick_up_address,
                                         "pick_up_address_lat":this.state.pick_up_address_lat,
                                         "pick_up_address_long":this.state.pick_up_address_long,

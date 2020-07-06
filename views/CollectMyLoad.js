@@ -502,7 +502,7 @@ export default class CollectMyLoad extends React.Component {
                                                 <TouchableOpacity
                                                     onPress={() => {
                                                         this.RBSheet.close();
-                                                        this.props.navigation.navigate('LocationDetails',{'truck_type_id':item.category_id});
+                                                        this.props.navigation.navigate('LocationDetails',{'truck_type_id':item.category_id, 'truck_category_name' : item.category_name, 'truck_desc':item.desc});
                                                     }}
                                                     style={[StyleCollectMyLoad.truckBtn]}>
                                                     <Text style={StyleCollectMyLoad.truckBtnText}>Select Truck</Text>
