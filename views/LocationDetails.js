@@ -119,18 +119,21 @@ export default class LocationDetails extends React.Component {
         // if (hour == 0) {
         //     hour = 12;
         // }
-        const selectedTime = hour+":"+minute+":00";
+        const selectedTime = hour+":"+minute;
         console.log("selected = time ==> "+selectedTime)
-        console.log("clock time =======> "+new moment().format('h:m:s'))
+
+        let selectedDT = this.state.pickup_date+" "+selectedTime
+        selectedDT = new moment(selectedDT).format('YYYY-MM-DD H:m')
+        console.log("selected DT =====> "+selectedDT)
+
         if(this.state.pickup_date == new moment().format('YYYY-MM-DD')){
-            if(new moment().format('h:m:s')>=selectedTime)
-            {
-                //validation for today for past time.
-                this.setState({isTimerError:true})
+
+            if(moment(selectedDT).isBefore(new moment().format('YYYY-MM-DD H:m'))){
                 alert("Enter correct time.")
             }
             else{
-                this.setState({ pickup_time:  selectedTime, isTimerError:false})
+                console.log("time correct")
+                this.setState({ pickup_time:  selectedTime+":00", isTimerError:false})
             }
         }else{
             this.setState({ pickup_time:  selectedTime, isTimerError:false})
@@ -469,7 +472,7 @@ export default class LocationDetails extends React.Component {
                                 />
                                 <TouchableOpacity
                                     style={{ width: 30, alignSelf: 'flex-end', justifyContent: 'center', alignItems: 'center', marginTop: -32, marginRight: 15 }}
-                                    onPress={() => { this.openTimer() }}
+                                    onPress={() => { this.state.pickup_date =="" ? alert('Please select date first.') : this.openTimer() }}
                                 >
                                     <Image style={{ width: 20, height: 20, }}
                                         source={require('../images/time_icon.png')}

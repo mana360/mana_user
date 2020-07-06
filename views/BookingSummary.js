@@ -391,28 +391,35 @@ export default class BookingSummary extends React.Component{
  
     async openTimer(){
 
-        var { action, minute, hour } = await TimePickerAndroid.open({      
-            is24Hour: false,
+        var { action, minute, hour, second } = await TimePickerAndroid.open({
+            is24Hour: true,
           });
           if (action === TimePickerAndroid.dismissedAction) {
               this.setState({pick_time:""})
               return;
           }
-          // setting AM/PM and hour to 12 by checking condition
-          let am_pm = 'AM';
-          
-          if(hour>11){
-            am_pm = 'PM';
-            if(hour>12){
-              hour = hour - 12;
+            //const selectedTime = `${hour}:${minute} ${am_pm}` ;
+            //this.setState({ pick_time:selectedTime})
+
+            const selectedTime = hour+":"+minute;
+            console.log("selected = time ==> "+selectedTime)
+
+            let selectedDT = this.state.pickup_date+" "+selectedTime
+            selectedDT = new moment(selectedDT).format('YYYY-MM-DD H:m')
+            console.log("selected DT =====> "+selectedDT)
+
+            if(this.state.pickup_date == new moment().format('YYYY-MM-DD')){
+
+                if(moment(selectedDT).isBefore(new moment().format('YYYY-MM-DD H:m'))){
+                    alert("Enter correct time.")
+                }
+                else{
+                    console.log("time correct")
+                    this.setState({ pick_time:  selectedTime+":00", isTimerError:false})
+                }
+            }else{
+                this.setState({ pick_time:  selectedTime, isTimerError:false})
             }
-          }
-          
-          if(hour == 0){
-            hour = 12;
-          }
-            const selectedTime = `${hour}:${minute} ${am_pm}` ;
-            this.setState({ pick_time:selectedTime})
     }
 
     applyDiscount(amount){
@@ -517,7 +524,7 @@ export default class BookingSummary extends React.Component{
                                         <TextInput placeholder='Enter Dropoff Address' 
                                         placeholderTextColor="#a4a4a4"
                                         ref={(ref)=>{this.drop_off_address1=ref}}
-                                        value={this.state.drop_list[0]}
+                                        value={this.state.drop_off_address}
                                         onChangeText={
                                             (value)=>{
                                                 this.setState({drop_off_address:value})
