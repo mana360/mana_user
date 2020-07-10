@@ -28,10 +28,10 @@ export default class CollectMyLoad extends React.Component {
             ],
 
             truckdata_Head:[
-                "SN","Truck Ton Capacity","Cargo Type","Rate/KM"
+                "SN","Truck Ton Capacity","Cargo Type","Rate/User"
             ],
             otherServices_Head:[
-                "SN","Other Services","Rate/KM"
+                "SN","Other Services","Rate/User"
             ],
             truckTableData: [],
               otherServicesData: []
@@ -54,7 +54,6 @@ export default class CollectMyLoad extends React.Component {
                             />
                     </TouchableOpacity>
               <ScrollView>
-                 
                     
                     <Table borderStyle={{borderWidth: 1, borderColor:Constants.COLOR_GREY_DARK,}} style={{marginBottom:8}}>
                         <Row data={this.state.truckdata_Head} textStyle={{alignSelf:"center"}} />
@@ -70,59 +69,6 @@ export default class CollectMyLoad extends React.Component {
             </View>
 
 
-            // <View style={{ flex: 1, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)', }}>
-
-            //     <View style={[StyleCollectMyLoad.modalCotainer, { width: '80%' }]}>
-            //         <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
-            //             onPress={() => {
-            //                 this.setState({ modalVisible_RateCard: false })
-            //             }}
-            //         >
-            //             <Image source={require('../images/close.png')}
-            //                 style={{ width: 15, height: 15 }}
-            //             />
-            //         </TouchableOpacity>
-
-            //         <Text style={StyleCollectMyLoad.modalText}>{Constants.RateCard}</Text>
-
-            //         <View style={[StyleCollectMyLoad.modalrow, { borderBottomWidth: 0.5, borderBottomColor: Constants.COLOR_GREY_LIGHT, marginBottom: 10 }]}>
-            //             <View style={StyleCollectMyLoad.modalcol1}>
-            //                 <Text style={[StyleCollectMyLoad.modalTittle]}>{Constants.Size}</Text>
-            //             </View>
-            //             <View style={StyleCollectMyLoad.modalcol2}>
-            //                 <Text style={StyleCollectMyLoad.modalTittle}>{Constants.Amount}</Text>
-            //             </View>
-            //         </View>
-
-            //         <View style={StyleCollectMyLoad.modalrow}>
-            //             <View style={StyleCollectMyLoad.modalcol1}>
-            //                 <Text style={StyleCollectMyLoad.keytext}>{Constants.SmallLessthan}</Text>
-            //             </View>
-            //             <View style={StyleCollectMyLoad.modalcol2}>
-            //                 <Text style={StyleCollectMyLoad.valueText}>$40/-</Text>
-            //             </View>
-            //         </View>
-
-            //         <View style={StyleCollectMyLoad.modalrow}>
-            //             <View style={StyleCollectMyLoad.modalcol1}>
-            //                 <Text style={StyleCollectMyLoad.keytext}>{Constants.Medium}</Text>
-            //             </View>
-            //             <View style={StyleCollectMyLoad.modalcol2}>
-            //                 <Text style={StyleCollectMyLoad.valueText}>$80/-</Text>
-            //             </View>
-            //         </View>
-
-            //         <View style={[StyleCollectMyLoad.modalrow, { marginBottom: 15 }]}>
-            //             <View style={StyleCollectMyLoad.modalcol1}>
-            //                 <Text style={StyleCollectMyLoad.keytext}>{Constants.Large}</Text>
-            //             </View>
-            //             <View style={StyleCollectMyLoad.modalcol2}>
-            //                 <Text style={StyleCollectMyLoad.valueText}>$120/-</Text>
-            //             </View>
-            //         </View>
-
-            //     </View>
-            // </View>
         )
     }
 

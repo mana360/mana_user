@@ -39,7 +39,6 @@ export default class Dashboard extends React.Component {
         }
     }
     componentDidMount() {
-       
         this.presenter.callGetApi(ApiConstants.getDashboardData, "", true);
         this.getUserStatus();
     }
