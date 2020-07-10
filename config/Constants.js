@@ -3,6 +3,9 @@ import { Dimensions, Platform } from 'react-native';
 const Constants = {
 
     BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/api/",
+      // BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
+
+    
     IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/",
 
     //base url for QAP
