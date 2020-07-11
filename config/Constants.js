@@ -16,6 +16,7 @@ const Constants = {
     GOOGLE_MAP_KEY:"AIzaSyBEDVKNDyVUzE2ajUXcrpX89ZORifA0cN4",
 
     EMAIL_REGX:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+    PASSWORD_REGX:/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
 
     IMAGE_MAX_SIZE:2000000,
     IMAGE_MAX_SIZE_EXCEED_MESSAGE:"Image should be less than 2 MB.",
