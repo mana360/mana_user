@@ -713,7 +713,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.WarehouseId}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.warehouse_booking_detailsi.warehouse_booking_id}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.warehouse_booking_detailsi.warehouse_type_id}</Text>
                                                         </View>
                                                     </View>
 
@@ -722,7 +722,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.WarehoueType}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.warehouse_booking_detailsi.warehouse_type_id}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.warehouse_booking_detailsi.warehouse_type_name}</Text>
                                                         </View>
                                                     </View>
 
@@ -944,7 +944,7 @@ export default class ViewUpcomingTrip extends React.Component {
 
                                                 <View style={StyleViewUpcomingTrip.row}>
                                                     <View style={StyleViewUpcomingTrip.col1}>
-                                                        <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Quantity}</Text>
+                                                        <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoQuantity}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
                                                         <Text style={StyleViewUpcomingTrip.col2Text}>

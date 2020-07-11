@@ -53,6 +53,7 @@ export default class ViewCurrentTrip extends React.Component {
             this.booking_id = this.props.navigation.getParam('booking_id')
             console.log('bookig_id  ' + JSON.stringify(this.booking_id));
             this.tripDetails= this.props.navigation.getParam("bookingItem");
+            console.log(JSON.stringify( "Trip Details==>"+JSON.stringify(this.tripDetails)));
             this.setState({truckData:this.tripDetails});
     
         // this.presenter.callPostApi(ApiConstants.getBookingDetails, {'service_type_id':this.service_type_id,'booking_id':this.booking_id}, true)
@@ -153,7 +154,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedTimeTocmpleteTrip}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.estimate_timetocmplte}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.date_of_pickup}</Text>
                                         </View>
                                     </View>
 
@@ -162,7 +163,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedDateTocmpleteTrip}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.estimate_datetocmplete}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.date_of_pickup}</Text>
                                         </View>
                                     </View>
 
@@ -183,7 +184,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.driver_contact}</Text>
                                             <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}
                                              onPress={()=>{
-                                                this.dialCall(this.state.driver_telephone_no);
+                                                this.dialCall(this.state.truckData.driver_contact);
                                             }}
                                             >
                                                 <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
@@ -205,10 +206,10 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.ContactNo}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.partner_no}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.partner_contact}</Text>
                                             <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}
                                                onPress={()=>{
-                                                   this.dialCall(this.state.partner_telephone_no);
+                                                   this.dialCall(this.state.truckData.partner_contact);
                                                }}
                                             >
                                                 <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />

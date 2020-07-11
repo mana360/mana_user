@@ -163,6 +163,7 @@ const Constants = {
     WillCauseDelayBecauseOfSomeRoadBloc: 'will cause delay because of some road block',
     Description: 'Description',
     Quantity: 'Quantity',
+    CargoQuantity: 'Cargo Quantity',
     Price: 'price',
     Total: 'total',
     Title:'Title',
