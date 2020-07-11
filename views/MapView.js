@@ -31,6 +31,9 @@ export default class MapViews extends React.Component {
         { destination: 1, latitude: 19.0760, longitude: 72.8777, title: 'mumbai', desc: '' },
       ], //origin and destination marker direction 
 
+ flag_marker:"",
+ markerDirectionLat:"",
+ markerDirectionLong:"",
 
 
     }
@@ -38,7 +41,11 @@ export default class MapViews extends React.Component {
 
   componentDidMount() {
     this.getCurrentCoords();
+    let flag_marker = this.props.navigation.getParam('flag_marker'); //get marker direction with origin and destination coordinates 
+    this.setState({flag_marker:flag_marker});
+    if(!flag_marker==true){
     this.RBSheet.open();
+    }
   }
 
   async getCurrentCoords() {
@@ -75,17 +82,69 @@ export default class MapViews extends React.Component {
       )
   }
 
+
+markerDirection(){
+  return(
+    <MapView
+    ref={(ref)=>{this.googleMap = ref}}
+    style={StyleMapView.mapStyle}
+    showsUserLocation={true}
+    zoomEnabled={true}
+    zoomControlEnabled={true}
+    initialRegion={{
+      latitude: this.state.current_latitude,
+      longitude: this.state.current_longitude,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    }}
+    onLayout = {() => this.googleMap.fitToCoordinates(
+      [{
+        latitude: this.state.current_latitude,
+        longitude: this.state.current_longitude,
+      }],
+      { edgePadding: { top: 5, right: 5, bottom: 5, left: 5 }, animated: true })}
+  >
+    
+     <Marker
+
+          // draggable
+          // onDragEnd={(e) => {
+          //   this.getCurrentAdddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude);
+          //   console.log('drag location==>', e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude);
+          //    this.RBSheet.open();
+          // }}
+          coordinate={{latitude:this.state.current_latitude,longitude:this.state.current_longitude}}
+        />
+
+<Marker  
+          // draggable
+          // onDragEnd={(e) => {
+          //   this.getCurrentAdddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude);
+          //   console.log('drag location==>', e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude);
+          //    this.RBSheet.open();
+          // }}
+          coordinate={{latitude:this.state.current_latitude,longitude:this.state.current_longitude}}
+        />
+  
+  </MapView>
+
+  )
+}
   render() {
 
     let { navigation } = this.props
-    let flag_map = this.props.navigation.getParam('flag_map'); //get marker direction with origin and destination coordinates 
     let flag_location = this.props.navigation.getParam('flag_location'); //get current address
     return (
       <View style={{ flex: 1 }}>
         
         <HeaderBar isBack={true} title="View Map" isLogout={true} navigation={navigation} />
-        
-        <View style={StyleMapView.MainContainer}>
+        {
+          this.state.flag_marker==true?
+          
+          this.markerDirection()
+          
+          :
+        <View  style={ StyleMapView.MainContainer}>
 
           <TouchableOpacity 
             style={{ display:this.state.isSearchVisible ?'none':'flex', position:'absolute', top:10, right:10, zIndex:+1, justifyContent:'center', alignItems:'center'}}
@@ -150,7 +209,7 @@ export default class MapViews extends React.Component {
           </MapView>
   }
         </View>
-              
+        }    
         <RBSheet
           ref={ref => {
             this.RBSheet = ref;

@@ -53,7 +53,7 @@ export default class CollectMyLoad extends React.Component {
                                 style={{ width: 15, height: 15 }}
                             />
                     </TouchableOpacity>
-              <ScrollView>
+               <ScrollView>
                     
                     <Table borderStyle={{borderWidth: 1, borderColor:Constants.COLOR_GREY_DARK,}} style={{marginBottom:8}}>
                         <Row data={this.state.truckdata_Head} textStyle={{alignSelf:"center"}} />
@@ -316,7 +316,13 @@ export default class CollectMyLoad extends React.Component {
                                                 ?
                                                 this.RBSheet.open()
                                                 :
-                                                this.props.navigation.navigate('MyBookings');
+                                                this.props.navigation.navigate('MyBookings',{
+                                                    callback:(item)=>{
+                                                            if(item==true){
+                                                                this.RBSheet.open();
+                                                            }
+                                                    }
+                                                });
                                                 null
                                         }}
                                     >

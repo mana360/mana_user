@@ -128,7 +128,7 @@ export default class LocationDetails extends React.Component {
                 }
 
             }else{
-                alert('Enter correct hours in time.')
+                // alert('Enter correct hours in time.')
             }
 
             // if(moment(selectedDT).isBefore(new moment().format('YYYY-MM-DD H:m'))){

@@ -226,7 +226,7 @@ export default class ViewCurrentTrip extends React.Component {
                             <TouchableOpacity style={[StyleViewCurrentTrip.bottomButton, { marginRight: 15, width: '40%' }]}
                                 onPress={() => {
                                     if (this.state.live_geopin == true)
-                                        this.props.navigation.navigate('MapViews', { flag_map: 'marker_direction' })
+                                        this.props.navigation.navigate('MapViews', { flag_marker:true })
                                     else
                                         this.RBSheet.open(); //delay msg
                                 }}
@@ -240,7 +240,8 @@ export default class ViewCurrentTrip extends React.Component {
                                 onPress={() => {
                 
                                         // this.props.navigation.navigate('ViewUpcomingTripAll',{item:this.state.truckData,flag_CurrentTrip:1})
-                                this.props.navigation.navigate('ViewUpcomingTrip',{item:this.state.truckData,Flag_currentTtrip:true,flag_upcoming_Trip:"1",booking_id});
+                                // this.props.navigation.navigate('ViewUpcomingTrip',{item:this.state.truckData,Flag_currentTtrip:true,flag_upcoming_Trip:"1",booking_id});
+                                this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':this.booking_id, 'service_type_id': this.service_type_id, 'flag_upcoming_Trip':1,Flag_currentTtrip:true})
 
                                 }}
                             >

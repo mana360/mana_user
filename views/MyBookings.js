@@ -98,7 +98,11 @@ export default class MyBookings extends React.Component{
                 <Text style={StyleMyBooking.newBookingInstructionText}>
                     You can place new order{'\n'}by clicking on "New Booking" below
                 </Text>
-                <TouchableOpacity style={StyleMyBooking.newBookingButtonView} onPress={()=>{ this.props.navigation.navigate('Dashboard') }}>
+                <TouchableOpacity style={StyleMyBooking.newBookingButtonView} onPress={()=>{ 
+                
+                this.props.navigation.state.params.callback(true);
+                    this.props.navigation.navigate('Dashboard',);
+                    }}>
                     <Text style={StyleMyBooking.newBookingButtonText}>{Constants.NewBooking}</Text>
                 </TouchableOpacity>
             </View>

@@ -160,7 +160,7 @@ export default class UpcomingTrip extends React.Component {
                                     <View style={StyleUpcomingTrip.bottomLine}>
                                         <Text style={StyleUpcomingTrip.title}>
                                             {    this.service_type_id==1
-                                                ?item.pickup_location
+                                                ?`${item.pickup_location} - ${item.drop_location.drop_location[0]}`
                                                 :this.service_type_id==2
                                                 ?item.warehouse_type_name
                                                 :""
