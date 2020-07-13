@@ -19,6 +19,7 @@ export default class MapViews extends React.Component {
   constructor(props) {
     super(props)
     this.googleMap=null,
+    
     this.state = {
       isSearchVisible:false,
       set_destination: false,
@@ -30,19 +31,19 @@ export default class MapViews extends React.Component {
         { origin: 0, latitude: 18.5204, longitude: 73.85672, title: 'pune', desc: '' },
         { destination: 1, latitude: 19.0760, longitude: 72.8777, title: 'mumbai', desc: '' },
       ], //origin and destination marker direction 
-
+      TripDetials:[],
  flag_marker:"",
  markerDirectionLat:"",
  markerDirectionLong:"",
-
-
     }
   }
 
   componentDidMount() {
     this.getCurrentCoords();
     let flag_marker = this.props.navigation.getParam('flag_marker'); //get marker direction with origin and destination coordinates 
-    this.setState({flag_marker:flag_marker});
+    let tempTruckDetails=this.props.navigation.getParam('TripDetials');
+    console.log("truckDetails=====>"+JSON.stringify(tempTruckDetails));
+    this.setState({flag_marker:flag_marker,TripDetials:tempTruckDetails});
     if(!flag_marker==true){
     this.RBSheet.open();
     }
@@ -82,8 +83,16 @@ export default class MapViews extends React.Component {
       )
   }
 
+latANDlong(latlongString,value){
+  let temp= latlongString.split(",");
+  if(temp==""){
+    return 0
+  }else{
+  return parseInt(temp[value]);
+  }
+}
 
-markerDirection(){
+markerDirection(origin,destination){
   return(
     <MapView
     ref={(ref)=>{this.googleMap = ref}}
@@ -97,33 +106,24 @@ markerDirection(){
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     }}
-    onLayout = {() => this.googleMap.fitToCoordinates(
-      [{
-        latitude: this.state.current_latitude,
-        longitude: this.state.current_longitude,
-      }],
-      { edgePadding: { top: 5, right: 5, bottom: 5, left: 5 }, animated: true })}
+    // onLayout = {() => this.googleMap.fitToCoordinates(
+    //   [{
+    //     latitude: this.state.current_latitude,
+    //     longitude: this.state.current_longitude,
+    //   }],
+    //   { edgePadding: { top: 5, right: 5, bottom: 5, left: 5 }, animated: true })}
   >
     
      <Marker
-
-          // draggable
-          // onDragEnd={(e) => {
-          //   this.getCurrentAdddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude);
-          //   console.log('drag location==>', e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude);
-          //    this.RBSheet.open();
-          // }}
-          coordinate={{latitude:this.state.current_latitude,longitude:this.state.current_longitude}}
+          coordinate={{latitude:this.latANDlong(origin,0),longitude:this.latANDlong(origin,1)}}
         />
 
-<Marker  
-          // draggable
-          // onDragEnd={(e) => {
-          //   this.getCurrentAdddress(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude);
-          //   console.log('drag location==>', e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude);
-          //    this.RBSheet.open();
-          // }}
-          coordinate={{latitude:this.state.current_latitude,longitude:this.state.current_longitude}}
+        <Marker  
+          coordinate={{latitude:this.latANDlong(destination.drop_location.drop_latlng[0],0),longitude:this.latANDlong(destination.drop_location.drop_latlng[0],1)}}
+        />
+        <MapViewDirections
+        origin={this.latANDlong(origin,0),this.latANDlong(origin,1)}
+        destination={drop_location.drop_latlng[0]}
         />
   
   </MapView>
@@ -140,9 +140,9 @@ markerDirection(){
         <HeaderBar isBack={true} title="View Map" isLogout={true} navigation={navigation} />
         {
           this.state.flag_marker==true?
+        
           
-          this.markerDirection()
-          
+          this.markerDirection(this.state.TripDetials.pickup_latlng,this.state.TripDetials)
           :
         <View  style={ StyleMapView.MainContainer}>
 

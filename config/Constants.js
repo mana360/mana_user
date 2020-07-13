@@ -78,6 +78,8 @@ const Constants = {
     Set:'Set',
     NextAddress:'Next Address',
     APPLY: 'APPLY',
+    Start_Date:"Start Date",
+    End_Date:"End Date",
 
     //Label
     AlreadyRegistered:'Already \n Registered? Login',

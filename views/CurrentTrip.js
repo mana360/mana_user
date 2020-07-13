@@ -9,6 +9,7 @@ import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import { MainPresenter } from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
+import moment from 'moment'
 
 export default class CurrentTrip extends React.Component {
     constructor(props) {
@@ -20,6 +21,7 @@ export default class CurrentTrip extends React.Component {
         this.service_type_id =0,
         this.state = {
             dataSource:[],
+            warehouseTrucking_list:[],
         }
     }
 
@@ -49,21 +51,12 @@ export default class CurrentTrip extends React.Component {
                     }
                     else if(this.service_type_id==2){
                         this.setState({dataSource: data.warehouse_booking_list});
+                    }else{
+                        if(this.service_type_id==3){
+                            this.setState({dataSource: data.truck_warehouse_booking_list});
+                        }
                     }
-                //     if(this.truckBooingStatus){
-                //         if (data.truck_booking_list.length != 0) {
-
-                            
-                //             this.setState({
-                //                 dataSource: data.truck_booking_list,
-                //             }) 
-                //     }
-                // }else {
-                //         this.setState({
-                //             dataSource: [],
-                //         })
-                        
-                //     }
+            
                 } else {
                     alert(data.message)
                 }
@@ -72,7 +65,10 @@ export default class CurrentTrip extends React.Component {
             }
         }
     }
-
+dateAndTime(itemDate,value){
+    let tempdate=itemDate.split(" ");
+    return tempdate[value];
+}
     render() {
 
         let { navigation } = this.props
@@ -106,7 +102,7 @@ export default class CurrentTrip extends React.Component {
                                 }
                                 if(this.service_type_id==2){
                                     this.props.navigation.navigate('ViewUpcomingTrip',
-                                    {item:item,"flag_upcoming_Trip":2,'booking_id':item.truck_booking_id,Flag_currentTtrip:true})
+                                    {item:item,"flag_upcoming_Trip":2,'service_type_id':2,'booking_id':item.warehouse_booking_id,Flag_currentTtrip:true})
                                 }
                                 if(this.service_type_id==3){
                                     this.props.navigation.navigate('TruckingWarehouseCurrentTripDetails',
@@ -141,16 +137,22 @@ export default class CurrentTrip extends React.Component {
                                             style={[StyleCurrentTrip.imageIcon]}
                                         />
                         
-                                        <Text style={StyleCurrentTrip.labeltext}>{Constants.pickupDate}:</Text>
-                                        <Text style={[StyleCurrentTrip.datacss,{paddingRight:10}]}>{item.date_of_pickup}</Text>
+                                        <Text style={StyleCurrentTrip.labeltext}>{this.service_type_id==2?Constants.Start_Date:Constants.pickupDate}:</Text>
+                                        <Text style={[StyleCurrentTrip.datacss,{paddingRight:10}]}>{ 
+                                       this.service_type_id==2
+                                       ?
+                                       moment(item.service_start_date).format("DD/MMM/YYYY  hh:mm:ss")
+                                       :
+                                       this.dateAndTime(item.pickedup_date_time,0)
+                                        }</Text>
                                         </View>
                                         <View style={{flexDirection:"row"}}>
                                         <Image source={require('../images/date_icon.png')}
-                                            style={[StyleCurrentTrip.imageIcon]}
+                                            style={this.service_type_id==2?{display:'none'}:[StyleCurrentTrip.imageIcon]}
                                         />
                         
-                                        <Text style={StyleCurrentTrip.labeltext}>{Constants.PickUpTime}:</Text>
-                                        <Text style={StyleCurrentTrip.datacss}>{item.date}</Text>
+                                        <Text style={this.service_type_id==2?{display:'none'}:StyleCurrentTrip.labeltext}>{Constants.PickUpTime}:</Text>
+                                        <Text style={StyleCurrentTrip.datacss}>{ this.service_type_id==2?null:this.dateAndTime(item.pickedup_date_time,1)}</Text>
                                         </View>
                                     </View>
 
@@ -158,14 +160,19 @@ export default class CurrentTrip extends React.Component {
                                         <Image source={require('../images/date_icon.png')}
                                             style={StyleCurrentTrip.imageIcon}
                                         />
-                                        <Text style={StyleCurrentTrip.labeltext}>{Constants.dropoffDate}:</Text>
-                                        <Text style={StyleCurrentTrip.datacss}>{item.pickUpTime}</Text>
+                                        <Text style={StyleCurrentTrip.labeltext}>{this.service_type_id==2?Constants.End_Date: Constants.dropoffDate}:</Text>
+                                        <Text style={StyleCurrentTrip.datacss}>{ 
+                                          this.service_type_id==2? moment(item.service_end_date).format("DD/MMM/YYYY  hh:mm:ss")
+                                          :
+                                          this.dateAndTime(item.arrivalDateAndTime,0)
+                                    
+                                        }</Text>
 
                                         <Image source={require('../images/time_icon.png')}
-                                            style={[StyleCurrentTrip.imageIcon, { marginLeft: 10 }]}
+                                            style={this.service_type_id==2?{display:'none'}:[StyleCurrentTrip.imageIcon, { marginLeft: 10 }]}
                                         />
-                                        <Text style={StyleCurrentTrip.labeltext}>{Constants.DropUpTime}:</Text>
-                                        <Text style={StyleCurrentTrip.datacss}>{item.dropUpTime}</Text>
+                                        <Text style={this.service_type_id==2?{display:'none'}:[StyleCurrentTrip.labeltext,{}]}>{Constants.DropUpTime}:</Text>
+                                        <Text style={StyleCurrentTrip.datacss}>{this.service_type_id==2?null:this.dateAndTime(item.arrivalDateAndTime,1)}</Text>
                                     </View>
                                 </View>
                               

@@ -14,6 +14,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
     constructor(props) {
         super(props);
         this.tripDetails=[];
+        service_type_id="";
         this.state = {
             starCount: null,
             inputLabelTrip: '',
@@ -37,6 +38,7 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
     }
 componentDidMount(){
     // this.initServices(service_type_id);
+    this.service_type_id=this.props.navigation.getParam("service_type_id");
    this.tripDetails= this.props.navigation.getParam("bookingItem");
 }
 // -------------------API------------------
@@ -126,7 +128,9 @@ async onResponse(apiConstant, data) {
 
                                 <TouchableOpacity style={{ marginTop: 25 }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('HelpAndSupport', { flag: false });
+                                        // this.props.navigation.navigate('HelpAndSupport', { flag: false });
+                                        this.props.navigation.navigate('HelpAndSupport', { flag: false ,"service_type_id":this.service_type_id,"booking_id":this.tripDetails.booking_id})
+
                                     }}
                                 >
                                     <Image source={require('../images/support_icon.png')}
@@ -209,7 +213,9 @@ async onResponse(apiConstant, data) {
                                         </View>
                                         <TouchableOpacity style={StyleViewCurrentTrip.col2}
                                             onPress={() => {
-                                                this.props.navigation.navigate('MapViews', { flag: 'truckingWarehouse',"latlong":"" })
+                                                // this.props.navigation.navigate('MapViews', { flag: 'truckingWarehouse',"latlong":"" })
+                                        this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials":this.tripDetails });
+
 
                                             }}
                                         >
@@ -226,8 +232,9 @@ async onResponse(apiConstant, data) {
                         <TouchableOpacity style={{ backgroundColor: Constants.COLOR_GREEN, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', width: '50%', marginVertical: 25, borderRadius: 50 }}
                             onPress={() => {
                                 // this.props.navigation.navigate('ViewCurrentTripAll', { item: this.state.warehouseTrucking_data, flag_CurrentTrip: 3 })
-                                this.props.navigation.navigate('ViewUpcomingTrip',{'booking_id':result.truck_booking_id,Flag_currentTtrip:true,flag_upcoming_Trip:"3"});
-
+                                // this.props.navigation.navigate('ViewUpcomingTrip',{'booking_id':result.truck_booking_id,Flag_currentTtrip:true,flag_upcoming_Trip:"3"});
+                                this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':this.tripDetails.truck_booking_id, 'service_type_id': this.service_type_id, flag_upcoming_Trip:"3",Flag_currentTtrip:true})
+                                    console.log("service type id==>"+this.service_type_id+"booking ID==>"+this.tripDetails.truck_booking_id);
                                 
                             }}
                         >

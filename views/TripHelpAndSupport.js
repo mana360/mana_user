@@ -27,6 +27,7 @@ export default class TripHelpAndSupport extends React.Component{
       }
 componentDidMount(){
     // this.presenter.callGetApi(ApiConstants.getSupportSubjects,"",true);
+    // alert("me")
 }
 onResponse(apiConstants,data){
     switch (apiConstants) {

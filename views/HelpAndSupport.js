@@ -35,6 +35,8 @@ export default class HelpAndSupport extends React.Component {
     }
     
     componentDidMount(){
+        this.service_type_id=this.props.navigation.getParam("service_type_id");
+        this.booking_id=this.props.navigation.getParam("booking_id");
         this.getUserLocalInfo()
     }
 
@@ -72,8 +74,8 @@ export default class HelpAndSupport extends React.Component {
             alert("Please enter subject")
         }else{
             let param ={
-                'booking_id':0,
-                'service_type_id':0,
+                'booking_id':this.booking_id==undefined?0:this.booking_id,
+                'service_type_id':this.service_type_id==undefined?5:this.service_type_id,
                 'subject_id':this.subject_id,
                 'message': this.state.support_message
             }

@@ -25,7 +25,8 @@ export default class UpcomingTrip extends React.Component {
             dataSource: [],
             truckData: [],
             truck_booking_list:[],
-            warehouse_booking_list:[]
+            warehouse_booking_list:[],
+            warehouseTrucking_list:[],
         }
     }
     
@@ -67,12 +68,16 @@ export default class UpcomingTrip extends React.Component {
 
     async onResponse(apiConstant, data) {
         switch (apiConstant) {
-            case ApiConstants.getMyBookings: {
-                if (data.status) {
+                case ApiConstants.getMyBookings: {
+                    if (data.status) {
                     if(this.service_type_id==1){
                         this.setState({truck_booking_list: data.truck_booking_list})
                     }else if(this.service_type_id==2){
                         this.setState({warehouse_booking_list: data.warehouse_booking_list})
+                    }else{
+                        if(this.service_type_id==3){
+                            this.setState({warehouseTrucking_list: data.truck_warehouse_booking_list})
+                        }
                     }
                     //console.log("truck ====> "+JSON.stringify(this.state.truck_booking_list))
                 //     if(this.truckBooingStatus){
@@ -125,7 +130,8 @@ export default class UpcomingTrip extends React.Component {
                     data={
                           this.service_type_id==1 ? this.state.truck_booking_list
                         : this.service_type_id==2 ? this.state.warehouse_booking_list
-                        : []
+                        : this.service_type_id=3? this.state.warehouseTrucking_list
+                        :[]
                         }
                     extraData={this.state}
                     keyExtractor={index => index.toString()}
@@ -137,6 +143,9 @@ export default class UpcomingTrip extends React.Component {
                                         this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':item.truck_booking_id, 'service_type_id':this.service_type_id, 'flag_upcoming_Trip':1})
                                     }
                                     if(this.service_type_id==2){
+                                        this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':item.warehouse_booking_id, 'service_type_id':this.service_type_id, 'flag_upcoming_Trip':1})
+                                    }
+                                    if(this.service_type_id==3){
                                         this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':item.warehouse_booking_id, 'service_type_id':this.service_type_id, 'flag_upcoming_Trip':1})
                                     }
                                 }}
@@ -172,12 +181,12 @@ export default class UpcomingTrip extends React.Component {
                                         <Image source={require('../images/date_icon.png')}
                                             style={[StyleUpcomingTrip.imageIcon]}
                                         />
-                                        <Text style={StyleUpcomingTrip.labeltext}>{Constants.Date}</Text>
+                                        <Text style={StyleUpcomingTrip.labeltext}>{this.service_type_id==2?Constants.Start_Date: Constants.Date}</Text>
                                         <Text style={StyleUpcomingTrip.datacss}>
                                             {   this.service_type_id==1
                                                 ? moment(item.date_of_pickup).format("DD MMM YYYY")
                                                 : this.service_type_id==2
-                                                ? moment(item.service_start_date).format("DD MMM YYYY")
+                                                ? moment(item.service_start_date).format("DD/MMM/YYYY  hh:mm:ss")
                                                 :''
                                             }
                                         </Text>
@@ -187,12 +196,12 @@ export default class UpcomingTrip extends React.Component {
                                         <Image source={require('../images/time_icon.png')}
                                             style={StyleUpcomingTrip.imageIcon}
                                         />
-                                        <Text style={StyleUpcomingTrip.labeltext}>{Constants.PickUpTime}</Text>
+                                        <Text style={StyleUpcomingTrip.labeltext}>{this.service_type_id==2?Constants.End_Date:Constants.dropoffDate}</Text>
                                         <Text style={StyleUpcomingTrip.datacss}>
                                             {   this.service_type_id==1
                                                 ? moment(item.date_of_pickup).format("hh:mm A")
                                                 :this.service_type_id==2
-                                                ? item.pickup_time
+                                                ?  moment(item.service_end_date).format("DD/MMMM/YYYY hh:mm:ss")
                                                 :''
                                             }
                                         </Text>

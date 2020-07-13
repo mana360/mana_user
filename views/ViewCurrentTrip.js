@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity,Linking,Platform } from 'react-native';
-import { StyleViewCurrentTrip, StyleCurrentTrip } from '../config/CommonStyles';
+import { StyleViewCurrentTrip, StyleCurrentTrip, StyleMyBooking } from '../config/CommonStyles';
 import RBSheet from "react-native-raw-bottom-sheet";
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
@@ -123,7 +123,7 @@ export default class ViewCurrentTrip extends React.Component {
                                 /> */}
                                 <TouchableOpacity style={{ marginTop: 25, }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('HelpAndSupport', { flag: false })
+                                        this.props.navigation.navigate('HelpAndSupport', { flag: false ,"service_type_id":this.service_type_id,"booking_id":this.booking_id})
                                     }}
                                 >
                                     <Image source={require('../images/support_icon.png')}
@@ -145,8 +145,32 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.CurrentStatus}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.current_status}</Text>
-                                        </View>
+                                            {/* <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.current_status}</Text> */}
+                                            <Text style={
+                                                this.state.truckData.current_status== Constants.BOOKING_STATUS_NEW ?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
+                                                :
+                                                this.state.truckData.current_status==Constants.BOOKING_STATUS_PICKED_UP?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
+                                                :
+                                                this.state.truckData.current_status==Constants.BOOKING_STATUS_DELIVERED?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_GREEN}]
+                                                :
+                                                this.state.truckData.current_status==Constants.BOOKING_STATUS_CANCELLED?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_RED}]
+                                                :
+                                                null
+                                            }>
+                                                {
+                                                    this.state.truckData.current_status==Constants.BOOKING_STATUS_NEW?"New"
+                                                    :
+                                                    this.state.truckData.current_status==Constants.BOOKING_STATUS_PICKED_UP?"Driver Assigned"
+                                                    :   
+                                                    this.state.truckData.current_status==Constants.BOOKING_STATUS_DELIVERED?"Delivered"
+                                                    :
+                                                    this.state.truckData.current_status==Constants.BOOKING_STATUS_CANCELLED?"Cancelled"
+                                                    :
+                                                    this.state.truckData.current_status==Constants.BOOKING_CURRENT_STATUS_ON_ROUTE_TO_DESTINATION?"On Route to Destination"
+                                                    :null
+                                                }
+                                                </Text>
+                                    </View>
                                     </View>
 
                                     <View style={StyleViewCurrentTrip.row}>
@@ -227,7 +251,7 @@ export default class ViewCurrentTrip extends React.Component {
                             <TouchableOpacity style={[StyleViewCurrentTrip.bottomButton, { marginRight: 15, width: '40%' }]}
                                 onPress={() => {
                                     if (this.state.live_geopin == true)
-                                        this.props.navigation.navigate('MapViews', { flag_marker:true })
+                                        this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials":this.state.truckData });
                                     else
                                         this.RBSheet.open(); //delay msg
                                 }}

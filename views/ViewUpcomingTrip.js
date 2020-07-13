@@ -31,7 +31,7 @@ export default class ViewUpcomingTrip extends React.Component {
             cancelModal_Visible: false,
             isModalVisible_driverDetails:false,
             isSuccesfull: false,
-            truckData: '',
+            truckData: [],
             warehouse_booking_detailsi:'',
             Profile_data: [{ partnerName: 'ABC Service' }],
             showDestinationLocations:false,
@@ -335,7 +335,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                     <Text style={[StyleViewUpcomingTrip.title,{textTransform:'capitalize'}]}>
                                         {
                                               this.service_type_id==1
-                                            ? this.state.truckData.pickup_location
+                                            ?`${this.state.truckData.pickup_location} - ${this.state.truckData.drop_location.drop_location[0]}`
                                             : this.service_type_id==2 
                                             ? this.state.warehouse_booking_detailsi.warehouse_type_name
                                             : ''
@@ -374,6 +374,10 @@ export default class ViewUpcomingTrip extends React.Component {
                                                 :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION ? "Arrived at Destination"
                                                 :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_TRIP_COMPLETED_CARGO_OFFLOADED ? "Trip completed, cargo offloaded"
                                                 :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In storage"
+                                                :this.state.truckData.current_status == Constants.BOOKING_STATUS_DELIVERED ? "Delivered"
+                                                :this.state.truckData.current_status == Constants.BOOKING_STATUS_PICKED_UP ? "Picked Up"
+                                                :this.state.truckData.current_status == Constants.BOOKING_STATUS_CANCELLED ? "Cancelled"
+                                                :this.state.truckData.current_status == Constants.BOOKING_STATUS_CANCELLED ? "New"
                                                 :null
                                             }
                                             </Text>
@@ -386,7 +390,6 @@ export default class ViewUpcomingTrip extends React.Component {
                                                 :null
                                             }
                                             </Text>
-
                                         </View>
                                     </View>
 
