@@ -38,8 +38,10 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
     }
 componentDidMount(){
     // this.initServices(service_type_id);
-    this.service_type_id=this.props.navigation.getParam("service_type_id");
    this.tripDetails= this.props.navigation.getParam("bookingItem");
+   this.setState({warehouseTrucking_data:this.tripDetails})
+    this.service_type_id=this.props.navigation.getParam("service_type_id");
+   console.log(" TRip detailes==> "+JSON.stringify(this.tripDetails));
 }
 // -------------------API------------------
 async initServices(service_type_id){
@@ -140,10 +142,9 @@ async onResponse(apiConstant, data) {
                             </View>
                         </View>
 
-                        {this.state.Truckwarehouse_data.map((result) => {
-                            return (
+
                                 <View>
-                                    <Text style={StyleViewCurrentTrip.title}>Current Trip:{result.title}</Text>
+                                <Text style={StyleViewCurrentTrip.title}>Current Trip:{this.state.warehouseTrucking_data.pickup_location}-{this.state.warehouseTrucking_data.drop_location.drop_location[0]}</Text>
                                     <View style={StyleViewCurrentTrip.bottomLine}></View>
 
                                     <View style={StyleViewCurrentTrip.row}>
@@ -151,7 +152,7 @@ async onResponse(apiConstant, data) {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.PartnerName}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.partnername}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.warehouseTrucking_data.partnername}</Text>
                                         </View>
                                     </View>
 
@@ -160,7 +161,7 @@ async onResponse(apiConstant, data) {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.Telephonenumber}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.partner_contact}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.warehouseTrucking_data.partner_contact}</Text>
                                         </View>
                                     </View>
 
@@ -169,7 +170,7 @@ async onResponse(apiConstant, data) {
                                             <Text style={StyleViewCurrentTrip.col1Text}>Estimated time to completion of trip</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.date_of_drop}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.warehouseTrucking_data.date_of_drop}</Text>
                                         </View>
                                     </View>
 
@@ -178,7 +179,7 @@ async onResponse(apiConstant, data) {
                                             <Text style={StyleViewCurrentTrip.col1Text}>Estimated Date for completion of trip</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.date_of_drop}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.warehouseTrucking_data.date_of_drop}</Text>
                                         </View>
                                     </View>
 
@@ -187,7 +188,7 @@ async onResponse(apiConstant, data) {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.DriverName}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.driver_name}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.warehouseTrucking_data.driver_name}</Text>
                                         </View>
                                     </View>
 
@@ -196,10 +197,10 @@ async onResponse(apiConstant, data) {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.PhoneNumber}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{result.driver_contact}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.warehouseTrucking_data.driver_contact}</Text>
                                             <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}
                                             onPress={()=>{
-                                                this.dialCall(result.phone_number);
+                                                this.dialCall(this.state.warehouseTrucking_data.phone_number);
                                             }}
                                             >
                                                 <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
@@ -214,7 +215,7 @@ async onResponse(apiConstant, data) {
                                         <TouchableOpacity style={StyleViewCurrentTrip.col2}
                                             onPress={() => {
                                                 // this.props.navigation.navigate('MapViews', { flag: 'truckingWarehouse',"latlong":"" })
-                                        this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials":this.tripDetails });
+                                        this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials":this.state.warehouseTrucking_data });
 
 
                                             }}
@@ -226,13 +227,13 @@ async onResponse(apiConstant, data) {
                                     </View>
 
                                 </View>
-                            )
-                        })}
+                            
+                      
 
                         <TouchableOpacity style={{ backgroundColor: Constants.COLOR_GREEN, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', width: '50%', marginVertical: 25, borderRadius: 50 }}
                             onPress={() => {
                                 // this.props.navigation.navigate('ViewCurrentTripAll', { item: this.state.warehouseTrucking_data, flag_CurrentTrip: 3 })
-                                // this.props.navigation.navigate('ViewUpcomingTrip',{'booking_id':result.truck_booking_id,Flag_currentTtrip:true,flag_upcoming_Trip:"3"});
+                                // this.props.navigation.navigate('ViewUpcomingTrip',{'booking_id':this.state.warehouseTrucking_data.truck_booking_id,Flag_currentTtrip:true,flag_upcoming_Trip:"3"});
                                 this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':this.tripDetails.truck_booking_id, 'service_type_id': this.service_type_id, flag_upcoming_Trip:"3",Flag_currentTtrip:true})
                                     console.log("service type id==>"+this.service_type_id+"booking ID==>"+this.tripDetails.truck_booking_id);
                                 

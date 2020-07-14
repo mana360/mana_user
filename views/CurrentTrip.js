@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
-import { StyleCurrentTrip } from '../config/CommonStyles';
+import { StyleCurrentTrip, StyleUpcomingTrip } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
@@ -114,7 +114,14 @@ dateAndTime(itemDate,value){
 
                                 <View style={StyleCurrentTrip.col1}>
                                     <Image
-                                        source={require('../images/Truck_Bookings_copy.png')}
+                                        source={
+                                            this.service_type_id==1
+                                            ?require('../images/Truck_Bookings_copy.png')
+                                            : this.service_type_id==2
+                                            ?require('../images/WarehouseServices_copy.png')
+                                            :require('../images/Trucking_+Warehouse.png')
+                                        }
+                                        
                                         style={StyleCurrentTrip.icon}
                                     />
                                 </View>
@@ -126,33 +133,57 @@ dateAndTime(itemDate,value){
                                                 ? item.truck_booking_id
                                                 : this.service_type_id==2
                                                 ? item.warehouse_booking_id
-                                                :''
+                                                :this.service_type_id==3
+                                                ?item.warehouse_type_name
+                                                :""
+                                            }
+                                        </Text>
+                                        
+                                    </View>
+                                    <View style={this.service_type_id==3?{ flexDirection: 'row', paddingTop: 3 }:null}>
+                                    <Image source={require('../images/date_icon.png')}
+                                            style={[StyleUpcomingTrip.imageIcon]}
+                                        />
+
+                                        <Text style={StyleUpcomingTrip.labeltext}>{this.service_type_id==3? Constants.PICKEDUP:null}</Text>
+                                        <Text style={StyleUpcomingTrip.datacss}>:
+                                            { moment(item.pickedup_date_time).format("DD/MMMM/YYYY")
+                                                
                                             }
                                         </Text>
                                     </View>
 
                                     <View style={{ flexDirection: 'row', paddingTop: 3 }}>
+                                        
                                         <View style={{flexDirection:"row"}}>
+
                                         <Image source={require('../images/date_icon.png')}
                                             style={[StyleCurrentTrip.imageIcon]}
                                         />
                         
-                                        <Text style={StyleCurrentTrip.labeltext}>{this.service_type_id==2?Constants.Start_Date:Constants.pickupDate}:</Text>
+                                        <Text style={StyleCurrentTrip.labeltext}>{
+                                               this.service_type_id==1?Constants.pickupDate:Constants.Start_Date}:</Text>
                                         <Text style={[StyleCurrentTrip.datacss,{paddingRight:10}]}>{ 
-                                       this.service_type_id==2
+                                       this.service_type_id==1
                                        ?
-                                       moment(item.service_start_date).format("DD/MMM/YYYY  hh:mm:ss")
-                                       :
                                        this.dateAndTime(item.pickedup_date_time,0)
+                                       :
+                                       moment(item.service_start_date).format("DD/MMM/YYYY")
+                                       
                                         }</Text>
                                         </View>
                                         <View style={{flexDirection:"row"}}>
                                         <Image source={require('../images/date_icon.png')}
-                                            style={this.service_type_id==2?{display:'none'}:[StyleCurrentTrip.imageIcon]}
+                                            style={this.service_type_id==1?[StyleCurrentTrip.imageIcon]:{display:'none'}}
                                         />
                         
-                                        <Text style={this.service_type_id==2?{display:'none'}:StyleCurrentTrip.labeltext}>{Constants.PickUpTime}:</Text>
-                                        <Text style={StyleCurrentTrip.datacss}>{ this.service_type_id==2?null:this.dateAndTime(item.pickedup_date_time,1)}</Text>
+                                        <Text style={this.service_type_id==1?StyleCurrentTrip.labeltext:{display:'none'}}>{Constants.PickUpTime}:</Text>
+                                        <Text style={StyleCurrentTrip.datacss}>{
+                                         this.service_type_id==1?
+                                         this.dateAndTime(item.pickedup_date_time,1)
+                                         :
+                                         null
+                                     }</Text>
                                         </View>
                                     </View>
 
@@ -160,19 +191,22 @@ dateAndTime(itemDate,value){
                                         <Image source={require('../images/date_icon.png')}
                                             style={StyleCurrentTrip.imageIcon}
                                         />
-                                        <Text style={StyleCurrentTrip.labeltext}>{this.service_type_id==2?Constants.End_Date: Constants.dropoffDate}:</Text>
+                                        <Text style={StyleCurrentTrip.labeltext}>{this.service_type_id==1?Constants.dropoffDate:Constants.End_Date}:</Text>
                                         <Text style={StyleCurrentTrip.datacss}>{ 
-                                          this.service_type_id==2? moment(item.service_end_date).format("DD/MMM/YYYY  hh:mm:ss")
+                                          this.service_type_id==1?
+                                           this.dateAndTime(item.arrivalDateAndTime,0)
                                           :
-                                          this.dateAndTime(item.arrivalDateAndTime,0)
+                                           moment(item.service_end_date).format("DD/MMM/YYYY  hh:mm:ss A")
+                                          
+                                         
                                     
                                         }</Text>
 
                                         <Image source={require('../images/time_icon.png')}
-                                            style={this.service_type_id==2?{display:'none'}:[StyleCurrentTrip.imageIcon, { marginLeft: 10 }]}
+                                            style={this.service_type_id==1?[StyleCurrentTrip.imageIcon, { marginLeft: 10 }]:{display:'none'}}
                                         />
-                                        <Text style={this.service_type_id==2?{display:'none'}:[StyleCurrentTrip.labeltext,{}]}>{Constants.DropUpTime}:</Text>
-                                        <Text style={StyleCurrentTrip.datacss}>{this.service_type_id==2?null:this.dateAndTime(item.arrivalDateAndTime,1)}</Text>
+                                        <Text style={this.service_type_id==1?[StyleCurrentTrip.labeltext,{}]:{display:'none'}}>{Constants.DropUpTime}:</Text>
+                                        <Text style={StyleCurrentTrip.datacss}>{this.service_type_id==1?this.dateAndTime(item.arrivalDateAndTime,1):null}</Text>
                                     </View>
                                 </View>
                               

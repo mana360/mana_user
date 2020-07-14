@@ -82,6 +82,7 @@ export default class TruckingWarehouseServices extends React.Component {
                                                 this.props.navigation.navigate('CurrentTrip',{'flag_truck_booking':true,'service_type_id':3})
                                                 :
                                                 this.props.navigation.navigate('UpcomingTrip',{'flag_truck_booking':true,'service_type_id':3})
+                                              
                                         }}
                                     >
                                         <Text style={StyleTruckBooking.buttonLabel}>{Constants.ViewAll}</Text>

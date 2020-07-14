@@ -580,17 +580,25 @@ export default class LocationDetails extends React.Component {
                                         style={StyleLocationDetails.inputBox}
                                     />
                                 </TouchableOpacity>
-                                    <Text>{
+                                    {/* <Text>{
                                         this.state.LoadCategoryItems.map((item,index)=>{
                                                 item.category_name
                                         })
-                                        }</Text>
+                                        }</Text> */}
                             </View>
-                            <Text>{
-                                        this.state.LoadCategoryItems.map((item,index)=>{
-                                                item.category_name
-                                        })
-                                        }</Text>  
+                                <Text style={this.state.LoadCategoryItemsSelected==""?{display:'none'}:{paddingVertical:15,alignSelf:"center",paddingBottom:5,color:"grey",fontSize:14}}>Selected Load Category</Text>
+
+                                    <View style={
+                                                    this.state.LoadCategoryItemsSelected==""?{display:'none'}
+                                                    :
+                                                    {paddingVertical:10,width:"90%",flexDirection:'column',backgroundColor:Constants.COLOR_GREY_LIGHT,alignSelf:'center'}
+                                                }>
+                                       {   
+                                        this.state.LoadCategoryItemsSelected.map((item,index)=>(
+                                            <Text style={{paddingHorizontal:5}}>{item.category_name} ,</Text>
+                                        ))
+                                        }  
+                                        </View>
                             <View style={this.state.other_flag==1?[StyleLocationDetails.inputContainer,{justifyContent:"center",paddingLeft:25}]:{display:'none'}}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.LOAD_CATEGORY}</Text>

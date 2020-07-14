@@ -3,14 +3,11 @@ import { Dimensions, Platform } from 'react-native';
 const Constants = {
 
     // BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/api/",
-      BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
-
-    
-    IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/",
+    // IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/",
 
     //base url for QAP
-    //BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
-    //IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
+    BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
+    IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
 
     
     GOOGLE_MAP_KEY:"AIzaSyBEDVKNDyVUzE2ajUXcrpX89ZORifA0cN4",

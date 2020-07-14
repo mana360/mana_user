@@ -2,7 +2,7 @@
     design by -mayur s
  */
 import React from 'react';
-import { View, Image, ScrollView, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Image, ScrollView, Text, TouchableOpacity, FlatList, BackHandler, ToastAndroid } from 'react-native';
 import { Card, CardItem } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
 import { StyleDashboard } from '../config/CommonStyles';
@@ -29,6 +29,7 @@ export default class Dashboard extends React.Component {
             role_id:"",
             active_status:"",
             notifications_count:"",
+            validCloseWindow: false,
 
             dashboard_data: [
                 // { title: "Truck Bookings", desc: "Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent: "60" },
@@ -38,11 +39,28 @@ export default class Dashboard extends React.Component {
             ],
         }
     }
-    componentDidMount() {
+   async componentDidMount() {
+    //    BackHandler.addEventListener("hardwareBackPress",this.handleBackButton.bind(this));
         this.presenter.callGetApi(ApiConstants.getDashboardData, "", true);
         this.getUserStatus();
     }
 
+//    handleBackButton=()=>{
+//     // if (!this.props.navigation.goBack()) {
+//     //     if (this.state.validCloseWindow)
+//     //         return false;
+//     //     this.state.validCloseWindow = true
+//     //     setTimeout(() => {
+//     //         this.state.validCloseWindow = false
+//     //     }, 3000);
+//     //     ToastAndroid.show("Press Again To Exit !", ToastAndroid.SHORT);
+//     //     return true;
+//     }
+
+
+   componentWillMount(){
+    // BackHandler.removeEventListener("hardwareBackPress",this.handleBackButton.bind(this));
+}
 getUserStatus(){
     this.presenter.callGetApi(ApiConstants.userStatus, "", true);
 }
