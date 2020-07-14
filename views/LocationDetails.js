@@ -564,7 +564,9 @@ export default class LocationDetails extends React.Component {
                                     <Text style={[StyleLocationDetails.labelTextNew, { textTransform: 'capitalize' }]}>Other category</Text>
                                 </View>
                                 <TouchableOpacity style={{justifyContent:'center', alignItems:'center', marginTop:1}}
-                                    onPress={()=>{ this.setState({isLoadCategoryVisible:true}) }}
+                                    onPress={()=>{ this.setState({isLoadCategoryVisible:true});
+                                  
+                                 }}
                                 >
                                     <TextInput
                                         placeholder='Enter other category'
@@ -578,8 +580,17 @@ export default class LocationDetails extends React.Component {
                                         style={StyleLocationDetails.inputBox}
                                     />
                                 </TouchableOpacity>
+                                    <Text>{
+                                        this.state.LoadCategoryItems.map((item,index)=>{
+                                                item.category_name
+                                        })
+                                        }</Text>
                             </View>
-                                    
+                            <Text>{
+                                        this.state.LoadCategoryItems.map((item,index)=>{
+                                                item.category_name
+                                        })
+                                        }</Text>  
                             <View style={this.state.other_flag==1?[StyleLocationDetails.inputContainer,{justifyContent:"center",paddingLeft:25}]:{display:'none'}}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.LOAD_CATEGORY}</Text>

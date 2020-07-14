@@ -232,6 +232,11 @@ isValid() {
     this.TextInput_emailId.focus()
     return false
 }
+if(!Constants.PASSWORD_REGX.test(this.state.password)){
+  alert("Please enter valid password");
+  this.TextInput_emailId.focus()
+  return false
+}
 
   if (this.state.password.length == 0) {
     alert("Please enter Password")

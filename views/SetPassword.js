@@ -73,6 +73,11 @@ export default class SetPassword extends React.Component {
             alert("Enter confirm password")
             return false
         }
+        if(!Constants.PASSWORD_REGX.test(this.state.new_password)){
+            alert("Please enter valid password");
+            // this.TextInput_emailId.focus()
+            return false
+          }
         if(this.state.confirm_password!=this.state.new_password){
             alert("Password didn't matched")
             return false

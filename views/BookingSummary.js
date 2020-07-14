@@ -81,6 +81,7 @@ export default class BookingSummary extends React.Component{
             truck_Type_id:"",
             truck_name:"",
             truck_desc:"",
+            chargesTripCost:"",
         }
         // this.userInfo=[];
         this.userDetails_1={};
@@ -324,7 +325,9 @@ export default class BookingSummary extends React.Component{
                     otherServices_amount:data.booking_summary.other_services,
                     discountAmount:data.booking_summary.discount,
                     total_price:data.booking_summary.booking_amount,
-                    booking_amount:data.booking_summary.booking_amount
+                    booking_amount:data.booking_summary.booking_amount,
+                    vat:data.booking_summary.vat_tax_amount,
+                    chargesTripCost:data.booking_summary.per_kilomiter_price,
                   });
               }else{
                   alert(data.message);
@@ -794,10 +797,16 @@ export default class BookingSummary extends React.Component{
                                         <Text style={StyleBookingSummary.priceVol}>{this.state.otherServices_amount}</Text>
                                     </View>
                                     
-                                    {/* <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
+
+                                    <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
+                                        <Text style={StyleBookingSummary.priceTxt}>{Constants.ChargesTripCost}</Text>
+                                        <Text style={StyleBookingSummary.priceVol}>{this.state.chargesTripCost}</Text>
+                                    </View>
+
+                                    <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={StyleBookingSummary.priceTxt}>{Constants.vat}</Text>
-                                        <Text style={StyleBookingSummary.priceVol}>{this.state.vat} %</Text>
-                                    </View> */}
+                                        <Text style={StyleBookingSummary.priceVol}>{this.state.vat}</Text>
+                                    </View>
 
                                     <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={[StyleBookingSummary.priceTxt,{width:'70%'}]}>{Constants.DiscountVoucher}</Text>

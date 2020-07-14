@@ -463,7 +463,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpTime}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{moment(this.state.truckData.date_of_pickup).format("DD MMM YYYY")}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{moment(this.state.truckData.pickedup_date_time).format("h:m A")}</Text>
                                                         </View>
                                                     </View>
 
@@ -482,7 +482,9 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         </View>
                                                         <View style={[StyleViewUpcomingTrip.col2,{justifyContent:'flex-end', alignItems:'flex-end'}]}>
                                                             <TouchableOpacity style={{justifyContent:'flex-end', alignItems:'flex-end', alignSelf:'flex-end'}}
-                                                                onPress={()=>{ this.setState({showDestinationLocations :!this.state.showDestinationLocations}) }}
+                                                                onPress={()=>{ 
+                                                                    this.setState({showDestinationLocations :!this.state.showDestinationLocations}) 
+                                                                }}
                                                             >
                                                             <Image
                                                                 source={ this.state.showDestinationLocations ? require('../images/ArrowUp.png') : require('../images/ArrowDown.png')}
@@ -499,8 +501,8 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <View style={[StyleViewUpcomingTrip.col2,{flexDirection:'column'}]}>
                                                                 {
                                                                     this.state.truckData == '' ? "" :
-                                                                    this.state.truckData.drop_location.drop_location.map((item)=>
-                                                                        <Text style={[StyleViewUpcomingTrip.col2Text,{marginBottom:5}]}>{item}</Text>
+                                                                    this.state.truckData.drop_location.drop_location.map((item,index)=>
+                                                                        <Text style={[StyleViewUpcomingTrip.col2Text,{marginBottom:5}]}>{`${index+1}. `+item}</Text>
                                                                     )
                                                                     //this.state.truckData.drop_location.drop_location[0]
                                                                 }
