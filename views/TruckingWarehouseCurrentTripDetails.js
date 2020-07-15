@@ -8,8 +8,9 @@ import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import Invoice from './InvoiceView';
-import { MainPresenter } from '../config/MainPresenter';
-import ApiConstants from '../config/ApiConstants';
+// import { MainPresenter } from '../config/MainPresenter';
+// import ApiConstants from '../config/ApiConstants';
+import moment from 'moment';
 export default class TruckingWarehouseCurrentTripDetails extends React.Component {
     constructor(props) {
         super(props);
@@ -21,19 +22,11 @@ export default class TruckingWarehouseCurrentTripDetails extends React.Component
             reviewTrip: '',
             modal_Visible: false,
             invoiceModal_Visible: false,
-            Truckwarehouse_data: [{ title: 'NYC - SYS', partnername: 'ABC Services', TelephoneNumber: '+56 89232021', Estimated_timetocomplete: '11 PM', estimated_datetocomplete: '11/12/2019', Driver_name: 'Amanda.P', phone_number: '+56 4521241512', }],
+            Truckwarehouse_data: [ ],
             driver_telephonNumber:"",
             partner_telephoneNumber:"",
             
-            warehouseTrucking_data: [
-                {
-                    // title: 'PVR service', booking_id: '1851', status: 'Not yet started', partner_name: 'ABC Service', contact_number: '+56 784520141',
-                    // cargo_type: 'Cargo Type 1', cargo_description: 'Lorem ipsomeLorem ipsomeLorem ipsomeLorem ', cargo_handling: 'Yes', numberUsers: '2', quantity: '10', cargo_insurance: 'Yes', dimensions: '10*50*50', Volumetric_weight: '200kg', valueof_load: 'R 200',
-                    // dateOF_pickUp: '11/04/2019', pickup_time: '11.00 AM', pickup_location: '275 N Marr Road,CA', destination_location: 'Block no 2,Jackson street', arrival_date: '11/04/2019', arrivalTime: '12.00 AM', truck_name: '407 TATA', mid_point1: 'Lorem ipsome', truckID: '1010',
-                    // warehouse_id: '1234', warehouse_type: 'Public', storage_type: 'Refregirator', costPer_sqm: 'R 35', warehouse_location: 'Street 45,Lane2', duration_ofstorage: '11/09/2019 to 15/10/2020',
-                    // recursing_requirement: 'Yes', costOf_recurring: 'R 100', cargoHandling_cost: 'R 100', service_frquency: 'Daily', insurance_rate: 'R 500', discount: '10', trip_amount: 'R 500'
-                }
-            ]
+            warehouseTrucking_data: []
         }
     }
 componentDidMount(){
@@ -43,42 +36,43 @@ componentDidMount(){
     this.service_type_id=this.props.navigation.getParam("service_type_id");
    console.log(" TRip detailes==> "+JSON.stringify(this.tripDetails));
 }
+
 // -------------------API------------------
-async initServices(service_type_id){
-    let param={
-    'service_type_id':service_type_id,
-    'flag':1,
-    'start_index':0,
-    'total_count':10}
-    await this.presenter.callPostApi(ApiConstants.getMyBookings, param, true);
-}
-async onResponse(apiConstant, data) {
-    switch (apiConstant) {
-        case ApiConstants.getMyBookings: {
-            if (data.status) {
-                this.setState({dataSource: data.warehouseTrucking_data});
-            //     if(this.truckBooingStatus){
-            //         if (data.truck_booking_list.length != 0) {
+// `async initServices(service_type_id){
+//     let param={
+//     'service_type_id':service_type_id,
+//     'flag':1,
+//     'start_index':0,
+//     'total_count':10}
+//     await this.presenter.callPostApi(ApiConstants.getMyBookings, param, true);
+// }
+// async onResponse(apiConstant, data) {
+//     switch (apiConstant) {
+//         case ApiConstants.getMyBookings: {
+//             if (data.status) {
+//                 this.setState({dataSource: data.warehouseTrucking_data});
+//             //     if(this.truckBooingStatus){
+//             //         if (data.truck_booking_list.length != 0) {
 
                         
-            //             this.setState({
-            //                 dataSource: data.truck_booking_list,
-            //             }) 
-            //     }
-            // }else {
-            //         this.setState({
-            //             dataSource: [],
-            //         })
+//             //             this.setState({
+//             //                 dataSource: data.truck_booking_list,
+//             //             }) 
+//             //     }
+//             // }else {
+//             //         this.setState({
+//             //             dataSource: [],
+//             //         })
                     
-            //     }
-            } else {
-                alert(data.message)
-            }
+//             //     }
+//             } else {
+//                 alert(data.message)
+//             }
 
-            break;
-        }
-    }
-}
+//             break;
+//         }
+//     }
+// }`
 
 // ----------------------------------------
 
@@ -101,9 +95,9 @@ async onResponse(apiConstant, data) {
         return (
             <View style={{ flex: 1 }}>
             
-            <MainPresenter ref={(ref) => { this.presenter = ref }} 
+            {/* <MainPresenter ref={(ref) => { this.presenter = ref }} 
                             onResponse={this.onResponse.bind(this)}
-                            navigation={this.props.navigation} />
+                            navigation={this.props.navigation} /> */}
                             <HeaderBar title="TRUCKING + WAREHOUSE  CURRENT TRIP DETAILS" isBack={true} isLogout={true} navigation={navigation} />
                 <View style={{ flex: 1 }}>
 
@@ -131,7 +125,7 @@ async onResponse(apiConstant, data) {
                                 <TouchableOpacity style={{ marginTop: 25 }}
                                     onPress={() => {
                                         // this.props.navigation.navigate('HelpAndSupport', { flag: false });
-                                        this.props.navigation.navigate('HelpAndSupport', { flag: false ,"service_type_id":this.service_type_id,"booking_id":this.tripDetails.booking_id})
+                                        this.props.navigation.navigate('HelpAndSupport', { flag: false ,"service_type_id":this.service_type_id,"booking_id":this.tripDetails.Truck_warehouse_booking})
 
                                     }}
                                 >
@@ -144,7 +138,7 @@ async onResponse(apiConstant, data) {
 
 
                                 <View>
-                                <Text style={StyleViewCurrentTrip.title}>Current Trip:{this.state.warehouseTrucking_data.pickup_location}-{this.state.warehouseTrucking_data.drop_location.drop_location[0]}</Text>
+                                <Text style={StyleViewCurrentTrip.title}>Current Trip:{this.state.warehouseTrucking_data.pickup_location}-</Text>
                                     <View style={StyleViewCurrentTrip.bottomLine}></View>
 
                                     <View style={StyleViewCurrentTrip.row}>
@@ -152,7 +146,7 @@ async onResponse(apiConstant, data) {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.PartnerName}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.warehouseTrucking_data.partnername}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.warehouseTrucking_data.partner_name}</Text>
                                         </View>
                                     </View>
 
@@ -170,7 +164,7 @@ async onResponse(apiConstant, data) {
                                             <Text style={StyleViewCurrentTrip.col1Text}>Estimated time to completion of trip</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.warehouseTrucking_data.date_of_drop}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{moment(this.state.warehouseTrucking_data.date_of_drop).format("hh:mm a")}</Text>
                                         </View>
                                     </View>
 
@@ -179,7 +173,7 @@ async onResponse(apiConstant, data) {
                                             <Text style={StyleViewCurrentTrip.col1Text}>Estimated Date for completion of trip</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.warehouseTrucking_data.date_of_drop}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{moment(this.state.warehouseTrucking_data.date_of_drop).format("DD/MMMM/YYYY")}</Text>
                                         </View>
                                     </View>
 
@@ -200,7 +194,7 @@ async onResponse(apiConstant, data) {
                                             <Text style={StyleViewCurrentTrip.col2Text}>{this.state.warehouseTrucking_data.driver_contact}</Text>
                                             <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}
                                             onPress={()=>{
-                                                this.dialCall(this.state.warehouseTrucking_data.phone_number);
+                                                this.dialCall(this.state.warehouseTrucking_data.driver_contact);
                                             }}
                                             >
                                                 <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
@@ -215,7 +209,7 @@ async onResponse(apiConstant, data) {
                                         <TouchableOpacity style={StyleViewCurrentTrip.col2}
                                             onPress={() => {
                                                 // this.props.navigation.navigate('MapViews', { flag: 'truckingWarehouse',"latlong":"" })
-                                        this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials":this.state.warehouseTrucking_data });
+                                        this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials":this.state.warehouseTrucking_data.drop_location });
 
 
                                             }}
@@ -232,10 +226,9 @@ async onResponse(apiConstant, data) {
 
                         <TouchableOpacity style={{ backgroundColor: Constants.COLOR_GREEN, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', width: '50%', marginVertical: 25, borderRadius: 50 }}
                             onPress={() => {
-                                // this.props.navigation.navigate('ViewCurrentTripAll', { item: this.state.warehouseTrucking_data, flag_CurrentTrip: 3 })
-                                // this.props.navigation.navigate('ViewUpcomingTrip',{'booking_id':this.state.warehouseTrucking_data.truck_booking_id,Flag_currentTtrip:true,flag_upcoming_Trip:"3"});
-                                this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':this.tripDetails.truck_booking_id, 'service_type_id': this.service_type_id, flag_upcoming_Trip:"3",Flag_currentTtrip:true})
-                                    console.log("service type id==>"+this.service_type_id+"booking ID==>"+this.tripDetails.truck_booking_id);
+                               
+                                this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':this.tripDetails.truck_booking_id,'service_type_id': this.service_type_id, flag_upcoming_Trip:"3",Flag_currentTtrip:true})
+                                    // console.log("service type id==>"+this.service_type_id+"booking ID==>"+this.tripDetails.truck_booking_id);
                                 
                             }}
                         >

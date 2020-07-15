@@ -15,6 +15,7 @@ import moment from 'moment'
 import RNFetchBlob from 'rn-fetch-blob';
 import RBSheet from "react-native-raw-bottom-sheet";
 import Carousel from "react-native-carousel";
+import ApiConstants from '../config/ApiConstants';
 
 export default class ViewUpcomingTrip extends React.Component {
     
@@ -49,8 +50,25 @@ export default class ViewUpcomingTrip extends React.Component {
         this.presenter.callPostApi(ApiConstants.getBookingDetails, {'service_type_id':this.service_type_id,'booking_id':this.booking_id}, true)
     }
 
+    cancelTrip(){
+        let param={
+            "booking_id":this.booking_id,
+            "service_type_id":this.service_type_id,
+            "booking_status":5,
+        }
+        this.presenter.callPostApi(ApiConstants.cancelTrip,param,true);
+    }
+
     async onResponse(apiConstant, data) {
         switch (apiConstant) {
+            case ApiConstants.cancelTrip: {
+                if (data.status){
+                    this.setState({isSuccesfull:true})
+                }else{
+                    alert(data.message);
+                }
+                break;
+            }
             case ApiConstants.getBookingDetails: {
                 if (data.status) {
                     if(this.service_type_id==1){
@@ -113,7 +131,9 @@ export default class ViewUpcomingTrip extends React.Component {
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 10 }}>
                         <TouchableOpacity style={StyleViewUpcomingTrip.cancelModalButton}
                             onPress={() => {
-                                this.setState({ isSuccesfull: true, })
+                                // this.setState({ isSuccesfull: true, });
+                                this.cancelTrip();
+
                             }}
                         >
                             <Text style={StyleViewUpcomingTrip.cancelModalButtonText}>{Constants.YES}</Text>
@@ -335,23 +355,23 @@ export default class ViewUpcomingTrip extends React.Component {
                                 
                                 <Image 
                                     source={
-                                    this.service_type_id == '1'
+                                    this.service_type_id == 1
                                         ? require('../images/current_trips.png')
-                                        : this.service_type_id == '2'
+                                        : this.service_type_id == 2
                                             ? require('../images/WarehouseServices_copy.png')
-                                            : this.service_type_id == '3'
+                                            : this.service_type_id ==3
                                                 ? require('../images/Trucking_+Warehouse.png')
                                                 : null
                                     }
                                     style={[StyleViewCurrentTrip.ImageCurrentTrip, { marginRight: 95 }]}
                                 />
-                                <TouchableOpacity style={{ marginTop: 25, }}
+                                <TouchableOpacity style={{position:'absolute',top:63,right:12 }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('HelpAndSupport', { flag: false })
+                                        this.props.navigation.navigate('HelpAndSupport', {flag: false ,"service_type_id":this.service_type_id,"booking_id":this.booking_id })
                                     }}
                                 >
                                     <Image source={require('../images/support_icon.png')}
-                                        style={service_name == '1' ? { display: 'none' } : StyleViewCurrentTrip.sideImage}
+                                        style={this.service_type_id == 2 ?StyleViewCurrentTrip.sideImage:{display:'none'}}
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -647,7 +667,6 @@ export default class ViewUpcomingTrip extends React.Component {
 
                                             </Tab>
                                            
-                                           
                                         } 
 
                                          {
@@ -704,7 +723,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.warehouse_location}</Text>
                                                             <TouchableOpacity style={{ position: 'absolute', right: 5, alignSelf: 'center' }}
                                                              onPress={()=>{
-                                                                this.props.navigation.navigate('MapViews',{'coordinates':this.state.warehouse_booking_detailsi.warehouse_location})
+                                                                this.props.navigation.navigate('MapViews',{"warehouse_flag":true,'WarehouseCoordinates':this.state.truckData.warehouse_latlng})
                                                             }}
                                                             >
                                                                 <Image style={{ width: 30, height: 30, }} source={require('../images/location_1.png')} />

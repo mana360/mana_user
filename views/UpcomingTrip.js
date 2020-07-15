@@ -182,7 +182,7 @@ export default class UpcomingTrip extends React.Component {
                                         </Text>
                                     </View>
                                
-                                    <View style={this.service_type_id==3?{ flexDirection: 'row', paddingTop: 3 }:null}>
+                                    <View style={this.service_type_id==3?{ flexDirection: 'row', paddingTop: 3 }:{display:'none'}}>
                                     <Image source={require('../images/date_icon.png')}
                                             style={[StyleUpcomingTrip.imageIcon]}
                                         />

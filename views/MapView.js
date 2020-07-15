@@ -21,6 +21,10 @@ export default class MapViews extends React.Component {
     this.googleMap=null,
     
     this.state = {
+      warehouse_lat:0,
+      warehouse_long:0,
+      warehouseLocation:'',
+      warehouse_flag:false,
       isSearchVisible:false,
       set_destination: false,
       current_address: "", //get current address  with draggable
@@ -32,7 +36,7 @@ export default class MapViews extends React.Component {
         { destination: 1, latitude: 19.0760, longitude: 72.8777, title: 'mumbai', desc: '' },
       ], //origin and destination marker direction 
       TripDetials:[],
- flag_marker:"",
+ flag_marker:false,
  markerDirectionLat:"",
  markerDirectionLong:"",
     }
@@ -42,11 +46,33 @@ export default class MapViews extends React.Component {
     this.getCurrentCoords();
     let flag_marker = this.props.navigation.getParam('flag_marker'); //get marker direction with origin and destination coordinates 
     let tempTruckDetails=this.props.navigation.getParam('TripDetials');
-    console.log("truckDetails=====>"+JSON.stringify(tempTruckDetails));
-    this.setState({flag_marker:flag_marker,TripDetials:tempTruckDetails});
-    if(!flag_marker==true){
-    this.RBSheet.open();
+    // console.log("truckDetails==af===>"+JSON.stringify(tempTruckDetails.drop_location.drop_latlng));
+    let warehouse_flag=this.props.navigation.getParam("warehouse_flag");
+    let warehouseLocation=this.props.navigation.getParam("WarehouseCoordinates");
+  //   if(warehouse_flag==true){ 
+  //      var Templatlong=warehouseLocation.split(",");
+  //     this.setState({
+        
+  //     warehouse_lat:parseFloat(Templatlong[0]),
+  //     warehouse_long:parseFloat(Templatlong[1])
+  //     })
+  // }
+      // console.log("bhai bhai==>"+JSON.stringify(Templatlong[1]));
+
+    this.setState({ 
+      warehouse_flag:warehouse_flag,
+      flag_marker:flag_marker,
+      TripDetials:tempTruckDetails,
+    
+    });
+  
+      // let itemsda=this.props.navigation.getParams("WarehouseCoordinates");
+    if(flag_marker==true||warehouse_flag==true){
+    
+    }else{
+      this.RBSheet.open();
     }
+   
   }
 
   async getCurrentCoords() {
@@ -94,11 +120,13 @@ latANDlong(latlongString,value){
 
 markerDirection(origin,destination){
   return(
+    this.state.current_latitude==""?<View style={{flex:1}}></View>:
+    
     <MapView
-    ref={(ref)=>{this.googleMap = ref}}
     style={StyleMapView.mapStyle}
     showsUserLocation={true}
     zoomEnabled={true}
+    followsUserLocation={true}
     zoomControlEnabled={true}
     initialRegion={{
       latitude: this.state.current_latitude,
@@ -106,24 +134,19 @@ markerDirection(origin,destination){
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     }}
-    // onLayout = {() => this.googleMap.fitToCoordinates(
-    //   [{
-    //     latitude: this.state.current_latitude,
-    //     longitude: this.state.current_longitude,
-    //   }],
-    //   { edgePadding: { top: 5, right: 5, bottom: 5, left: 5 }, animated: true })}
   >
-    
-     <Marker
-          coordinate={{latitude:this.latANDlong(origin,0),longitude:this.latANDlong(origin,1)}}
-        />
+   
+    {/* <Marker
+          coordinate={{latitude:parseFloat(this.latANDlong(origin,0)),longitude:parseFloat(this.latANDlong(origin,1))}}
+        /> */}
 
         <Marker  
-          coordinate={{latitude:this.latANDlong(destination.drop_location.drop_latlng[0],0),longitude:this.latANDlong(destination.drop_location.drop_latlng[0],1)}}
+          coordinate={{latitude:parseFloat(destination[0]),longitude:parseFloat(destination[1])}}
         />
         <MapViewDirections
-        origin={this.latANDlong(origin,0),this.latANDlong(origin,1)}
-        destination={drop_location.drop_latlng[0]}
+        apikey={Constants.GOOGLE_MAP_KEY}
+        origin={{latitude:parseFloat(this.state.current_latitude),longitude:parseFloat(this.state.current_longitude)}}
+        destination={{latitude:parseFloat(this.latANDlong(destination[0]),0),longitude:parseFloat(this.latANDlong(destination[1]))}}
         />
   
   </MapView>
@@ -140,9 +163,26 @@ markerDirection(origin,destination){
         <HeaderBar isBack={true} title="View Map" isLogout={true} navigation={navigation} />
         {
           this.state.flag_marker==true?
-        
-          
-          this.markerDirection(this.state.TripDetials.pickup_latlng,this.state.TripDetials)
+
+        this.markerDirection(this.state.TripDetials.pickup_latlng,this.state.TripDetials)
+          :this.state.warehouse_flag==true?
+          <MapView
+          ref={(ref)=>{this.googleMap = ref}}
+          style={StyleMapView.mapStyle}
+          showsUserLocation={true}
+          zoomEnabled={true}
+          zoomControlEnabled={true}
+          initialRegion={{
+            latitude: this.state.warehouse_lat,
+            longitude: this.state.warehouse_long,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          >
+            <Marker
+            coordinate={{latitude:this.state.warehouse_lat,longitude:this.state.warehouse_long}}
+            />
+          </MapView>
           :
         <View  style={ StyleMapView.MainContainer}>
 
@@ -210,6 +250,7 @@ markerDirection(origin,destination){
   }
         </View>
         }    
+
         <RBSheet
           ref={ref => {
             this.RBSheet = ref;
@@ -229,7 +270,7 @@ markerDirection(origin,destination){
                 <Image style={StyleViewMap.mapimg} source={require('../images/address.png')} />
               </View>
               <View style={StyleViewMap.maptxtwid}>
-        <Text style={StyleViewMap.maptxt}>{this.state.current_address}</Text>
+               <Text style={StyleViewMap.maptxt}>{this.state.current_address}</Text>
               </View>
             </View>
             <View style={StyleViewMap.maplocationbtn}>

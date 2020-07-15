@@ -14,7 +14,13 @@ import { } from 'react-native-gesture-handler';
 import RBSheet from "react-native-raw-bottom-sheet";
 
 export default class ViewMap extends React.Component{
-   
+  constructor(props) {
+    super(props)
+    this.state={
+      currentlat:"",
+      currentlong:"",
+    }
+  }
   render(){
     let {navigation} = this.props
       return(

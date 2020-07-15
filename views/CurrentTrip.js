@@ -105,6 +105,7 @@ dateAndTime(itemDate,value){
                                     {item:item,"flag_upcoming_Trip":2,'service_type_id':2,'booking_id':item.warehouse_booking_id,Flag_currentTtrip:true})
                                 }
                                 if(this.service_type_id==3){
+                                   
                                     this.props.navigation.navigate('TruckingWarehouseCurrentTripDetails',
                                      {'booking_id':item.truck_booking_id,'service_type_id':3,"bookingItem":item})
                                 }
@@ -140,7 +141,7 @@ dateAndTime(itemDate,value){
                                         </Text>
                                         
                                     </View>
-                                    <View style={this.service_type_id==3?{ flexDirection: 'row', paddingTop: 3 }:null}>
+                                    <View style={this.service_type_id==3?{ flexDirection: 'row', paddingTop: 3 }:{display:'none'}}>
                                     <Image source={require('../images/date_icon.png')}
                                             style={[StyleUpcomingTrip.imageIcon]}
                                         />

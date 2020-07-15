@@ -2,7 +2,7 @@
     design by -mayur s
  */
 import React, { Component } from 'react';
-import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity,Linking,Platform } from 'react-native';
+import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity,Linking,Platform, PermissionsAndroid } from 'react-native';
 import { StyleViewCurrentTrip, StyleCurrentTrip, StyleMyBooking } from '../config/CommonStyles';
 import RBSheet from "react-native-raw-bottom-sheet";
 import FooterBar from '../config/FooterBar';
@@ -10,6 +10,7 @@ import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
 import Invoice from './InvoiceView';
 import { MainPresenter } from '../config/MainPresenter';
+import RNFetchBlob from 'rn-fetch-blob';
 
 export default class ViewCurrentTrip extends React.Component {
     constructor(props) {
@@ -53,7 +54,7 @@ export default class ViewCurrentTrip extends React.Component {
             this.booking_id = this.props.navigation.getParam('booking_id')
             console.log('bookig_id  ' + JSON.stringify(this.booking_id));
             this.tripDetails= this.props.navigation.getParam("bookingItem");
-            console.log(JSON.stringify( "Trip Details==>"+JSON.stringify(this.tripDetails)));
+            // console.log(JSON.stringify( "Trip Details==>"+JSON.stringify(this.tripDetails)));
             this.setState({truckData:this.tripDetails});
     
         // this.presenter.callPostApi(ApiConstants.getBookingDetails, {'service_type_id':this.service_type_id,'booking_id':this.booking_id}, true)
@@ -83,7 +84,50 @@ export default class ViewCurrentTrip extends React.Component {
         }
     }
 
-
+    async requestFilePermission(file_path){
+        try {
+            const granted = await PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+              {
+                'title': 'File Storage Permission',
+                'message': 'App needs access to your file storage to download file.'
+              }
+            )
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                // permission granted
+                this.getDownloadFile(file_path)
+                return true
+            }
+            else {
+                // permission denied
+                alert("File downloading faild.");
+                return false
+            }
+          } catch (err) {
+            console.warn(err)
+          }
+          return false
+    }
+    getDownloadFile(file_path){
+        var date = new Date();
+        var image_URL = file_path;
+        var ext = this.getExtention(image_URL);
+        ext = "." + ext[0];
+        const { config, fs } = RNFetchBlob;
+        let DownloadDir = fs.dirs.DownloadDir
+        let options = {
+            fileCache: true,
+            addAndroidDownloads: {
+                useDownloadManager: true,
+                notification: true,
+                path: DownloadDir + "/Mana" + Math.floor(date.getTime()+ date.getSeconds() / 2) + ext,
+                description: 'Mana invoice file'
+            }
+        }
+        config(options).fetch('GET', image_URL).then((res) => {
+            alert("File is downloaded successfully.");
+        });
+    }
     render() {
        
         let { navigation } = this.props
@@ -104,11 +148,16 @@ export default class ViewCurrentTrip extends React.Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
 
                                 <TouchableOpacity style={{ marginTop: 25, }}
-                                    onPress={() => {
-                                        return (
-                                            this.setState({ invoiceModal_Visible: true })
-                                        )
-                                    }}
+                                   
+                                            onPress={()=>{
+                                                //return ( this.setState({ invoiceModal_Visible: true }))
+                                                this.state.truckData.invoice_goods!=""
+                                                ?
+                                                Platform.OS=="android" ? this.requestFilePermission(this.state.truckData.invoice_url) : this.getDownloadFile(this.state.truckData.invoice_url)
+                                                : null
+                                            }}
+                                        
+                                
                                 >
                                     <Image source={require('../images/invoice_details.png')}
                                         style={StyleViewCurrentTrip.sideImage} />
@@ -251,7 +300,7 @@ export default class ViewCurrentTrip extends React.Component {
                             <TouchableOpacity style={[StyleViewCurrentTrip.bottomButton, { marginRight: 15, width: '40%' }]}
                                 onPress={() => {
                                     if (this.state.live_geopin == true)
-                                        this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials":this.state.truckData });
+                                        this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials":this.state.truckData.drop_location.drop_latlng, });
                                     else
                                         this.RBSheet.open(); //delay msg
                                 }}
@@ -270,7 +319,6 @@ export default class ViewCurrentTrip extends React.Component {
 
                                 }}
                             >
-
                                 <Text style={StyleViewCurrentTrip.buttonText}>{Constants.ViewMore}</Text>
                             </TouchableOpacity>
                         </View>

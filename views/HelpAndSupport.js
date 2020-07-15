@@ -42,6 +42,7 @@ export default class HelpAndSupport extends React.Component {
 
     async getUserLocalInfo(){
         let data = JSON.parse(await getUserData())
+        console.log("are bhai mai agaya"+JSON.stringify(data));
         if(data[0].user_type==1){
             this.setState({isUser:false})
         }else{
@@ -64,7 +65,7 @@ export default class HelpAndSupport extends React.Component {
     }
 
     async getSupportSubjectList(){
-        await this.presenter.callPostApi(ApiConstants.getSupportSubject, {'driver_id':1}, true);
+        await this.presenter.callPostApi(ApiConstants.getSupportSubject, "", true);
     }
 
     async sendMessage(){
@@ -96,7 +97,7 @@ export default class HelpAndSupport extends React.Component {
           }
           case ApiConstants.addSupportData: {
               if(data.status){
-                this.setState({supportSubjectList : data.support_subjects})
+                // this.setState({supportSubjectList : data.support_subjects})
               }else{
                 alert(data.message)
               }
@@ -126,7 +127,7 @@ export default class HelpAndSupport extends React.Component {
                             <View style={{ flex: 3, justifyContent: 'center', alignItems: 'flex-end', marginLeft: 10 }}>
                                 <Image
                                     style={StyleHelpAndSupport.userImage}
-                                    source={require('../images/Profile_pic.png')}
+                                    source={{uri:this.state.userData.profile_picture}}
                                 />
                             </View>
 
