@@ -21,6 +21,7 @@ export default class HelpAndSupport extends React.Component {
     constructor(props) {
         super(props);
         this.subject_id="",
+        this.driver_id=""
         this.state = {
             support_subject: "",
             support_message: "",
@@ -37,12 +38,13 @@ export default class HelpAndSupport extends React.Component {
     componentDidMount(){
         this.service_type_id=this.props.navigation.getParam("service_type_id");
         this.booking_id=this.props.navigation.getParam("booking_id");
+        this.driver_id=this.props.navigation.getParam("driver_id");
         this.getUserLocalInfo()
     }
 
     async getUserLocalInfo(){
         let data = JSON.parse(await getUserData())
-        console.log("are bhai mai agaya"+JSON.stringify(data));
+        // console.log("are bhai mai agaya"+JSON.stringify(data));
         if(data[0].user_type==1){
             this.setState({isUser:false})
         }else{
@@ -65,7 +67,10 @@ export default class HelpAndSupport extends React.Component {
     }
 
     async getSupportSubjectList(){
-        await this.presenter.callPostApi(ApiConstants.getSupportSubject, "", true);
+        let param={
+            driver_id:this.driver_id==""?0:this.driver_id
+        }
+        await this.presenter.callPostApi(ApiConstants.getSupportSubject,param, true);
     }
 
     async sendMessage(){

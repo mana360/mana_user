@@ -83,7 +83,9 @@ export default class ViewCurrentTrip extends React.Component {
             }
         }
     }
-
+    getExtention(filename){
+        return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
+    }
     async requestFilePermission(file_path){
         try {
             const granted = await PermissionsAndroid.request(
@@ -172,7 +174,7 @@ export default class ViewCurrentTrip extends React.Component {
                                 /> */}
                                 <TouchableOpacity style={{ marginTop: 25, }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('HelpAndSupport', { flag: false ,"service_type_id":this.service_type_id,"booking_id":this.booking_id})
+                                        this.props.navigation.navigate('HelpAndSupport', { flag: false ,"service_type_id":this.service_type_id,"booking_id":this.booking_id,"driver_id":this.state.truckData.driver_id})
                                     }}
                                 >
                                     <Image source={require('../images/support_icon.png')}
@@ -207,15 +209,15 @@ export default class ViewCurrentTrip extends React.Component {
                                                 null
                                             }>
                                                 {
-                                                    this.state.truckData.current_status==Constants.BOOKING_STATUS_NEW?"New"
+                                                    this.state.truckData.current_status==Constants.BOOKING_CURRENT_STATUS_DRIVER_DISPATCHED ? "Driver Dispatched"
                                                     :
-                                                    this.state.truckData.current_status==Constants.BOOKING_STATUS_PICKED_UP?"Driver Assigned"
+                                                    this.state.truckData.current_status==Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_PICKUP_LOCATION ? "Arrived at Pickup Location"
                                                     :   
-                                                    this.state.truckData.current_status==Constants.BOOKING_STATUS_DELIVERED?"Delivered"
+                                                    this.state.truckData.current_status==Constants.BOOKING_CURRENT_STATUS_ON_ROUTE_TO_DESTINATION ? "On- route to destination"
                                                     :
-                                                    this.state.truckData.current_status==Constants.BOOKING_STATUS_CANCELLED?"Cancelled"
+                                                    this.state.truckData.current_status==Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION ? "Arrived at Destination"
                                                     :
-                                                    this.state.truckData.current_status==Constants.BOOKING_CURRENT_STATUS_ON_ROUTE_TO_DESTINATION?"On Route to Destination"
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_TRIP_COMPLETED_CARGO_OFFLOADED ? "Trip completed, cargo offloaded"
                                                     :null
                                                 }
                                                 </Text>
@@ -300,7 +302,7 @@ export default class ViewCurrentTrip extends React.Component {
                             <TouchableOpacity style={[StyleViewCurrentTrip.bottomButton, { marginRight: 15, width: '40%' }]}
                                 onPress={() => {
                                     if (this.state.live_geopin == true)
-                                        this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials":this.state.truckData.drop_location.drop_latlng, });
+                                        this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials":this.state.truckData.drop_location.drop_latlng[1] });
                                     else
                                         this.RBSheet.open(); //delay msg
                                 }}

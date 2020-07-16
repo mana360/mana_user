@@ -21,6 +21,8 @@ export default class MapViews extends React.Component {
     this.googleMap=null,
     
     this.state = {
+      drop_lat:0,
+      drop_long:0,
       warehouse_lat:0,
       warehouse_long:0,
       warehouseLocation:'',
@@ -46,7 +48,7 @@ export default class MapViews extends React.Component {
     this.getCurrentCoords();
     let flag_marker = this.props.navigation.getParam('flag_marker'); //get marker direction with origin and destination coordinates 
     let tempTruckDetails=this.props.navigation.getParam('TripDetials');
-    // console.log("truckDetails==af===>"+JSON.stringify(tempTruckDetails.drop_location.drop_latlng));
+    console.log("truckDetails==af===>"+JSON.stringify(tempTruckDetails));
     let warehouse_flag=this.props.navigation.getParam("warehouse_flag");
     let warehouseLocation=this.props.navigation.getParam("WarehouseCoordinates");
   //   if(warehouse_flag==true){ 
@@ -114,11 +116,11 @@ latANDlong(latlongString,value){
   if(temp==""){
     return 0
   }else{
-  return parseInt(temp[value]);
+  return temp[value];
   }
 }
 
-markerDirection(origin,destination){
+markerDirection(destination){
   return(
     this.state.current_latitude==""?<View style={{flex:1}}></View>:
     
@@ -140,14 +142,14 @@ markerDirection(origin,destination){
           coordinate={{latitude:parseFloat(this.latANDlong(origin,0)),longitude:parseFloat(this.latANDlong(origin,1))}}
         /> */}
 
-        <Marker  
-          coordinate={{latitude:parseFloat(destination[0]),longitude:parseFloat(destination[1])}}
+       <Marker  
+          coordinate={{latitude:parseFloat(this.latANDlong(destination,0)),longitude:parseFloat(this.latANDlong(destination,1))}}
         />
-        <MapViewDirections
+        {/*  <MapViewDirections
         apikey={Constants.GOOGLE_MAP_KEY}
         origin={{latitude:parseFloat(this.state.current_latitude),longitude:parseFloat(this.state.current_longitude)}}
-        destination={{latitude:parseFloat(this.latANDlong(destination[0]),0),longitude:parseFloat(this.latANDlong(destination[1]))}}
-        />
+        destination={{latitude:parseFloat(25.2325),longitude:parseFloat(25.2154)}}
+        /> */}
   
   </MapView>
 
@@ -164,7 +166,7 @@ markerDirection(origin,destination){
         {
           this.state.flag_marker==true?
 
-        this.markerDirection(this.state.TripDetials.pickup_latlng,this.state.TripDetials)
+        this.markerDirection(this.state.TripDetials)
           :this.state.warehouse_flag==true?
           <MapView
           ref={(ref)=>{this.googleMap = ref}}

@@ -367,7 +367,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                 />
                                 <TouchableOpacity style={{position:'absolute',top:63,right:12 }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('HelpAndSupport', {flag: false ,"service_type_id":this.service_type_id,"booking_id":this.booking_id })
+                                        this.props.navigation.navigate('HelpAndSupport', {flag: false ,"service_type_id":this.service_type_id,"booking_id":this.booking_id,"driver_id":"" })
                                     }}
                                 >
                                     <Image source={require('../images/support_icon.png')}
@@ -417,27 +417,25 @@ export default class ViewUpcomingTrip extends React.Component {
                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.Status}</Text>
                                         </View>
                                         <View style={StyleViewUpcomingTrip.col2}>
-                                            <Text style={[StyleViewUpcomingTrip.col2Text,{ display : this.service_type_id==1 ? 'flex' :'none'}]}>
+                                            <Text style={[StyleViewUpcomingTrip.col2Text,{ display : this.service_type_id==1 ? 'none' :'flex'}]}>
                                             {
-                                                 this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_DRIVER_DISPATCHED ? "Driver Dispatched"
-                                                :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_PICKUP_LOCATION ? "Arrived at Pickup Location"
-                                                :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_ON_ROUTE_TO_DESTINATION ? "On- route to destination"
-                                                :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION ? "Arrived at Destination"
-                                                :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_TRIP_COMPLETED_CARGO_OFFLOADED ? "Trip completed, cargo offloaded"
-                                                :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In storage"
-                                                :this.state.truckData.current_status == Constants.BOOKING_STATUS_DELIVERED ? "Delivered"
-                                                :this.state.truckData.current_status == Constants.BOOKING_STATUS_PICKED_UP ? "Picked Up"
-                                                :this.state.truckData.current_status == Constants.BOOKING_STATUS_CANCELLED ? "Cancelled"
-                                                :this.state.truckData.current_status == Constants.BOOKING_STATUS_CANCELLED ? "New"
+                                                 this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_DRIVER_DISPATCHED ? "Driver Dispatched"
+                                                :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_PICKUP_LOCATION ? "Arrived at Pickup Location"
+                                                :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_ON_ROUTE_TO_DESTINATION ? "On- route to destination"
+                                                :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION ? "Arrived at Destination"
+                                                :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_TRIP_COMPLETED_CARGO_OFFLOADED ? "Trip completed, cargo offloaded"
+                                                :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In storage"
                                                 :null
                                             }
                                             </Text>
-                                            <Text style={[StyleViewUpcomingTrip.col2Text,{ display : this.service_type_id==1? 'none' :'flex'}]}>
+                                            <Text style={[StyleViewUpcomingTrip.col2Text,{ display : this.service_type_id==1? 'flex' :'none'}]}>
                                             {
-                                                 this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_STATUS_NEW ? "New"
-                                                :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_STATUS_PICKED_UP ? "Picked up"
-                                                :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_STATUS_DELIVERED ? "Delivered"
-                                                :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_STATUS_CANCELLED ? "Cancelled"
+                                                 this.state.truckData.current_status ==Constants.BOOKING_CURRENT_STATUS_DRIVER_DISPATCHED ? "Driver Dispatched"
+                                                :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_PICKUP_LOCATION ? "Arrived at Pickup Location"
+                                                :this.state.truckData.current_status ==Constants.BOOKING_CURRENT_STATUS_ON_ROUTE_TO_DESTINATION ? "On- route to destination"
+                                                :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION ? "Arrived at Destination"
+                                                :this.state.truckData.current_status ==Constants.BOOKING_CURRENT_STATUS_TRIP_COMPLETED_CARGO_OFFLOADED ? "Trip completed, cargo offloaded" 
+                                                // :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In storage"
                                                 :null
                                             }
                                             </Text>
@@ -658,7 +656,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
                                                             <Text style={StyleViewUpcomingTrip.col2Text}>{
-                                                            this.state.truckData.drop_location.drop_address[this.state.truckData.drop_location.drop_address.length-1]
+                                                            this.state.truckData.drop_location.drop_address[1]
                                                             }</Text>
                                                         </View>
                                                     </View>  */}

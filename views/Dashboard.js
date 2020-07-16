@@ -4,6 +4,7 @@
 import React from 'react';
 import { View, Image, ScrollView, Text, TouchableOpacity, FlatList, BackHandler, ToastAndroid } from 'react-native';
 import { Card, CardItem } from "native-base";
+import { Toast } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
 import { StyleDashboard } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
@@ -37,25 +38,39 @@ export default class Dashboard extends React.Component {
                 // { title: "Trucking + Warehouse", desc: "Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent: "25" },
                 // { title: "Collect My Load", desc: "Lorem ipsum sit amet, consecture adiscipline  elit, Lorem sed do eipsm temport jsheeon ut labore", percent: "70" },
             ],
+            clickcount:0
         }
     }
    async componentDidMount() {
-    //    BackHandler.addEventListener("hardwareBackPress",this.handleBackButton.bind(this));
+    // BackHandler.addEventListener("hardwareBackPress",()=>{
+    //     this.setState({'clickcount':this.state.clickcount+1})
+    //     this.check();
+    //     return true
+    // })
         this.presenter.callGetApi(ApiConstants.getDashboardData, "", true);
         this.getUserStatus();
     }
 
-//    handleBackButton=()=>{
-//     // if (!this.props.navigation.goBack()) {
-//     //     if (this.state.validCloseWindow)
-//     //         return false;
-//     //     this.state.validCloseWindow = true
-//     //     setTimeout(() => {
-//     //         this.state.validCloseWindow = false
-//     //     }, 3000);
-//     //     ToastAndroid.show("Press Again To Exit !", ToastAndroid.SHORT);
-//     //     return true;
-//     }
+    check=()=>{
+        if(this.state.clickcount<2){
+            setTimeout(() => {
+                ToastAndroid.show("A pikachu appeared nearby !", ToastAndroid.SHORT,);
+                this.setState({'clickcount':0})
+            
+            }, 1000);
+this.setState({'clickcount':0})
+            // Toast.show({
+            //     text:`Press back again to exit App `,
+            //     duration:2000,
+            //     onClose:()=>{}
+            // })
+
+        }
+        else if(this.state.clickcount==2)
+        {
+            BackHandler.exitApp()
+        }
+    }
 
 
    componentWillMount(){

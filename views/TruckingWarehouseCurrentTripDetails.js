@@ -2,7 +2,7 @@
     design by -mayur s
  */
 import React, { Component } from 'react';
-import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity ,Linking,Platform} from 'react-native';
+import { View, Text, Image, TextInput, ScrollView, Modal, TouchableOpacity ,Linking,Platform, PermissionsAndroid} from 'react-native';
 import { StyleViewCurrentTrip, StyleCurrentTrip } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
@@ -11,6 +11,7 @@ import Invoice from './InvoiceView';
 // import { MainPresenter } from '../config/MainPresenter';
 // import ApiConstants from '../config/ApiConstants';
 import moment from 'moment';
+import RNFetchBlob from 'rn-fetch-blob';
 export default class TruckingWarehouseCurrentTripDetails extends React.Component {
     constructor(props) {
         super(props);
@@ -90,6 +91,55 @@ componentDidMount(){
 
         Linking.openURL(phoneNumber);
     };
+
+    getExtention(filename){
+        return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
+    }
+    getDownloadFile(file_path){
+        var date = new Date();
+        var image_URL = file_path;
+        var ext = this.getExtention(image_URL);
+        ext = "." + ext[0];
+        const { config, fs } = RNFetchBlob;
+        let DownloadDir = fs.dirs.DownloadDir
+        let options = {
+            fileCache: true,
+            addAndroidDownloads: {
+                useDownloadManager: true,
+                notification: true,
+                path: DownloadDir + "/Mana" + Math.floor(date.getTime()+ date.getSeconds() / 2) + ext,
+                description: 'Mana invoice file'
+            }
+        }
+        config(options).fetch('GET', image_URL).then((res) => {
+            alert("File is downloaded successfully.");
+        });
+    }
+
+    async requestFilePermission(file_path){
+        try {
+            const granted = await PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+              {
+                'title': 'File Storage Permission',
+                'message': 'App needs access to your file storage to download file.'
+              }
+            )
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                // permission granted
+                this.getDownloadFile(file_path)
+                return true
+            }
+            else {
+                // permission denied
+                alert("File downloading faild.");
+                return false
+            }
+          } catch (err) {
+            console.warn(err)
+          }
+          return false
+    }
     render() {
         let { navigation } = this.props
         return (
@@ -109,9 +159,13 @@ componentDidMount(){
 
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <TouchableOpacity style={{ marginTop: 25 }}
-                                    onPress={() => {
-                                        this.setState({ invoiceModal_Visible: true })
-                                    }}
+                                   onPress={()=>{
+                                    //return ( this.setState({ invoiceModal_Visible: true }))
+                                    this.state.warehouseTrucking_data.invoice_url!=""
+                                    ?
+                                    Platform.OS=="android" ? this.requestFilePermission(this.state.warehouseTrucking_data.invoice_url) : this.getDownloadFile(this.state.warehouseTrucking_data.invoice_url)
+                                    : null
+                                }}
                                 >
                                     <Image source={require('../images/invoice_details.png')}
                                         style={StyleViewCurrentTrip.sideImage}
@@ -125,7 +179,7 @@ componentDidMount(){
                                 <TouchableOpacity style={{ marginTop: 25 }}
                                     onPress={() => {
                                         // this.props.navigation.navigate('HelpAndSupport', { flag: false });
-                                        this.props.navigation.navigate('HelpAndSupport', { flag: false ,"service_type_id":this.service_type_id,"booking_id":this.tripDetails.Truck_warehouse_booking})
+                                        this.props.navigation.navigate('HelpAndSupport', { flag: false ,"service_type_id":this.service_type_id,"booking_id":this.tripDetails.Truck_warehouse_booking,"driver_id":his.tripDetails.driver_id})
 
                                     }}
                                 >
@@ -209,7 +263,7 @@ componentDidMount(){
                                         <TouchableOpacity style={StyleViewCurrentTrip.col2}
                                             onPress={() => {
                                                 // this.props.navigation.navigate('MapViews', { flag: 'truckingWarehouse',"latlong":"" })
-                                        this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials":this.state.warehouseTrucking_data.drop_location });
+                                        this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials":this.state.warehouseTrucking_data.drop_location.drop_latlng[1]});
 
 
                                             }}
