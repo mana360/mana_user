@@ -124,7 +124,7 @@ export default class LocationDetails extends React.Component {
                     console.log("Time is valid")
                     this.setState({ pickup_time:  selectedTime+":00", isTimerError:false})
                 }else{
-                    alert('Enter correct minutes in time.')    
+                    // alert('Enter correct minutes in time.')    
                 }
 
             }else{
