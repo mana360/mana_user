@@ -314,11 +314,11 @@ export default class LocationDetails extends React.Component {
 
                         <View style={StyleLocationDetails.locationWrapp}>
 
-                            <View style={[StyleLocationDetails.inputContainer,{height:this.state.pick_up_address==""?48:55}]}>
+                            <View style={[StyleLocationDetails.inputContainer,{}]}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.PickUpAddress}</Text>
                                 </View>
-                                <Text style={[StyleLocationDetails.inputBox,{marginTop:10}]}>
+                                <Text style={[StyleLocationDetails.inputBox,{marginTop:10}]} numberOfLines={1}>
                                     {this.state.pick_up_address=="" ?"Enter Pickup Address" :this.state.pick_up_address}
                                 </Text>
                                 {/* <TextInput
@@ -365,11 +365,11 @@ export default class LocationDetails extends React.Component {
                                     style={StyleLocationDetails.inputBox} />
                             </View>
 
-                            <View style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 20, width: '94%', height:this.state.drop_off_address==""?48:55 }] : [StyleLocationDetails.inputContainer, { marginBottom: 20, height:this.state.drop_off_address==""?48:55 }]}>
+                            <View style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 20, width: '94%' }] : [StyleLocationDetails.inputContainer, { marginBottom: 20}]}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.DropOffAddress} 1</Text>
                                 </View>
-                                <Text style={[StyleLocationDetails.inputBox,{marginTop:10}]}>
+                                <Text style={[StyleLocationDetails.inputBox,{marginTop:10}]} numberOfLines={1}>
                                     {this.state.drop_off_address=="" ?"Drop Off Address" :this.state.drop_off_address}
                                 </Text>
                                 {/* <TextInput placeholder='Drop Off Address'
@@ -421,11 +421,11 @@ export default class LocationDetails extends React.Component {
 
                             </TouchableOpacity>
 
-                            <View style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 20, height:this.state.drop_off_address_1==""?48:55 }] : { display: 'none' }}>
+                            <View style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 20 }] : { display: 'none' }}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.DropOffAddress} 2</Text>
                                 </View>
-                                <Text style={[StyleLocationDetails.inputBox,{marginTop:10}]}>
+                                <Text style={[StyleLocationDetails.inputBox,{marginTop:10}]} numberOfLines={1}>
                                     {this.state.drop_off_address_1=="" ?"Drop Off Address" :this.state.drop_off_address_1}
                                 </Text>
                                 {/* <TextInput placeholder='Drop Off Address'

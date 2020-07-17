@@ -203,7 +203,7 @@ export default class BookingSummary extends React.Component{
         {
             "drop_location":this.state.drop_off_addressDetails+","+this.state.drop_off_address,
             "drop_latlng":this.state.drop_off_address_lat+","+this.state.drop_off_address_long,
-            "drop_address":this.state.pick_up_addressDetails
+            "drop_address":this.state.drop_off_addressDetails
         },
         {
             "drop_location":this.state.drop_off_address_1Details+","+this.state.drop_off_address_1,

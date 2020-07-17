@@ -2779,7 +2779,7 @@ const StyleLocationDetails = StyleSheet.create({
 		position:'relative',
 		borderRadius: 50,
 		borderWidth: 0.8,
-		height:48,
+		height:45,
         marginBottom: 35,  
 	},
 	labelBoxNew: {	 
