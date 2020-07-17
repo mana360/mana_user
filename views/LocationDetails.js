@@ -1,5 +1,6 @@
 /* screen -MANAPPCUS064
     design by -Harshad 
+    dev + api by Udayraj
  */
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, DatePickerAndroid, TimePickerAndroid, TextInput, Modal, FlatList} from 'react-native';
@@ -107,6 +108,7 @@ export default class LocationDetails extends React.Component {
     async openTimer() {
         var { action, minute, hour, second } = await TimePickerAndroid.open({
             is24Hour: true,
+            mode:"spinner"
         });
         if (action === TimePickerAndroid.dismissedAction) {
             this.setState({ pickup_time: "" })
@@ -229,28 +231,30 @@ export default class LocationDetails extends React.Component {
     }
 
     getAddress(flag){
-        this.props.navigation.navigate('MapViews', {
+        //MapViews removed
+        this.props.navigation.navigate('placePicker', {
             flag_location:flag, address: (resp) => {
                 console.log("callback flag==>"+flag);
+                console.log("received location ==>"+JSON.stringify(resp))
                         if(flag=="1"){
                             this.setState({
-                                pick_up_address:resp.results[0].formatted_address,
-                                pick_up_address_lat:resp.results[0].geometry.location.lat,
-                                pick_up_address_long:resp.results[0].geometry.location.lng
+                                pick_up_address:resp.address,
+                                pick_up_address_lat:resp.latitude,
+                                pick_up_address_long:resp.longitude
                                     });
                         }
                         if(flag=="2"){
                                 this.setState({
-                                drop_off_address:resp.results[0].formatted_address,
-                                drop_off_address_lat:resp.results[0].geometry.location.lat,
-                                drop_off_address_long:resp.results[0].geometry.location.lng
+                                drop_off_address:resp.address,
+                                drop_off_address_lat:resp.latitude,
+                                drop_off_address_long:resp.longitude
                                 });
                         }
                         if(flag=='3'){
                             this.setState({
-                                drop_off_address_1:resp.results[0].formatted_address,
-                                drop_off_address_1_lat:resp.results[0].geometry.location.lat,
-                                drop_off_address_1_long:resp.results[0].geometry.location.lng
+                                drop_off_address_1:resp.address,
+                                drop_off_address_1_lat:resp.latitude,
+                                drop_off_address_1_long:resp.longitude
                                 });
                         }
             }
@@ -310,21 +314,26 @@ export default class LocationDetails extends React.Component {
 
                         <View style={StyleLocationDetails.locationWrapp}>
 
-                            <View style={StyleLocationDetails.inputContainer}>
+                            <View style={[StyleLocationDetails.inputContainer,{height:this.state.pick_up_address==""?48:55}]}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.PickUpAddress}</Text>
                                 </View>
-                                <TextInput
-                                    placeholder='Enter Pickup Address,'
+                                <Text style={[StyleLocationDetails.inputBox,{marginTop:10}]}>
+                                    {this.state.pick_up_address=="" ?"Enter Pickup Address" :this.state.pick_up_address}
+                                </Text>
+                                {/* <TextInput
+                                    placeholder='Enter Pickup Address'
                                     placeholderTextColor="#a4a4a4"
+                                    editable={false}
                                     ref={(ref) => { this.pick_up_address = ref }}
-                                    value={this.state.pick_up_address}
+                                    //value={this.state.pick_up_address}
+                                    value="abcde fh gjhid uh asdoa uwhe 23io4j 8snn"
                                     onChangeText={
                                         (value) => {
                                             this.setState({ pick_up_address: value })
                                         }
                                     }
-                                    style={StyleLocationDetails.inputBox} />
+                                    style={[StyleLocationDetails.inputBox,{display:'none'}]} /> */}
                               
                                 <TouchableOpacity
                                     style={{ position: "absolute", right: 20, top: 12, }}
@@ -356,12 +365,16 @@ export default class LocationDetails extends React.Component {
                                     style={StyleLocationDetails.inputBox} />
                             </View>
 
-                            <View style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 20, width: '94%' }] : [StyleLocationDetails.inputContainer, { marginBottom: 20 }]}>
+                            <View style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 20, width: '94%', height:this.state.drop_off_address==""?48:55 }] : [StyleLocationDetails.inputContainer, { marginBottom: 20, height:this.state.drop_off_address==""?48:55 }]}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.DropOffAddress} 1</Text>
                                 </View>
-                                <TextInput placeholder='Drop Off Address'
+                                <Text style={[StyleLocationDetails.inputBox,{marginTop:10}]}>
+                                    {this.state.drop_off_address=="" ?"Drop Off Address" :this.state.drop_off_address}
+                                </Text>
+                                {/* <TextInput placeholder='Drop Off Address'
                                     placeholderTextColor="#a4a4a4"
+                                    editable={false}
                                     ref={(ref) => { this.drop_off_address = ref }}
                                     value={this.state.drop_off_address}
                                     onChangeText={
@@ -369,7 +382,7 @@ export default class LocationDetails extends React.Component {
                                             this.setState({ drop_off_address: value })
                                         }
                                     }
-                                    style={StyleLocationDetails.inputBox} />
+                                    style={StyleLocationDetails.inputBox} /> */}
                                 <TouchableOpacity
                                     style={{ position: "absolute", right: 20, top: 12, }}
                                     onPress={() => {
@@ -408,12 +421,16 @@ export default class LocationDetails extends React.Component {
 
                             </TouchableOpacity>
 
-                            <View style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 20 }] : { display: 'none' }}>
+                            <View style={this.state.add_nextAddress == '1' ? [StyleLocationDetails.inputContainer, { marginBottom: 20, height:this.state.drop_off_address_1==""?48:55 }] : { display: 'none' }}>
                                 <View style={StyleLocationDetails.labelBoxNew}>
                                     <Text style={StyleLocationDetails.labelTextNew}>{Constants.DropOffAddress} 2</Text>
                                 </View>
-                                <TextInput placeholder='Drop Off Address'
+                                <Text style={[StyleLocationDetails.inputBox,{marginTop:10}]}>
+                                    {this.state.drop_off_address_1=="" ?"Drop Off Address" :this.state.drop_off_address_1}
+                                </Text>
+                                {/* <TextInput placeholder='Drop Off Address'
                                     placeholderTextColor="#a4a4a4"
+                                    editable={false}
                                     ref={(ref) => { this.drop_off_address = ref }}
                                     value={this.state.drop_off_address_1}
                                     onChangeText={
@@ -421,7 +438,7 @@ export default class LocationDetails extends React.Component {
                                             this.setState({ drop_off_address_1: value })
                                         }
                                     }
-                                    style={[StyleLocationDetails.inputBox, { marginLeft: 15 }]} />
+                                    style={[StyleLocationDetails.inputBox, { marginLeft: 15 }]} /> */}
                                 <TouchableOpacity
                                     style={{ position: "absolute", right: 20, top: 12, }}
                                     onPress={() => {

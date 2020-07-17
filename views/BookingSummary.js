@@ -399,6 +399,7 @@ export default class BookingSummary extends React.Component{
     async openTimer(){
         var { action, minute, hour, second } = await TimePickerAndroid.open({
             is24Hour: true,
+            mode:"spinner"
           });
           if (action === TimePickerAndroid.dismissedAction) {
               this.setState({pick_time:""})

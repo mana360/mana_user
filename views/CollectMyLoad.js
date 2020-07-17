@@ -414,7 +414,7 @@ export default class CollectMyLoad extends React.Component {
                         <Carousel
                             indicatorAtBottom={true}
                             indicatorOffset={0}
-                            delay={5000}
+                            delay={60000}
                             loop={true}
                             indicatorColor="#7bc145"
                             indicatorSpace={15}

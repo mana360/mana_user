@@ -38,6 +38,10 @@ target 'Mana360_customerUser' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
+
   target 'Mana360_customerUserTests' do
     inherit! :search_paths
     # Pods for testing
