@@ -233,7 +233,7 @@ isValid() {
     return false
 }
 if(!Constants.PASSWORD_REGX.test(this.state.password)){
-  alert("Please enter valid password");
+  alert("Password should contain atleast 1 capital letter,\n small letter, numbers and special symbols.");
   this.TextInput_emailId.focus()
   return false
 }

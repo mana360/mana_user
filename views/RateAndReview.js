@@ -16,6 +16,8 @@ import ApiConstants from '../config/ApiConstants';
 export default class RateAndReview extends React.Component {
     constructor(props) {
         super(props);
+        this.service_type_id="",
+        this.booking_id=""
         this.state = {
             starCount: 0,
             inputLabelTrip: '',
@@ -29,13 +31,13 @@ componentDidMount(){
 
 async submitRating(){
     let params = {
-        'booking_id' : 1,
-        'service_type_id':1,
+        'booking_id' : this.service_type_id,
+        'service_type_id':this.service_type_id,
         'ratings':this.state.starCount,
         'label':this.state.inputLabelTrip,
         'review':this.state.reviewTrip,
     }
-    await this.presenter.callPostApi(ApiConstants.getSupportSubject, params, true);
+    await this.presenter.callPostApi(ApiConstants.RateBookings, params, true);
 }
 
 onResponse(apiConstant, data) {

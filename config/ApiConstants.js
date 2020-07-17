@@ -59,5 +59,6 @@ export default ApiConstants = {
     bookCMLTrip:"customer/bookCMLTrip",
     calculateBooking:"customer/calculateBooking",
     cancelTrip:'customer/cancelTrip',
+    RateBookings:"customer/rateBooking",
 
 } 

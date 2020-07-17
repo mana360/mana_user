@@ -74,7 +74,7 @@ export default class SetPassword extends React.Component {
             return false
         }
         if(!Constants.PASSWORD_REGX.test(this.state.new_password)){
-            alert("Please enter valid password");
+            alert("Password should contain atleast 1 capital letter,\n small letter, numbers and special symbols.");
             // this.TextInput_emailId.focus()
             return false
           }
