@@ -102,7 +102,7 @@ export default class HelpAndSupport extends React.Component {
           }
           case ApiConstants.addSupportData: {
               if(data.status){
-                // this.setState({supportSubjectList : data.support_subjects})
+                this.setState({modal_Visible : true})
               }else{
                 alert(data.message)
               }
@@ -291,7 +291,10 @@ export default class HelpAndSupport extends React.Component {
                             />
                             <Text style={StyleHelpAndSupport.modalMsg}>{Constants.RequestSentSuccessfully}</Text>
                             <TouchableOpacity style={StyleHelpAndSupport.modalButton}
-                                onPress={() => { this.setState({ modal_Visible: false })}}
+                                onPress={() => { 
+                                    this.setState({ modal_Visible: false });
+                                    this.props.navigation.goBack();
+                                }}
                             >
                                 <Text style={StyleHelpAndSupport.modalButtonText}>{Constants.OK}</Text>
                             </TouchableOpacity>

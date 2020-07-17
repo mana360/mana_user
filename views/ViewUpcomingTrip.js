@@ -379,14 +379,14 @@ export default class ViewUpcomingTrip extends React.Component {
 
                                 <View>
 
-                                    <Text style={[StyleViewUpcomingTrip.title,{textTransform:'capitalize'}]}>
+                                    <Text style={[StyleViewUpcomingTrip.title,{textTransform:'capitalize',width:"90%",textAlign:'center'}]}>
                                         {
                                               this.service_type_id==1
-                                            ?`${this.state.truckData.pickup_location} - ${this.state.truckData.drop_location.drop_location[0]}`
+                                            ?`${this.state.truckData.pickup_location} - ${this.state.truckData.drop_location[0].drop_location}`
                                             : this.service_type_id==2 
                                             ? this.state.warehouse_booking_detailsi.warehouse_type_name
                                             :this.service_type_id==3
-                                            ?this.state.warehouse_booking_detailsi.warehouse_type_name
+                                            ?this.state.truckData==undefined?"":`${this.state.truckData.pickup_location}-${this.state.truckData.drop_location[0].drop_location}`
                                             :null
                                         }
                                     </Text>
@@ -425,6 +425,8 @@ export default class ViewUpcomingTrip extends React.Component {
                                                 :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION ? "Arrived at Destination"
                                                 :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_TRIP_COMPLETED_CARGO_OFFLOADED ? "Trip completed, cargo offloaded"
                                                 :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In storage"
+                                                :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_PICKUP ? "Pickup"
+                                                :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_DRIVER ? "Cancel by driver"
                                                 :null
                                             }
                                             </Text>
