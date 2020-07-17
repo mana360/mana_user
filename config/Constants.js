@@ -280,6 +280,7 @@ const Constants = {
     Medium:'Medium(1-2 kgs)',
     Large:'Large(1-3 kgs)',
     Lorem: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    OTPSentSuccessfully:"OTP Sent Successfully",
 
 
 

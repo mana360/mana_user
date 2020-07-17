@@ -60,5 +60,6 @@ export default ApiConstants = {
     calculateBooking:"customer/calculateBooking",
     cancelTrip:'customer/cancelTrip',
     RateBookings:"customer/rateBooking",
+    generateOTP:"customer/generateTripOTP",
 
 } 

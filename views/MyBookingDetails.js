@@ -33,6 +33,7 @@ export default class MyBookingDetails extends React.Component {
             shareMyRideType:"",
             shareByEmail:"",
             shareByMobile:"",
+            isgenerateOTPSuccessModalVisisble:false,
         }
     }
 
@@ -148,6 +149,14 @@ export default class MyBookingDetails extends React.Component {
         this.presenter.callPostApi(ApiConstants.shareMyRide, param, true)
     }
 
+    async generateOTP(){
+        let param={
+            "service_type_id":4,
+            "booking_id":this.state.truck_booking_details.booking_id,
+        }
+        await this.presenter.callPostApi(ApiConstants.generateOTP,param,true);
+    }
+
     onResponse(apiConstant, data) {
     
     switch (apiConstant) {
@@ -170,6 +179,14 @@ export default class MyBookingDetails extends React.Component {
             }
             break;
         }
+        case ApiConstants.generateOTP: {
+           if(data.status){
+            this.setState({isgenerateOTPSuccessModalVisisble:true});
+           }else{
+               alert(data.message)
+           }
+          break;
+      }
 
         case ApiConstants.getBookingDetails: {
               this.setState({
@@ -532,7 +549,11 @@ export default class MyBookingDetails extends React.Component {
                         <View style={{ flex: 1 }}>
                             <Text style={[StyleMyBookingDetails.detailsKey, { textTransform: 'none', }]}>{Constants.Resend_OTP}</Text>
                         </View>
-                        <TouchableOpacity style={{ flex: 1 }}>
+                        <TouchableOpacity style={{ flex: 1 }}
+                            onPress={()=>{
+                                this.generateOTP();
+                            }}
+                        >
                             <Text style={[StyleMyBookingDetails.detailsValue, { color: Constants.COLOR_GREEN, textDecorationLine: 'underline' }]}>Generate OTP</Text>
                         </TouchableOpacity>
                     </View>
@@ -698,6 +719,31 @@ export default class MyBookingDetails extends React.Component {
                             </TouchableOpacity>
                         </View>
 
+                    </View>
+                </View>
+                </Modal>
+
+                <Modal
+                    isVisible={this.state.isgenerateOTPSuccessModalVisisble}
+                    // isVisible={true}
+
+                    animationIn={"fadeIn"}
+                    animationOut={"fadeOut"}
+                    transparent={true}
+                >
+                <View style={{justifyContent:'center', alignItems:'center', backgroundColor:'rgba(0,0,0,0.2)'}}>
+                    <View style={{width:'90%', height:150,borderRadius:10,justifyContent:'center',backgroundColor:Constants.COLOR_WHITE, paddingVertical:20}}>
+                    <TouchableOpacity style={{ alignSelf:'flex-end',top:15,position: "absolute",right:15}}
+                            onPress={()=>{
+                                this.setState({isgenerateOTPSuccessModalVisisble:false})
+                            }}
+                        >
+                            <Image
+                                source={require('../images/close.png')}
+                                style={{width:15, height:15, resizeMode:'stretch'}}
+                            />
+                        </TouchableOpacity>   
+                        <Text style={{alignSelf:'center',fontSize:22}}>{Constants.OTPSentSuccessfully}</Text>
                     </View>
                 </View>
                 </Modal>
