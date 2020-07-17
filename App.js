@@ -47,6 +47,7 @@ import PaymentMethod from './views/PaymentMethod';
 import ProfileSetUp from './views/ProfileSetUp';
 import SendOTP from './views/SendOTP';
 import ViewCurrentTripAll from './views/ViewcurrentTrip_all';
+import LocationView from './config/mapUtils/src/LocationView'
 
 
 console.disableYellowBox = true;
@@ -239,7 +240,11 @@ const AppNavigator1 = createStackNavigator({
     ViewCurrentTripAll:{
       screen:ViewCurrentTripAll,
       navigationOptions:()=>({header:null})
-    }, 
+    },
+    placePicker:{
+      screen:LocationView,
+      navigationOptions:()=>({header:null})
+    },
 },
     {initialRouteName:"Splash"}
 

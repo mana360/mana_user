@@ -27,7 +27,7 @@ export default class MapViews extends React.Component {
       warehouse_long:0,
       warehouseLocation:'',
       warehouse_flag:false,
-      isSearchVisible:false,
+      isSearchVisible:true,
       set_destination: false,
       current_address: "", //get current address  with draggable
       current_latitude:0,  // get current latitude
@@ -38,9 +38,9 @@ export default class MapViews extends React.Component {
         { destination: 1, latitude: 19.0760, longitude: 72.8777, title: 'mumbai', desc: '' },
       ], //origin and destination marker direction 
       TripDetials:[],
- flag_marker:false,
- markerDirectionLat:"",
- markerDirectionLong:"",
+      flag_marker:false,
+      markerDirectionLat:"",
+      markerDirectionLong:"",
     }
   }
 
@@ -72,7 +72,7 @@ export default class MapViews extends React.Component {
     if(flag_marker==true||warehouse_flag==true){
     
     }else{
-      this.RBSheet.open();
+      //this.RBSheet.open();
     }
    
   }
@@ -111,50 +111,50 @@ export default class MapViews extends React.Component {
       )
   }
 
-latANDlong(latlongString,value){
-  let temp= latlongString.split(",");
-  if(temp==""){
-    return 0
-  }else{
-  return temp[value];
+  latANDlong(latlongString,value){
+    let temp= latlongString.split(",");
+    if(temp==""){
+      return 0
+    }else{
+    return temp[value];
+    }
   }
-}
 
-markerDirection(destination){
-  return(
-    this.state.current_latitude==""?<View style={{flex:1}}></View>:
+  markerDirection(destination){
+    return(
+      this.state.current_latitude==""?<View style={{flex:1}}></View>:
+      
+      <MapView
+      style={StyleMapView.mapStyle}
+      showsUserLocation={true}
+      zoomEnabled={true}
+      followsUserLocation={true}
+      zoomControlEnabled={true}
+      initialRegion={{
+        latitude: this.state.current_latitude,
+        longitude: this.state.current_longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      }}
+    >
     
-    <MapView
-    style={StyleMapView.mapStyle}
-    showsUserLocation={true}
-    zoomEnabled={true}
-    followsUserLocation={true}
-    zoomControlEnabled={true}
-    initialRegion={{
-      latitude: this.state.current_latitude,
-      longitude: this.state.current_longitude,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    }}
-  >
-   
-    {/* <Marker
-          coordinate={{latitude:parseFloat(this.latANDlong(origin,0)),longitude:parseFloat(this.latANDlong(origin,1))}}
-        /> */}
+      {/* <Marker
+            coordinate={{latitude:parseFloat(this.latANDlong(origin,0)),longitude:parseFloat(this.latANDlong(origin,1))}}
+          /> */}
 
-       <Marker  
-          coordinate={{latitude:parseFloat(this.latANDlong(destination,0)),longitude:parseFloat(this.latANDlong(destination,1))}}
-        />
-        {/*  <MapViewDirections
-        apikey={Constants.GOOGLE_MAP_KEY}
-        origin={{latitude:parseFloat(this.state.current_latitude),longitude:parseFloat(this.state.current_longitude)}}
-        destination={{latitude:parseFloat(25.2325),longitude:parseFloat(25.2154)}}
-        /> */}
-  
-  </MapView>
+        <Marker  
+            coordinate={{latitude:parseFloat(this.latANDlong(destination,0)),longitude:parseFloat(this.latANDlong(destination,1))}}
+          />
+          {/*  <MapViewDirections
+          apikey={Constants.GOOGLE_MAP_KEY}
+          origin={{latitude:parseFloat(this.state.current_latitude),longitude:parseFloat(this.state.current_longitude)}}
+          destination={{latitude:parseFloat(25.2325),longitude:parseFloat(25.2154)}}
+          /> */}
+    
+    </MapView>
 
-  )
-}
+    )
+  }
   render() {
 
     let { navigation } = this.props
@@ -207,6 +207,7 @@ markerDirection(destination){
                   current_longitude: details.geometry.location.lng,
                   isSearchVisible:false,
                   })
+                  this.getCurrentAdddress(details.geometry.location.lat, details.geometry.location.lng)
               }}
               query={{
                 key: Constants.GOOGLE_MAP_KEY,
