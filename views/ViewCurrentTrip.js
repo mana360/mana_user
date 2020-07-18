@@ -197,16 +197,16 @@ export default class ViewCurrentTrip extends React.Component {
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
                                             {/* <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.current_status}</Text> */}
-                                            <Text style={
-                                                this.state.truckData.current_status== Constants.BOOKING_STATUS_NEW ?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
-                                                :
-                                                this.state.truckData.current_status==Constants.BOOKING_STATUS_PICKED_UP?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
-                                                :
-                                                this.state.truckData.current_status==Constants.BOOKING_STATUS_DELIVERED?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_GREEN}]
-                                                :
-                                                this.state.truckData.current_status==Constants.BOOKING_STATUS_CANCELLED?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_RED}]
-                                                :
-                                                null
+                                            <Text style={[StyleMyBooking.bookingStatus,{color:Constants.COLOR_GREY_DARK}]
+                                                // this.state.truckData.current_status== Constants.BOOKING_STATUS_NEW ?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
+                                                // :
+                                                // this.state.truckData.current_status==Constants.BOOKING_STATUS_PICKED_UP?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
+                                                // :
+                                                // this.state.truckData.current_status==Constants.BOOKING_STATUS_DELIVERED?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_GREEN}]
+                                                // :
+                                                // this.state.truckData.current_status==Constants.BOOKING_STATUS_CANCELLED?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_RED}]
+                                                // :
+                                                // null
                                             }>
                                                 {
                                                     this.state.truckData.current_status==Constants.BOOKING_CURRENT_STATUS_DRIVER_DISPATCHED ? "Driver Dispatched"
@@ -218,6 +218,11 @@ export default class ViewCurrentTrip extends React.Component {
                                                     this.state.truckData.current_status==Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION ? "Arrived at Destination"
                                                     :
                                                     this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_TRIP_COMPLETED_CARGO_OFFLOADED ? "Trip completed, cargo offloaded"
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_UPCOMING ? "Upcoming"
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In Storage"
+
                                                     :null
                                                 }
                                                 </Text>

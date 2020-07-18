@@ -192,7 +192,8 @@ componentDidMount(){
 
 
                                 <View>
-                                <Text style={StyleViewCurrentTrip.title}>Current Trip:{this.state.warehouseTrucking_data.pickup_location}-</Text>
+                                <Text style={StyleViewCurrentTrip.title}>{this.state.warehouseTrucking_data.pickup_location} - 
+                                {this.state.warehouseTrucking_data.pickup_location==undefined?"":this.state.warehouseTrucking_data.drop_location.drop_location[0]} </Text>
                                     <View style={StyleViewCurrentTrip.bottomLine}></View>
 
                                     <View style={StyleViewCurrentTrip.row}>

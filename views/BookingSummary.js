@@ -326,7 +326,7 @@ export default class BookingSummary extends React.Component{
                     discountAmount:data.booking_summary.discount,
                     total_price:data.booking_summary.booking_amount,
                     booking_amount:data.booking_summary.booking_amount,
-                    vat:data.booking_summary.vat_tax_amount,
+                    vat:data.booking_summary.vat_tax_per,
                     chargesTripCost:data.booking_summary.per_kilomiter_price,
                   });
               }else{
@@ -806,7 +806,7 @@ export default class BookingSummary extends React.Component{
 
                                     <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={StyleBookingSummary.priceTxt}>{Constants.vat}</Text>
-                                        <Text style={StyleBookingSummary.priceVol}>{this.state.vat}</Text>
+                                        <Text style={StyleBookingSummary.priceVol}>{this.state.vat} %</Text>
                                     </View>
 
                                     <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>

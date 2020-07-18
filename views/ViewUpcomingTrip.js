@@ -427,6 +427,8 @@ export default class ViewUpcomingTrip extends React.Component {
                                                 :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In storage"
                                                 :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_PICKUP ? "Pickup"
                                                 :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_DRIVER ? "Cancel by driver"
+                                                :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_UPCOMING ? "Upcoming"
+
                                                 :null
                                             }
                                             </Text>
@@ -437,6 +439,10 @@ export default class ViewUpcomingTrip extends React.Component {
                                                 :this.state.truckData.current_status ==Constants.BOOKING_CURRENT_STATUS_ON_ROUTE_TO_DESTINATION ? "On- route to destination"
                                                 :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION ? "Arrived at Destination"
                                                 :this.state.truckData.current_status ==Constants.BOOKING_CURRENT_STATUS_TRIP_COMPLETED_CARGO_OFFLOADED ? "Trip completed, cargo offloaded" 
+                                                :this.state.truckData.current_status ==Constants.BOOKING_CURRENT_STATUS_UPCOMING ? "Upcoming" 
+                                                :this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In Storage"
+
+
                                                 // :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In storage"
                                                 :null
                                             }
