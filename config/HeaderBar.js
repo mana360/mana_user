@@ -5,13 +5,14 @@
 import React from 'react';
 import { BackHandler, View, Text, Image, StyleSheet, TouchableOpacity, } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
-import { Header } from 'native-base'
+import { Header, Badge } from 'native-base'
 import { StylePaymentMethod } from '../config/CommonStyles';
 import Constants from '../config/Constants'
 import Modal from "react-native-modal";
 import ApiConstants from './ApiConstants';
-import {MainPresenter} from './MainPresenter';
 import {clearAllData} from './AppSharedPreference';
+import { MainPresenter } from './MainPresenter';
+
 
 class HeaderBar extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -29,10 +30,16 @@ class HeaderBar extends React.Component {
       isLogoutModalVisible: false,
       isSuccessLogoutModal: false,
       isPaymentBackModalVisible: false,
+      notification_count:"",
     }
   }
   componentWillMount() {
-    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+ 
+  }
+  componentDidMount(){
+    this.getUserStatus();
+    
   }
   componentWillUnmount() {
     this.backHandler.remove();
@@ -45,6 +52,12 @@ class HeaderBar extends React.Component {
     }
      //return true
   }
+
+
+
+   getUserStatus(){
+ this.presenter.callGetApi(ApiConstants.userStatus, "", true);
+}
 
   onResponse(apiConstant, data) {
     switch (apiConstant) {
@@ -72,6 +85,16 @@ class HeaderBar extends React.Component {
           }
         break;
       }
+
+      case ApiConstants.userStatus: {
+        if(data.status){
+        this.setState({notification_count:data.userStatus[0].notifications_count});
+        // alert(JSON.stringify(data.userStatus[0].notifications_count));
+        }else{
+      
+        }
+      break;
+    }
     }
   }
 
@@ -86,7 +109,8 @@ class HeaderBar extends React.Component {
       <Header style={{ backgroundColor: Constants.COLOR_PRIMARY, padding: 0, margin: 0, justifyContent: 'center', alignItems: 'center', alignContent: 'center', }}>
         
         <View style={{ flex: 10, flexDirection: 'row', }}>
-          <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
+    
+        <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
           
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-start' }}>
             
@@ -129,6 +153,11 @@ class HeaderBar extends React.Component {
                 source={require('../images/notification.png')}
                 style={[styles.headerIcon, { width: 30, height: 30, }]}
               />
+              {
+                <Badge style={{position:"absolute",right: 0,width: 20,height: 20,}}>
+                  <Text style={{color:Constants.COLOR_WHITE}}>{this.state.notification_count}</Text>
+                </Badge>
+              }
             </TouchableOpacity>
 
             <TouchableOpacity style={isLogout ? { display: 'flex' } : { display: 'none' }}

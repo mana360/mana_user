@@ -179,8 +179,8 @@ componentDidMount(){
                                 <TouchableOpacity style={{ marginTop: 25 }}
                                     onPress={() => {
                                         // this.props.navigation.navigate('HelpAndSupport', { flag: false });
-                                        this.props.navigation.navigate('HelpAndSupport', { flag: false ,"service_type_id":this.service_type_id,"booking_id":this.tripDetails.Truck_warehouse_booking,"driver_id":his.tripDetails.driver_id})
-
+                                        // this.props.navigation.navigate('HelpAndSupport', { flag: false ,"service_type_id":this.service_type_id,"booking_id":this.tripDetails.Truck_warehouse_booking,"driver_id":his.tripDetails.driver_id})
+                                        this.props.navigation.navigate("HelpAndSupport",{"tripHelpAndSupport":true,"service_type_id":this.service_type_id,"booking_id":this.tripDetails.Truck_warehouse_booking});
                                     }}
                                 >
                                     <Image source={require('../images/support_icon.png')}

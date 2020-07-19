@@ -733,7 +733,7 @@ export default class LocationDetails extends React.Component {
                                                 source={ item.isChecked ? require("../images/radio_buttons_selected.png") : require("../images/radio_buttons.png")}
                                                 style={{width:20, height:20, resizeMode:'cover'}}
                                             />
-                                            <Text style={{fontSize:14, marginLeft:10}}>{item.category_name} </Text>
+                                            <Text style={{fontSize:14, marginLeft:10,marginRight:10,width:"90%"}}>{item.category_name} </Text>
                                         </TouchableOpacity>
                                     }
                                 />

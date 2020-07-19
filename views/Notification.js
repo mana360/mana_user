@@ -135,7 +135,10 @@ export default class Notification extends React.Component {
                                 <View style={StyleNotification.col1}>
                                      <Image
                                         source={require('../images/notification-icon.png')}
-                                        style={StyleNotification.icon} />
+                                        style={
+                                            // StyleNotification.icon
+                                            {display:"none"}
+                                            } />
                                     
                                 </View>
 

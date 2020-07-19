@@ -133,9 +133,9 @@ dateAndTime(itemDate,value){
                                             {     this.service_type_id==1 
                                                 ? `${item.pickup_location} - ${item.drop_location.drop_location[0]}`
                                                 : this.service_type_id==2
-                                                ? item.warehouse_booking_id
+                                                ? item.partner_name
                                                 :this.service_type_id==3
-                                                ?item.warehouse_type_name
+                                                ?item.partner_name
                                                 :""
                                             }
                                         </Text>

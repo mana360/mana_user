@@ -174,7 +174,7 @@ export default class ViewCurrentTrip extends React.Component {
                                 /> */}
                                 <TouchableOpacity style={{ marginTop: 25, }}
                                     onPress={() => {
-                                        this.props.navigation.navigate('HelpAndSupport', { flag: false ,"service_type_id":this.service_type_id,"booking_id":this.booking_id,"driver_id":this.state.truckData.driver_id})
+                                        this.props.navigation.navigate('HelpAndSupport', { flag: false ,"service_type_id":this.service_type_id,"booking_id":this.booking_id,"driver_id":this.state.truckData.driver_id,"tripHelpAndSupport":true})
                                     }}
                                 >
                                     <Image source={require('../images/support_icon.png')}

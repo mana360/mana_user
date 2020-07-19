@@ -1058,11 +1058,22 @@ export default class ProfileSetUp extends React.Component {
                     this.input_user_first_name.focus()
                     return false
             }
+            if(!Constants.NAMING_REGX.test(this.state.user_firstName)){
+                alert("First Name should contain alphabets only")
+                this.input_user_first_name.focus()
+                return false
+        }
             if(this.state.user_lastName==""){
                     alert("Please enter last name")
                     this.input_user_last_name.focus()
                     return false
             }
+
+            if(!Constants.NAMING_REGX.test(this.state.user_lastName)){
+                alert("Last Name should contain alphabets only")
+                this.input_user_last_name.focus()
+                return false
+        }
             if(this.state.user_title=="-1"){
                     alert("Please select title")
                     this.input_user_title.focus()

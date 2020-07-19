@@ -761,7 +761,7 @@ export default class BookingSummary extends React.Component{
                                                       </Text>
                                             <TouchableOpacity style={StyleBookingSummary.rtSec}
                                             onPress={()=>{
-                                                this.other_servicesData=""
+                                                this.other_servicesData=[]
                                                 this.setState({otherServices:"", otherServicesdata:""});
                                                 this.getcalculatingBooking();
                                                 // this.setState({otherServiceSelected:temparry})

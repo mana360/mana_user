@@ -72,12 +72,12 @@ export default class UpcomingTrip extends React.Component {
                 case ApiConstants.getMyBookings: {
                     if (data.status) {
                     if(this.service_type_id==1){
-                        this.setState({truck_booking_list: data.truck_booking_list})
+                        this.setState({dataSource: data.truck_booking_list})
                     }else if(this.service_type_id==2){
-                        this.setState({warehouse_booking_list: data.warehouse_booking_list})
+                        this.setState({dataSource: data.warehouse_booking_list})
                     }else{
                         if(this.service_type_id==3){
-                            this.setState({warehouseTrucking_list: data.truck_warehouse_booking_list})
+                            this.setState({dataSource: data.truck_warehouse_booking_list})
                         }
                     }
                     //console.log("truck ====> "+JSON.stringify(this.state.truck_booking_list))
@@ -125,14 +125,14 @@ export default class UpcomingTrip extends React.Component {
                 
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} navigation={this.props.navigation} />
                 
-                <FlatList
+                <View style={{ display : this.state.dataSource=="" ? 'flex' : 'none', flex:1, justifyContent:'center', alignItems:'center',marginTop:20 }}>
+                    <Text style={{fontSize:16}}> No trip available. </Text>
+                </View>
+                    <FlatList
                     style={{ marginVertical: 15 }}
                     numColumns={1}
                     data={
-                          this.service_type_id==1 ? this.state.truck_booking_list
-                        : this.service_type_id==2 ? this.state.warehouse_booking_list
-                        : this.service_type_id==3? this.state.warehouseTrucking_list
-                        :[]
+                        this.state.dataSource
                         }
                     extraData={this.state}
                     keyExtractor={index => index.toString()}
@@ -174,7 +174,7 @@ export default class UpcomingTrip extends React.Component {
                                             {    
                                                 this.service_type_id==2
                                                 ?
-                                                item.warehouse_type_name
+                                                item.partner_name
                                                 :
                                                 `${item.pickup_location} - ${item.drop_location.drop_location[0]}`
                                      

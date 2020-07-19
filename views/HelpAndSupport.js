@@ -23,6 +23,7 @@ export default class HelpAndSupport extends React.Component {
         this.subject_id="",
         this.driver_id=""
         this.state = {
+            tripHelpAndSupport:false,
             support_subject: "",
             support_message: "",
             support_contact_number: "",
@@ -39,6 +40,9 @@ export default class HelpAndSupport extends React.Component {
         this.service_type_id=this.props.navigation.getParam("service_type_id");
         this.booking_id=this.props.navigation.getParam("booking_id");
         this.driver_id=this.props.navigation.getParam("driver_id");
+    
+        this.setState({tripHelpAndSupport:this.props.navigation.getParam("tripHelpAndSupport")})
+        
         this.getUserLocalInfo()
     }
 
@@ -119,7 +123,7 @@ export default class HelpAndSupport extends React.Component {
         return (
             <View style={{ flex: 1, }}>
                 
-                <HeaderBar title={this.state.isUser ? "Help & Support" : "Trip-Help & support"} isBack={true} isLogout={true} navigation={navigation}/>
+                <HeaderBar title={this.state.tripHelpAndSupport ==true? "Trip-Help & support":"Help & Support" } isBack={true} isLogout={true} navigation={navigation}/>
                 
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
                 
@@ -174,15 +178,15 @@ export default class HelpAndSupport extends React.Component {
                             </View>
 
                             <View style={
-                                isTrip 
+                                this.state.tripHelpAndSupport==true 
                                 ? 
-                                    [StyleHelpAndSupport.pickerView, {borderWidth:0, marginTop:35}]
+                                    [StyleHelpAndSupport.pickerView, {borderWidth:0, marginTop:35,}]
                                 : 
                                 [{ display:'none'}]}
                             >
-                                <View style={{ position: 'absolute', top: -15, left: 20, padding: 5, paddingLeft: 10, paddingRight: 10, backgroundColor: Constants.COLOR_WHITE, }}>
-                                    <Text style={StyleHelpAndSupport.pickerTitle}>Trip ID</Text>
-                                    <Text style={[StyleHelpAndSupport.pickerTitle,{marginTop:5, fontWeight:'normal', color:Constants.COLOR_GREY_LIGHT}]}>{isTrip}</Text>
+                                <View style={{ position: 'absolute', top: -15, left: 20, padding: 5, paddingLeft: 10, paddingRight: 10, backgroundColor: Constants.COLOR_WHITE,flexDirection:"row" }}>
+                                    <Text style={StyleHelpAndSupport.pickerTitle}>Trip ID :</Text>
+                                    <Text style={[StyleHelpAndSupport.pickerTitle,{ fontWeight:'normal',left:15, color:Constants.COLOR_GREY_LIGHT}]}>{this.booking_id}</Text>
                                 </View>
                                 
                             </View>
@@ -231,9 +235,9 @@ export default class HelpAndSupport extends React.Component {
                             
 
                             {
-                                isTrip
+                                this.state.tripHelpAndSupport==true
                                 ?
-                                    <View style={isTrip ? {display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center'} :{display:'none'}}>
+                                    <View style={ this.state.tripHelpAndSupport==true ? {display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center'} :{display:'none'}}>
                                         
                                         <TouchableOpacity style={[StyleHelpAndSupport.buttonView,{width:'40%', marginRight:20}]}
                                         onPress={() => {this.props.navigation.pop()}}
@@ -250,9 +254,9 @@ export default class HelpAndSupport extends React.Component {
                                     </View>
                                 :
                                     <TouchableOpacity style={
-                                        //this.state.isUser ? 
-                                        StyleHelpAndSupport.buttonView 
-                                        //: { display: 'flex' }
+                                        this.state.tripHelpAndSupport==true?
+                                         { display: 'flex' }
+                                         :  [StyleHelpAndSupport.buttonView ]
                                         }
                                         onPress={() => {
                                             this.sendMessage()

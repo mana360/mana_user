@@ -15,6 +15,7 @@ const Constants = {
 
     EMAIL_REGX:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
     PASSWORD_REGX:/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
+    NAMING_REGX:/^[A-Za-z]+$/,
 
     IMAGE_MAX_SIZE:2000000,
     IMAGE_MAX_SIZE_EXCEED_MESSAGE:"Image should be less than 2 MB.",
@@ -110,6 +111,10 @@ const Constants = {
     AarrivalDate:'Arrival Date',
     AarrivalTime:'Arrival Time',
     TruckName:'Truck Name',
+    TruckModelNumber:'Truck Model Number',
+    MakeofTruck:'Make of Truck',
+
+
     TruckRegistrationNo:'Truck Registrtion \n Number',
     TruckInsurance:'Truck Insurance',
     TruckColor:'Truck colour',
@@ -144,6 +149,7 @@ const Constants = {
     WarehouseType:'Warehouse Type',
     StorageType:'Storage Type',
     CostPerSqm:'Cost per Sqm',
+    WarehouseName:"Warehouse Name",
     Trip: "trip",
     CollectMyLoad: 'collect my load',
     TotalBookings: 'total bookings',

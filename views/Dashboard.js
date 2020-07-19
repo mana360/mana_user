@@ -142,8 +142,9 @@ getUserStatus(){
                     }else{
                         alert(data.message);
                     }
+                    break;
                 }
-                break;
+          
 
             default:
                 break;
