@@ -1164,7 +1164,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 {
                                                                     this.service_type_id==1
                                                                     ?
-                                                                        <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                        <Text style={StyleViewUpcomingTrip.col2Text}>R{" "}
                                                                         {
                                                                           this.state.truckData.cargo_handling_req==0
                                                                           ?
@@ -1177,8 +1177,23 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                         </Text>
                                                                     : this.service_type_id==2 
                                                                     ?
-                                                                        <Text style={StyleViewUpcomingTrip.col2Text}>
-                                                                        {this.state.warehouse_booking_detailsi.cargo_handling_cost==0
+                                                                        <Text style={StyleViewUpcomingTrip.col2Text}>R{" "}
+                                                                        {this.state.warehouse_booking_detailsi.cargo_handling_req==0
+                                                                            ?
+                                                                            "00"
+                                                                            :
+                                                                           this.state.warehouse_booking_detailsi.cargo_handling_cost==undefined
+                                                                          ?
+                                                                           ""
+                                                                          :
+                                                                             this.state.warehouse_booking_detailsi.cargo_handling_cost
+                                                                        }
+                                                                        </Text>
+                                                                    :  this.service_type_id==3
+                                                                    ?
+                                                                        <Text style={StyleViewUpcomingTrip.col2Text}>R{" "}
+                                                                        {
+                                                                            this.state.warehouse_booking_detailsi.cargo_handling_req==0
                                                                             ?
                                                                             "00"
                                                                             :
@@ -1187,21 +1202,6 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                            ""
                                                                            :
                                                                             this.state.warehouse_booking_detailsi.cargo_handling_cost
-                                                                        }
-                                                                        </Text>
-                                                                    :  this.service_type_id==3
-                                                                    ?
-                                                                        <Text style={StyleViewUpcomingTrip.col2Text}>
-                                                                        {
-                                                                            this.state.warehouse_booking_detailsi.cargo_handling_cost==0
-                                                                            ?
-                                                                            "00"
-                                                                            :
-                                                                           this.state.warehouse_booking_detailsi.cargo_handling_cost==undefined
-                                                                           ?
-                                                                           ""
-                                                                           :
-                                                                            this.state.warehouse_booking_detailsi.cargo_handling_cost==undefined?"":this.state.warehouse_booking_detailsi.cargo_handling_cost
                                                                         }
                                                                         </Text>
                                                                     : null
@@ -1233,7 +1233,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>Booking Amount</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>R{" "}
                                                                     {
                                                                         this.service_type_id==1
                                                                         ? this.state.truckData.trip_amount
@@ -1242,6 +1242,24 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                         : this.service_type_id==3
                                                                         ? this.state.warehouse_booking_detailsi.trip_amount
                                                                         : null
+                                                                    }
+                                                                </Text>
+                                                            </View>
+                                                        </View>
+
+
+                                                        <View style={this.service_type_id==1?{display:'none'}: StyleViewUpcomingTrip.row}>
+                                                            <View style={StyleViewUpcomingTrip.col1}>
+                                                                <Text style={StyleViewUpcomingTrip.col1Text}>Service Cost</Text>
+                                                            </View>
+                                                            <View style={StyleViewUpcomingTrip.col2}>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>R{" "}
+                                                                    {
+                                                                       
+                                                                        this.state.warehouse_booking_detailsi.service_cost==undefined
+                                                                        ?""
+                                                                        :this.state.warehouse_booking_detailsi.service_cost
+                                                                       
                                                                     }
                                                                 </Text>
                                                             </View>
@@ -1271,7 +1289,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>Discounted price</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>R{" "}
                                                                     {
                                                                         this.service_type_id==1
                                                                         ? this.state.truckData.discounted_amount
@@ -1290,7 +1308,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.InsuranceRate}</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>R{" "}
                                                                     {
                                                                         this.service_type_id==1
                                                                         ? this.state.truckData.insurance_rate
@@ -1309,7 +1327,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>Total</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>R{" "}
                                                                     {
                                                                         this.service_type_id==1
                                                                         ? this.state.truckData.total
@@ -1349,7 +1367,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>Book Amount after Tax</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>R{" "}
                                                                     {
                                                                         
                                                                         this.state.warehouse_booking_detailsi.booking_amount_after_tax==undefined?
@@ -1366,7 +1384,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>10% Deposit on Booking Amount</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>R{" "}
                                                                     {
                                                                         
                                                                         this.state.warehouse_booking_detailsi.booking_amount_deposit==undefined?
@@ -1384,7 +1402,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 <Text style={StyleViewUpcomingTrip.col1Text}>Final Paid Cost</Text>
                                                             </View>
                                                             <View style={StyleViewUpcomingTrip.col2}>
-                                                                <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                <Text style={StyleViewUpcomingTrip.col2Text}>R{" "}
                                                                     {
                                                                         this.service_type_id==1
                                                                         ? this.state.truckData.final_paid_amount
