@@ -2,13 +2,13 @@ import { Dimensions, Platform } from 'react-native';
 
 const Constants = {
 
-    BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/api/",
-    IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/",
+    // BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/api/",
+    // IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/",
 
     // base url for QAP
     
-    // BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
-    // IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
+    BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
+    IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
 
     
     GOOGLE_MAP_KEY:"AIzaSyBEDVKNDyVUzE2ajUXcrpX89ZORifA0cN4",
@@ -241,6 +241,8 @@ const Constants = {
     ChangeSavedSuccessFully:'changes saved successfully',
     MobileNumber:'Mobile Number',
     KindlyEnteryourRegisteredMobNo:'Kindly enter your registered \n Mobile Number to receive Verification code',
+    KindlyEnteryourRegisteredEmailAddress:'Kindly enter your registered \n Email Address to receive Verification code',
+
     VerificationCode:'Verification code (OTP)',
     ResendCode:'Resend Code',
     Resend_OTP:'Resend OTP',

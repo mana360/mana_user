@@ -234,7 +234,11 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedTimeTocmpleteTrip}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.date_of_pickup}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{
+                                            this.state.truckData.date_of_pickup==undefined?
+                                            ""
+                                            :
+                                            this.state.truckData.date_of_pickup}</Text>
                                         </View>
                                     </View>
 
@@ -243,7 +247,15 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedDateTocmpleteTrip}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.date_of_pickup}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{
+                                            this.state.truckData.date_of_pickup==undefined
+                                            ?
+                                            "":
+                                            this.state.truckData.date_of_pickup==""?
+                                            ""
+                                            :
+                                            this.state.truckData.date_of_pickup
+                                            }</Text>
                                         </View>
                                     </View>
 
@@ -252,7 +264,13 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.DriverName}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.driver_name}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{
+                                            this.state.truckData.driver_name==undefined
+                                            ?""
+                                            :this.state.truckData.driver_name==""
+                                            ?""
+                                            : this.state.truckData.driver_name
+                                            }</Text>
                                         </View>
                                     </View>
 
@@ -261,7 +279,13 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.ContactNo}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.driver_contact}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{
+                                            this.state.truckData.driver_contact==undefined?
+                                            ""
+                                            :this.state.truckData.driver_contact==""?
+                                            ""
+                                            :this.state.truckData.driver_contact
+                                            }</Text>
                                             <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}
                                              onPress={()=>{
                                                 this.dialCall(this.state.truckData.driver_contact);
@@ -277,7 +301,14 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.Partnername}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.partner_name}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{
+                                            this.state.truckData.partner_name==undefined?
+                                            ""
+                                            :
+                                            this.state.truckData.partner_name==""
+                                            ?""
+                                            :this.state.truckData.partner_name
+                                            }</Text>
                                         </View>
                                     </View>
 
@@ -286,7 +317,12 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.ContactNo}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{this.state.truckData.partner_contact}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{
+                                            this.state.truckData.partner_contact==undefined?""
+                                            :this.state.truckData.partner_contact==""?
+                                            "":this.state.truckData.partner_contact
+                                            
+                                            }</Text>
                                             <TouchableOpacity style={{ right: 5, position: 'absolute', alignSelf: 'center' }}
                                                onPress={()=>{
                                                    this.dialCall(this.state.truckData.partner_contact);

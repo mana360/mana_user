@@ -606,14 +606,14 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         </View>
                                                     </View>
 
-                                                    <View style={StyleViewUpcomingTrip.row}>
+                                                    {/* <View style={StyleViewUpcomingTrip.row}>
                                                         <View style={StyleViewUpcomingTrip.col1}>
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TruckName}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
                                                             <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.truck_name}</Text>
                                                         </View>
-                                                    </View>
+                                                    </View> */}
 
 
 
@@ -663,19 +663,20 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         </View>
                                                 </View>
 
-                                                      {/* {
-                                                        this.state.truckData.drop_location.drop_address == '' ? "" :
+                                                      {
+                                                        this.state.truckData.drop_location == undefined ? "" :
                                                         this.state.truckData.drop_location.map((item,index)=>
                                                             <View style={StyleViewUpcomingTrip.row}>
                                                                 <View style={StyleViewUpcomingTrip.col1}>
                                                                     <Text style={StyleViewUpcomingTrip.col1Text}>Mid Point {index+1}</Text>
                                                                 </View>
                                                                 <View style={StyleViewUpcomingTrip.col2}>
-                                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{item.drop_address}</Text>
+                                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{ item.drop_address==undefined?"": item.drop_address}</Text>
                                                                 </View>
                                                         </View>
                                                         )
-                                                    }  */}
+                                                    } 
+
                                         
                                                  
                                              <View style={StyleViewUpcomingTrip.row}>
@@ -925,16 +926,34 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.CargoQuantity}</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
+
+                                                        {
+                                                          this.service_type_id==1? 
+                                                          <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                              {this.state.truckData.quantity==""?
+                                                              "NA"
+                                                              :this.state.truckData.quantity==undefined
+                                                              ?
+                                                              ""
+                                                              :
+                                                               this.state.truckData.quantity}
+                                                          </Text>
+                                                          :null
+
+                                                        }
+                     {                                    this.service_type_id==1?null:
                                                         <Text style={StyleViewUpcomingTrip.col2Text}>
                                                             {
-                                                                this.service_type_id==1
-                                                                ? this.state.truckData.quantity
-                                                                : this.service_type_id==2
-                                                                ? this.state.warehouse_booking_detailsi.quantity
-                                                                :this.service_type_id==3
-                                                                ? this.state.warehouse_booking_detailsi.quantity
-                                                                :"NA"
-                                                            }</Text>
+                                                                 this.state.warehouse_booking_detailsi.quantity==undefined?
+                                                                 
+                                                                 ""
+                                                                 : this.state.warehouse_booking_detailsi.quantity==""
+                                                                 ?
+                                                                 "NA"
+                                                                 :
+                                                                 this.state.warehouse_booking_detailsi.quantity
+                                                            
+                                                            }</Text>}
                                                     </View>
                                                 </View>
 
@@ -1014,17 +1033,47 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <Text style={StyleViewUpcomingTrip.col1Text}>Packeting/Protection Details</Text>
                                                     </View>
                                                     <View style={StyleViewUpcomingTrip.col2}>
-                                                        <Text style={StyleViewUpcomingTrip.col2Text}>
+
+                                                       {
+                                                           this.service_type_id==1
+                                                           ?
+                                                           <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                               {
+                                                                   this.state.truckData.packeting_details==undefined?
+                                                                   ""
+                                                                   :this.state.truckData.packeting_details==""?
+                                                                   "NA"
+                                                                   :this.state.truckData.packeting_details
+                                                               }
+                                                           </Text>
+                                                               :null
+                                                       }
+                                                        
                                                             {
-                                                                this.service_type_id==1
-                                                                ? this.state.truckData.packeting_details
-                                                                : this.service_type_id==2
-                                                                ? this.state.warehouse_booking_detailsi.packeting_details
-                                                                : this.service_type_id==3
-                                                                ? this.state.warehouse_booking_detailsi.packeting_details
-                                                                :"NA"
+
+                                                                        this.service_type_id==1
+                                                                        ?null
+                                                                        :
+                                                                        <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                                            {
+                                                                                this.state.warehouse_booking_detailsi.packeting_details==undefined?
+                                                                                ""
+                                                                                :this.state.warehouse_booking_detailsi.packeting_details==""?
+                                                                                "NA"
+                                                                                :this.state.warehouse_booking_detailsi.packeting_details
+                                                                            }
+                                                                        </Text>
+                                                                            
+
+                                                                // this.service_type_id==1
+                                                                // ? this.state.truckData.packeting_details
+                                                                // : this.service_type_id==2
+                                                                // ? this.state.warehouse_booking_detailsi.packeting_details
+                                                                // : this.service_type_id==3
+                                                                // ? this.state.warehouse_booking_detailsi.packeting_details
+                                                                // :"NA"
                                                             }
-                                                        </Text>
+                                                        
                                                     </View>
                                                 </View>
 

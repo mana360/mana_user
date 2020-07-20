@@ -209,12 +209,12 @@ render() {
                 <View style={{ flex: 1 }}>
 
                     <View>
-                        <Text style={StyleForgotPassword.textMsg}>{Constants.KindlyEnteryourRegisteredMobNo}</Text>
+                        <Text style={StyleForgotPassword.textMsg}>{Constants.KindlyEnteryourRegisteredEmailAddress}</Text>
                     </View>
 
                     <View style={StyleForgotPassword.TextInputView}>
                         <View style={StyleForgotPassword.LabelView}>
-                            <Image source={require('../images/mobile_number.png')}
+                            <Image source={require('../images/email_id.png')}
                                 style={StyleForgotPassword.labelIcon}
                             />
                             <Text style={StyleForgotPassword.modalLabelText}>{Constants.Email}</Text>
