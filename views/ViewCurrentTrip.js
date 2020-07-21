@@ -343,7 +343,14 @@ export default class ViewCurrentTrip extends React.Component {
                             <TouchableOpacity style={[StyleViewCurrentTrip.bottomButton, { marginRight: 15, width: '40%' }]}
                                 onPress={() => {
                                     if (this.state.live_geopin == true)
-                                        this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials":this.state.truckData.drop_location.drop_latlng[1] });
+                                        this.props.navigation.navigate('MapViews', { flag_marker:true,
+                                            "TripDetials": this.state.truckData.drop_location.drop_latlng[1]==undefined?
+                                            alert("Co-ordinate Not Found")
+                                            : this.state.truckData.drop_location.drop_latlng[1]==""?
+                                            alert("Co-ordinate Not Found")
+                                            :
+                                             this.state.truckData.drop_location.drop_latlng[1]
+                                     });
                                     else
                                         this.RBSheet.open(); //delay msg
                                 }}

@@ -106,6 +106,7 @@ const Constants = {
     DropUpTime: 'Dropoff Time',
     ArrivalTime: 'Arrival Time',
     PickUpLocation: 'Pick up Location',
+    AddressDetails:"Address Details",
     frequency: 'Frequency',
     DestinationLocation: 'Destination Location',
     AarrivalDate:'Arrival Date',

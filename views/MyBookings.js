@@ -26,8 +26,29 @@ export default class MyBookings extends React.Component{
         }
     }
 
-    componentDidMount(){
-        this.getCurrentBookingList()
+   async componentDidMount(){
+        if (await !this._isNetworkAvailable()) {
+            alert("No Network")
+            return
+        }else{
+            this.getCurrentBookingList()
+
+        }
+    }
+    async _isNetworkAvailable() {
+        let returnValue = false
+        await NetInfo.fetch().then(isConnected => {
+            if (isConnected) {
+                console.log("NetWork available")
+                returnValue = true
+            } else {
+                console.log("NetWork Not Available")
+                returnValue = false
+            }
+        }).catch(e => console.log(e))
+
+        return returnValue
+
     }
 
     getCurrentBookingList(){
@@ -72,8 +93,11 @@ export default class MyBookings extends React.Component{
                     ? this.setState({ current_booking_data : data.cml_booking_list, })
                     : this.state.resp_handler=="3"
                     ? this.setState({ past_booking_data : data.cml_booking_list, })
+                   
                     : this.state.resp_handler=="2"
-                    ? this.setState({ current_booking_data : data.cml_booking_list, })
+                    ?data.cml_booking_list==""?
+                    null
+                    : this.setState({ current_booking_data : data.cml_booking_list, })
                     :null
                 }else{
                     alert(data.message)

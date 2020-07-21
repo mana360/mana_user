@@ -264,7 +264,14 @@ componentDidMount(){
                                         <TouchableOpacity style={StyleViewCurrentTrip.col2}
                                             onPress={() => {
                                                 // this.props.navigation.navigate('MapViews', { flag: 'truckingWarehouse',"latlong":"" })
-                                        this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials":this.state.warehouseTrucking_data.drop_location.drop_latlng[1]});
+                                        this.props.navigation.navigate('MapViews', { flag_marker:true,
+                                            "TripDetials":this.state.warehouseTrucking_data.drop_location.drop_latlng[1]==undefined?
+                                            alert("Co-ordinate Not Found")
+                                            :this.state.warehouseTrucking_data.drop_location.drop_latlng[1]==""?
+                                            alert("Co-ordinate Not Found")
+                                            :
+                                            this.state.warehouseTrucking_data.drop_location.drop_latlng[1]
+                                        });
 
 
                                             }}

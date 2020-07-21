@@ -71,8 +71,12 @@ export default class HelpAndSupport extends React.Component {
     }
 
     async getSupportSubjectList(){
-        let param={
-            driver_id:this.driver_id==""?0:this.driver_id
+      let param={
+            "driver_id":this.driver_id==""
+            ? 0
+            : this.driver_id==undefined
+            ? 0
+            :this.driver_id
         }
         await this.presenter.callPostApi(ApiConstants.getSupportSubject,param, true);
     }
@@ -136,7 +140,7 @@ export default class HelpAndSupport extends React.Component {
                             <View style={{ flex: 3, justifyContent: 'center', alignItems: 'flex-end', marginLeft: 10 }}>
                                 <Image
                                     style={StyleHelpAndSupport.userImage}
-                                    source={{uri:this.state.userData.profile_picture}}
+                                    source={{uri:this.state.isUser==true?this.state.userData.profile_picture:this.state.userData.company_logo}}
                                 />
                             </View>
 

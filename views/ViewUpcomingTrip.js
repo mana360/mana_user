@@ -539,6 +539,14 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.pickup_location}</Text>
                                                         </View>
                                                     </View>
+                                                    <View style={[StyleViewUpcomingTrip.row,{}]}>
+                                                        <View style={StyleViewUpcomingTrip.col1}>
+                                                            <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AddressDetails}</Text>
+                                                        </View>
+                                                        <View style={StyleViewUpcomingTrip.col2}>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.pickup_location==undefined?"":this.state.truckData.pickup_location}</Text>
+                                                        </View>
+                                                    </View>
 
                                               <View style={[StyleViewUpcomingTrip.row,{borderBottomWidth:0}]}>
                                                         <View style={StyleViewUpcomingTrip.col1}>
@@ -573,7 +581,17 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             
                                                         </View>
                                                     </View> 
-                                             <View style={StyleViewUpcomingTrip.row}>
+
+                                                    <View style={[StyleViewUpcomingTrip.row,{}]}>
+                                                        <View style={StyleViewUpcomingTrip.col1}>
+                                                            <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AddressDetails}</Text>
+                                                        </View>
+                                                        <View style={StyleViewUpcomingTrip.col2}>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.drop_location==undefined?"":this.state.truckData.drop_location[0].drop_address}</Text>
+                                                        </View>
+                                                    </View>
+                                                    
+                                     <View style={StyleViewUpcomingTrip.row}>
                                                         <View style={StyleViewUpcomingTrip.col1}>
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AarrivalDate}</Text>
                                                         </View>
@@ -766,7 +784,13 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={[StyleViewUpcomingTrip.col2Text],{width:"80%"}}>{this.state.warehouse_booking_detailsi.warehouse_location}</Text>
                                                             <TouchableOpacity style={{ position: 'absolute', right: 5, alignSelf: 'center' }}
                                                              onPress={()=>{
-                                                                this.props.navigation.navigate('MapViews',{"warehouse_flag":true,'WarehouseCoordinates':this.state.truckData.warehouse_latlng})
+                                                                this.props.navigation.navigate('MapViews',{"warehouse_flag":true,'WarehouseCoordinates':
+                                                                this.state.truckData.warehouse_latlng==undefined?
+                                                                alert("Co-ordinate Not Found")
+                                                                :this.state.truckData.warehouse_latlng==""?
+                                                                alert("Co-ordiante Not Found"):
+                                                                this.state.truckData.warehouse_latlng
+                                                            })
                                                             }}
                                                             >
                                                                 <Image style={{ width: 30, height: 30, }} source={require('../images/location_1.png')} />
