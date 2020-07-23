@@ -220,7 +220,8 @@ export default class UpcomingTrip extends React.Component {
                                         <Text style={StyleUpcomingTrip.labeltext}>{this.service_type_id==1?Constants.dropoffDate:Constants.End_Date}</Text>
                                         <Text style={StyleUpcomingTrip.datacss}>
                                             {   this.service_type_id==1
-                                                ? moment(item.date_of_pickup).format("hh:mm A")
+                                                ?
+                                                 moment(item.arrivalDateAndTime,"YY-MM-DD").format("DD/MMMM/YYYY")
                                                 :this.service_type_id==2
                                                 ?  moment(item.service_end_date).format("DD/MMMM/YYYY hh:mm:ss")
                                                 :this.service_type_id==3
@@ -232,7 +233,7 @@ export default class UpcomingTrip extends React.Component {
                                             style={[StyleUpcomingTrip.imageIcon, { marginLeft: 10, display : this.service_type_id==1 ? 'flex' : 'none'}]}
                                         />
                                         <Text style={[StyleUpcomingTrip.labeltext,{display : this.service_type_id==1? 'flex' : 'none'}]}>{Constants.DropUpTime}</Text>
-                                        <Text style={[StyleUpcomingTrip.datacss,  {display : this.service_type_id==1 ? 'flex' : 'none'}]}>{moment(item.date_of_pickup).format("hh:mm A")}</Text>
+                                        <Text style={[StyleUpcomingTrip.datacss,  {display : this.service_type_id==1 ? 'flex' : 'none'}]}>{moment(item.arrivalDateAndTime,"h:m:s").format("hh:mm:ss")}</Text>
                                     </View>
                                 
                                 </View>

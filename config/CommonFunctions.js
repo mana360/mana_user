@@ -24,15 +24,17 @@ class CommonFunctions extends React.Component{
         }
     }
 
-    isNetworkConnected = () =>{
-        NetInfo.isConnected.fetch().then(isConnected =>{
+   isNetworkConnected = async () =>{
+       let returnValue=false;
+     await  NetInfo.fetch().then(isConnected =>{
             if(isConnected){
-                return true
+                returnValue=true;
             }else{
                 alert('Connection lost')
-                return false
+           returnValue=false;
             }
         })
+        return returnValue;
     }    
 
     render(){

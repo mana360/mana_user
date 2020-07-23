@@ -193,12 +193,9 @@ export default class BookingSummary extends React.Component{
     }
    
    async bookCMLtrip(){
-
-         
         // let dropoff_list = [{ "drop_location":"test 123","drop_latlng":"18.5590, 73.7868", "drop_address":"test 123"}, 
         // { "drop_location":"test 123", "drop_latlng":"18.5590, 73.7868", "drop_address":"test 123"}]
         
-       
     let dropoff_list =    [
         {
             "drop_location":this.state.drop_off_addressDetails+","+this.state.drop_off_address,
@@ -213,10 +210,12 @@ export default class BookingSummary extends React.Component{
     ]
 
        //console.log('Drop of list : -->' + JSON.stringify(dropoff_list.replace("'\'","")))
-
-       this.state.otherServicesdata.map((item)=>{
-           delete item.service_name
-       })
+        if(this.state.otherServicesdata !=""){
+            this.state.otherServicesdata.map((item)=>{
+                delete item.service_name
+            })
+        }
+      
 
     let params={
         "pickup_address":`${this.state.pick_up_addressDetails},${this.state.pick_up_address}`,

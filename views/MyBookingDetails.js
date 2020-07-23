@@ -143,7 +143,7 @@ export default class MyBookingDetails extends React.Component {
             param = {
                 'booking_id':this.state.truck_booking_details.booking_id,
                 'share_type' : 0,
-                'mobile_number': this.state.shareByMobile
+                'mobile_no': this.state.shareByMobile
             }
         }
         this.presenter.callPostApi(ApiConstants.shareMyRide, param, true)

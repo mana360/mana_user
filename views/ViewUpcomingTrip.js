@@ -518,7 +518,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DateOfPickUp}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.pickedup_date_time==""?"": moment(this.state.truckData.pickedup_date_time).format("DD MMM YYYY")}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.pickedup_date_time==""?"": moment(this.state.truckData.pickedup_date_time,"YY-MM-DD").format("DD MMM YYYY")}</Text>
                                                         </View>
                                                     </View>
 
@@ -527,7 +527,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpTime}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{  this.state.truckData.pickedup_date_time==""?"" :moment(this.state.truckData.pickedup_date_time).format("h:m a")}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{  this.state.truckData.pickedup_date_time==""?"" :moment(this.state.truckData.pickedup_date_time,"h:m:s").format("hh:mm:ss")}</Text>
                                                         </View>
                                                     </View>
 
@@ -597,7 +597,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
                                                             <Text style={StyleViewUpcomingTrip.col2Text}>
-                                                                { this.state.truckData.arrivalDateAndTime==""?"":moment(this.state.truckData.arrivalDateAndTime,"YY-MM-DD h:m:s").format("DD/MM/YYYY")}
+                                                                { this.state.truckData.arrivalDateAndTime==""?"":moment(this.state.truckData.arrivalDateAndTime,"YY-MM-DD").format("DD/MM/YYYY")}
                                                                 </Text>
                                                         </View>
                                                     </View>
@@ -608,7 +608,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
                                                             <Text style={StyleViewUpcomingTrip.col2Text}>
-                                                                {this.state.truckData.arrivalDateAndTime == ""? "":moment(this.state.truckData.arrivalDateAndTime,"YY-MM-DD h:m:s").format("h:m A")}
+                                                                {this.state.truckData.arrivalDateAndTime == ""? "":moment(this.state.truckData.arrivalDateAndTime,"h:m:s").format("h:m:ss")}
                                                             </Text>
                                                         </View>
                                                     </View>
@@ -648,7 +648,15 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.TruckModelNumber}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.truck_model_number==undefined?"": this.state.truckData.truck_model_number}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{
+                                                            this.state.truckData.truck_model_number==undefined
+                                                            ?
+                                                            "NA"
+                                                            : this.state.truckData.truck_model_number==""
+                                                            ?"NA"
+                                                            : this.state.truckData.truck_model_number
+                                                            
+                                                            }</Text>
                                                         </View>
                                                     </View>
 

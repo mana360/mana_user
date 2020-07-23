@@ -1649,9 +1649,9 @@ const StyleCollectMyLoad = StyleSheet.create({
     truckBtn: {
 		backgroundColor: Constants.COLOR_GREEN,
 		borderRadius: 50,
-		padding:12,
+		padding:10,
         alignItems:"center",       
-        width:'100%',
+        width:'90%',
 	},
 	truckBtnText: {
 		color: '#fff',

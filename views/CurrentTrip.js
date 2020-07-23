@@ -198,9 +198,7 @@ dateAndTime(itemDate,value){
                                            this.dateAndTime(item.arrivalDateAndTime,0)
                                           :
                                            moment(item.service_end_date).format("DD/MMM/YYYY  hh:mm:ss A")
-                                          
-                                         
-                                    
+                                        
                                         }</Text>
 
                                         <Image source={require('../images/time_icon.png')}

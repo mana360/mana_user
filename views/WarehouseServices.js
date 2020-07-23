@@ -29,7 +29,7 @@ export default class WarehouseServices extends React.Component {
                     let upcoming_trips = data.dashboard_data.warehouse_booking.upcoming_trips
                     if (data && data.dashboard_data && data.dashboard_data.warehouse_booking) {
                         let localArray = [
-                            { title: "Current Trips", type: "current", desc: data.dashboard_data.referral_content, percent:current_trips?current_trips :0  },
+                            { title: "Available Warehouse Booking", type: "current", desc: data.dashboard_data.referral_content, percent:current_trips?current_trips :0  },
                             { title: "Upcoming Trips", type: "upcoming", desc: data.dashboard_data.referral_content, percent:upcoming_trips?upcoming_trips :0  },
                         ]
                         this.setState({

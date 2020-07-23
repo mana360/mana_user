@@ -2,13 +2,15 @@ import { Dimensions, Platform } from 'react-native';
 
 const Constants = {
 
-    // BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/api/",
-    // IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/",
+    
+
+    BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/api/",
+    IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/",
 
     // base url for QAP
     
-    BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
-    IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
+    // BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
+    // IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
 
     
     GOOGLE_MAP_KEY:"AIzaSyBEDVKNDyVUzE2ajUXcrpX89ZORifA0cN4",
@@ -23,13 +25,14 @@ const Constants = {
     BOOKING_STATUS_NEW:0,
     BOOKING_STATUS_PICKED_UP:1,
     BOOKING_STATUS_DELIVERED:2,
-    BOOKING_STATUS_CANCELLED:3,
+    BOOKING_STATUS_CANCELLED:5,
 
     BOOKING_CURRENT_STATUS_TRIP_COMPLETED_CARGO_OFFLOADED:1,
     BOOKING_CURRENT_STATUS_UPCOMING:2,
     BOOKING_CURRENT_STATUS_IN_STORAGE:3,
     BOOKING_CURRENT_STATUS_ARRIVED_AT_PICKUP_LOCATION:7,
     BOOKING_CURRENT_STATUS_PICKUP:8,
+    // BOOKING_CURRENT_STATUS_PICKUP:3,
     BOOKING_CURRENT_STATUS_ON_ROUTE_TO_DESTINATION:9,
     BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION:10,
     BOOKING_CURRENT_STATUS_DRIVER_DISPATCHED:11,

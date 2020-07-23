@@ -27,13 +27,10 @@ export default class MyBookings extends React.Component{
     }
 
    async componentDidMount(){
-        if (await !this._isNetworkAvailable()) {
-            alert("No Network")
-            return
-        }else{
+
             this.getCurrentBookingList()
 
-        }
+        
     }
     async _isNetworkAvailable() {
         let returnValue = false
@@ -245,7 +242,11 @@ export default class MyBookings extends React.Component{
                     renderItem={
                         ({item})=>
                         <TouchableOpacity style={StyleMyBooking.bookingRow}
-                            onPress={()=>{this.props.navigation.navigate('MyBookingDetails',{'book_item':item})}}
+                            onPress={()=>{this.props.navigation.navigate('MyBookingDetails',{'book_item':item,cancelTripCallback: ()=>{
+                                console.log("callback for cancell trip");
+                                this.getPastBookingList();
+                            }
+                        })}}
                         >
                             <Card>
                                 <CardItem>

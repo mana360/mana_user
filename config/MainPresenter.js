@@ -21,8 +21,9 @@ export class MainPresenter extends React.Component {
     }
     /* -------------Public method------------------- */
     async callPostApi(apiConstant, params, loader) {
-
-        if (await !this._isNetworkAvailable()) {
+        let isConnected=await this._isNetworkAvailable();
+        console.log("Rietsh bhau==>"+isConnected);
+        if (!isConnected) {
             alert("No Network")
             return
         }
@@ -47,15 +48,20 @@ export class MainPresenter extends React.Component {
             }
         })
             .then(it => this._setResponse(apiConstant, it))
-            .catch(e => console.error(e))
+            .catch((e) => {
+                // console.warn(e);
+                console.log(e);
+                // console.error(e);
+            })
             .finally(() => { this._stopLoader() })
     }
-
-
+    
     async callGetApi(apiConstant, queryParams, loader) {
-        if (await !this._isNetworkAvailable()) {
+        let isConnected=await this._isNetworkAvailable();
+        console.log("Rietsh bhau==>"+isConnected);
+        if (!isConnected) {
             alert("No Network")
-            return
+            return 
         }
 
         this._initLoader(loader)
@@ -78,12 +84,14 @@ export class MainPresenter extends React.Component {
 
         }, (e) => { console.log(e) })
             .then(it => this._setResponse(apiConstant, it))
-            .catch(e => console.error(e))
+            .catch(e => console.log(e))
             .finally(() => { this._stopLoader() })
     }
 
     async callMultipartApi(apiConstant, params, loader) {
-        if (await !this._isNetworkAvailable()) {
+        let isConnected=await this._isNetworkAvailable();
+        console.log("Rietsh bhau==>"+isConnected);
+        if (!isConnected) {
             alert("No Network")
             return
         }
@@ -111,7 +119,9 @@ export class MainPresenter extends React.Component {
     }
 
     async setupProfileCompany(apiConstant, params, loader) {
-        if (await !this._isNetworkAvailable()) {
+        let isConnected=await this._isNetworkAvailable();
+        console.log("Rietsh bhau==>"+isConnected);
+        if (!isConnected) {
             alert("No Network")
             return
         }
@@ -156,7 +166,9 @@ export class MainPresenter extends React.Component {
     }
 
     async setupProfileIndividual(apiConstant, params, loader) {
-        if (await !this._isNetworkAvailable()) {
+        let isConnected=await this._isNetworkAvailable();
+        console.log("Rietsh bhau==>"+isConnected);
+        if (!isConnected) {
             alert("No Network")
             return
         }
@@ -237,7 +249,9 @@ export class MainPresenter extends React.Component {
 
     async upload(apiConstant, params, loader) {
         
-        if (await !this._isNetworkAvailable()) {
+        let isConnected=await this._isNetworkAvailable();
+        console.log("Rietsh bhau==>"+isConnected);
+        if (!isConnected) {
             alert("No Network")
             return
         }
@@ -358,9 +372,11 @@ export class MainPresenter extends React.Component {
 
     async _isNetworkAvailable() {
         let returnValue = false
-        await NetInfo.fetch().then(isConnected => {
-            if (isConnected) {
-                console.log("NetWork available")
+        await NetInfo.fetch().then(state => {
+            if (state.isConnected) {
+                console.log("NetWork available");
+                console.log("isConnected=========>"+JSON.stringify(state.isConnected));
+                // alert(JSON.stringify(isConnected));
                 returnValue = true
             } else {
                 console.log("NetWork Not Available")

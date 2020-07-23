@@ -11,6 +11,7 @@ import HeaderBar from '../config/HeaderBar';
 import Invoice from './InvoiceView';
 import { MainPresenter } from '../config/MainPresenter';
 import RNFetchBlob from 'rn-fetch-blob';
+import moment from 'moment';
 
 export default class ViewCurrentTrip extends React.Component {
     constructor(props) {
@@ -235,10 +236,8 @@ export default class ViewCurrentTrip extends React.Component {
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
                                             <Text style={StyleViewCurrentTrip.col2Text}>{
-                                            this.state.truckData.date_of_pickup==undefined?
-                                            ""
-                                            :
-                                            this.state.truckData.date_of_pickup}</Text>
+                                            moment(this.state.truckData.arrivalDateAndTime,"hh:mm:ss").format("hh:mm:ss")
+                                            }</Text>
                                         </View>
                                     </View>
 
@@ -248,13 +247,8 @@ export default class ViewCurrentTrip extends React.Component {
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
                                             <Text style={StyleViewCurrentTrip.col2Text}>{
-                                            this.state.truckData.date_of_pickup==undefined
-                                            ?
-                                            "":
-                                            this.state.truckData.date_of_pickup==""?
-                                            ""
-                                            :
-                                            this.state.truckData.date_of_pickup
+                                            moment(this.state.truckData.arrivalDateAndTime,"YYYY-MMMM-DDDD").format("YYYY/MMMM/DD")
+                                                                                        
                                             }</Text>
                                         </View>
                                     </View>

@@ -213,7 +213,7 @@ onClickSignup(){
   let params = {
     "email_id":this.state.emailId,
     "password":this.state.confirm_password,
-    "referral_code":this.state.referral_code
+    "referal_code":this.state.referral_code
   }
  this.presenter.callPostApi(ApiConstants.register, params, true);
 }
