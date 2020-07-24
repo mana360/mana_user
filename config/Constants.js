@@ -4,13 +4,13 @@ const Constants = {
 
     
 
-    BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/api/",
-    IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/",
+    // BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/api/",
+    // IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/",
 
     // base url for QAP
     
-    // BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
-    // IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
+    BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
+    IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
 
     
     GOOGLE_MAP_KEY:"AIzaSyBEDVKNDyVUzE2ajUXcrpX89ZORifA0cN4",
@@ -25,7 +25,7 @@ const Constants = {
     BOOKING_STATUS_NEW:0,
     BOOKING_STATUS_PICKED_UP:1,
     BOOKING_STATUS_DELIVERED:2,
-    BOOKING_STATUS_CANCELLED:5,
+    BOOKING_STATUS_CANCELLED:3,
 
     BOOKING_CURRENT_STATUS_TRIP_COMPLETED_CARGO_OFFLOADED:1,
     BOOKING_CURRENT_STATUS_UPCOMING:2,
@@ -38,6 +38,8 @@ const Constants = {
     BOOKING_CURRENT_STATUS_DRIVER_DISPATCHED:11,
     BOOKING_CURRENT_STATUS_REASON_FOR_DELAY:13,
     BOOKING_CURRENT_STATUS_CANCEL_BY_DRIVER:14,
+    BOOKING_CURRENT_STATUS_CANCLE:5,
+
 
 
     

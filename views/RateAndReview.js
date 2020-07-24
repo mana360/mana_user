@@ -48,7 +48,9 @@ onResponse(apiConstant, data) {
               this.setState({ modal_Visible: true })
           }
           else{
-              alert(data.message)
+            //   alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
           }
         break;
       }

@@ -304,7 +304,8 @@ export default class BookingSummary extends React.Component{
                console.log(data);
                this.setState({otherServicesList:data.other_services,selectedOtherService_value:data.other_services});
             } else {
-               alert(data.message)
+            //    alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
              }
              break;
          }
@@ -313,7 +314,9 @@ export default class BookingSummary extends React.Component{
              if(data.status){
                this.doPayment(data)
              }else{
-                 alert(data.message);
+                //  alert(data.message);
+            this.presenter.getCommonAlertBox(data.message);
+
              }
              break;
          }
@@ -329,7 +332,9 @@ export default class BookingSummary extends React.Component{
                     chargesTripCost:data.booking_summary.per_kilomiter_price,
                   });
               }else{
-                  alert(data.message);
+                //   alert(data.message);
+            this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
 

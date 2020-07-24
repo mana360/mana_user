@@ -65,7 +65,9 @@ export default class ViewUpcomingTrip extends React.Component {
                 if (data.status){
                     this.setState({isSuccesfull:true})
                 }else{
-                    alert(data.message);
+                    // alert(data.message);
+                    this.presenter.getCommonAlertBox(data.message);
+
                 }
                 break;
             }
@@ -104,7 +106,9 @@ export default class ViewUpcomingTrip extends React.Component {
                         }
                     }
                 } else {
-                    alert(data.message)
+                    // alert(data.message)
+                    this.presenter.getCommonAlertBox(data.message);
+
                 }
 
                 break;

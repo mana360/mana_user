@@ -101,7 +101,8 @@ export default class SetPassword extends React.Component {
                     await clearAllData()
                     this.setState({modal_visible:true, api_message:data.message})
                 }else{
-                    alert(data.message)
+                    // alert(data.message)
+                    this.presenter.getCommonAlertBox(data.message);
                 }
                 break;
             }

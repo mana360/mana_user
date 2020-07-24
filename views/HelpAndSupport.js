@@ -112,7 +112,9 @@ export default class HelpAndSupport extends React.Component {
               if(data.status){
                 this.setState({modal_Visible : true})
               }else{
-                alert(data.message)
+                // alert(data.message);
+            this.presenter.getCommonAlertBox(data.message);
+
               }
             
           break;

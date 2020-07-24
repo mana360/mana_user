@@ -47,7 +47,9 @@ export default class WarehouseServicesCurrentTrip extends React.Component {
                         
                     }
                 }else {
-                    alert(data.message)
+                    // alert(data.message)
+                    this.presenter.getCommonAlertBox(data.message);
+
                 }
     
                 break;

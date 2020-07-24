@@ -140,7 +140,9 @@ getUserStatus(){
                         this.setState({role_id:data.userStatus.role_id,active_status:data.userStatus.active_status,notifications_count:data.userStatus.notifications_count});
                    console.log(data.userStatus);
                     }else{
-                        alert(data.message);
+                        // alert(data.message);
+                     this.presenter.getCommonAlertBox(data.message);
+
                     }
                     break;
                 }

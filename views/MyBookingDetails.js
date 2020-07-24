@@ -142,7 +142,7 @@ export default class MyBookingDetails extends React.Component {
             // 2 mobile
             param = {
                 'booking_id':this.state.truck_booking_details.booking_id,
-                'share_type' : 0,
+                'share_type' : 2,
                 'mobile_no': this.state.shareByMobile
             }
         }
@@ -164,9 +164,11 @@ export default class MyBookingDetails extends React.Component {
         case ApiConstants.shareMyRide:{
             this.setState({shareByEmail:"", shareByMobile:"", shareMyRideType:""})
             if(data.status){
-
+                this.presenter.getCommonAlertBox(data.message);
             }else{
-                alert(data.message)
+                // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
             }
             break;
         }
@@ -175,7 +177,9 @@ export default class MyBookingDetails extends React.Component {
             if(data.status){
                 this.setState({ isReasonModalvisible: true, reasonText: "", reasonSubmit: true })
             }else{
-                alert(data.message)
+                // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
             }
             break;
         }
@@ -183,7 +187,9 @@ export default class MyBookingDetails extends React.Component {
            if(data.status){
             this.setState({isgenerateOTPSuccessModalVisisble:true});
            }else{
-               alert(data.message)
+            //    alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
            }
           break;
       }

@@ -77,7 +77,9 @@ export default class ViewCurrentTrip extends React.Component {
                         
                     }
                 } else {
-                    alert(data.message)
+                    // alert(data.message)
+                    this.presenter.getCommonAlertBox(data.message);
+
                 }
     
                 break;
@@ -103,7 +105,9 @@ export default class ViewCurrentTrip extends React.Component {
             }
             else {
                 // permission denied
-                alert("File downloading faild.");
+                // alert("File downloading faild.");
+                this.presenter.getCommonAlertBox("File downloading faild");
+
                 return false
             }
           } catch (err) {

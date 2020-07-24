@@ -61,14 +61,18 @@ export default class MyProfile extends React.Component {
                     }
                     this.updateUserObject(data.user_data)           // storing user details in local db
                 }else{
-                    alert(data.msg)
+                    // alert(data.msg)
+            this.presenter.getCommonAlertBox(data.message);
+
                 }
                 break;
             }
             case ApiConstants.updateProfilePic: {
                 if (data.status) {
                 } else {
-                    alert(data.message)
+                    // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                 }
     
                 break;
@@ -76,9 +80,13 @@ export default class MyProfile extends React.Component {
             case ApiConstants.changePassword:{
                 if(data.status){
                     this.setState({ modalVisible_Changepassword: false, current_password:"", new_password:"", confirm_password:"" })
-                    alert(data.message)
+                    // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                 }else{
-                    alert(data.message)
+                    // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                 }
                 break;
             }

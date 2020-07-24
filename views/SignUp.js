@@ -82,7 +82,8 @@ export default class SignUp extends Component {
           //this.props.navigation.navigate('ProfileSetUp')
         } else {
           await clearAllData()
-          alert(data.message)
+          // alert(data.message)
+          this.presenter.getCommonAlertBox(data.message);
         }
         break;
       }
@@ -93,7 +94,9 @@ export default class SignUp extends Component {
         }
         else {
           await clearAllData()
-          alert(data.message)
+          // alert(data.message)
+          this.presenter.getCommonAlertBox(data.message);
+
         }
         break;
       }
@@ -113,7 +116,9 @@ export default class SignUp extends Component {
           }, 3000)
         }else{
           await clearAllData()
-          alert(data.message)
+          // alert(data.message)
+          this.presenter.getCommonAlertBox(data.message);
+
         }
         break;
       }

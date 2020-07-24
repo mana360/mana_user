@@ -7,7 +7,7 @@
  * 
  * */
 import React, { useState } from 'react'
-import { View, Text, Modal, ActivityIndicator } from 'react-native'
+import { View, Text, Modal, ActivityIndicator ,Alert} from 'react-native'
 import Constants from './Constants';
 import ApiConstants from './ApiConstants';
 import NetInfo from "@react-native-community/netinfo";
@@ -19,6 +19,31 @@ export class MainPresenter extends React.Component {
     state = {
         isLoader: false
     }
+
+    getCommonAlertBox(message){
+        Alert.alert(
+            'Message',
+            message,
+            [
+            //   {
+            //     text: 'Ask me later', 
+            //     onPress:()=>{}
+            //   },
+            //   {
+            //     text: 'Cancel',
+            //     onPress:()=>{},
+            //     style: 'cancel',
+            //   },
+              {
+                text: 'OK', 
+                onPress:()=>{}
+              },
+            ],
+            {cancelable: false},
+          );
+    }
+
+
     /* -------------Public method------------------- */
     async callPostApi(apiConstant, params, loader) {
         let isConnected=await this._isNetworkAvailable();

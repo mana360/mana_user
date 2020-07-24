@@ -215,7 +215,9 @@ export default class CollectMyLoad extends React.Component {
                             })
                         }
                     } else {
-                        alert(data.message)
+                        // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                     }
                     break;
                 }
@@ -225,7 +227,9 @@ export default class CollectMyLoad extends React.Component {
                         this.setState({truckList:data.truck_category});
                         console.log('truck value===>',data.truck_category);
                     }else{
-                        alert(data.message)
+                        // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                     }
 
                     break;
@@ -259,15 +263,21 @@ export default class CollectMyLoad extends React.Component {
                             console.log("======>"+ this.state.otherServicesData);
                           }else{
                             console.log(data.message);
+                    //  this.presenter.getCommonAlertBox(data.message);
+
                           }
                         break;
                 }
                 case ApiConstants.referFriend:{
                     this.setState({ModalVisible_referFriend:false, refer_emailId:"", refer_mobile_number:""})
                     if(data.status){
-                        alert(data.message)
+                        // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                     }else{
-                        alert(data.message)
+                        // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                     }
                     break;
                 }       

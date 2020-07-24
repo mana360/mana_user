@@ -1188,7 +1188,9 @@ export default class EditProfile extends React.Component {
               if(data.status){
                   this.setState({countryList : data.countryList, isCountryListFilled:1})
               }else{
-                  alert(data.msg)
+                //   alert(data.msg)
+            this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -1199,7 +1201,9 @@ export default class EditProfile extends React.Component {
                   this.setState({provinceList : data.stateList, isProvinceListFilled:1})
               }
               else {
-                  alert(data.message)
+                //   alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
               }
             break;
           }
@@ -1209,7 +1213,9 @@ export default class EditProfile extends React.Component {
                     this.setState({cityList: data.cityList, isCityListFilled:1})
               }
               else{
-                  alert(data.message)
+                //   alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -1219,7 +1225,9 @@ export default class EditProfile extends React.Component {
                 this.presenter.callPostApi(ApiConstants.getMyProfile, "", true)
               }
               else {
-                  alert(data.message)
+                //   alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -1236,7 +1244,9 @@ export default class EditProfile extends React.Component {
               if(data.status){
                   this.setState({isProfileUpdatedModal:true})
               }else{
-                  alert(data.message)
+                //   alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -1260,7 +1270,9 @@ export default class EditProfile extends React.Component {
                 }
                 this.updateUserObject(data.user_data)           // storing user details in local db
             }else{
-                alert(data.msg)
+                // alert(data.msg)
+            this.presenter.getCommonAlertBox(data.message);
+
             }
               break;
           }

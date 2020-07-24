@@ -973,7 +973,9 @@ export default class ProfileSetUp extends React.Component {
               if(data.status){
                 this.setState({countryList : data.countryList, isCountryListFilled:1})
               }else{
-                  alert(data.msg)
+                //   alert(data.msg);
+                this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -983,7 +985,9 @@ export default class ProfileSetUp extends React.Component {
                   this.setState({provinceList : data.stateList, isProvinceListFilled:1})
               }
               else {
-                  alert(data.message)
+                  alert(data.message);
+                  this.presenter.getCommonAlertBox(data.message);
+
               }
             break;
           }
@@ -993,7 +997,9 @@ export default class ProfileSetUp extends React.Component {
                   this.setState({cityList: data.cityList, isCityListFilled:1})
               }
               else{
-                  alert(data.message)
+                //   alert(data.message)
+                this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -1007,7 +1013,9 @@ export default class ProfileSetUp extends React.Component {
                      })
                     this.openOTPModal()
               }else{
-                  alert(data.message)
+                //   alert(data.message)
+                this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -1016,7 +1024,9 @@ export default class ProfileSetUp extends React.Component {
                   this.onOTPVerified()
               }
               else{
-                  alert(data.message)
+                //   alert(data.message)
+                this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -1030,7 +1040,9 @@ export default class ProfileSetUp extends React.Component {
                   })
                   this.openOTPModal()
               }else{
-                  alert(data.message)
+                //   alert(data.message)
+                this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }

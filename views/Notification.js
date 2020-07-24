@@ -62,7 +62,7 @@ export default class Notification extends React.Component {
                         
                     }
                 } else {
-                    alert(data.message)
+                    // alert(data.message)
                 }
 
                 break;
@@ -87,17 +87,21 @@ export default class Notification extends React.Component {
 
             case ApiConstants.removeNotification :{
                 if (data.status) {
-                    alert(data.message,[
-                              {text: 'OK',
-                                 onPress:()=>{}},
-                                ],{ cancelable: false })
+                    // alert(data.message,[
+                    //           {text: 'OK',
+                    //              onPress:()=>{}},
+                    //             ],{ cancelable: false });
+                    this.presenter.getCommonAlertBox(data.message);
                     this.getAllNotification()
                    } else {
-                       alert(data.message,
-                           [
-                               {text: 'OK', onPress:()=>{}},
-                           ],
-                           { cancelable: false })
+                    //    alert(data.message,
+                    //        [
+                    //            {text: 'OK', onPress:()=>{}},
+                    //        ],
+                    //        { cancelable: false })
+
+                    this.presenter.getCommonAlertBox(data.message);
+                    
                    }
                 break;
             }

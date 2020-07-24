@@ -96,8 +96,11 @@ export default class MyBookings extends React.Component{
                     null
                     : this.setState({ current_booking_data : data.cml_booking_list, })
                     :null
+                    console.log("past ale ikde==>"+JSON.stringify(this.state.past_booking_data))
                 }else{
-                    alert(data.message)
+                    // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                 }
                 this.state.resp_handler=="1"
                 ? this.getOngoingBookingList()

@@ -82,7 +82,8 @@ export default class SignIn extends Component {
           await setUserData(data.userData)
           this.presenter.callGetApi(ApiConstants.userStatus, "", true);   // checking for the status of user account
         } else {
-          alert(data.message)
+          // alert(data.message)
+          this.presenter.getCommonAlertBox(data.message);
         }
         break;
       }
@@ -106,7 +107,9 @@ export default class SignIn extends Component {
                   actions: [NavigationActions.navigate({ routeName: 'ProfileSetUp' })],
                 }))
             }else{
-              alert(data.msg)
+              // alert(data.msg)
+              this.presenter.getCommonAlertBox(data.message);
+
             }
         }
         break;
