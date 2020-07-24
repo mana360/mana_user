@@ -147,7 +147,8 @@ export default class MyBookings extends React.Component{
                     <TouchableOpacity style={StyleMyBooking.bookingRow}
                         onPress={()=>{this.props.navigation.navigate('MyBookingDetails',{'book_item':item, cancelTripCallback: ()=>{
                             console.log("callback for cancell trip")
-                            this.getCurrentBookingList()
+                            this.getCurrentBookingList();
+                            this.getPastBookingList();
                         }
                         })}}
                     >

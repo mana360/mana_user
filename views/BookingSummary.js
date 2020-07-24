@@ -260,6 +260,7 @@ export default class BookingSummary extends React.Component{
    }
    
    async getcalculatingBooking(){
+       
        let params=  {
         "pickup_latlng":{
             "latitude": this.state.pick_up_address_lat,
@@ -469,8 +470,8 @@ export default class BookingSummary extends React.Component{
                                    <View style={StyleBookingSummary.topBox}>
                                         
                                         <View style={[StyleBookingSummary.topinnBox, { borderBottomColor:'#a9b0b5', borderBottomWidth:0.8,} ]}>
-                                            <Text style={StyleBookingSummary.topinnTxt}>Truck Type - {this.state.truck_Type_id}</Text>
-                                            <Text style={StyleBookingSummary.topinnTxt}>Truck Name - {this.state.truck_name}</Text>
+                                            <Text style={StyleBookingSummary.topinnTxt}>Truck Type - {this.state.truck_name}</Text>
+                                            {/* <Text style={StyleBookingSummary.topinnTxt}>Truck Name - {this.state.truck_name}</Text> */}
                                             <Text style={StyleBookingSummary.topinnTxt}>Truck Description</Text>
                                             <Text style={[StyleBookingSummary.topinnTxt,{fontSize:14, marginTop:10}]}>{this.state.truck_desc}</Text>
                                         </View>
@@ -953,9 +954,14 @@ export default class BookingSummary extends React.Component{
                                                             onPress={()=>{
                                                                 this.setState({modalVisible:false});
                                                                 console.log("Other service data ===> "+JSON.stringify(this.state.otherServicesdata))
+
+                                                                console.log("Other service data 1111111===> "+JSON.stringify(this.other_servicesData));
+
+
                                                                 // this.getOtherServices();
                                                             //   this.props.navigation.navigate('PaymentMethod');
                                                                  this.getcalculatingBooking();
+                                                            
 
                                                         }}
                                                         style={[StyleLocationDetails.logButton, {marginTop:0, marginBottom:0,} ]}>

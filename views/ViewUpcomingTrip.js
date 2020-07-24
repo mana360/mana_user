@@ -800,7 +800,8 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 this.state.truckData.warehouse_latlng==undefined?
                                                                 alert("Co-ordinate Not Found")
                                                                 :this.state.truckData.warehouse_latlng==""?
-                                                                alert("Co-ordiante Not Found"):
+                                                                alert("Co-ordiante Not Found"+this.state.truckData.warehouse_latlng )
+                                                                :
                                                                 this.state.truckData.warehouse_latlng
                                                             })
                                                             }}
