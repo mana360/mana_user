@@ -282,7 +282,7 @@ class HeaderBar extends React.Component {
               >
                 <Image style={StylePaymentMethod.popcloseimg} source={require('../images/close.png')}></Image>
               </TouchableOpacity>
-              <Text style={[StylePaymentMethod.popbodythankstxt, { textAlign: 'center', width: '80%', alignSelf: 'center' }]}>Are you sure you want to Cancel the order?</Text>
+              <Text style={[StylePaymentMethod.popbodythankstxt, { textAlign: 'center', width: '80%', alignSelf: 'center' }]}>{Constants.cancellation_msgPayment}</Text>
               <TouchableOpacity style={StylePaymentMethod.modal_cancleBtn}
                 onPress={() => {
                   this.setState({ isPaymentBackModalVisible: false });

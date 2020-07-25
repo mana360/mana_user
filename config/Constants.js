@@ -190,6 +190,8 @@ const Constants = {
     DownloadInvoice: 'download invoice',
     Cancelleation_msg: 'Cancellation of trip will cause you with the penalty cost.',
     cancellation_msgDelete: "Are you sure you want to delete the trip?",
+    cancellation_msgPayment: "Are you sure you want to Cancel the Booking?",
+
     TripCanceledSuccessfully: 'Trip Cancelled Successfully.',
     checkYourregisteredEmailIdPeneltyInfo: 'Check your registered email ID for \n penalty information.',
     Duration: 'Duration',
