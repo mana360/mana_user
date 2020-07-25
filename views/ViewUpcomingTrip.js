@@ -799,8 +799,9 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 this.props.navigation.navigate('MapViews',{"warehouse_flag":true,'WarehouseCoordinates':
                                                                 this.state.truckData.warehouse_latlng==undefined?
                                                                 alert("Co-ordinate Not Found")
-                                                                :this.state.truckData.warehouse_latlng==""?
-                                                                alert("Co-ordiante Not Found"+this.state.truckData.warehouse_latlng )
+                                                                :this.state.truckData.warehouse_latlng==""
+                                                                ?
+                                                                alert("Co-ordiante Not Found")
                                                                 :
                                                                 this.state.truckData.warehouse_latlng
                                                             })
@@ -918,7 +919,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.NumberOfUSer}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.numberUsers}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargo_number_of_users}</Text>
                                                         </View>
                                                     </View>
                                                     : this.service_type_id==2
@@ -928,7 +929,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.NumberOfUSer}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.warehouse_booking_detailsi.number_of_users}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.warehouse_booking_detailsi.cargo_number_of_users}</Text>
                                                         </View>
                                                     </View>
                                                     :this.service_type_id==3
@@ -938,7 +939,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.NumberOfUSer}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.warehouse_booking_detailsi.number_of_users}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.warehouse_booking_detailsi.cargo_number_of_users}</Text>
                                                         </View>
                                                     </View>
                                                     :null

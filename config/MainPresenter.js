@@ -115,7 +115,6 @@ export class MainPresenter extends React.Component {
 
     async callMultipartApi(apiConstant, params, loader) {
         let isConnected=await this._isNetworkAvailable();
-        console.log("Rietsh bhau==>"+isConnected);
         if (!isConnected) {
             alert("No Network")
             return
@@ -138,7 +137,7 @@ export class MainPresenter extends React.Component {
 
         fetch(URL, options).then(it => it.json(), (e) => { console.log(e) })
             .then(it => this._setResponse(apiConstant, it))
-            .catch(e => console.error(e))
+            .catch(e => console.log(e))
             .finally(() => { this._stopLoader() })
 
     }
@@ -165,7 +164,7 @@ export class MainPresenter extends React.Component {
 
         fetch(URL, options).then(it => it.json(), (e) => { console.log(e) })
             .then(it => this._setResponse(apiConstant, it))
-            .catch(e => console.error(e))
+            .catch(e => console.log(e))
             .finally(() => { this._stopLoader() })
 
     }
@@ -212,7 +211,7 @@ export class MainPresenter extends React.Component {
 
         fetch(URL, options).then(it => it.json(), (e) => { console.log(e) })
             .then(it => this._setResponse(apiConstant, it))
-            .catch(e => console.error(e))
+            .catch(e => console.log(e))
             .finally(() => { this._stopLoader() })
 
     }
@@ -304,7 +303,7 @@ export class MainPresenter extends React.Component {
             it.json(), (e) => {
             console.log(e)})
             .then(it => this._setResponse(apiConstant, it))
-            .catch(e => console.error(e))
+            .catch(e => console.log(e))
             .finally(() => { this._stopLoader() })
     }
 

@@ -465,6 +465,7 @@ export default class MyProfile extends React.Component {
                                 style={StyleMyProfile.TextInput}
                                 value={this.state.current_password}
                                 secureTextEntry={true}
+                                maxLength={12}
                                 autoCapitalize="none"
                                 onChangeText={(text) => { this.setState({ current_password: text }) }}
                                 onBlur={()=>{ this.input_new_password.focus() }}
@@ -484,6 +485,7 @@ export default class MyProfile extends React.Component {
                                 style={StyleMyProfile.TextInput}
                                 value={this.state.new_password}
                                 secureTextEntry={true}
+                                maxLength={12}
                                 autoCapitalize="none"
                                 onChangeText={(text) => { this.setState({ new_password: text }) }}
                                 onBlur={()=>{this.input_confirm_password.focus()}}
@@ -502,6 +504,7 @@ export default class MyProfile extends React.Component {
                                 ref={(ref)=>{this.input_confirm_password = ref}}
                                 style={StyleMyProfile.TextInput}
                                 value={this.state.confirm_password}
+                                maxLength={12}
                                 secureTextEntry={true}
                                 autoCapitalize="none"
                                 onChangeText={(text) => { this.setState({ confirm_password: text }) }}

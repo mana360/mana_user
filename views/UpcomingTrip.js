@@ -207,9 +207,9 @@ export default class UpcomingTrip extends React.Component {
                                             {   this.service_type_id==1
                                                 ? moment(item.date_of_pickup).format("DD MMM YYYY")
                                                 : this.service_type_id==2
-                                                ? moment(item.service_start_date).format("DD/MMM/YYYY  hh:mm:ss A")
+                                                ? moment(item.service_start_date).format("DD/MMM/YYYY  hh:mm:ss ")
                                                 :this.service_type_id==3
-                                                ?moment(item.service_start_date).format("DD/MMM/YYYY  hh:mm:ss A")
+                                                ?moment(item.service_start_date).format("DD/MMM/YYYY  hh:mm:ss")
                                                 :null
                                             }
                                         </Text>

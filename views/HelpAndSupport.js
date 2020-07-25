@@ -48,7 +48,8 @@ export default class HelpAndSupport extends React.Component {
 
     async getUserLocalInfo(){
         let data = JSON.parse(await getUserData())
-        // console.log("are bhai mai agaya"+JSON.stringify(data));
+
+        console.log("UserData"+JSON.stringify(data));
         if(data[0].user_type==1){
             this.setState({isUser:false})
         }else{

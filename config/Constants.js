@@ -225,7 +225,7 @@ const Constants = {
     CompanyContactPerson: 'Company Contact Person',
     CompanyContactPosition: 'Company Contact Position',
     CompanyTelephonenumber: 'Company Telephone Number',
-    Email: 'Email Id',
+    Email: 'Email Address',
     EmailAddress:'Email Address',
     Address: 'Address',
     StreetAddress:'Street Address',

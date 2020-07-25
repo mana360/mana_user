@@ -139,10 +139,10 @@ export default class SignIn extends Component {
           <View style={StyleSignIn.textInput_container}>
             <View style={StyleSignIn.labelBox}>
               <Image style={StyleSignIn.LabelBoxIcon}
-                source={require('../images/mobile_number.png')} />
+                source={require('../images/email_id-signin.png')} />
               <Text style={StyleSignIn.labelBoxText}>{Constants.Email}</Text>
             </View>
-            <TextInput placeholder='Enter Email id'
+            <TextInput placeholder='Enter Email Address'
               ref={(ref)=>{this.Input_emailId = ref}}
               style={StyleSignIn.textInput_style}
               keyboardType="email-address"

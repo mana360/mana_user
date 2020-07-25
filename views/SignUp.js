@@ -305,7 +305,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
                 source={require('../images/mobile_number.png')} />
               <Text style={StyleSignUp.labelBoxText}>{Constants.Email}</Text>
             </View>
-            <TextInput placeholder='Enter Email Id'
+            <TextInput placeholder='Enter Email Address'
               ref={(ref)=>(this.TextInput_emailId = ref)}
               style={StyleSignUp.textInput_style}
               autoCapitalize="none"

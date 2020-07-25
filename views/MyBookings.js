@@ -87,15 +87,22 @@ export default class MyBookings extends React.Component{
             case ApiConstants.getMyBookings: {
                 if(data.status){
                     this.state.resp_handler=="1"
-                    ? this.setState({ current_booking_data : data.cml_booking_list, })
-                    : this.state.resp_handler=="3"
-                    ? this.setState({ past_booking_data : data.cml_booking_list, })
-                   
-                    : this.state.resp_handler=="2"
-                    ?data.cml_booking_list==""?
+                    ? 
+                    this.setState({ current_booking_data : data.cml_booking_list, })
+                    : 
+                    this.state.resp_handler=="3"
+                    ? 
+                    this.setState({ past_booking_data : data.cml_booking_list, })
+                    :
+                     this.state.resp_handler=="2"
+                    ?
+                    data.cml_booking_list==""
+                    ?
                     null
-                    : this.setState({ current_booking_data : data.cml_booking_list, })
-                    :null
+                    :
+                     this.setState({ current_booking_data : data.cml_booking_list, })
+                    :
+                    null
                     console.log("past ale ikde==>"+JSON.stringify(this.state.past_booking_data))
                 }else{
                     // alert(data.message)

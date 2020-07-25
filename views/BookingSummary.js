@@ -97,7 +97,8 @@ export default class BookingSummary extends React.Component{
 
     async initServices(){
         let user_data = JSON.parse(await getUserData())
-        this.setState({name : user_data[0].first_name+ " "+user_data[0].last_name, contact_number:user_data[0].contact})
+        console.log("USerData====>"+JSON.stringify(user_data));
+        this.setState({name : user_data[0].user_type==1?user_data[0].company_name:user_data[0].first_name+ " "+user_data[0].last_name, contact_number:user_data[0].tele_number})
         
         let i=1
         for(i=1;i<=5;i++){
