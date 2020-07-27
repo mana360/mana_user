@@ -48,11 +48,15 @@ import ProfileSetUp from './views/ProfileSetUp';
 import SendOTP from './views/SendOTP';
 import ViewCurrentTripAll from './views/ViewcurrentTrip_all';
 import LocationView from './config/mapUtils/src/LocationView'
-
+import WebBrowser from './views/WebBrowser'
 
 console.disableYellowBox = true;
 
 const AppNavigator1 = createStackNavigator({
+    WebBrowser :{
+      screen:WebBrowser,
+      navigationOptions:()=>({ header:null,})
+    },
     Home :{
       screen:Home,
       navigationOptions:()=>({ header:null,})

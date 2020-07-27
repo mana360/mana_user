@@ -313,7 +313,7 @@ export default class LocationDetails extends React.Component {
                 <ScrollView bounces={false} style={{ width: wp('100%') }}>
 
                     <View style={{ flex: 1, backgroundColor: Constants.COLOR_WHITE }}>
-
+                    
                         <View style={StyleLocationDetails.locationWrapp}>
 
                             <View style={[StyleLocationDetails.inputContainer,{}]}>

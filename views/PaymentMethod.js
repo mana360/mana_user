@@ -23,9 +23,24 @@ export default class PaymentMethod extends React.Component {
         }
     }
 
+    componentDidMount(){
+        this.payment_amount = this.props.navigation.getParam('payment_amount')
+        console.log("payment amount on PaymentMethod ==> "+this.payment_amount)
+    }
+
     onPaymentSucess(){
         this.props.navigation.goBack()
-        this.props.navigation.state.params.paymentSuccess()
+        this.props.navigation.state.params.paymentCallback(this.payment_method,1)
+    }
+
+    redirectToPaymentGateway(){
+        this.props.navigation.navigate("WebBrowser",{ 
+            'payment_amount':this.payment_amount,
+            callback: (payment_flag)=>{
+                this.props.navigation.goBack()
+                this.props.navigation.state.params.paymentCallback(this.payment_method,payment_flag)
+            }, 
+        })
     }
 
     render() {
@@ -124,7 +139,7 @@ export default class PaymentMethod extends React.Component {
                                 <TouchableOpacity
                                     onPress={() => {
                                         this.setState({modalVisible:false})
-                                        this.onPaymentSucess()
+                                        this.redirectToPaymentGateway()
                                     }}
                                     style={StylePaymentMethod.popbtnwidth}
                                     underlayColor='#fff'>

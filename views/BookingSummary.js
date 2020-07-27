@@ -193,7 +193,7 @@ export default class BookingSummary extends React.Component{
         await this.presenter.callGetApi(ApiConstants.getotherServices,"",true);
     }
    
-   async bookCMLtrip(){
+   async bookCMLtrip(payment_mode){
         // let dropoff_list = [{ "drop_location":"test 123","drop_latlng":"18.5590, 73.7868", "drop_address":"test 123"}, 
         // { "drop_location":"test 123", "drop_latlng":"18.5590, 73.7868", "drop_address":"test 123"}]
         
@@ -290,10 +290,15 @@ export default class BookingSummary extends React.Component{
        await this.presenter.callPostApi(ApiConstants.calculateBooking,params,true);
     }
 
-    doPayment(resp){
-        this.props.navigation.navigate("PaymentMethod", {paymentSuccess : ()=>{
-            console.log("payment callback received")
-            this.setState({paymentSuccessModal:true})
+    doPayment(){
+        this.props.navigation.navigate("PaymentMethod", {payment_amount : this.state.grand_total, paymentCallback : (payment_mode, payment_flag)=>{
+                console.log("payment callback received")
+                if(payment_flag==1)
+                {
+                    this.bookCMLtrip(payment_mode)
+                }else{
+                    this.presenter.getCommonAlertBox("Payment faild.")
+                }
             }
         })
     }
@@ -314,7 +319,8 @@ export default class BookingSummary extends React.Component{
 
          case ApiConstants.bookCMLTrip:{
              if(data.status){
-               this.doPayment(data)
+                this.setState({paymentSuccessModal:true})
+                //this.doPayment(data)
              }else{
                 //  alert(data.message);
             this.presenter.getCommonAlertBox(data.message);
@@ -856,8 +862,8 @@ export default class BookingSummary extends React.Component{
                                 
                                 <TouchableOpacity 
                                     onPress={()=>{
-                                        this.bookCMLtrip();
-                                    //   this.props.navigation.navigate('PaymentMethod');
+                                        //this.bookCMLtrip();
+                                        this.doPayment()
 
                                     }}
                                     style={[StyleLocationDetails.logButton, {marginTop:0, marginHorizontal:25,} ]}
