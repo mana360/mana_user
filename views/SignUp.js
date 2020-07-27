@@ -28,6 +28,7 @@ export default class SignUp extends Component {
       resp_user_id:'',
       resp_otp_code:'',
       resp_temp_token:'',
+      userData:"",
     }
   }
   static navigationOptions = ({ navigation }) => {
@@ -69,7 +70,9 @@ export default class SignUp extends Component {
           console.log(data);
           this.setState({otp_modal_visible:true, resp_otp_code:data.email_otp, resp_user_id:data.user_id, resp_temp_token:data.access_token});
           //await setAuthToken(data.access_token);  //token required for temp purpose only.
-          await setUserData(data)
+          this.setState({userData:data});
+          // await setUserData(data);
+
           // this.timer = setInterval(()=>{
           //   this.setState({modalVisible_welcome:false})
           //   clearInterval(this.timer)
@@ -125,7 +128,9 @@ export default class SignUp extends Component {
       }
     }
 
-verifyOTP(){
+async verifyOTP(){
+          await setUserData(this.state.userData);
+  
   if(this.state.resp_otp_code==this.state.otp_code){
     let params = {
       "mobile_otp":this.state.otp_code,
