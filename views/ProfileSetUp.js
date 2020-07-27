@@ -923,6 +923,7 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Password"
                         editable={false}
                         secureTextEntry={true}
+                        maxLength={16}
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_password}
                         autoCapitalize="none"
@@ -938,6 +939,7 @@ export default class ProfileSetUp extends React.Component {
                     <TextInput
                         placeholder="Enter Confirm Password"
                         editable={false}
+                        maxLength={16}
                         secureTextEntry={true}
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_confirmPassword}
