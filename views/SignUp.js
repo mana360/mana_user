@@ -386,7 +386,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
             <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}>{Constants.IagreeTo}</Text>
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('TermsAndCondition', { flag: 'TermsAndCondition' })
+                this.props.navigation.navigate('TermsAndCondition', { flag: 4 })
               }}
             >
               <Text style={StyleSignUp.PolicyLabel}>{Constants.TermsAndConditions}</Text>
@@ -398,7 +398,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
           
           <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('TermsAndCondition', { flag: 'CancellationPolicy' })
+                this.props.navigation.navigate('TermsAndCondition', { flag: 3 })
               }}
           >
               <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy} </Text>
@@ -406,7 +406,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
           
           <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('TermsAndCondition', { flag: 'PaymentPolicy' })
+                this.props.navigation.navigate('TermsAndCondition', { flag: 2 })
               }}
 
           >
@@ -419,7 +419,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
 
         <TouchableOpacity style={{marginLeft:41, marginBottom:10}}
               onPress={() => {
-                this.props.navigation.navigate('TermsAndCondition', { flag: 'PrivacyPolicy',isLogout:false })
+                this.props.navigation.navigate('TermsAndCondition', { flag: 1,isLogout:false })
               }}
 
           >

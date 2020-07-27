@@ -1469,7 +1469,7 @@ export default class ProfileSetUp extends React.Component {
                                     <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold', paddingHorizontal: 3 }}>{Constants.IagreeTo}</Text>
                                     <TouchableOpacity
                                         onPress={() => {
-                                            this.props.navigation.navigate('TermsAndCondition', { flag: 'TermsAndCondition' })
+                                            this.props.navigation.navigate('TermsAndCondition', { flag: 4 })
                                         }}
                                     >
                                         <Text style={StyleSignUp.PolicyLabel}>{Constants.TermsAndConditions}</Text>
@@ -1481,7 +1481,7 @@ export default class ProfileSetUp extends React.Component {
                                     
                                     <TouchableOpacity
                                         onPress={() => {
-                                            this.props.navigation.navigate('TermsAndCondition', { flag: 'CancellationPolicy' })
+                                            this.props.navigation.navigate('TermsAndCondition', { flag: 3 })
                                         }}
                                     >
                                         <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy}, </Text>
@@ -1489,7 +1489,7 @@ export default class ProfileSetUp extends React.Component {
                                     
                                     <TouchableOpacity
                                         onPress={() => {
-                                            this.props.navigation.navigate('TermsAndCondition', { flag: 'PaymentPolicy' })
+                                            this.props.navigation.navigate('TermsAndCondition', { flag: 2 })
                                         }}
 
                                     >
@@ -1504,7 +1504,7 @@ export default class ProfileSetUp extends React.Component {
                                     
                                     <TouchableOpacity
                                         onPress={() => {
-                                            this.props.navigation.navigate('TermsAndCondition', { flag: 'PrivacyPolicy' })
+                                            this.props.navigation.navigate('TermsAndCondition', { flag: 1 })
                                         }}
 
                                     >

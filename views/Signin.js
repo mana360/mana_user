@@ -190,7 +190,7 @@ export default class SignIn extends Component {
                 
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate('TermsAndCondition', { flag: 'TermsAndCondition', isLogout:false})
+                    this.props.navigation.navigate('TermsAndCondition', { flag: 4, isLogout:false})
                   }}
                 >
                   <Text style={StyleSignUp.PolicyLabel}>{Constants.TermsAndConditions}</Text>
@@ -204,7 +204,7 @@ export default class SignIn extends Component {
                 
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate('TermsAndCondition', { flag: 'CancellationPolicy', isLogout:false })
+                    this.props.navigation.navigate('TermsAndCondition', { flag: 3, isLogout:false })
                   }}
                 >
                   <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy}, </Text>
@@ -212,7 +212,7 @@ export default class SignIn extends Component {
                 
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate('TermsAndCondition', { flag: 'PaymentPolicy', isLogout:false })
+                    this.props.navigation.navigate('TermsAndCondition', { flag: 2, isLogout:false })
                   }}
 
                 >
@@ -225,7 +225,7 @@ export default class SignIn extends Component {
             
             <TouchableOpacity style={{marginLeft:40}}
                 onPress={() => {
-                  this.props.navigation.navigate('TermsAndCondition', { flag: 'PrivacyPolicy', isLogout:false })
+                  this.props.navigation.navigate('TermsAndCondition', { flag: 1, isLogout:false })
                 }}
 
               >
