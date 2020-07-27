@@ -929,17 +929,18 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.NumberOfUSer}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.warehouse_booking_detailsi.cargo_number_of_users}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.warehouse_booking_detailsi.cargo_number_of_users==undefined?"":
+                                                            this.state.warehouse_booking_detailsi.cargo_number_of_users}</Text>
                                                         </View>
                                                     </View>
                                                     :this.service_type_id==3
                                                     ?
-                                                    <View style={[StyleViewUpcomingTrip.row,{display : this.state.warehouse_booking_detailsi.cargo_handling_req == 1 ? 'flex' : 'none'}]}>
+                                                    <View style={[StyleViewUpcomingTrip.row,{display : this.state.truckData.cargo_handling_req == 1 ? 'flex' : 'none'}]}>
                                                         <View style={StyleViewUpcomingTrip.col1}>
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.NumberOfUSer}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.warehouse_booking_detailsi.cargo_number_of_users}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.cargo_number_of_users==undefined?"":this.state.truckData.cargo_number_of_users}</Text>
                                                         </View>
                                                     </View>
                                                     :null
