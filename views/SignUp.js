@@ -276,7 +276,10 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
   if(!this.state.referalRadio_button){
     this.setState({referral_code:''})
   }
-
+  if(this.state.referalRadio_button&&this.state.referal_code==""){
+   alert("Please Enter Referal Code");
+   return false
+  }
   return true;
 } 
 
