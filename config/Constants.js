@@ -12,6 +12,10 @@ const Constants = {
     BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
     IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
 
+    PAYMENT_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/mobile-payment",
+    PAYMENT_SUCCESS_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/success_payment",
+    PAYMENT_FAILD_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/failed_payment",
+
     
     GOOGLE_MAP_KEY:"AIzaSyBEDVKNDyVUzE2ajUXcrpX89ZORifA0cN4",
 

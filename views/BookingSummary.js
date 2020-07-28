@@ -193,7 +193,7 @@ export default class BookingSummary extends React.Component{
         await this.presenter.callGetApi(ApiConstants.getotherServices,"",true);
     }
    
-   async bookCMLtrip(payment_mode){
+    bookCMLtrip(payment_mode, transaction_id){
         // let dropoff_list = [{ "drop_location":"test 123","drop_latlng":"18.5590, 73.7868", "drop_address":"test 123"}, 
         // { "drop_location":"test 123", "drop_latlng":"18.5590, 73.7868", "drop_address":"test 123"}]
         
@@ -237,27 +237,10 @@ export default class BookingSummary extends React.Component{
         "grand_total":this.state.grand_total,
         "coupon_id":this.state.discountAmount_ID,
         "load_category_id":this.state.load_category_id,
-
-
-        // "pickup_address":"test 1",
-        // "pickup_latlng":"18.5590, 73.7868",
-        // "drop1_address":"road 123 highway",
-        // "drop1_latlng":"18.5590, 73.7868",
-        // "drop2_address":"road 124 highway",
-        // "drop2_latlng":"18.5590, 73.7868",
-        // "truck_type_id":"2",
-        // "pickup_date":"2029-12-12",
-        // "pickup_time":"12:30",
-        // "instructions":"no instructions",
-        // "other_services":[{"service_id" : 1, "qty": 23}],
-        // "booking_amount":"1200",
-        // "discount":"10",
-        // "grand_total":"1100",
-        // "coupon_id":"1",
-        // "load_category_id":"1",
-        
+        "payment_mode":payment_mode,
+        "payment_transaction_id":transaction_id
        }
-       await this.presenter.callPostApi(ApiConstants.bookCMLTrip,params,true);
+     this.presenter.callPostApi(ApiConstants.bookCMLTrip,params,true);
    }
    
    async getcalculatingBooking(){
@@ -291,13 +274,14 @@ export default class BookingSummary extends React.Component{
     }
 
     doPayment(){
-        this.props.navigation.navigate("PaymentMethod", {payment_amount : this.state.grand_total, paymentCallback : (payment_mode, payment_flag)=>{
+        this.props.navigation.navigate("PaymentMethod", {payment_amount : this.state.grand_total,
+            paymentCallback : (payment_mode, payment_flag, transaction_id)=>{
                 console.log("payment callback received")
                 if(payment_flag==1)
                 {
-                    this.bookCMLtrip(payment_mode)
+                    this.bookCMLtrip(payment_mode, transaction_id)
                 }else{
-                    this.presenter.getCommonAlertBox("Payment faild.")
+                    this.presenter.getCommonAlertBox("Payment failed.")
                 }
             }
         })
