@@ -10,11 +10,14 @@ import { StylePaymentMethod } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import Constants from '../config/Constants';
 import HeaderBar from '../config/HeaderBar';
+import { MainPresenter } from '../config/MainPresenter';
+import ApiConstants from '../config/ApiConstants';
 export default class PaymentMethod extends React.Component {
 
     constructor() {
         super();
         this.payment_method="",
+        this.user_id="",
         this.state = {
             payment_method:"",
             modalVisible: false,
@@ -23,9 +26,42 @@ export default class PaymentMethod extends React.Component {
         }
     }
 
+    componentDidMount(){
+        this.payment_amount = this.props.navigation.getParam('payment_amount')
+        console.log("payment amount on PaymentMethod ==> "+this.payment_amount)
+        this.presenter.callPostApi(ApiConstants.getMyProfile, "", true)
+    }
+
+    onResponse(apiConstant, data){
+
+        switch(apiConstant){
+            case ApiConstants.getMyProfile:{
+                if(data.status){
+                    this.user_id = data.user_data.user_id
+                    console.log("user id ===> "+this.user_id)
+                }else{
+
+                }
+                break;
+            }
+        }
+
+    }
+
     onPaymentSucess(){
         this.props.navigation.goBack()
-        this.props.navigation.state.params.paymentSuccess()
+        this.props.navigation.state.params.paymentCallback(this.payment_method,1,0)
+    }
+
+    redirectToPaymentGateway(){
+        this.props.navigation.navigate("WebBrowser",{ 
+            'payment_amount':this.payment_amount,
+            'user_id':this.user_id,
+            callback: (payment_flag, transaction_id)=>{
+                this.props.navigation.goBack()
+                this.props.navigation.state.params.paymentCallback(this.payment_method,payment_flag, transaction_id)
+            }, 
+        })
     }
 
     render() {
@@ -35,29 +71,9 @@ export default class PaymentMethod extends React.Component {
 
                 <HeaderBar title="Payment Method" isBack={true} isPaymentBack={true} isNotification={true} navigation={navigation} />
                 
+                <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
+                
                 <ScrollView bounces={false} style={{ width: wp('100%'), }}>
-                    {/* <View style={StylePaymentMethod.paymentamount}>
-                
-                        <View style={StylePaymentMethod.paymentamounttxt}>
-                            <Text style={StylePaymentMethod.paymentamountlefttxt}>Total Price</Text>
-                            <Text style={StylePaymentMethod.paymentamountrighttxt}>R 445</Text>
-                        </View>
-                
-                        <View style={StylePaymentMethod.paymentamounttxt}>
-                            <Text style={StylePaymentMethod.paymentamountlefttxt}>Other Services</Text>
-                            <Text style={StylePaymentMethod.paymentamountrighttxt}>R 55</Text>
-                        </View>
-                
-                        <View style={StylePaymentMethod.paymentamounttxt}>
-                            <Text style={StylePaymentMethod.paymentamountlefttxt}>Discount Voucher</Text>
-                            <Text style={StylePaymentMethod.paymentamountrighttxt}>-  R 10</Text>
-                        </View>
-                        <View style={[StylePaymentMethod.paymentamounttxt, { borderBottomWidth: 0, }]}>
-                            <Text style={StylePaymentMethod.paymenttotal}>Grand Total</Text>
-                            <Text style={StylePaymentMethod.paymenttotalamount}>R 490</Text>
-                        </View>
-                    
-                    </View> */}
 
                     <View style={StylePaymentMethod.paymentmethod}>
 
@@ -124,7 +140,7 @@ export default class PaymentMethod extends React.Component {
                                 <TouchableOpacity
                                     onPress={() => {
                                         this.setState({modalVisible:false})
-                                        this.onPaymentSucess()
+                                        this.redirectToPaymentGateway()
                                     }}
                                     style={StylePaymentMethod.popbtnwidth}
                                     underlayColor='#fff'>
