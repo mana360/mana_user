@@ -241,7 +241,7 @@ export default class BookingSummary extends React.Component{
         "payment_transaction_id":transaction_id
        }
      this.presenter.callPostApi(ApiConstants.bookCMLTrip,params,true);
-   }
+    }
    
    async getcalculatingBooking(){
        
