@@ -330,7 +330,7 @@ export default class ProfileSetUp extends React.Component {
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.company_telephoneNo}
                         ref={(ref)=>{this.input_company_telephone_number = ref}}
-                        maxLength={10}
+                        maxLength={9}
                         keyboardType="number-pad"
                         onChangeText={(text) => { 
                             if(!isNaN(text))
@@ -524,6 +524,7 @@ export default class ProfileSetUp extends React.Component {
                         autoCapitalize="none"
                         value={this.state.company_password}
                         secureTextEntry={true}
+                        maxLength={16}
                         ref={(ref)=>{this.input_company_new_password = ref}}
                         onChangeText={(text) => { this.setState({ company_password: text }) }}
                     />
@@ -540,6 +541,7 @@ export default class ProfileSetUp extends React.Component {
                         autoCapitalize="none"
                         value={this.state.company_confirmPass}
                         secureTextEntry={true}
+                        maxLength={16}
                         ref={(ref)=>{this.input_company_confirm_password = ref}}
                         onChangeText={(text) => { this.setState({ company_confirmPass: text }) }}
                     />
@@ -613,7 +615,7 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Telephone Number"
                         style={StyleSetUpProfile.TextInput}
                         keyboardType="number-pad"
-                        maxLength={10}
+                        maxLength={9}
                         ref={(ref)=>{this.input_user_telephone_number=ref}}
                         value={this.state.user_telephoneNumber}
                         onChangeText={(text) => { 
