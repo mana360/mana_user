@@ -152,6 +152,12 @@ getUserStatus(){
                 break;
         }
     }
+
+    totalBookingValue(item){
+        let value = parseInt(item.current_trips)+parseInt(item.upcoming_trips);
+        console.log(value)
+        return value
+    }
     getDashboard() {
         return (
             <View>
@@ -170,7 +176,7 @@ getUserStatus(){
                                     <AnimatedCircularProgress
                                         size={90}
                                         width={10}
-                                        fill={item.current_trips}
+                                        fill={this.totalBookingValue(item)}
                                         rotation="0"
                                         lineCap="round"
                                         duration={1200}
@@ -187,7 +193,7 @@ getUserStatus(){
                                                     index % 4 == 1 ? "#9ABD08" :
                                                         index % 5 == 2 ? "#FA4009" :
                                                             index % 4 == 3 ? "#57C9EB" : null
-                                        }}> {item.current_trips} </Text>)}
+                                        }}> {this.totalBookingValue(item)} </Text>)}
                                     </AnimatedCircularProgress>
 
                                 </View>
