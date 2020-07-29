@@ -19,6 +19,7 @@ export default class ProfileSetUp extends React.Component {
 
     constructor(props) {
         super(props);
+        this.title=""
         this.state = {
             policyRadio_button: false,
             customerType: '',//Individual,Company
@@ -98,9 +99,10 @@ export default class ProfileSetUp extends React.Component {
             company_emailId : global.temp_emailId,
             company_password : global.temp_password,
             company_confirmPass : global.temp_password,
+
             user_email : global.temp_emailId,
-            user_password : global.temp_emailId,
-            user_confirmPassword : global.temp_emailId,
+            user_password : global.temp_password,
+            user_confirmPassword : global.temp_password,
         })
         this.getCountryList()
     }
@@ -591,7 +593,10 @@ export default class ProfileSetUp extends React.Component {
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_LIGHT }}
                         selectedValue={this.state.user_title}
-                        onValueChange={(value) => { this.setState({ user_title: value }) }}
+                        onValueChange={(value) => { 
+                            this.title=value;
+                            this.setState({ user_title: value }) 
+                        }}
                     >
                         <Picker.Item label="Select" value="-1" />
                         <Picker.Item label="Mr" value="Mr" />
@@ -1276,7 +1281,7 @@ export default class ProfileSetUp extends React.Component {
                 let params = {
                     "first_name":this.state.user_firstName,
                     "last_name":this.state.user_lastName,
-                    "title":this.state.user_title,
+                    "title":this.title,
                     "telephone_number":this.state.user_telephoneNumber,    // missing param in api
                     "rsa_id":   this.state.user_docType=="1" ? this.state.user_rsaPassport : 0,
                     "rsa_file": this.state.user_docType=="1" ? this.state.user_doc_image_data : "",
