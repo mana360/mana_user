@@ -318,8 +318,6 @@ export default class CollectMyLoad extends React.Component {
 
                                 <View style={StyleTruckBooking.col2}>
                                     
-                                    
-                                    
                                     <TouchableOpacity style={[StyleTruckBooking.button,{paddingHorizontal:15,width:'75%',alignSelf:'center'}]}
                                         onPress={() => {
                                             item.type == "upcoming"

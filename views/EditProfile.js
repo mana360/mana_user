@@ -263,7 +263,7 @@ export default class EditProfile extends React.Component {
                         style={StyleEditProfile.TextInput}
                         value={this.state.company_telephoneNo}
                         keyboardType="number-pad"
-                        maxLength={10}
+                        maxLength={9}
                         onChangeText={(text) => {
                             this.setState({ company_telephoneNo: text })
                         }}
@@ -517,7 +517,7 @@ export default class EditProfile extends React.Component {
                         style={StyleEditProfile.TextInput}
                         value={this.state.user_telephoneNo}
                         keyboardType="number-pad"
-                        maxLength={10}
+                        maxLength={9}
                         onChangeText={(text) => {
                             if (!isNaN(text))
                                 this.setState({ user_telephoneNo: text })
