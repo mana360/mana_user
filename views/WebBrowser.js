@@ -39,7 +39,12 @@ export default class WebBrowser extends React.Component{
 
     paymentDone(transaction_id){
         this.props.navigation.goBack()
-        this.props.navigation.state.params.callback(1, transaction_id)  //1 = success, 2= failed
+        this.props.navigation.state.params.callback(1, transaction_id)  //1 = success
+    }
+
+    paymentFailed(transaction_id){
+        this.props.navigation.goBack()
+        this.props.navigation.state.params.callback(0, transaction_id)  //0= failed
     }
 
     render(){
@@ -75,6 +80,11 @@ export default class WebBrowser extends React.Component{
                         if(event.nativeEvent.data!=-1){
                             this.webView.stopLoading()
                             this.paymentDone(event.nativeEvent.data)
+                        }
+                        if(event.nativeEvent.data==-1){
+                            // payment failed scenario
+                            this.webView.stopLoading()
+                            this.paymentFailed(event.nativeEvent.data)
                         }
                     }
                 }}
