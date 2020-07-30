@@ -522,7 +522,7 @@ export default class ProfileSetUp extends React.Component {
                         autoCapitalize="none"
                         value={this.state.company_password}
                         secureTextEntry={true}
-                        maxLength={16}
+                        maxLength={12}
                         ref={(ref)=>{this.input_company_new_password = ref}}
                         onChangeText={(text) => { this.setState({ company_password: text }) }}
                     />
@@ -539,7 +539,7 @@ export default class ProfileSetUp extends React.Component {
                         autoCapitalize="none"
                         value={this.state.company_confirmPass}
                         secureTextEntry={true}
-                        maxLength={16}
+                        maxLength={12}
                         ref={(ref)=>{this.input_company_confirm_password = ref}}
                         onChangeText={(text) => { this.setState({ company_confirmPass: text }) }}
                     />
@@ -925,7 +925,7 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Password"
                         editable={false}
                         secureTextEntry={true}
-                        maxLength={16}
+                        maxLength={12}
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_password}
                         autoCapitalize="none"
@@ -941,7 +941,7 @@ export default class ProfileSetUp extends React.Component {
                     <TextInput
                         placeholder="Enter Confirm Password"
                         editable={false}
-                        maxLength={16}
+                        maxLength={12}
                         secureTextEntry={true}
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_confirmPassword}

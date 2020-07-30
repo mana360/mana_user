@@ -123,8 +123,11 @@ export default class LocationDetails extends React.Component {
         if(this.state.pickup_date == new moment().format('YYYY-MM-DD')){
             if(hour>=currentHour){
                 if(minute>=currentMinute){
+
                     console.log("Time is valid")
-                    this.setState({ pickup_time:  selectedTime+":00", isTimerError:false})
+                    this.setState({ pickup_time:  selectedTime+":00", isTimerError:false});
+                      
+                 
                 }else{
                     // alert('Enter correct minutes in time.')    
                 }
@@ -141,6 +144,7 @@ export default class LocationDetails extends React.Component {
             //     this.setState({ pickup_time:  selectedTime+":00", isTimerError:false})
             // }
         }else{
+                   
             this.setState({ pickup_time:  selectedTime, isTimerError:false})
         }
         

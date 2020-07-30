@@ -1053,6 +1053,7 @@ export default class EditProfile extends React.Component {
                                 style={StyleMyProfile.TextInput}
                                 value={this.state.current_password}
                                 autoCapitalize="none"
+                                maxLength={12}
                                 secureTextEntry={true}
                                 onChangeText={(text) => { this.setState({ current_password: text }) }}
 
@@ -1071,6 +1072,7 @@ export default class EditProfile extends React.Component {
                                 style={StyleMyProfile.TextInput}
                                 autoCapitalize="none"
                                 secureTextEntry={true}
+                                maxLength={12}
                                 value={this.state.new_password}
                                 onChangeText={(text) => { this.setState({ new_password: text }) }}
 

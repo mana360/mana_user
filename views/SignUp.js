@@ -332,6 +332,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
             <TextInput placeholder='Enter Password'
               ref={(ref)=>(this.TextInput_password = ref)}
               secureTextEntry={true}
+              maxLength={12}
               style={StyleSignUp.textInput_style}
               value={this.state.password}
               onChangeText={(newtext) => { this.setState({ password: newtext }) }}
