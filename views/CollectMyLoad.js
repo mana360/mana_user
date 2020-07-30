@@ -240,15 +240,15 @@ export default class CollectMyLoad extends React.Component {
                             // console.log("Other Services Data===>"+ JSON.stringify(data.booking_rates));
                            var  truckTableData=[];
                            var otherServices_Data=[];
+                           
                            data.booking_rates.truck_type.forEach((currentItem,index)=>{
                             currentItem.category_list.forEach(child=>{
                                 truckTableData[index]=[index+1 , currentItem.truck_type_name , child.categoty_name, child.rate]
-                                  
                             })
                             })
                             this.setState({truckTableData:truckTableData});
 
-                            console.log("=mayure =====>"+ JSON.stringify(data.booking_rates.other_service));
+                            console.log("=OtherServices =====>"+ JSON.stringify(data.booking_rates.other_service));
 
                                          data.booking_rates.other_service.forEach((currentItem,index) => {
                                           otherServices_Data[index]=[index+1,currentItem.other_service, currentItem.rate]
@@ -256,9 +256,6 @@ export default class CollectMyLoad extends React.Component {
 
                                              
                                          });
-
-                            
-
                             this.setState({otherServicesData:otherServices_Data});
                             console.log("======>"+ this.state.otherServicesData);
                           }else{
@@ -266,6 +263,7 @@ export default class CollectMyLoad extends React.Component {
                     //  this.presenter.getCommonAlertBox(data.message);
 
                           }
+                       
                         break;
                 }
                 case ApiConstants.referFriend:{
@@ -439,9 +437,8 @@ export default class CollectMyLoad extends React.Component {
                                             <View style={StyleCollectMyLoad.outerCircle}>
                                                 <View style={StyleCollectMyLoad.innerCircle}>
                                                     <Image style={StyleCollectMyLoad.truckImg}
-                                                        source={{uri:Constants.BASE_URL.substr(0,Constants.BASE_URL.length-5)+item.image}}
+                                                        source={{uri:item.image}}
                                                     />
-                                                    
                                                 </View>
                                             </View>
 

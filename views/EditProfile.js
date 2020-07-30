@@ -837,10 +837,10 @@ export default class EditProfile extends React.Component {
                 alert("Please enter telephone number")
                 return false
             }
-            if(this.state.company_telephoneNo.length!=10){
-                alert("Please enter correct telephone number")
-                return false
-            }
+            // if(this.state.company_telephoneNo.length!=9){
+            //     alert("Please enter correct telephone number")
+            //     return false
+            // }
             if(this.state.company_email==""){
                 alert("Please enter email Id")
                 return false
@@ -917,7 +917,7 @@ export default class EditProfile extends React.Component {
                     alert("Please enter telephone number")
                     return false
             }
-            if(this.state.user_telephoneNo.length!=10){
+            if(this.state.user_telephoneNo.length!=9){
                     alert("Please enter correct telephone number")
                     return false
             }
@@ -1258,7 +1258,7 @@ export default class EditProfile extends React.Component {
                     this.setState({
                         customerType:"company_profile",
                         company_name:data.user_data.company_name,
-                        company_telephoneNo:data.user_data.tele_number,
+                        company_telephoneNo:data.user_data.telephone_number,
                         company_email:data.user_data.email
                     })
                 }else{
@@ -1266,7 +1266,7 @@ export default class EditProfile extends React.Component {
                         customerType:"user_profile",
                         user_first_name:data.user_data.first_name,
                         user_last_name:data.user_data.last_name,
-                        user_telephoneNo:data.user_data.tele_number,
+                        user_telephoneNo:data.user_data.telephone_number,
                         email_id:data.user_data.email
                     })
                 }
@@ -1312,7 +1312,7 @@ export default class EditProfile extends React.Component {
                     "first_name":this.state.user_first_name,
                     "last_name":this.state.user_last_name,
                     "email_id":this.state.email_id,
-                    "mobile_no":this.state.user_telephoneNo,
+                    "telephone_number":this.state.user_telephoneNo,
                 }
                 this.presenter.callPostApi(ApiConstants.updateProfile, params, true)
             }
@@ -1322,7 +1322,8 @@ export default class EditProfile extends React.Component {
                 let params={
                     "registration_type":1,                  // company profile
                     "company_name":this.state.company_name,
-                    "company_contact":this.state.company_telephoneNo,
+                    // "company_contact":this.state.company_telephoneNo,
+                    "telephone_number":this.state.company_telephoneNo,
                     "email_id":this.state.company_email,
                 }
                 this.presenter.callPostApi(ApiConstants.updateProfile, params, true)

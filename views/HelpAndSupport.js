@@ -60,10 +60,10 @@ export default class HelpAndSupport extends React.Component {
         if(this.state.isUser){
             this.setState({
                 supportSubjectList:[
-                    { subject_id:0, subject_name:'Cargo Lost'},
-                    { subject_id:1, subject_name:'Late Delivery'},
-                    { subject_id:2, subject_name:'Driver not in contact'},
-                    { subject_id:3, subject_name:'Others'}
+                    { id:0, subject_name:'Cargo Lost'},
+                    { id:1, subject_name:'Late Delivery'},
+                    { id:2, subject_name:'Driver not in contact'},
+                    { id:3, subject_name:'Others'}
                 ]
             })
         }else{
@@ -84,12 +84,19 @@ export default class HelpAndSupport extends React.Component {
 
     async sendMessage(){
         if(this.subject_id=="-1"){
-            alert("Please select subject")
+            this.presenter.getCommonAlertBox("Please select subject")
+
         }else if(this.state.support_message==""){
-            alert("Please enter subject")
+            this.presenter.getCommonAlertBox("Please enter subject")
         }else{
             let param ={
-                'booking_id':this.booking_id==undefined?0:this.booking_id,
+                'booking_id':this.booking_id==undefined
+                ?
+                0
+                :this.booking_id==""?
+                0
+                :
+                this.booking_id,
                 'service_type_id':this.service_type_id==undefined?5:this.service_type_id,
                 'subject_id':this.subject_id,
                 'message': this.state.support_message
@@ -216,7 +223,7 @@ export default class HelpAndSupport extends React.Component {
                                         this.state.supportSubjectList!=""
                                         ?
                                             this.state.supportSubjectList.map((item)=>
-                                                <Picker.Item key={item.subject_id} value={item.subject_id} label={item.subject_name}/>
+                                                <Picker.Item key={item.id} value={item.id} label={item.subject_name}/>
                                             )
                                         : null
                                     }

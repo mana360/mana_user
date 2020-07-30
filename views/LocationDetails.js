@@ -121,20 +121,29 @@ export default class LocationDetails extends React.Component {
         let currentMinute = new moment().format('m')
 
         if(this.state.pickup_date == new moment().format('YYYY-MM-DD')){
-            if(hour>=currentHour){
-                if(minute>=currentMinute){
+            console.log("Time is valid")
+            this.setState({ pickup_time:  selectedTime+":00", isTimerError:false});
+                        console.log(currentHour+"   "+currentMinute);
+                        // console.log(hour+"   "+minute);
+                        if(currentHour-1==hour-1){
+                        }else{
+                            alert("invalid Time")
+                        }
+                
+          
+            // if(hour>=currentHour){
+            //     if(minute>=currentMinute){
 
-                    console.log("Time is valid")
-                    this.setState({ pickup_time:  selectedTime+":00", isTimerError:false});
+                    
                       
                  
-                }else{
-                    // alert('Enter correct minutes in time.')    
-                }
+            //     }else{
+            //         // alert('Enter correct minutes in time.')    
+            //     }
 
-            }else{
-                // alert('Enter correct hours in time.')
-            }
+            // }else{
+            //     // alert('Enter correct hours in time.')
+            // }
 
             // if(moment(selectedDT).isBefore(new moment().format('YYYY-MM-DD H:m'))){
             //     alert("Enter correct time.")
@@ -647,7 +656,7 @@ export default class LocationDetails extends React.Component {
                                         })
                                     }
                                     console.log("sending cat ===>"+JSON.stringify(this.state.LoadCategoryItemsSelected))
-                                    this.loadCategoryString = this.loadCategoryString.slice(0,-1)
+                                    this.loadCategoryString = this.loadCategoryString.slice(0,1)
                                     console.log("string====> "+this.loadCategoryString)
 
                                     let drop_list =[
@@ -694,7 +703,8 @@ export default class LocationDetails extends React.Component {
                                         //"load_category_id":this.other_flag==0?this.load_category_id:this.other_flag,
                                        " other_flag":this.other_flag,
                                     }
-
+                                    console.log("seletedLoad Category"+this.state.loadCategoryString);
+                                    
                                     if(!this.isValid()){
                                     }else{
                                         this.props.navigation.navigate('BookingSummary',{'booking_data':booking_data});
@@ -733,6 +743,7 @@ export default class LocationDetails extends React.Component {
                                                 const temp =[...this.state.LoadCategoryItems]
                                                 temp[index].isChecked = ! temp[index].isChecked
                                                 this.setState({LoadCategoryItems : temp})
+                                                console.log("checked===>"+JSON.stringify(temp))
                                             }}
                                         >
                                             <Image

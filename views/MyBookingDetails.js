@@ -4,7 +4,7 @@
     api by    :  Udayraj
  */
 import React from 'react'
-import { View, Text, Image, TouchableOpacity, TouchableWithoutFeedback, ScrollView, FlatList, TextInput, } from 'react-native'
+import { View, Text, Image, TouchableOpacity, TouchableWithoutFeedback, ScrollView, FlatList, TextInput, PermissionsAndroid, } from 'react-native'
 import Constants from '../config/Constants'
 import HeaderBar from '../config/HeaderBar'
 import FooterBar from '../config/FooterBar'
@@ -278,12 +278,12 @@ export default class MyBookingDetails extends React.Component {
                         </View>
                     </View>
 
-                    <View style={StyleMyBookingDetails.detailsRow}>
+                    <View style={ this.state.truck_booking_details.booking_date_time==undefined?{display:'none'}:StyleMyBookingDetails.detailsRow}>
                         <View style={{ flex: 1 }}>
                             <Text style={StyleMyBookingDetails.detailsKey}>{Constants.BOOKING_DATE_TIME}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.pickup_date} {this.state.truck_booking_details.pickup_time} </Text>
+                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.booking_date_time==undefined?"":this.state.truck_booking_details.booking_date_time} </Text>
                         </View>
                     </View>
 
@@ -429,11 +429,14 @@ export default class MyBookingDetails extends React.Component {
                             <Text style={StyleMyBookingDetails.detailsKey}>{Constants.LOAD_CATEGORY}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>
-                                {
-                                    this.state.load_category.slice(1,this.state.load_category.length-1)
+                           
+                                { this.state.truck_booking_details.load_category==undefined?null:
+                                    this.state.truck_booking_details.load_category.map((item,index)=>{
+                                        return(
+                                        <Text style={StyleMyBookingDetails.detailsValue}>{index+1})   { item.category_name} </Text>
+                                    )})
                                 }
-                            </Text>
+                           
                         </View>
                     </View>
 
@@ -556,11 +559,19 @@ export default class MyBookingDetails extends React.Component {
                             <Text style={[StyleMyBookingDetails.detailsKey, { textTransform: 'none', }]}>{Constants.Resend_OTP}</Text>
                         </View>
                         <TouchableOpacity style={{ flex: 1 }}
+                         disabled={this.state.truck_booking_details.booking_status==1?false:true}
                             onPress={()=>{
+                                console.log("Booking status"+this.state.truck_booking_details.booking_status);
                                 this.generateOTP();
                             }}
                         >
-                            <Text style={[StyleMyBookingDetails.detailsValue, { color: Constants.COLOR_GREEN, textDecorationLine: 'underline' }]}>Generate OTP</Text>
+                            <Text style={
+                                this.state.truck_booking_details.booking_status==1?
+                                [StyleMyBookingDetails.detailsValue, { color: Constants.COLOR_GREEN, textDecorationLine: 'underline' }]
+                                :
+                                [StyleMyBookingDetails.detailsValue, { color: Constants.COLOR_GREY_DARK, textDecorationLine: 'underline' }]
+
+                            } >Generate OTP</Text>
                         </TouchableOpacity>
                     </View>
 

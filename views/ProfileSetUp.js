@@ -1105,7 +1105,7 @@ export default class ProfileSetUp extends React.Component {
                     this.input_user_telephone_number.focus()
                     return false
             }
-            if(this.state.user_telephoneNumber.length!=10){
+            if(this.state.user_telephoneNumber.length!=9){
                     alert("Please enter correct telephone number")
                     this.input_user_telephone_number.focus()
                     return false
@@ -1212,7 +1212,7 @@ export default class ProfileSetUp extends React.Component {
                 this.input_company_telephone_number.focus()
                 return false
             }
-            if(this.state.company_telephoneNo.length!=10){
+            if(this.state.company_telephoneNo.length!=9){
                 alert("Please enter correct telephone number")
                 this.input_company_telephone_number.focus()
                 return false

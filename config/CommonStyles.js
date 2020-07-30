@@ -1720,7 +1720,7 @@ const StyleMyProfile = StyleSheet.create({
         borderBottomColor: Constants.COLOR_GREY
     },
     col1: {
-        width: '50%',
+        width: '40%',
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -1736,14 +1736,14 @@ const StyleMyProfile = StyleSheet.create({
         paddingLeft: 10,
     },
     col2: {
-        width: '50%',
+        width: '60%',
         height: '100%',
         alignItems: 'center',
         flexDirection: 'row',
     },
     col2Text: {
-        paddingLeft: 20,
-        fontSize: Constants.FONT_SIZE_LARGE,
+        paddingLeft: 10,
+        fontSize: Constants.FONT_SIZE__MEDIUM,
         color: Constants.COLOR_GREY_DARK,
     },
     ModalWrapper: {

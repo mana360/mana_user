@@ -141,7 +141,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.CompanyTelephonenumber}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.tele_number!=undefined ? this.state.userData.tele_number : "" }</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.telephone_number!=undefined ? this.state.userData.telephone_number : "" }</Text>
                     </View>
                 </View>
 
@@ -270,7 +270,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.TelephoneNo}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.tele_number!=undefined ? this.state.userData.tele_number : ""}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.telephone_number!=undefined ? this.state.userData.telephone_number : ""}</Text>
                     </View>
                 </View>
 
@@ -382,8 +382,8 @@ export default class MyProfile extends React.Component {
                         />
                         <Text style={StyleMyProfile.col1Text}>{Constants.EmailAddress}</Text>
                     </View>
-                    <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.email!=undefined ? this.state.userData.email : ""}</Text>
+                    <View style={[StyleMyProfile.col2]}>
+                        <Text style={[StyleMyProfile.col2Text]}>{this.state.userData.email!=undefined ? this.state.userData.email : ""}</Text>
                     </View>
                 </View>
 
@@ -643,7 +643,9 @@ export default class MyProfile extends React.Component {
                         <Text style={[StyleMyProfile.label,{textTransform:'capitalize'}]}>
                             {
                                 this.state.screen_title == 'UserProfile' 
-                                ? this.state.userData.first_name+" "+ this.state.userData.last_name
+                                ? this.state.userData.first_name==undefined?""
+                                :
+                                this.state.userData.first_name+" "+ this.state.userData.last_name
                                 : this.state.userData.company_name
                             }
                         </Text>

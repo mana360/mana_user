@@ -133,7 +133,7 @@ dateAndTime(itemDate,value){
                                     <View style={StyleCurrentTrip.bottomLine}>
                                         <Text style={StyleCurrentTrip.title}>
                                             {     this.service_type_id==1 
-                                                ? `${item.pickup_location} - ${item.drop_location.drop_location[0]}`
+                                                ? `${item.pickup_location} - ${item.Last_drop_location}`
                                                 : this.service_type_id==2
                                                 ? item.partner_name
                                                 :this.service_type_id==3

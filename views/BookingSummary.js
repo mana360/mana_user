@@ -90,7 +90,8 @@ export default class BookingSummary extends React.Component{
 
     componentDidMount(){
         this.booking_data = this.props.navigation.getParam('booking_data')
-        console.log("booking data ======> "+JSON.stringify(this.booking_data))
+        console.log("booking data =====================> "+JSON.stringify(this.booking_data));
+
         this.initServices();
         this.getOtherServices();
     }
@@ -98,12 +99,19 @@ export default class BookingSummary extends React.Component{
     async initServices(){
         let user_data = JSON.parse(await getUserData())
         console.log("USerData====>"+JSON.stringify(user_data));
-        this.setState({name : user_data[0].user_type==1?user_data[0].company_name:user_data[0].first_name+ " "+user_data[0].last_name, contact_number:user_data[0].tele_number})
+        this.setState({
+            name : user_data[0].user_type==1?user_data[0].company_name:user_data[0].first_name+ " "+user_data[0].last_name, 
+            contact_number:user_data[0].telephone_number})
         
         let i=1
         for(i=1;i<=5;i++){
                 this.state.countList.push(i);
         }
+
+        // let agb= this.user_data.filter((item)=>{
+        //         item.load_category.category_id
+        // })
+        // alert(""+JSON.stringify(agb));
         // this.userInfo = await getUserData();
         // this.userInfo = JSON.parse(this.userInfo);
         // console.log("userData_object========>"+ JSON.stringify(this.userInfo));
@@ -321,7 +329,7 @@ export default class BookingSummary extends React.Component{
                     total_price:data.booking_summary.booking_amount,
                     booking_amount:data.booking_summary.booking_amount,
                     vat:data.booking_summary.vat_tax_per,
-                    chargesTripCost:data.booking_summary.per_kilomiter_price,
+                    chargesTripCost:data.booking_summary.other_per,
                   });
               }else{
                 //   alert(data.message);
@@ -406,16 +414,17 @@ export default class BookingSummary extends React.Component{
             let currentMinute = new moment().format('m')
             
             if(this.state.pickup_date == new moment().format('YYYY-MM-DD')){
-                if(hour>=currentHour){
-                    if(minute>=currentMinute){
-                        console.log("Time is valid")
-                        this.setState({ pick_time:  selectedTime+":00", isTimerError:false})
-                    }else{
-                        alert('Enter correct time.')    
-                    }    
-                }else{
-                    alert('Enter correct time.')
-                }
+                console.log("Time is valid")
+                this.setState({ pick_time:  selectedTime+":00", isTimerError:false})
+                // if(hour>=currentHour){
+                //     if(minute>=currentMinute){
+                    
+                //     }else{
+                //         alert('Enter correct time.')    
+                //     }    
+                // }else{
+                //     alert('Enter correct time.')
+                // }
             }else{
                 this.setState({ pick_time:  selectedTime, isTimerError:false})
             }
@@ -762,7 +771,7 @@ export default class BookingSummary extends React.Component{
                                                 this.getcalculatingBooking();
                                                 // this.setState({otherServiceSelected:temparry})
                                             }}>
-                                                    <Image style={StyleBookingSummary.removeImg}
+                                                    <Image style={this.state.otherServicesdata==""?{display:'none'}: StyleBookingSummary.removeImg}
                                                     source={require('../images/remove.png')} />
                                             </TouchableOpacity>
                                         </View>
