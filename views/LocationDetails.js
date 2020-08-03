@@ -648,16 +648,7 @@ export default class LocationDetails extends React.Component {
 
                             <TouchableOpacity
                                 onPress={() => {
-                                    if(this.state.isOtherLoadCategorySelected){
-                                        this.state.LoadCategoryItemsSelected.map((item)=>{
-                                            if(item.category_name=="Others"){
-                                                item.category_name=this.state.otherLoadCategoryText
-                                            }
-                                        })
-                                    }
-                                    console.log("sending cat ===>"+JSON.stringify(this.state.LoadCategoryItemsSelected))
-                                    this.loadCategoryString = this.loadCategoryString.slice(0,1)
-                                    console.log("string====> "+this.loadCategoryString)
+                                   
 
                                     let drop_list =[
                                         {
@@ -743,7 +734,20 @@ export default class LocationDetails extends React.Component {
                                                 const temp =[...this.state.LoadCategoryItems]
                                                 temp[index].isChecked = ! temp[index].isChecked
                                                 this.setState({LoadCategoryItems : temp})
-                                                console.log("checked===>"+JSON.stringify(temp))
+                                                console.log("checked===>"+JSON.stringify(temp));
+
+                                                // ==============================
+                                                if(this.state.isOtherLoadCategorySelected){
+                                                    this.state.LoadCategoryItemsSelected.map((item)=>{
+                                                        if(item.category_name=="Others"){
+                                                            item.category_name=this.state.otherLoadCategoryText
+                                                        }
+                                                    })
+                                                }
+                                                console.log("sending cat ===>"+JSON.stringify(this.state.LoadCategoryItemsSelected))
+                                                if(this.loadCategoryString.length==1)
+                                                this.loadCategoryString = this.loadCategoryString.slice(0,-1)
+                                                console.log("string====> "+this.loadCategoryString)
                                             }}
                                         >
                                             <Image
