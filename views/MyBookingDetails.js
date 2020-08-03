@@ -14,6 +14,7 @@ import Modal from "react-native-modal";
 import {MainPresenter} from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
 import RNFetchBlob from 'rn-fetch-blob';
+import moment from 'moment'
 
 export default class MyBookingDetails extends React.Component {
 
@@ -283,7 +284,7 @@ export default class MyBookingDetails extends React.Component {
                             <Text style={StyleMyBookingDetails.detailsKey}>{Constants.BOOKING_DATE_TIME}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.booking_date_time==undefined?"":this.state.truck_booking_details.booking_date_time} </Text>
+                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.booking_date_time==undefined?"":moment(this.state.truck_booking_details.booking_date_time).format("DD/MMMM/YYYY  hh:mm:ss") } </Text>
                         </View>
                     </View>
 
@@ -540,7 +541,9 @@ export default class MyBookingDetails extends React.Component {
                         </View>
                         <View style={{ flex: 1 }}>
                             <Text style={this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_CANCELLED ? [StyleMyBookingDetails.detailsValue, { color: Constants.COLOR_RED }] : [StyleMyBookingDetails.detailsValue, { color: Constants.COLOR_GREEN }]}>
-                                {
+                                {  
+                              this.state.truck_booking_details.current_status== Constants.BOOKING_CURRENT_STATUS_PICKUP ? "Trip Started" 
+                                    :
                                     this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW ? "New"
                                         :
                                             this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_PICKED_UP ? "Driver Assigned"
@@ -548,7 +551,8 @@ export default class MyBookingDetails extends React.Component {
                                                     this.state.truck_booking_details['booking_status'] ==Constants.BOOKING_STATUS_DELIVERED ? "Delivered"
                                                         :
                                                         this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_CANCELLED ? "Cancelled"
-                                                            : null
+                                                   
+                                                        : null
                                 }
                             </Text>
                         </View>

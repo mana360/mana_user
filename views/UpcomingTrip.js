@@ -178,7 +178,7 @@ export default class UpcomingTrip extends React.Component {
                                                 ?
                                                 item.partner_name
                                                 :
-                                                `${item.pickup_location} - ${item.drop_location.drop_location[0]}`
+                                                `${item.pickup_location} - ${item.Last_drop_location}`
                                      
                                             }
                                         </Text>

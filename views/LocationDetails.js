@@ -125,7 +125,7 @@ export default class LocationDetails extends React.Component {
             this.setState({ pickup_time:  selectedTime+":00", isTimerError:false});
                         console.log(currentHour+"   "+currentMinute);
                         // console.log(hour+"   "+minute);
-                        if(currentHour-1==hour-1){
+                        if(currentHour<=hour){
                         }else{
                             alert("invalid Time")
                         }

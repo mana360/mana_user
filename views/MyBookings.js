@@ -56,7 +56,8 @@ export default class MyBookings extends React.Component{
             'start_index':0,
             'total_count':10
         }
-        this.presenter.callPostApi(ApiConstants.getMyBookings, param, true)
+        this.presenter.callPostApi(ApiConstants.getMyBookings, param, true);
+        
     }
 
     getOngoingBookingList(){
@@ -151,15 +152,26 @@ export default class MyBookings extends React.Component{
                 numColumns={1}
                 renderItem={
                     ({item})=>
-                    <TouchableOpacity style={StyleMyBooking.bookingRow}
+                    <TouchableOpacity style={
+                        StyleMyBooking.bookingRow
+                    }
                         onPress={()=>{this.props.navigation.navigate('MyBookingDetails',{'book_item':item, cancelTripCallback: ()=>{
                             console.log("callback for cancell trip")
                             this.getCurrentBookingList();
                             this.getPastBookingList();
+                            // alert("bhau")
                         }
                         })}}
                     >
-                        <Card>
+                        <Card style={ item.booking_status==Constants.BOOKING_STATUS_DELIVERED
+                        ?
+                        {display:"none"}
+                        :
+                        item.booking_status==Constants.BOOKING_STATUS_CANCELLED
+                        ? 
+                        {display:"none"}
+                        :
+                        {flex:1}}>
                             <CardItem>
                                 <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
 
@@ -179,7 +191,9 @@ export default class MyBookings extends React.Component{
                                                 :
                                                 null
                                             }>
-                                                {
+                                                {  item.current_status== Constants.BOOKING_CURRENT_STATUS_PICKUP ? "Trip Started" 
+                                                    :
+                                                    
                                                     item.booking_status==Constants.BOOKING_STATUS_NEW?"New"
                                                     :
                                                     item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?"Driver Assigned"
@@ -343,6 +357,7 @@ export default class MyBookings extends React.Component{
 
     render(){
         let {navigation} = this.props
+        
         return(
             <View style={{flex:1,}}>
                 

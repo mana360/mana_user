@@ -47,9 +47,9 @@ export class MainPresenter extends React.Component {
     /* -------------Public method------------------- */
     async callPostApi(apiConstant, params, loader) {
         let isConnected=await this._isNetworkAvailable();
-        console.log("Rietsh bhau==>"+isConnected);
+        console.log("ISconnected"+isConnected);
         if (!isConnected) {
-            alert("No Network")
+            this.getCommonAlertBox("Internet connection is unavailable.")
             return
         }
 
@@ -85,7 +85,7 @@ export class MainPresenter extends React.Component {
         let isConnected=await this._isNetworkAvailable();
         console.log("Rietsh bhau==>"+isConnected);
         if (!isConnected) {
-            alert("No Network")
+            this.getCommonAlertBox("Internet connection is unavailable.")
             return 
         }
 
@@ -116,7 +116,7 @@ export class MainPresenter extends React.Component {
     async callMultipartApi(apiConstant, params, loader) {
         let isConnected=await this._isNetworkAvailable();
         if (!isConnected) {
-            alert("No Network")
+            this.getCommonAlertBox("Internet connection is unavailable.")
             return
         }
         let authToken = await getAuthToken()
@@ -146,7 +146,7 @@ export class MainPresenter extends React.Component {
         let isConnected=await this._isNetworkAvailable();
         console.log("Rietsh bhau==>"+isConnected);
         if (!isConnected) {
-            alert("No Network")
+            this.getCommonAlertBox("Internet connection is unavailable.")
             return
         }
         let authToken = await getAuthToken()
@@ -193,7 +193,7 @@ export class MainPresenter extends React.Component {
         let isConnected=await this._isNetworkAvailable();
         console.log("Rietsh bhau==>"+isConnected);
         if (!isConnected) {
-            alert("No Network")
+            this.getCommonAlertBox("Internet connection is unavailable.")
             return
         }
         let authToken = await getAuthToken()
@@ -276,7 +276,7 @@ export class MainPresenter extends React.Component {
         let isConnected=await this._isNetworkAvailable();
         console.log("Rietsh bhau==>"+isConnected);
         if (!isConnected) {
-            alert("No Network")
+            this.getCommonAlertBox("Internet connection is unavailable.")
             return
         }
         
@@ -382,7 +382,7 @@ export class MainPresenter extends React.Component {
         if (this.props.onResponse) {
             this.props.onResponse(apiConstant, data?data:{})
         } else {
-            alert('No \'onResponse\' callback register for api call')
+            this.getCommonAlertBox('No \'onResponse\' callback register for api call')
         }
     }
     _initLoader(isloading) {

@@ -186,10 +186,13 @@ export default class HelpAndSupport extends React.Component {
 
                         <View style={{ backgroundColor: Constants.COLOR_WHITE }}>
 
-                            <View style={this.state.isUser ? { display: 'none' }:[{ paddingLeft: 45, marginTop: 15, }]}>
-                                <Text style={StyleTripHelpAndSupport.pickerTitle}>{Constants.Trip}</Text>
-                                <Text style={{ color: Constants.COLOR_GREY_LIGHT, marginVertical: 2 }}>{Constants.Nyc_Syc}</Text>
+                            {/* { 
+                            this.state.tripHelpAndSupport==true?
+                                <View style={this.state.isUser ? { display: 'none' }:[{ paddingLeft: 45, marginTop: 15, }]}>
+                                <Text style={StyleTripHelpAndSupport.pickerTitle}>{Constants.Trip} ID</Text>
+                                <Text style={{ color: Constants.COLOR_GREY_LIGHT, marginVertical: 2 }}>{this.booking_id}</Text>
                             </View>
+                            :null} */}
 
                             <View style={
                                 this.state.tripHelpAndSupport==true 

@@ -158,6 +158,7 @@ getUserStatus(){
         console.log(value)
         return value
     }
+    
     getDashboard() {
         return (
             <View>

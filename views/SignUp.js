@@ -201,7 +201,7 @@ showOTpModal() {
                       <TouchableOpacity style={StyleForgotPassword.modalButtonView}
                           onPress={()=>{
                               this.setState({otp_modal_visible:false})
-                              this.props.navigation.pop()
+                              // this.props.navigation.pop()
                           }}
                       >
                           <Text style={StyleForgotPassword.modalButtonLabel}>{Constants.BACK}</Text>
