@@ -522,7 +522,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DateOfPickUp}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.pickedup_date_time? moment(this.state.truckData.pickedup_date_time,"YY-MM-DD").format("DD MMM YYYY"):""}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.pickedup_date_time? moment(this.state.truckData.pickedup_date_time,"YY-MM-DD").format("DD/MM/YYYY"):""}</Text>
                                                         </View>
                                                     </View>
 
@@ -531,7 +531,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpTime}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{  this.state.truckData.pickedup_date_time?moment(this.state.truckData.pickedup_date_time).format("hh:mm:ss a"):""}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{  this.state.truckData.pickedup_date_time?moment(this.state.truckData.pickedup_date_time).format("hh:mm a"):""}</Text>
                                                         </View>
                                                     </View>
 
@@ -572,7 +572,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             </TouchableOpacity>
                                                         </View>
                                                     </View>
-                              <View style={[StyleViewUpcomingTrip.row,{display : this.state.showDestinationLocations ? 'flex' : 'none'}]}>
+                                                   <View style={[StyleViewUpcomingTrip.row,{display : this.state.showDestinationLocations ? 'flex' : 'none'}]}>
                                                         <View style={StyleViewUpcomingTrip.col1}>
                                                             <Text style={StyleViewUpcomingTrip.col1Text}></Text>
                                                         </View>
@@ -591,7 +591,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                     </View> 
 
                                            
-                                         <View style={[StyleViewUpcomingTrip.row,{}]}>
+                                                 <View style={[StyleViewUpcomingTrip.row,{}]}>
                                                         <View style={StyleViewUpcomingTrip.col1}>
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AddressDetails}</Text>
                                                         </View>
@@ -600,7 +600,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         </View>
                                                     </View>
                                                     
-                                          <View style={StyleViewUpcomingTrip.row}>
+                                                 <View style={StyleViewUpcomingTrip.row}>
                                                         <View style={StyleViewUpcomingTrip.col1}>
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AarrivalDate}</Text>
                                                         </View>
@@ -610,13 +610,14 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 </Text>
                                                         </View>
                                                     </View>
-                                       <View style={StyleViewUpcomingTrip.row}>
+                                    
+                                                 <View style={StyleViewUpcomingTrip.row}>
                                                         <View style={StyleViewUpcomingTrip.col1}>
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AarrivalTime}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
                                                             <Text style={StyleViewUpcomingTrip.col2Text}>
-                                                                {this.state.truckData.arrivalDateAndTime?moment(this.state.truckData.arrivalDateAndTime,"h:m:s").format("HH:MM:SS"):""}
+                                                                {this.state.truckData.arrivalDateAndTime?moment(this.state.truckData.arrivalDateAndTime,"hh:mm:ss").format("hh:mm a"):""}
                                                             </Text>
                                                         </View>
                                                     </View>
@@ -644,7 +645,7 @@ export default class ViewUpcomingTrip extends React.Component {
 
 
 
-                                                <View style={StyleViewUpcomingTrip.row}>
+                                                        <View style={StyleViewUpcomingTrip.row}>
                                                         <View style={StyleViewUpcomingTrip.col1}>
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.MakeofTruck}</Text>
                                                         </View>
@@ -671,39 +672,39 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         </View>
                                                     </View>
 
-                                                <View style={StyleViewUpcomingTrip.row}>
-                                                        <View style={StyleViewUpcomingTrip.col1}>
-                                                            <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DriverDEtails}</Text>
-                                                        </View>
-                                                        <View style={StyleViewUpcomingTrip.col2}>
-                                                            <TouchableOpacity 
-                                                            disabled={this.state.truckData==""?true:false}
-                                                            onPress={()=>{
-                                                                
-                                                                this.setState({driverDetailsModalVisible:true})
-                                                                }}>
-                                                                <Text style={[StyleViewUpcomingTrip.col2Text, { color: Constants.COLOR_GREEN, textDecorationLine: 'underline' }]}>View</Text>
-                                                            </TouchableOpacity>
-                                                        </View>
-                                                    </View>
-                                            
-                                        <View style={StyleViewUpcomingTrip.row}>
-                                                        <View style={StyleViewUpcomingTrip.col1}>
-                                                            <Text style={StyleViewUpcomingTrip.col1Text}>Start Point</Text>
-                                                        </View>
-                                                        <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{
-                                                                this.service_type_id==1
-                                                                ?
-                                                                this.state.truckData.pickup_location
-                                                                :this.service_type_id==3
-                                                                ?
-                                                               this.state.truckData.pickup_location
-                                                                :null
+                                                        <View style={StyleViewUpcomingTrip.row}>
+                                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                                    <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.DriverDEtails}</Text>
+                                                                </View>
+                                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                                    <TouchableOpacity 
+                                                                    disabled={this.state.truckData==""?true:false}
+                                                                    onPress={()=>{
+                                                                        
+                                                                        this.setState({driverDetailsModalVisible:true})
+                                                                        }}>
+                                                                        <Text style={[StyleViewUpcomingTrip.col2Text, { color: Constants.COLOR_GREEN, textDecorationLine: 'underline' }]}>View</Text>
+                                                                    </TouchableOpacity>
+                                                                </View>
+                                                            </View>
+                                                    
+                                                        <View style={StyleViewUpcomingTrip.row}>
+                                                                <View style={StyleViewUpcomingTrip.col1}>
+                                                                    <Text style={StyleViewUpcomingTrip.col1Text}>Start Point</Text>
+                                                                </View>
+                                                                <View style={StyleViewUpcomingTrip.col2}>
+                                                                    <Text style={StyleViewUpcomingTrip.col2Text}>{
+                                                                        this.service_type_id==1
+                                                                        ?
+                                                                        this.state.truckData.pickup_location
+                                                                        :this.service_type_id==3
+                                                                        ?
+                                                                    this.state.truckData.pickup_location
+                                                                        :null
 
-                                                            }</Text>
+                                                                    }</Text>
+                                                                </View>
                                                         </View>
-                                                </View>
 
                                                              {
                                                         this.state.truckData.drop_location == undefined ?null:
@@ -837,7 +838,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <View style={StyleViewUpcomingTrip.col2}>
                                                             <Text style={StyleViewUpcomingTrip.col2Text}>
                                                                 {this.state.warehouse_booking_detailsi.service_start_date==""?null:
-                                                                moment(this.state.warehouse_booking_detailsi.service_start_date).format("DD/MMMM/YYYY")} To {this.state.warehouse_booking_detailsi.service_end_date==""?null: moment(this.state.warehouse_booking_detailsi.service_end_date).format("DD/MMMM/YYYY")}
+                                                                moment(this.state.warehouse_booking_detailsi.service_start_date).format("DD/MM/YYYY")} To {this.state.warehouse_booking_detailsi.service_end_date==""?null: moment(this.state.warehouse_booking_detailsi.service_end_date).format("DD/MM/YYYY")}
                                                                 
                                                             </Text>
                                                         </View>

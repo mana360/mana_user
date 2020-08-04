@@ -240,7 +240,7 @@ export default class ViewCurrentTrip extends React.Component {
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
                                             <Text style={StyleViewCurrentTrip.col2Text}>{
-                                            moment(this.state.truckData.arrivalDateAndTime,"hh:mm:ss").format("hh:mm:ss")
+                                            moment(this.state.truckData.arrivalDateAndTime,"hh:mm:ss").format("hh:mm:ss a")
                                             }</Text>
                                         </View>
                                     </View>

@@ -285,7 +285,7 @@ export default class MyBookingDetails extends React.Component {
                             <Text style={StyleMyBookingDetails.detailsKey}>{Constants.BOOKING_DATE_TIME}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.booking_date_time==undefined?"":moment(this.state.truck_booking_details.booking_date_time).format("DD/MMMM/YYYY  hh:mm:ss") } </Text>
+                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.booking_date_time==undefined?"":moment(this.state.truck_booking_details.booking_date_time).format("DD/MM/YYYY  hh:mm a") } </Text>
                         </View>
                     </View>
 
@@ -294,7 +294,7 @@ export default class MyBookingDetails extends React.Component {
                             <Text style={StyleMyBookingDetails.detailsKey}>{Constants.EXPECTED_PICKUP}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.pickup_date} {this.state.truck_booking_details.pickup_time}</Text>
+                            <Text style={StyleMyBookingDetails.detailsValue}>{moment(this.state.truck_booking_details.pickup_date_time).format("DD/MM/YYYY hh:mm a")} </Text>
                         </View>
                     </View>
 

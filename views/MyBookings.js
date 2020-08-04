@@ -27,10 +27,12 @@ export default class MyBookings extends React.Component{
     }
 
    async componentDidMount(){
+    this.getCurrentBookingList();
     this.willFocusSubscription = this.props.navigation.addListener(
         'willFocus',
         () => {    this.getCurrentBookingList() }
       );
+
  
     }
 
@@ -87,7 +89,15 @@ export default class MyBookings extends React.Component{
         }
         this.presenter.callPostApi(ApiConstants.getMyBookings, param, true)
     }
+    mergeArray(reponse_data){
+        let data=[...this.state.current_booking_data]
+        reponse_data.map((item,index)=>{
 
+            data.push(item)
+        })
+
+        this.setState({current_booking_data:data});
+    }
     async onResponse(apiConstant, data) {
         switch (apiConstant) {
 
@@ -107,7 +117,8 @@ export default class MyBookings extends React.Component{
                     ?
                     null
                     :
-                     this.setState({ current_booking_data : data.cml_booking_list, })
+                    //  this.setState({ current_booking_data : data.cml_booking_list, })
+                    this.mergeArray( data.cml_booking_list)
                     :
                     null
                    
@@ -116,6 +127,7 @@ export default class MyBookings extends React.Component{
             this.presenter.getCommonAlertBox(data.message);
 
                 }
+                
                 this.state.resp_handler=="1"
                 ? this.getOngoingBookingList()
                 : this.state.resp_handler=="2"
@@ -171,8 +183,8 @@ export default class MyBookings extends React.Component{
                         onPress={()=>{this.props.navigation.navigate('MyBookingDetails',{'book_item':item, cancelTripCallback: ()=>{
                             console.log("callback for cancell trip")
                             this.getCurrentBookingList();
+                            this.getOngoingBookingList()
                             this.getPastBookingList();
-                            // alert("bhau")
                         }
                         })}}
                     >

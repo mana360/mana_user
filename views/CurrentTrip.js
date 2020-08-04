@@ -150,7 +150,7 @@ dateAndTime(itemDate,value){
 
                                         <Text style={StyleUpcomingTrip.labeltext}>{this.service_type_id==3? Constants.PICKEDUP:null}</Text>
                                         <Text style={StyleUpcomingTrip.datacss}>:
-                                            { moment(item.pickedup_date_time).format("DD/MMMM/YYYY")
+                                            { moment(item.pickedup_date_time).format("DD/MM/YYYY")
                                                 
                                             }
                                         </Text>
@@ -171,7 +171,7 @@ dateAndTime(itemDate,value){
                                        ?
                                        this.dateAndTime(item.pickedup_date_time,0)
                                        :
-                                       moment(item.service_start_date).format("DD/MMM/YYYY")
+                                       moment(item.service_start_date).format("DD MMMM YYYY")
                                        
                                         }</Text>
                                         </View>
@@ -199,7 +199,7 @@ dateAndTime(itemDate,value){
                                           this.service_type_id==1?
                                            this.dateAndTime(item.arrivalDateAndTime,0)
                                           :
-                                           moment(item.service_end_date).format("DD/MMM/YYYY  hh:mm:ss A")
+                                           moment(item.service_end_date).format("DD MMMM YYYY  hh:mm a")
                                         
                                         }</Text>
 

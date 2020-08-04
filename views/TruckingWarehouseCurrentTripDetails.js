@@ -219,7 +219,7 @@ componentDidMount(){
                                             <Text style={StyleViewCurrentTrip.col1Text}>Estimated time to completion of trip</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{moment(this.state.warehouseTrucking_data.date_of_drop).format("hh:mm:ss")}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{moment(this.state.warehouseTrucking_data.date_of_drop).format("hh:mm:ss a")}</Text>
                                         </View>
                                     </View>
 
