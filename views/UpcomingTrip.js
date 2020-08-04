@@ -191,7 +191,7 @@ export default class UpcomingTrip extends React.Component {
 
                                         <Text style={StyleUpcomingTrip.labeltext}>{this.service_type_id==3? Constants.PICKEDUP:null}</Text>
                                         <Text style={StyleUpcomingTrip.datacss}>
-                                            { moment(item.pickedup_date_time).format("DD/MMMM/YYYY")
+                                            { moment(item.pickedup_date_time).format("DD/MMMM/YYYY HH:MM:SS")
                                                 
                                             }
                                         </Text>
@@ -207,9 +207,9 @@ export default class UpcomingTrip extends React.Component {
                                             {   this.service_type_id==1
                                                 ? moment(item.date_of_pickup).format("DD MMM YYYY")
                                                 : this.service_type_id==2
-                                                ? moment(item.service_start_date).format("DD/MMM/YYYY  hh:mm:ss ")
+                                                ? moment(item.service_start_date).format("DD/MMM/YYYY ")
                                                 :this.service_type_id==3
-                                                ?moment(item.service_start_date).format("DD/MMM/YYYY  hh:mm:ss")
+                                                ?moment(item.service_start_date).format("DD/MMM/YYYY ")
                                                 :null
                                             }
                                         </Text>
@@ -225,9 +225,9 @@ export default class UpcomingTrip extends React.Component {
                                                 ?
                                                  moment(item.arrivalDateAndTime,"YY-MM-DD").format("DD/MMMM/YYYY")
                                                 :this.service_type_id==2
-                                                ?  moment(item.service_end_date).format("DD/MMMM/YYYY hh:mm:ss")
+                                                ?  moment(item.service_end_date).format("DD/MMMM/YYYY ")
                                                 :this.service_type_id==3
-                                                ?moment(item.service_end_date).format("DD/MMMM/YYYY hh:mm:ss")
+                                                ?moment(item.service_end_date).format("DD/MMMM/YYYY ")
                                                 :null
                                             }
                                         </Text>

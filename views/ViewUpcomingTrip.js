@@ -531,7 +531,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpTime}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{  this.state.truckData.pickedup_date_time?moment(this.state.truckData.pickedup_date_time,"h:m:s").format("hh:mm:ss"):""}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{  this.state.truckData.pickedup_date_time?moment(this.state.truckData.pickedup_date_time).format("hh:mm:ss a"):""}</Text>
                                                         </View>
                                                     </View>
 
@@ -549,7 +549,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.AddressDetails}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.pickup_location==undefined?"":this.state.truckData.pickup_location}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{this.state.truckData.pickup_address==undefined?"":this.state.truckData.pickup_address}</Text>
                                                         </View>
                                                     </View>
 
@@ -616,7 +616,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
                                                             <Text style={StyleViewUpcomingTrip.col2Text}>
-                                                                {this.state.truckData.arrivalDateAndTime?moment(this.state.truckData.arrivalDateAndTime,"h:m:s").format("h:m:ss"):""}
+                                                                {this.state.truckData.arrivalDateAndTime?moment(this.state.truckData.arrivalDateAndTime,"h:m:s").format("HH:MM:SS"):""}
                                                             </Text>
                                                         </View>
                                                     </View>
@@ -808,19 +808,21 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <View style={StyleViewUpcomingTrip.col2}>
                                                             <Text style={[StyleViewUpcomingTrip.col2Text],{width:"80%"}}>{this.state.warehouse_booking_detailsi.warehouse_location}</Text>
                                                             <TouchableOpacity style={{ position: 'absolute', right: 5, alignSelf: 'center' }}
-                                                            disabled={this.state.truckData==""?true:false}
+                                                            // disabled={
+                                                                
+                                                            //     this.state.truckData==""?true:false
+                                                            // }
+                                                          
                                                            onPress={()=>{
-                                                                this.props.navigation.navigate('MapViews',{"warehouse_flag":true,'WarehouseCoordinates':
-                                                                this.state.truckData.warehouse_latlng==undefined
-                                                                ?
-                                                                alert("Co-ordinate Not Found")
-                                                                :
-                                                                this.state.truckData.warehouse_latlng==""
-                                                                ?
-                                                                alert("Co-ordiante Not Found")
-                                                                :
-                                                                this.state.truckData.warehouse_latlng
-                                                            })
+                                                                if( this.state.truckData.warehouse_latlng==""||this.state.warehouse_booking_detailsi.warehouse_latlng==""){
+                                                                    alert("Co-ordinate Not Found");
+                                                                }else{
+                                                                    this.props.navigation.navigate('MapViews',{"warehouse_flag":true,'WarehouseCoordinates': 
+                                                                    this.service_type_id==3?
+                                                                    this.state.truckData.warehouse_latlng
+                                                                    :this.state.warehouse_booking_detailsi.warehouse_latlng})
+                                                                }
+                                                                
                                                             }}
                                                             >
                                                                 <Image style={{ width: 30, height: 30, }} source={require('../images/location_1.png')} />

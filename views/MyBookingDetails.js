@@ -260,6 +260,7 @@ export default class MyBookingDetails extends React.Component {
     }
 
     render() {
+        
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, }}>

@@ -416,9 +416,20 @@ export default class BookingSummary extends React.Component{
             if(this.state.pickup_date == new moment().format('YYYY-MM-DD')){
                 console.log("Time is valid")
                 this.setState({ pick_time:  selectedTime+":00", isTimerError:false});
+                console.log(currentHour+"<="+hour);
+               
                 if(currentHour<=hour){
                 }else{
-                    alert("invalid Time")
+                    alert("invalid Time");
+                    // this.setState({ pickup_time: ""});
+                }
+
+                if(currentHour==hour){
+                    if(minute<=currentMinute){
+                        alert("Invalid Time");
+                    }
+                }else{
+
                 }
                 // if(hour>=currentHour){
                 //     if(minute>=currentMinute){
