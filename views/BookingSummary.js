@@ -267,7 +267,7 @@ export default class BookingSummary extends React.Component{
             "longitude":this.state.drop_off_address_1_long
         },
         "truck_type_id" : this.state.truck_Type_id,
-        "pickup_date": this.state.pick_time,
+        "pickup_date": this.state.pickup_date,
         "load_category_id":this.state.load_category_id , 
         
         "other_services" :this.other_servicesData,
@@ -389,7 +389,7 @@ export default class BookingSummary extends React.Component{
           if (action !== DatePickerAndroid.dismissedAction) {
             const finalDate = `${month + 1}/${day}/${year}`;
             console.log(finalDate)
-            this.setState({ pickup_date: moment(finalDate).format('DD/MM/YYYY') })
+            this.setState({ pickup_date: moment(finalDate).format('YYYY-MM-DD') })
             console.log("selected date ===>"+this.state.pickup_date)
           }
     

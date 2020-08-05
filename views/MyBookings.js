@@ -27,10 +27,13 @@ export default class MyBookings extends React.Component{
     }
 
    async componentDidMount(){
-    this.getCurrentBookingList();
+    // this.getCurrentBookingList();
     this.willFocusSubscription = this.props.navigation.addListener(
         'willFocus',
-        () => {    this.getCurrentBookingList() }
+        () => {   
+                 this.getCurrentBookingList() ;
+                //  this.headerRefresh();
+                }
       );
 
  
@@ -182,9 +185,9 @@ export default class MyBookings extends React.Component{
                     }
                         onPress={()=>{this.props.navigation.navigate('MyBookingDetails',{'book_item':item, cancelTripCallback: ()=>{
                             console.log("callback for cancell trip")
-                            this.getCurrentBookingList();
-                            this.getOngoingBookingList()
-                            this.getPastBookingList();
+                            // this.getCurrentBookingList();
+                            // this.getOngoingBookingList()
+                            // this.getPastBookingList();
                         }
                         })}}
                     >
@@ -198,11 +201,12 @@ export default class MyBookings extends React.Component{
                                         </View>
                                         <View style={{flex:1}}>
                                             <Text style={
-                                                item.current_status== Constants.BOOKING_CURRENT_STATUS_PICKUP ?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_GREEN}]
-                                                :
+                                                
                                                 item.booking_status== Constants.BOOKING_STATUS_NEW ?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
                                                 :
-                                                item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
+                                                item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_GREEN}]
+                                                :
+                                                item.current_status== Constants.BOOKING_CURRENT_STATUS_PICKUP ?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
                                                 :
                                                 item.booking_status==Constants.BOOKING_STATUS_DELIVERED?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_GREEN}]
                                                 :
@@ -211,7 +215,7 @@ export default class MyBookings extends React.Component{
                                                 null
                                             }>
                                                 { 
-                                                 item.current_status== Constants.BOOKING_CURRENT_STATUS_PICKUP ? "Trip Started" 
+                                                 item.current_status== Constants.BOOKING_CURRENT_STATUS_UPCOMING ? "Trip Started" 
                                                     :
                                                     item.booking_status==Constants.BOOKING_STATUS_NEW?"New"
                                                     :
@@ -294,7 +298,7 @@ export default class MyBookings extends React.Component{
                         : StyleMyBooking.bookingRow}
                             onPress={()=>{this.props.navigation.navigate('MyBookingDetails',{'book_item':item,cancelTripCallback: ()=>{
                                 console.log("callback for cancell trip");
-                                this.getPastBookingList();
+                                // this.getPastBookingList();
                             }
                         })}}
                         >
@@ -379,7 +383,11 @@ export default class MyBookings extends React.Component{
             </View>
         )    
     }
-
+    headerRefresh(){
+        return(
+            <HeaderBar/>
+        )
+    }
     render(){
         let {navigation} = this.props
         

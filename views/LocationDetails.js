@@ -659,7 +659,7 @@ export default class LocationDetails extends React.Component {
 
                             <TouchableOpacity
                                 onPress={() => {
-                                   
+                                   console.log("hy date pahije==>"+this.state.pickup_date);
 
                                     let drop_list =[
                                         {

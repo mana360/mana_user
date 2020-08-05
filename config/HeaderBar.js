@@ -39,10 +39,17 @@ class HeaderBar extends React.Component {
   }
   componentDidMount(){
     this.getUserStatus();
+    this.willFocusSubscription = this.props.navigation.addListener(
+      'willFocus',
+      () => { this.getUserStatus() }
+    );
+    
     
   }
   componentWillUnmount() {
     this.backHandler.remove();
+    this.willFocusSubscription.remove();
+
   }
 
   handleBackPress() {
