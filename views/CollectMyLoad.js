@@ -132,6 +132,7 @@ export default class CollectMyLoad extends React.Component {
                             </View>
                             <TextInput placeholder='Enter Mobile Number'
                                 keyboardType="number-pad"
+                                maxLength={9}
                                 style={StyleCollectMyLoad.textInput_style}
                                 value={this.state.refer_mobile_number}
                                 onChangeText={(newText) => {
@@ -186,7 +187,7 @@ export default class CollectMyLoad extends React.Component {
             }
         }
         if(type==1){
-            if(this.state.refer_mobile_number.length!=10){
+            if(this.state.refer_mobile_number.length!=9){
                 alert("Please enter correct mobile number.")
             }else{
                 let params ={

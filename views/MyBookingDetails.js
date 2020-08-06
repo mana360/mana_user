@@ -203,7 +203,7 @@ export default class MyBookingDetails extends React.Component {
                 })
               this.setState({ truck_booking_details : this.state.truck_booking_details[0] })
                 console.log("other =====> "+JSON.stringify(this.state.other_services))
-                console.log("Date ===>"+ moment(this.state.truck_booking_details.booking_date_time).toDate().format("DD/MM/YYY hh:mm a"));
+                console.log("Date ===>"+ moment(this.state.truck_booking_details.booking_date_time).toDate().format("DD/MM/YYY hh:mm A"));
             break;
         }
 
@@ -286,7 +286,7 @@ export default class MyBookingDetails extends React.Component {
                             <Text style={StyleMyBookingDetails.detailsKey}>{Constants.BOOKING_DATE_TIME}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.booking_date_time==undefined?"":moment(this.state.truck_booking_details.booking_date_time).format("DD/MM/YYYY  hh:mm a") } </Text>
+                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.booking_date_time==undefined?"":moment(this.state.truck_booking_details.booking_date_time).format("DD/MM/YYYY  hh:mm A") } </Text>
                   
                         </View>
                     </View>
@@ -296,7 +296,7 @@ export default class MyBookingDetails extends React.Component {
                             <Text style={StyleMyBookingDetails.detailsKey}>{Constants.EXPECTED_PICKUP}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>{ this.state.truck_booking_details.pickup_date_time?moment(this.state.truck_booking_details.pickup_date_time).format("DD/MM/YYYY hh:mm a"):""} </Text>
+                            <Text style={StyleMyBookingDetails.detailsValue}>{ this.state.truck_booking_details.pickup_date_time?moment(this.state.truck_booking_details.pickup_date_time).format("DD/MM/YYYY hh:mm A"):""} </Text>
                         </View>
                     </View>
 
@@ -559,9 +559,10 @@ export default class MyBookingDetails extends React.Component {
                                     :
                                     this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW ? "New"
                                         :
-                                            this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_PICKED_UP ? "Driver Assigned"
-                                                :
-                                                    this.state.truck_booking_details['booking_status'] ==Constants.BOOKING_STATUS_DELIVERED ? "Delivered"
+                                        
+                                          this.state.truck_booking_details['booking_status'] ==Constants.BOOKING_STATUS_DELIVERED ? "Delivered"
+                                         :   this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_PICKED_UP ? "Driver Assigned"
+                                                
                                                         :
                                                         this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_CANCELLED ? "Cancelled"
                                                    
@@ -594,7 +595,10 @@ export default class MyBookingDetails extends React.Component {
 
 
 
-                     <View style={   this.state.truck_booking_details.current_status==Constants.BOOKING_CURRENT_STATUS_UPCOMING?
+                     <View style={  this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_DELIVERED?
+                     {display:'none'}
+                     :
+                           this.state.truck_booking_details.current_status==Constants.BOOKING_CURRENT_STATUS_UPCOMING?
                                 {display:'none'}
                                 :
                            this.state.truck_booking_details.booking_status== Constants.BOOKING_STATUS_PICKED_UP?StyleMyBookingDetails.detailsRow:{display:'none'} }>
@@ -613,6 +617,26 @@ export default class MyBookingDetails extends React.Component {
                             } >Generate OTP</Text>
                         </TouchableOpacity>
                     </View> 
+
+                    <View style={ this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW
+                     ?{ display: "none" } 
+                     :
+                      this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_CANCELLED
+                     ? {display:"none"}
+                    : 
+                    this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_DELIVERED
+                     ?  {display:"none"}
+                     :
+                      [StyleMyBookingDetails.detailsRow,{justifyContent:'center'} ]}>
+                       
+                            <TouchableOpacity style={{width:120, justifyContent:'center', alignItems:'center', backgroundColor:Constants.COLOR_GREEN, padding:10}}
+                                onPress={()=>{ this.setState({isShareMyRideModalVisible:true}) }}>
+                                <Text style={{color:Constants.COLOR_WHITE, textAlign:'center'}}>Share my Ride</Text>
+                            </TouchableOpacity>
+                        
+                       
+                    </View>
+
 
                     <View style={this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW ? StyleMyBookingDetails.detailsRow : { display: "none" }}>
                         <View style={{ flex: 1 }}>
@@ -762,6 +786,7 @@ export default class MyBookingDetails extends React.Component {
                                 onChangeText={(value)=>{ this.setState({shareByMobile:value}) }}
                                 keyboardType="number-pad"
                                 autoCapitalize="none"
+                                maxLength={9}
                                 placeholder="Enter mobile number"
                                 style={{width:'60%', borderBottomWidth:0.5, borderBottomColor:Constants.COLOR_GREY_DARK}}
                             />

@@ -415,6 +415,18 @@ export default class ViewUpcomingTrip extends React.Component {
                                             </Text>
                                         </View>
                                     </View>
+                                    <View style={ this.state.truckData.recurring_req==1?StyleViewUpcomingTrip.row:{display:'none'}}>
+                                        <View style={StyleViewUpcomingTrip.col1}>
+                                            <Text style={StyleViewUpcomingTrip.col1Text}>Recurring ID</Text>
+                                        </View>
+                                        <View style={StyleViewUpcomingTrip.col2}>
+                                            <Text style={StyleViewUpcomingTrip.col2Text}>
+                                                {this.state.truckData.recurring_id==undefined?"NA": 
+                                                this.state.truckData.recurring_req==1?this.state.truckData.recurring_id:""
+                                                }
+                                            </Text>
+                                        </View>
+                                    </View>
 
                                     <View style={StyleViewUpcomingTrip.row}>
                                         <View style={StyleViewUpcomingTrip.col1}>
@@ -445,6 +457,10 @@ export default class ViewUpcomingTrip extends React.Component {
                                                 :this.state.truckData.current_status ==Constants.BOOKING_CURRENT_STATUS_TRIP_COMPLETED_CARGO_OFFLOADED ? "Trip completed, cargo offloaded" 
                                                 :this.state.truckData.current_status ==Constants.BOOKING_CURRENT_STATUS_UPCOMING ? "Upcoming" 
                                                 :this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In Storage"
+                                                :this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_DELIVERED? "Delivered"
+                                                :this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_PENDING? "Pending"
+
+
 
 
                                                 // :this.state.truckData.current_status == Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In storage"
@@ -453,8 +469,10 @@ export default class ViewUpcomingTrip extends React.Component {
                                             </Text>
                                             
                                         </View>
+                                  
                                     </View>
 
+                                            
                                     <Tabs
                                         initialPage={0}
                                         style={{ borderRightWidth: 1, borderColor: 'white' }}
@@ -531,7 +549,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                             <Text style={StyleViewUpcomingTrip.col1Text}>{Constants.PickUpTime}</Text>
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
-                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{  this.state.truckData.pickedup_date_time?moment(this.state.truckData.pickedup_date_time).format("hh:mm a"):""}</Text>
+                                                            <Text style={StyleViewUpcomingTrip.col2Text}>{  this.state.truckData.pickedup_date_time?moment(this.state.truckData.pickedup_date_time).format("hh:mm A"):""}</Text>
                                                         </View>
                                                     </View>
 
@@ -617,7 +635,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
                                                             <Text style={StyleViewUpcomingTrip.col2Text}>
-                                                                {this.state.truckData.arrivalDateAndTime?moment(this.state.truckData.arrivalDateAndTime,"hh:mm:ss").format("hh:mm a"):""}
+                                                                {this.state.truckData.arrivalDateAndTime?moment(this.state.truckData.arrivalDateAndTime,"hh:mm:ss").format("hh:mm A"):""}
                                                             </Text>
                                                         </View>
                                                     </View>

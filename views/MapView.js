@@ -82,11 +82,11 @@ export default class MapViews extends React.Component {
 
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
       Geolocation.getCurrentPosition((position) => {
-        this.setState({
-          current_latitude: position.coords.latitude,
-          current_longitude: position.coords.longitude
-        })
-        this.getCurrentAdddress(position.coords.latitude,position.coords.longitude);
+        // this.setState({
+        //   current_latitude: position.coords.latitude,
+        //   current_longitude: position.coords.longitude
+        // })
+        // this.getCurrentAdddress(position.coords.latitude,position.coords.longitude);
       }, (error) => {
         console.log(error.code, error.message)
       },

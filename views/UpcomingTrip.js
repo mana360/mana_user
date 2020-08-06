@@ -143,8 +143,13 @@ export default class UpcomingTrip extends React.Component {
                             <TouchableOpacity style={StyleUpcomingTrip.row} 
                                 onPress={() => {
                                     if(this.service_type_id==1){
-                                        this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':item.truck_booking_id, 'service_type_id':this.service_type_id, 'flag_upcoming_Trip':1})
-                                    }
+                                        // alert("me ahe "+item.recurring_req)
+                                            if(item.recurring_req==1){
+                                                this.props.navigation.navigate('RecurringTrips', {'booking_id':item.truck_booking_id,"currentTrip":false,"reccurringItems":item.recurring_trips,"service_type_id":this.service_type_id})
+                                            }else{
+                                        this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':item.truck_booking_id, 'service_type_id':this.service_type_id, 'flag_upcoming_Trip':1})                                   
+                                     }
+                                     }
                                     if(this.service_type_id==2){
                                         this.props.navigation.navigate('ViewUpcomingTrip', {'booking_id':item.warehouse_booking_id, 'service_type_id':this.service_type_id, 'flag_upcoming_Trip':1})
                                     }
@@ -191,7 +196,7 @@ export default class UpcomingTrip extends React.Component {
 
                                         <Text style={StyleUpcomingTrip.labeltext}>{this.service_type_id==3? Constants.PICKEDUP:null}</Text>
                                         <Text style={StyleUpcomingTrip.datacss}>
-                                            { moment(item.pickedup_date_time).format("DD/MM/YYYY  hh:mm a")
+                                            { moment(item.pickedup_date_time,"YYYY-MM-DD").format("DD/MM/YYYY  hh:mm A")
                                                 
                                             }
                                         </Text>
@@ -202,14 +207,14 @@ export default class UpcomingTrip extends React.Component {
                                             style={[StyleUpcomingTrip.imageIcon]}
                                         />
 
-                                        <Text style={StyleUpcomingTrip.labeltext}>{this.service_type_id==1? Constants.Date:Constants.Start_Date}</Text>
+                                        <Text style={StyleUpcomingTrip.labeltext}>{this.service_type_id==1? Constants.pickupDate:Constants.Start_Date}</Text>
                                         <Text style={StyleUpcomingTrip.datacss}>
                                             {   this.service_type_id==1
-                                                ? moment(item.date_of_pickup).format("DD/MM/YYYY")
+                                                ? moment(item.date_of_pickup,"YYYY-MM-DD").format("DD/MM/YYYY")
                                                 : this.service_type_id==2
-                                                ? moment(item.service_start_date).format("DD/MM/YYYY ")
+                                                ? moment(item.service_start_date,"YYYY-MM-DD").format("DD/MM/YYYY ")
                                                 :this.service_type_id==3
-                                                ?moment(item.service_start_date).format("DD/MM/YYYY ")
+                                                ?moment(item.service_start_date,"YYYY-MM-DD").format("DD/MM/YYYY ")
                                                 :null
                                             }
                                         </Text>
@@ -225,9 +230,9 @@ export default class UpcomingTrip extends React.Component {
                                                 ?
                                                  moment(item.arrivalDateAndTime,"YY-MM-DD").format("DD/MM/YYYY")
                                                 :this.service_type_id==2
-                                                ?  moment(item.service_end_date).format("DD/MM/YYYY ")
+                                                ?  moment(item.service_end_date,"YYYY-MM-DD").format("DD/MM/YYYY ")
                                                 :this.service_type_id==3
-                                                ?moment(item.service_end_date).format("DD/MM/YYYY ")
+                                                ?moment(item.service_end_date,"YYYY-MM-DD").format("DD/MM/YYYY ")
                                                 :null
                                             }
                                         </Text>
@@ -235,7 +240,7 @@ export default class UpcomingTrip extends React.Component {
                                             style={[StyleUpcomingTrip.imageIcon, { marginLeft: 10, display : this.service_type_id==1 ? 'flex' : 'none'}]}
                                         />
                                         <Text style={[StyleUpcomingTrip.labeltext,{display : this.service_type_id==1? 'flex' : 'none'}]}>{Constants.DropUpTime}</Text>
-                                        <Text style={[StyleUpcomingTrip.datacss,  {display : this.service_type_id==1 ? 'flex' : 'none'}]}>{moment(item.arrivalDateAndTime,"hh:m:s").format("hh:mm a")}</Text>
+                                        <Text style={[StyleUpcomingTrip.datacss,  {display : this.service_type_id==1 ? 'flex' : 'none'}]}>{moment(item.arrivalDateAndTime,"hh:m:s").format("hh:mm A")}</Text>
                                     </View>
                                 
                                 </View>

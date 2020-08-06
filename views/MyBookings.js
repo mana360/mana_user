@@ -236,7 +236,7 @@ export default class MyBookings extends React.Component{
                                         </View>
                                         <View style={{flex:1}}>
                                             <Text style={StyleMyBooking.valueText}>
-                                                { moment(item.pickup_date,"YYYY-MM-DD").format("DD MMM. YYYY")} { moment(item.pickup_time,"h:m:s").format("hh:mm a")}
+                                                { moment(item.pickup_date,"YYYY-MM-DD").format("DD MMM. YYYY")} { moment(item.pickup_time,"h:m:s").format("hh:mm A")}
                                             </Text>
                                         </View>
                                     </View>
@@ -342,7 +342,7 @@ export default class MyBookings extends React.Component{
                                             </View>
                                             <View style={{flex:1}}>
                                                 <Text style={StyleMyBooking.valueText}>
-                                                    { moment(item.pickup_date,"YYYY-MM-DD").format("DD MMM. YYYY")} { moment(item.pickup_time,"h:m:s").format("hh:mm a")}
+                                                    { moment(item.pickup_date,"YYYY-MM-DD").format("DD MMM. YYYY")} { moment(item.pickup_time,"h:m:s").format("hh:mm A")}
                                                 </Text>
                                             </View>
                                         </View>

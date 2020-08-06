@@ -227,6 +227,12 @@ export default class ViewCurrentTrip extends React.Component {
                                                     this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_UPCOMING ? "Upcoming"
                                                     :
                                                     this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In Storage"
+                                                   : 
+                                                   this.state.truckData.current_status==Constants.BOOKING_CURRENT_STATUS_DELIVERED? "Delivered"
+                                                   :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_PENDING? "Pending"
+                                                   
+
 
                                                     :null
                                                 }
@@ -240,7 +246,7 @@ export default class ViewCurrentTrip extends React.Component {
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
                                             <Text style={StyleViewCurrentTrip.col2Text}>{
-                                            moment(this.state.truckData.arrivalDateAndTime,"hh:mm:ss").format("hh:mm:ss a")
+                                            moment(this.state.truckData.arrivalDateAndTime,"hh:mm:ss").format("hh:mm A")
                                             }</Text>
                                         </View>
                                     </View>
