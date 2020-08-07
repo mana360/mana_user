@@ -82,11 +82,11 @@ export default class MapViews extends React.Component {
 
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
       Geolocation.getCurrentPosition((position) => {
-        this.setState({
-          current_latitude: position.coords.latitude,
-          current_longitude: position.coords.longitude
-        })
-        this.getCurrentAdddress(position.coords.latitude,position.coords.longitude);
+        // this.setState({
+        //   current_latitude: position.coords.latitude,
+        //   current_longitude: position.coords.longitude
+        // })
+        // this.getCurrentAdddress(position.coords.latitude,position.coords.longitude);
       }, (error) => {
         console.log(error.code, error.message)
       },
@@ -98,6 +98,7 @@ export default class MapViews extends React.Component {
     }
   }
 
+  
   async getCurrentAdddress(lat, long) {
     await fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + Constants.GOOGLE_MAP_KEY)
       .then((response) => response.json()
@@ -107,7 +108,7 @@ export default class MapViews extends React.Component {
           this.setState({ current_address: responseJson.results[0].formatted_address,current_latlong:responseJson.results[0].geometry.location })
           this.props.navigation.state.params.address(responseJson);
         }).catch(error=>
-          console.log(error))
+          console.warn(error))
       )
   }
 

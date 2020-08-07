@@ -39,10 +39,17 @@ class HeaderBar extends React.Component {
   }
   componentDidMount(){
     this.getUserStatus();
+    this.willFocusSubscription = this.props.navigation.addListener(
+      'willFocus',
+      () => { this.getUserStatus() }
+    );
+    
     
   }
   componentWillUnmount() {
     this.backHandler.remove();
+    this.willFocusSubscription.remove();
+
   }
 
   handleBackPress() {
@@ -56,7 +63,7 @@ class HeaderBar extends React.Component {
 
 
    getUserStatus(){
- this.presenter.callGetApi(ApiConstants.userStatus, "", true);
+ this.presenter.callGetApi(ApiConstants.userStatus, "", false);
 }
 
   onResponse(apiConstant, data) {
@@ -88,8 +95,11 @@ class HeaderBar extends React.Component {
 
       case ApiConstants.userStatus: {
         if(data.status){
-        this.setState({notification_count:data.userStatus[0].notifications_count});
-        // alert(JSON.stringify(data.userStatus[0].notifications_count));
+          
+        this.setState({notification_count:data.noti_count});
+
+        console.log("user data===>"+JSON.stringify(data));
+  
         }else{
       
         }
@@ -151,11 +161,12 @@ class HeaderBar extends React.Component {
             >
               <Image
                 source={require('../images/notification.png')}
-                style={[styles.headerIcon, { width: 30, height: 30, }]}
+                style={[styles.headerIcon, { width: 33, height: 33, }]}
               />
               { this.state.notification_count==0?null:
-                <Badge style={{position:"absolute",right: 0,width: 20,height: 20,}}>
-                  <Text style={{color:Constants.COLOR_WHITE}}>{this.state.notification_count}</Text>
+                <Badge style={{position:"absolute",right: -5,padding:5,top:-8,justifyContent:'center'}}>
+                  <Text style={{color:Constants.COLOR_WHITE,fontSize:10,}}>{this.state.notification_count}</Text>
+
                 </Badge>
               }
             </TouchableOpacity>

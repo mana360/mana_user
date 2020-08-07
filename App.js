@@ -49,8 +49,11 @@ import SendOTP from './views/SendOTP';
 import ViewCurrentTripAll from './views/ViewcurrentTrip_all';
 import LocationView from './config/mapUtils/src/LocationView'
 import WebBrowser from './views/WebBrowser'
+import { ReactNativeFirebase } from '@react-native-firebase/app';
+import RecurringTrips from './views/RecurringTrips';
 
 console.disableYellowBox = true;
+console.reportErrorsAsExceptions = false;
 
 const AppNavigator1 = createStackNavigator({
     WebBrowser :{
@@ -249,6 +252,10 @@ const AppNavigator1 = createStackNavigator({
       screen:LocationView,
       navigationOptions:()=>({header:null})
     },
+    RecurringTrips:{
+      screen:RecurringTrips,
+      navigationOptions:()=>({header:null})
+    }
 },
     {initialRouteName:"Splash"}
 

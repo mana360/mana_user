@@ -69,7 +69,8 @@ export default class LocationView extends React.Component {
     Events.listen('InputBlur', this.constructor.displayName, this._onTextBlur);
     Events.listen('InputFocus', this.constructor.displayName, this._onTextFocus);
     Events.listen('PlaceSelected', this.constructor.displayName, this._onPlaceSelected);
-    this._getCurrentLocation()
+    this._getCurrentLocation();
+    this.getCurrentCoords()
   }
 
   componentWillUnmount() {
@@ -77,7 +78,26 @@ export default class LocationView extends React.Component {
     Events.rm('InputFocus', this.constructor.displayName);
     Events.rm('PlaceSelected', this.constructor.displayName);
   }
+  async getCurrentCoords() {
+    const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
 
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      Geolocation.getCurrentPosition((position) => {
+        // this.setState({
+        //   current_latitude: position.coords.latitude,
+        //   current_longitude: position.coords.longitude
+        // })
+        // this.getCurrentAdddress(position.coords.latitude,position.coords.longitude);
+      }, (error) => {
+        console.log(error.code, error.message)
+      },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      )
+    }
+    else {
+      console.log("ACCESS_FINE_LOCATION permission denied")
+    }
+  }
   state = {
     inputScale: new Animated.Value(1),
     inFocus: false,

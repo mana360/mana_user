@@ -267,7 +267,7 @@ export default class BookingSummary extends React.Component{
             "longitude":this.state.drop_off_address_1_long
         },
         "truck_type_id" : this.state.truck_Type_id,
-        "pickup_date": this.state.pick_time,
+        "pickup_date": this.state.pickup_date,
         "load_category_id":this.state.load_category_id , 
         
         "other_services" :this.other_servicesData,
@@ -343,37 +343,70 @@ export default class BookingSummary extends React.Component{
          }
     }
 
+    // getAddress(flag){
+    //     this.props.navigation.navigate('MapViews', {
+    //         flag_location:flag, address: (resp) => {
+    //             console.log("callback flag==>"+flag);
+    //                     if(flag=="1"){
+    //                         this.setState({
+    //                             pick_up_address:resp.results[0].formatted_address,
+    //                             pick_up_address_lat:resp.results[0].geometry.location.lat,
+    //                             pick_up_address_long:resp.results[0].geometry.location.lng
+    //                                 });
+    //                         this.getcalculatingBooking();
+
+    //                     }
+    //                     if(flag=="2"){
+    //                             this.setState({
+    //                             drop_off_address:resp.results[0].formatted_address,
+    //                             drop_off_address_lat:resp.results[0].geometry.location.lat,
+    //                             drop_off_address_long:resp.results[0].geometry.location.lng
+    //                             });
+    //                     this.getcalculatingBooking();
+
+    //                     }
+    //                     if(flag=='3'){
+    //                         this.setState({
+    //                             drop_off_address_1:resp.results[0].formatted_address,
+    //                             drop_off_address_1_lat:resp.results[0].geometry.location.lat,
+    //                             drop_off_address_1_long:resp.results[0].geometry.location.lng
+    //                             });
+    //                     this.getcalculatingBooking();
+
+    //                     }
+    //         }
+    //     })
+    // }
+
+
     getAddress(flag){
-        this.props.navigation.navigate('MapViews', {
+        //MapViews removed
+        this.props.navigation.navigate('placePicker', {
             flag_location:flag, address: (resp) => {
                 console.log("callback flag==>"+flag);
+                console.log("received location ==>"+JSON.stringify(resp))
                         if(flag=="1"){
                             this.setState({
-                                pick_up_address:resp.results[0].formatted_address,
-                                pick_up_address_lat:resp.results[0].geometry.location.lat,
-                                pick_up_address_long:resp.results[0].geometry.location.lng
+                                pick_up_address:resp.address,
+                                pick_up_address_lat:resp.latitude,
+                                pick_up_address_long:resp.longitude
                                     });
-                            this.getcalculatingBooking();
-
                         }
                         if(flag=="2"){
                                 this.setState({
-                                drop_off_address:resp.results[0].formatted_address,
-                                drop_off_address_lat:resp.results[0].geometry.location.lat,
-                                drop_off_address_long:resp.results[0].geometry.location.lng
+                                    drop_off_address:resp.address,
+                                    drop_off_address_lat:resp.latitude,
+                                    drop_off_address_long:resp.longitude
                                 });
-                        this.getcalculatingBooking();
-
                         }
                         if(flag=='3'){
                             this.setState({
-                                drop_off_address_1:resp.results[0].formatted_address,
-                                drop_off_address_1_lat:resp.results[0].geometry.location.lat,
-                                drop_off_address_1_long:resp.results[0].geometry.location.lng
+                                drop_off_address_1:resp.address,
+                                drop_off_address_1_lat:resp.latitude,
+                                drop_off_address_1_long:resp.longitude
                                 });
-                        this.getcalculatingBooking();
-
                         }
+                        this. getcalculatingBooking();
             }
         })
     }
@@ -389,7 +422,7 @@ export default class BookingSummary extends React.Component{
           if (action !== DatePickerAndroid.dismissedAction) {
             const finalDate = `${month + 1}/${day}/${year}`;
             console.log(finalDate)
-            this.setState({ pickup_date: moment(finalDate).format('DD/MM/YYYY') })
+            this.setState({ pickup_date: moment(finalDate).format('YYYY-MM-DD') })
             console.log("selected date ===>"+this.state.pickup_date)
           }
     
@@ -416,9 +449,20 @@ export default class BookingSummary extends React.Component{
             if(this.state.pickup_date == new moment().format('YYYY-MM-DD')){
                 console.log("Time is valid")
                 this.setState({ pick_time:  selectedTime+":00", isTimerError:false});
+                console.log(currentHour+"<="+hour);
+               
                 if(currentHour<=hour){
                 }else{
-                    alert("invalid Time")
+                    alert("invalid Time");
+                    // this.setState({ pickup_time: ""});
+                }
+
+                if(currentHour==hour){
+                    if(minute<=currentMinute){
+                        alert("Invalid Time");
+                    }
+                }else{
+
                 }
                 // if(hour>=currentHour){
                 //     if(minute>=currentMinute){
@@ -552,7 +596,6 @@ export default class BookingSummary extends React.Component{
 
                                         <TouchableOpacity style={StyleLocationDetails.iconView}
                                             onPress={()=>{
-                                                this.props.navigation.navigate("MapViews");
                                                 let flag="2"
                                                 this.getAddress(flag);
                                             }}
@@ -599,7 +642,7 @@ export default class BookingSummary extends React.Component{
                                             onPress={()=>{
                                                 let flag="3"
                                                 this.getAddress(flag);
-                                                // this.props.navigation.navigate("MapViews");
+                                              
                                             }}
                                         >
                                             <Image style={StyleLocationDetails.labelIconLoc}

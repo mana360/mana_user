@@ -125,11 +125,20 @@ export default class LocationDetails extends React.Component {
             this.setState({ pickup_time:  selectedTime+":00", isTimerError:false});
                         console.log(currentHour+"   "+currentMinute);
                         // console.log(hour+"   "+minute);
+                       
                         if(currentHour<=hour){
                         }else{
-                            alert("invalid Time")
+                            alert("invalid Time");
+                            // this.setState({ pickup_time: ""});
                         }
-                
+
+                        if(currentHour==hour){
+                            if(minute<=currentMinute){
+                                alert("Invalid Time");
+                            }
+                        }else{
+
+                        }
           
             // if(hour>=currentHour){
             //     if(minute>=currentMinute){
@@ -276,6 +285,7 @@ export default class LocationDetails extends React.Component {
         })
     }
 
+    
     closeCategoryModal(){
         this.loadCategoryString=""
         let cat=""
@@ -649,7 +659,7 @@ export default class LocationDetails extends React.Component {
 
                             <TouchableOpacity
                                 onPress={() => {
-                                   
+                                   console.log("hy date pahije==>"+this.state.pickup_date);
 
                                     let drop_list =[
                                         {
