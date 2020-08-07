@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet, Animated, Platform, UIManager, TouchableOpacity, Text, ViewPropTypes, Image } from 'react-native';
+import { View, StyleSheet, Animated, Platform,PermissionsAndroid, UIManager, TouchableOpacity, Text, ViewPropTypes, Image } from 'react-native';
 //import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import axios from 'axios';
@@ -70,7 +70,6 @@ export default class LocationView extends React.Component {
     Events.listen('InputFocus', this.constructor.displayName, this._onTextFocus);
     Events.listen('PlaceSelected', this.constructor.displayName, this._onPlaceSelected);
     this._getCurrentLocation();
-    this.getCurrentCoords()
   }
 
   componentWillUnmount() {
@@ -188,13 +187,14 @@ export default class LocationView extends React.Component {
     });
   };
 
-  _getCurrentLocation = () => {
+  _getCurrentLocation = async () => {
 
     // navigator.geolocation.getCurrentPosition(position => {
     //   let location = (({ latitude, longitude }) => ({ latitude, longitude }))(position.coords);
     //   this._setRegion(location);
     // });
-
+    const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
     Geolocation.getCurrentPosition((info)=>{
      
        let location = (({ latitude, longitude }) => ({ latitude, longitude }))(info.coords);
@@ -204,7 +204,14 @@ export default class LocationView extends React.Component {
       console.log("long ==== "+ info.coords.longitude)
 
       // this.setState({currentlatitude:info.coords.latitude, currentlongitude:info.coords.longitude});
-      });
+      },(error) => {
+        console.log(error.code, error.message)
+      },
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 10000 }
+      );
+    }else{
+      console.log("ACCESS_FINE_LOCATION permission denied")
+    }
   };
 
   render() {
