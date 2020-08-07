@@ -55,7 +55,7 @@ export default class ViewCurrentTrip extends React.Component {
             this.booking_id = this.props.navigation.getParam('booking_id')
             console.log('bookig_id  ' + JSON.stringify(this.booking_id));
             this.tripDetails= this.props.navigation.getParam("bookingItem");
-            // console.log(JSON.stringify( "Trip Details==>"+JSON.stringify(this.tripDetails)));
+            console.log(JSON.stringify( "Trip Details==>"+JSON.stringify( this.tripDetails)));
             this.setState({truckData:this.tripDetails});
     
         // this.presenter.callPostApi(ApiConstants.getBookingDetails, {'service_type_id':this.service_type_id,'booking_id':this.booking_id}, true)
@@ -349,17 +349,22 @@ export default class ViewCurrentTrip extends React.Component {
 
                             <TouchableOpacity style={[StyleViewCurrentTrip.bottomButton, { marginRight: 15, width: '40%' }]}
                                 onPress={() => {
-                                    if (this.state.live_geopin == true)
-                                        this.props.navigation.navigate('MapViews', { flag_marker:true,
-                                            "TripDetials": this.state.truckData.drop_location.drop_latlng[1]==undefined?
-                                            alert("Co-ordinate Not Found")
-                                            : this.state.truckData.drop_location.drop_latlng[1]==""?
+                                    if (this.state.live_geopin == true){
+                                            // alert(this.state.truckData.drop_location.drop_latlng[1]);
+                                            this.state.truckData.drop_location.drop_latlng[1] ==undefined
+                                            ?
+                                            // alert("Co-ordinate Not Found")
+                                            alert( this.state.truckData.drop_location.drop_latlng[1])
+                                            :
+                                            this.state.truckData.drop_location.drop_latlng[1]==""?
                                             alert("Co-ordinate Not Found")
                                             :
-                                             this.state.truckData.drop_location.drop_latlng[1]
-                                     });
-                                    else
+                                this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials": this.state.truckData.drop_location.drop_latlng[1]  });
+                                    }
+
+                                    else{
                                         this.RBSheet.open(); //delay msg
+                                    }
                                 }}
                             >
                                 <Image source={require('../images/live_geo_pin.png')}
