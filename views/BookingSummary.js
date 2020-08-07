@@ -177,22 +177,11 @@ export default class BookingSummary extends React.Component{
             alert("Please Enter valid Time");
             return false;
         }
-        if(this.state.instructContainer==""){
+        if(this.state.instructions==""){
             alert("Please Enter Instruction");
             return false;
         }
-        if(this.state.name==""){
-            alert("Please Enter Name");
-            return false;
-        }
-        if(this.state.contact_number==""){
-            alert("Please Enter Contact Number");
-            return false;
-        }
-        if(this.state.contact_number.length>10&&this.state.contact_number.length<13){
-            alert("Please Enter Contact Number");
-            return false;
-        }
+   
 
         return true
     }
@@ -903,7 +892,9 @@ export default class BookingSummary extends React.Component{
                                 <TouchableOpacity 
                                     onPress={()=>{
                                         //this.bookCMLtrip();
-                                        this.doPayment()
+                                        if(this.isValid()){
+                                            this.doPayment()
+                                        }
 
                                     }}
                                     style={[StyleLocationDetails.logButton, {marginTop:0, marginHorizontal:25,} ]}
