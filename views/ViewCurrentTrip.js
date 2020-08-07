@@ -86,9 +86,11 @@ export default class ViewCurrentTrip extends React.Component {
             }
         }
     }
+    
     getExtention(filename){
         return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
     }
+
     async requestFilePermission(file_path){
         try {
             const granted = await PermissionsAndroid.request(
@@ -115,6 +117,7 @@ export default class ViewCurrentTrip extends React.Component {
           }
           return false
     }
+
     getDownloadFile(file_path){
         var date = new Date();
         var image_URL = file_path;

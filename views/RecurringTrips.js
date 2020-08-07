@@ -30,10 +30,11 @@ export default class RecurringTrips extends React.Component {
     }
 
 inIt(){
-// let currentTrip = this.props.navigation.getParam('currentTrip');
+let currentTrip = this.props.navigation.getParam('currentTrip');
 let dataSource= this.props.navigation.getParam('reccurringItems');
 let bookingID=this.props.navigation.getParam('booking_id');
 this.service_type_id=this.props.navigation.getParam("service_type_id");
+console.log("reccurring Booking List====>"+JSON.stringify(dataSource));
 
      this.setState({
          currentTrip:currentTrip,

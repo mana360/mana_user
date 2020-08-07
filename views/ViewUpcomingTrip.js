@@ -43,7 +43,7 @@ export default class ViewUpcomingTrip extends React.Component {
     }
 
     componentDidMount(){
-        this.service_type_id = this.props.navigation.getParam('service_type_id')
+        this.service_type_id = this.props.navigation.getParam('service_type_id');
         this.booking_id = this.props.navigation.getParam('booking_id')
         // this.setState({Flag_currentTtrip:this.props.navigation.getParam('Flag_currentTtrip')});
         //console.log('bookig_id  ' + JSON.stringify(this.booking_id))
