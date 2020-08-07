@@ -297,6 +297,7 @@ export default class LocationDetails extends React.Component {
                 }
             }
         })
+        this.loadCategoryString = this.loadCategoryString.substring(0, this.loadCategoryString.length - 1)
         console.log("item selected are ====>"+JSON.stringify(this.state.LoadCategoryItemsSelected))
         console.log("load cat ==="+this.loadCategoryString)
         this.setState({isLoadCategoryVisible:false,})
