@@ -51,11 +51,16 @@ import LocationView from './config/mapUtils/src/LocationView'
 import WebBrowser from './views/WebBrowser'
 import { ReactNativeFirebase } from '@react-native-firebase/app';
 import RecurringTrips from './views/RecurringTrips';
+import Tripmap from './views/Tripmap';
 
 console.disableYellowBox = true;
 console.reportErrorsAsExceptions = false;
 
 const AppNavigator1 = createStackNavigator({
+    Tripmap :{
+      screen:Tripmap,
+      navigationOptions:()=>({ header:null,})
+    },
     WebBrowser :{
       screen:WebBrowser,
       navigationOptions:()=>({ header:null,})
