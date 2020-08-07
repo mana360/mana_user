@@ -286,7 +286,11 @@ export default class CollectMyLoad extends React.Component {
     }
 async  newBookingButton(){
    await  this.presenter.callGetApi(ApiConstants.getCMLTruckCategory,"",true);
+   if(this.state.truckList==""){
+       alert("Truck List Not Available")
+   }else{
     this.RBSheet.open()
+   }
 }
     render() {
         let { navigation } = this.props;
@@ -329,7 +333,7 @@ async  newBookingButton(){
                                                 this.props.navigation.navigate('MyBookings',{
                                                     callback:(item)=>{
                                                             if(item==true){
-                                                                this.RBSheet.open();
+                                                                this.newBookingButton()
                                                             }
                                                     }
                                                 });
