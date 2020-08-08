@@ -159,7 +159,7 @@ export default class NewBookingSummary extends React.Component{
                                 <Text style={StyleNewBookingSummary.otherTxtser}>Other Services</Text>
                                 <View style={StyleNewBookingSummary.grayBox}>
                                     <View style={StyleNewBookingSummary.ltSec}>
-                                        <Text style={{color:'#a3a3a3', fontFamily: "Roboto-Light",fontSize:16 }}>Extra Helper - 2, No. of floors - 4</Text>
+                                        <Text style={{color:'#a3a3a3', fontSize:16 }}>Extra Helper - 2, No. of floors - 4</Text>
                                     </View>
                                     <View style={StyleNewBookingSummary.rtSec}>
                                             <Image style={StyleNewBookingSummary.removeImg}
@@ -184,8 +184,8 @@ export default class NewBookingSummary extends React.Component{
                                 <Text style={StyleNewBookingSummary.priceVol}>- R 10</Text>
                             </View>
                             <View style={{flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15, }}>
-                                <Text style={[StyleNewBookingSummary.priceTxt, {color:Constants.COLOR_GREEN, textTransform:"uppercase", fontFamily: "Roboto-Bold",} ]}>{Constants.GrandTotal}</Text>
-                                <Text style={[StyleNewBookingSummary.priceVol, {color:Constants.COLOR_GREEN, fontFamily: "Roboto-Bold",} ]}>R 490</Text>
+                                <Text style={[StyleNewBookingSummary.priceTxt, {color:Constants.COLOR_GREEN, textTransform:"uppercase",} ]}>{Constants.GrandTotal}</Text>
+                                <Text style={[StyleNewBookingSummary.priceVol, {color:Constants.COLOR_GREEN,} ]}>R 490</Text>
                             </View> 
                         </View>                 
                         <TouchableOpacity style={[StyleNewBookingSummary.discntBtn, {display: "none",}]}>

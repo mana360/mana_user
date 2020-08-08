@@ -604,12 +604,12 @@ export default class MyProfile extends React.Component {
                                     ?
                                     <Image 
                                         source ={{uri: this.state.userData.profile_picture}}
-                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="UserProfile" ? 'flex' : 'none'}]}
+                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="UserProfile" ? 'flex' : 'none' , resizeMode:'contain'}]}
                                     />
                                     :
                                     <Image 
                                         source ={require('../images/user_name.png')}
-                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="UserProfile" ? 'flex' : 'none'}]}
+                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="UserProfile" ? 'flex' : 'none', resizeMode:'contain'}]}
                                     />
                                 }
                                 {
@@ -617,7 +617,7 @@ export default class MyProfile extends React.Component {
                                     ?
                                     <Image 
                                         source ={{uri: this.state.userData.company_logo}}
-                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="CompanyProfile" ? 'flex' : 'none'}]}
+                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="CompanyProfile" ? 'flex' : 'none' , resizeMode:'contain'}]}
                                     />
                                     :
                                     <Image 

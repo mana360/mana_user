@@ -7,7 +7,7 @@ export default class WebBrowser extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            html:null,
+            html:"",
         }
     }
 
@@ -62,7 +62,7 @@ export default class WebBrowser extends React.Component{
                 `;
         return(
             <WebView 
-                style={{flex:1}}
+                style={{flex:1,}}
                 ref={(ref)=>{this.webView = ref}}
                 bounces={false}
                 originWhitelist={'["*"]'}

@@ -284,8 +284,8 @@ export default class CollectMyLoad extends React.Component {
                     break;
         }
     }
-async  newBookingButton(){
-   await  this.presenter.callGetApi(ApiConstants.getCMLTruckCategory,"",true);
+  newBookingButton(){
+   //await  this.presenter.callGetApi(ApiConstants.getCMLTruckCategory,"",true);
    if(this.state.truckList==""){
        alert("Truck List Not Available")
    }else{

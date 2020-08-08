@@ -81,7 +81,7 @@ class HeaderBar extends React.Component {
                   this.props.navigation.dispatch(
                     StackActions.reset({
                     index: 0,
-                    actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
+                    actions: [NavigationActions.navigate({ routeName: 'Splash' })],
                   })
                 )
               }, 2000);
@@ -362,7 +362,6 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
-    fontFamily: "Roboto-Bold",
     textTransform: 'uppercase',
     color: Constants.COLOR_WHITE,
     alignSelf: 'center',

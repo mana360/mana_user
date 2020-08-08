@@ -4,7 +4,7 @@
     dev + api by Udayraj (place booking order)
  */
 import React, { Component } from 'react';
-import {View, Text, TouchableOpacity, Image, ScrollView, TextInput, Modal, DatePickerAndroid, TimePickerAndroid, TouchableHighlight} from 'react-native';
+import {Platform, View, Text, TouchableOpacity, Image, ScrollView, TextInput, Modal, DatePickerAndroid, TimePickerAndroid, TouchableHighlight} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {StyleBookingSummary, StyleLocationDetails, StylePaymentMethod} from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
@@ -17,7 +17,7 @@ import ApiConstants from '../config/ApiConstants';
 import { FlatList } from 'react-native-gesture-handler';
 import { Picker } from 'native-base';
 import {getUserData  } from "../config/AppSharedPreference";
-
+import {DateIOS} from '../config/DateIOS'
 
 export default class BookingSummary extends React.Component{
     setModalVisible(visible) {
@@ -478,6 +478,16 @@ export default class BookingSummary extends React.Component{
         this.getcalculatingBooking();
     }
 
+    getIOSDate(resp){
+        this.setState({ pickup_date: moment.utc(resp).local().format("YYYY-MM-DD") })
+    }
+
+    getIOSTime(resp){
+        console.log("received time => "+resp)
+        resp==""? this.setState({pick_time:""})
+        : this.setState({ pick_time: moment.utc(resp).local().format("HH:mm") })
+    }
+
     render(){
 
         let data = [{
@@ -493,7 +503,7 @@ export default class BookingSummary extends React.Component{
             <View style={{flex:1,}}>
                 
                 <HeaderBar  title="Booking Summary" isBack={true} isLogout={true} navigation={navigation}/>
-
+                <DateIOS ref={(ref)=>{this.iosDatePicker = ref}} getDate={this.getIOSDate.bind(this)} getTime={this.getIOSTime.bind(this)}/>
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
 
                     <ScrollView bounces={false} style={{width:wp('100%')}}>
@@ -669,7 +679,9 @@ export default class BookingSummary extends React.Component{
                                             editable={false} />
 
                                         <TouchableOpacity style={StyleLocationDetails.iconView}
-                                            onPress={()=>{ this.openCalender() }}
+                                            onPress={()=>{ 
+                                                Platform.OS=="android" ? this.openCalender() : this.iosDatePicker.getDateIOSPicker()
+                                            }}
                                         >
                                             <Image style={StyleLocationDetails.labelIconLoc}
                                                 source={require('../images/date_icon.png')} />
@@ -688,7 +700,13 @@ export default class BookingSummary extends React.Component{
                                             editable={false}
                                         />
                                         <TouchableOpacity style={StyleLocationDetails.iconView}
-                                            onPress={()=>{ this.openTimer() }}
+                                            onPress={()=>{ 
+                                                if(Platform.OS=="android"){
+                                                    this.state.pickup_date =="" ? this.presenter.getCommonAlertBox('Please select date first.') : this.openTimer() 
+                                                }else{
+                                                    this.state.pickup_date =="" ? this.presenter.getCommonAlertBox('Please select date first.') : this.iosDatePicker.getTimeIOSPicker(this.state.pickup_date)
+                                                }
+                                            }}
                                         >
                                             <Image style={StyleLocationDetails.labelIconLoc}
                                                 source={require('../images/time_icon.png')} />
@@ -777,7 +795,7 @@ export default class BookingSummary extends React.Component{
                                                 this.state.otherServicesdata.map((item)=>{
                                                     this.state.otherServicesList.map((Item, Index)=>{
                                                         if(item.service_id == Item.id){
-                                                            <Text style={{color:'#a3a3a3', fontFamily: "Roboto-Light",fontSize:14, width:"90%",}}>
+                                                            <Text style={{color:'#a3a3a3', fontSize:14, width:"90%",}}>
                                                             {Item.service_name} -
                                                             </Text>
                                                         }
@@ -797,7 +815,7 @@ export default class BookingSummary extends React.Component{
                                                         )
                                                }
 
-                                                 <Text style={{color:'#a3a3a3', fontFamily: "Roboto-Light",fontSize:14, width:"90%",}}>
+                                                 <Text style={{color:'#a3a3a3', fontSize:14, width:"90%",}}>
                                                     {/* {item.service_id}-{item.qty}, */}
                                                       </Text>
                                             <TouchableOpacity style={StyleBookingSummary.rtSec}
@@ -865,8 +883,8 @@ export default class BookingSummary extends React.Component{
                                     </View>
 
                                     <View style={{flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15, }}>
-                                        <Text style={[StyleBookingSummary.priceTxt, {color:Constants.COLOR_GREEN, textTransform:"uppercase", fontFamily: "Roboto-Bold",} ]}>{Constants.GrandTotal}</Text>
-                                        <Text style={[StyleBookingSummary.priceVol, {color:Constants.COLOR_GREEN, fontFamily: "Roboto-Bold",} ]}>{this.state.grand_total}</Text>
+                                        <Text style={[StyleBookingSummary.priceTxt, {color:Constants.COLOR_GREEN, textTransform:"uppercase",} ]}>{Constants.GrandTotal}</Text>
+                                        <Text style={[StyleBookingSummary.priceVol, {color:Constants.COLOR_GREEN,} ]}>{this.state.grand_total}</Text>
                                     </View>
                                    
                                 </View>            

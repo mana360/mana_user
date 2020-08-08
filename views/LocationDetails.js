@@ -3,7 +3,7 @@
     dev + api by Udayraj
  */
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, DatePickerAndroid, TimePickerAndroid, TextInput, Modal, FlatList} from 'react-native';
+import {Platform, View, Text, TouchableOpacity, Image, ScrollView, DatePickerAndroid, TimePickerAndroid, TextInput, Modal, FlatList} from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { StyleLocationDetails } from '../config/CommonStyles';
 import { Picker, List } from "native-base";
@@ -14,6 +14,7 @@ import Textarea from 'react-native-textarea';
 import moment from 'moment'
 import ApiConstants from '../config/ApiConstants';
 import { MainPresenter } from '../config/MainPresenter';
+import {DateIOS} from '../config/DateIOS'
 
 export default class LocationDetails extends React.Component {
     constructor(props) {
@@ -324,6 +325,16 @@ export default class LocationDetails extends React.Component {
         return isPresent
     }
 
+    getIOSDate(resp){
+        this.setState({ pickup_date: moment.utc(resp).local().format("YYYY-MM-DD") })
+    }
+
+    getIOSTime(resp){
+        console.log("received time => "+resp)
+        resp==""? this.setState({pickup_time:""})
+        : this.setState({ pickup_time: moment.utc(resp).local().format("HH:mm") })
+    }
+
     render() {
 
         let { navigation } = this.props;
@@ -333,6 +344,8 @@ export default class LocationDetails extends React.Component {
                 <HeaderBar title="Location Details" isBack={true} isLogout={true} navigation={navigation} />
 
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
+
+                <DateIOS ref={(ref)=>{this.iosDatePicker = ref}} getDate={this.getIOSDate.bind(this)} getTime={this.getIOSTime.bind(this)}/>
 
                 <ScrollView bounces={false} style={{ width: wp('100%') }}>
 
@@ -515,7 +528,9 @@ export default class LocationDetails extends React.Component {
                                 />
                                 <TouchableOpacity
                                     style={{ width: 30, alignSelf: 'flex-end', justifyContent: 'center', alignItems: 'center', marginTop: -32, marginRight: 15 }}
-                                    onPress={() => { this.openCalender() }}
+                                    onPress={() => { 
+                                        Platform.OS=="android" ? this.openCalender() : this.iosDatePicker.getDateIOSPicker()
+                                    }}
                                 >
                                     <Image style={{ width: 20, height: 20, }}
                                         source={require('../images/date_icon.png')}
@@ -533,7 +548,13 @@ export default class LocationDetails extends React.Component {
                                 />
                                 <TouchableOpacity
                                     style={{ width: 30, alignSelf: 'flex-end', justifyContent: 'center', alignItems: 'center', marginTop: -32, marginRight: 15 }}
-                                    onPress={() => { this.state.pickup_date =="" ? alert('Please select date first.') : this.openTimer() }}
+                                    onPress={() => { 
+                                        if(Platform.OS=="android"){
+                                            this.state.pickup_date =="" ? this.presenter.getCommonAlertBox('Please select date first.') : this.openTimer() 
+                                        }else{
+                                            this.state.pickup_date =="" ? this.presenter.getCommonAlertBox('Please select date first.') : this.iosDatePicker.getTimeIOSPicker(this.state.pickup_date)
+                                        }
+                                    }}
                                 >
                                     <Image style={{ width: 20, height: 20, }}
                                         source={require('../images/time_icon.png')}
