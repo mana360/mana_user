@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* Mana360_customerUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Mana360_customerUserTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -19,6 +20,7 @@
 		376439EA36ABC5ACAE43F580 /* libPods-Mana360_customerUser-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F35251A1F447C91B6764CE /* libPods-Mana360_customerUser-tvOSTests.a */; };
 		A9B98DB731C7D2898FEA3DF2 /* libPods-Mana360_customerUser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86ADF13EE0445617CA75BF01 /* libPods-Mana360_customerUser.a */; };
 		CF2A4B543C4AF2EFA3BB71B2 /* libPods-Mana360_customerUserTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 327C2D57FE111A4D13203F96 /* libPods-Mana360_customerUserTests.a */; };
+		FA51852424DEA166009AF3D9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA51852324DEA166009AF3D9 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +111,7 @@
 		F4DCB46BBD884678842BC934 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		F822DBA2E2FF4799B91A30B2 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/native-base/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		F995730F19F54A018C4AC8CC /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		FA51852324DEA166009AF3D9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +175,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				FA51852324DEA166009AF3D9 /* GoogleService-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -437,6 +441,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				FA51852424DEA166009AF3D9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

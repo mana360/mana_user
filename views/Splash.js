@@ -28,7 +28,7 @@ export default class Splash extends React.Component {
             this.firebaseForAndroid()
         }
         if(Platform.OS=="ios"){
-            this.firebaseForAndroid()
+            this.checkFirebasePermission()
         }
         this.init()
     }

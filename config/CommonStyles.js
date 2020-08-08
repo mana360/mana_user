@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet, Platform } from 'react-native';
 import Constants from '../config/Constants';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -575,7 +575,8 @@ const StyleSignIn = StyleSheet.create({
         borderRadius: 50,
         paddingLeft: 25,
         marginVertical: 5,
-        borderColor: Constants.COLOR_GREY_LIGHT
+        borderColor: Constants.COLOR_GREY_LIGHT,
+        height: 40,
     },
     labelBox: {
         zIndex: 1,
@@ -1781,6 +1782,7 @@ const StyleMyProfile = StyleSheet.create({
         height: 17
     },
     TextInput: {
+        marginTop: Platform.OS=="android" ? 3 : 15,
         fontSize: Constants.FONT_SIZE_LARGE
     },
     ButtonView: {
@@ -1825,14 +1827,14 @@ const StyleEditProfile = StyleSheet.create({
         backgroundColor: Constants.COLOR_PRIMARY,
     },
     ProfileImage: {
-        width: 130,
-        height: 130,
-        borderRadius: 70,
+        width: 120,
+        height: 120,
+        borderRadius: 60,
         borderWidth: 8,
         borderColor: Constants.COLOR_WHITE,
         alignSelf: 'center',
         marginTop: '8%',
-        resizeMode: "cover"
+        resizeMode: "contain"
     },
     sideImageView: {
         marginTop:25,
@@ -2782,7 +2784,7 @@ const StyleLocationDetails = StyleSheet.create({
 		fontSize: Constants.FONT_SIZE_LARGE,
 		paddingLeft:26,
 		paddingRight:38,
-        marginTop:4,	
+        marginTop: Platform.OS=="android"? 4 : 15,	
     },
     nextAddrBtn: {
 		backgroundColor: Constants.COLOR_GREEN,

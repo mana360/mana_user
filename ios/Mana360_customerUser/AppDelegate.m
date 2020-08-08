@@ -19,6 +19,9 @@
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"Mana360_customerUser"
                                             initialProperties:nil];
+  if([FIRApp defaultApp] == nil){
+    [FIRApp configure];
+  }
 
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 

@@ -7,7 +7,7 @@
     2) user type = 2 means individual profile
  */
 import React from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput,FlatList } from 'react-native';
+import {Platform, View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput,FlatList } from 'react-native';
 import { StyleEditProfile, StyleMyProfile,StyleSetUpProfile } from '../config/CommonStyles';
 import { Picker } from "native-base";
 import ImagePicker from "react-native-image-picker";
@@ -1364,7 +1364,7 @@ export default class EditProfile extends React.Component {
                                     ?
                                     <Image 
                                         source ={{uri: this.state.userData.profile_picture}}
-                                        style={[StyleEditProfile.ProfileImage,{display: this.state.customerType=="user_profile" ? 'flex' : 'none'}]}
+                                        style={[StyleEditProfile.ProfileImage,{display: this.state.customerType=="user_profile" ? 'flex' : 'none',  resizeMode: Platform.OS=="android" ? "cover" :'contain'}]}
                                     />
                                     :
                                     <Image 
@@ -1377,7 +1377,7 @@ export default class EditProfile extends React.Component {
                                     ?
                                     <Image 
                                         source ={{uri: this.state.userData.company_logo}}
-                                        style={[StyleEditProfile.ProfileImage,{display: this.state.customerType=="company_profile" ? 'flex' : 'none'}]}
+                                        style={[StyleEditProfile.ProfileImage,{display: this.state.customerType=="company_profile" ? 'flex' : 'none', resizeMode: Platform.OS=="android" ? "cover" :'contain'}]}
                                     />
                                     :
                                     <Image 
@@ -1427,7 +1427,7 @@ export default class EditProfile extends React.Component {
                                     this.setState({ modalVisible_Changepassword: true })
                                 }}
                             >
-                                <Text style={{ textTransform: 'uppercase', color: 'white', paddingVertical: 12 }}>Change Password</Text>
+                                <Text style={{ textTransform: 'uppercase', color: 'white', paddingVertical: 12, textAlign:'center' }}>Change Password</Text>
                             </TouchableOpacity>
                             
                             <TouchableOpacity style={StyleEditProfile.ButtonView} onPress={() => { this.updateProfile();}}>
