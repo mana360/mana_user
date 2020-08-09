@@ -51,24 +51,24 @@ export default class SignIn extends Component {
 
   isValid() {
     if (this.state.input_email_id.length == 0) {
-      alert("Please enter email id")
+      this.presenter.getCommonAlertBox("Please enter email id")
       this.Input_emailId.focus()
       return false
     }
     if (!Constants.EMAIL_REGX.test(this.state.input_email_id)) {
       // console.log(this.state.input_email_id)
-      alert("Please enter valid email id")
+      this.presenter.getCommonAlertBox("Please enter valid email id")
       this.Input_emailId.focus()
       return false
     }
 
     if (this.state.input_password.length == 0) {
-      alert("Please enter Password")
+      this.presenter.getCommonAlertBox("Please enter Password")
       this.Input_password.focus()
       return false
     }
     if (this.state.input_password.length < 8 || this.state.input_password.length > 16) {
-      alert("password must be greater than 8 character & less than 16 character")
+      this.presenter.getCommonAlertBox("password must be greater than 8 character & less than 16 character")
       this.Input_password.focus()
       return false
     }

@@ -231,7 +231,7 @@ export default class MyBookingDetails extends React.Component {
             }
         }
         config(options).fetch('GET', image_URL).then((res) => {
-            alert("File is downloaded successfully.");
+            this.presenter.getCommonAlertBox("File is downloaded successfully.");
         });
     }
 
@@ -251,7 +251,7 @@ export default class MyBookingDetails extends React.Component {
             }
             else {
                 // permission denied
-                alert("File downloading faild.");
+                this.presenter.getCommonAlertBox("File downloading faild.");
                 return false
             }
           } catch (err) {

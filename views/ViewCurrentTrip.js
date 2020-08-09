@@ -135,7 +135,7 @@ export default class ViewCurrentTrip extends React.Component {
             }
         }
         config(options).fetch('GET', image_URL).then((res) => {
-            alert("File is downloaded successfully.");
+            this.presenter.getCommonAlertBox("File is downloaded successfully.");
         });
     }
     render() {
@@ -354,10 +354,10 @@ export default class ViewCurrentTrip extends React.Component {
                                             this.state.truckData.drop_location.drop_latlng[1] ==undefined
                                             ?
                                             // alert("Co-ordinate Not Found")
-                                            alert( this.state.truckData.drop_location.drop_latlng[1])
+                                            this.presenter.getCommonAlertBox( this.state.truckData.drop_location.drop_latlng[1])
                                             :
                                             this.state.truckData.drop_location.drop_latlng[1]==""?
-                                            alert("Co-ordinate Not Found")
+                                            this.presenter.getCommonAlertBox("Co-ordinate Not Found")
                                             :
                                 this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials": this.state.truckData.drop_location.drop_latlng[1]  });
                                     }

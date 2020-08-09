@@ -162,26 +162,25 @@ export default class BookingSummary extends React.Component{
     isValid(){
     
         if(this.state.pick_up_address==""){
-            alert("Please Enter Pickup Address");
+            this.presenter.getCommonAlertBox("Please Enter Pickup Address");
             return false;
         }
         if(this.state.drop_off_address==""){
-            alert("Please Enter Dropup Address");
+            this.presenter.getCommonAlertBox("Please Enter Dropup Address");
             return false;
         }
         if(this.state.pickup_date==""){
-            alert("Please Enter valid Date");
+            this.presenter.getCommonAlertBox("Please Enter valid Date");
             return false;
         }
         if(this.state.pickup_time==""){
-            alert("Please Enter valid Time");
+            this.presenter.getCommonAlertBox("Please Enter valid Time");
             return false;
         }
         if(this.state.instructions==""){
-            alert("Please Enter Instruction");
+            this.presenter.getCommonAlertBox("Please Enter Instruction");
             return false;
-        }
-   
+        }   
 
         return true
     }
@@ -442,13 +441,13 @@ export default class BookingSummary extends React.Component{
                
                 if(currentHour<=hour){
                 }else{
-                    alert("invalid Time");
+                    this.presenter.getCommonAlertBox("invalid Time");
                     // this.setState({ pickup_time: ""});
                 }
 
                 if(currentHour==hour){
                     if(minute<=currentMinute){
-                        alert("Invalid Time");
+                        this.presenter.getCommonAlertBox("Invalid Time");
                     }
                 }else{
 

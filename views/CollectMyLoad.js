@@ -176,7 +176,7 @@ export default class CollectMyLoad extends React.Component {
         let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
         if(type==0){
             if(!emailRegex.test(this.state.refer_emailId)){
-                alert("Please enter correct email Id.")
+                this.presenter.getCommonAlertBox("Please enter correct email Id.")
             }else{
                 let params = {
                     "type" : 0,
@@ -188,7 +188,7 @@ export default class CollectMyLoad extends React.Component {
         }
         if(type==1){
             if(this.state.refer_mobile_number.length!=9){
-                alert("Please enter correct mobile number.")
+                this.presenter.getCommonAlertBox("Please enter correct mobile number.")
             }else{
                 let params ={
                     "type" : 1,
@@ -287,7 +287,7 @@ export default class CollectMyLoad extends React.Component {
   newBookingButton(){
    //await  this.presenter.callGetApi(ApiConstants.getCMLTruckCategory,"",true);
    if(this.state.truckList==""){
-       alert("Truck List Not Available")
+    this.presenter.getCommonAlertBox("Truck List Not Available")
    }else{
     this.RBSheet.open()
    }

@@ -403,19 +403,19 @@ export default class MyProfile extends React.Component {
     
     isValidPasswords(){
         if(this.state.current_password==""){
-            alert("Please enter current password")
+            this.presenter.getCommonAlertBox("Please enter current password")
             return false
         }
         if(this.state.new_password==""){
-            alert("Please enter new password")
+            this.presenter.getCommonAlertBox("Please enter new password")
             return false
         }
         if(this.state.confirm_password==""){
-            alert("Please enter confirm passowrd")
+            this.presenter.getCommonAlertBox("Please enter confirm passowrd")
             return false
         }
         if(this.state.new_password != this.state.confirm_password){
-            alert("New and Confirm password doesn't matched.")
+            this.presenter.getCommonAlertBox("New and Confirm password doesn't matched.")
             return false
         }
         return true

@@ -261,7 +261,7 @@ export default class ViewUpcomingTrip extends React.Component {
             }
         }
         config(options).fetch('GET', image_URL).then((res) => {
-            alert("File is downloaded successfully.");
+            this.presenter.getCommonAlertBox("File is downloaded successfully.");
         });
     }
 
@@ -281,7 +281,7 @@ export default class ViewUpcomingTrip extends React.Component {
             }
             else {
                 // permission denied
-                alert("File downloading faild.");
+                this.presenter.getCommonAlertBox("File downloading faild.");
                 return false
             }
           } catch (err) {
@@ -834,7 +834,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                           
                                                            onPress={()=>{
                                                                 if( this.state.truckData.warehouse_latlng==""||this.state.warehouse_booking_detailsi.warehouse_latlng==""){
-                                                                    alert("Co-ordinate Not Found");
+                                                                    this.presenter.getCommonAlertBox("Co-ordinate Not Found");
                                                                 }else{
                                                                     this.props.navigation.navigate('MapViews',{"warehouse_flag":true,'WarehouseCoordinates': 
                                                                     this.service_type_id==3?

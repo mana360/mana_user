@@ -137,7 +137,7 @@ async verifyOTP(){
     }
    this.presenter.callPostApi(ApiConstants.verifyOTP, params, true);
   }else{
-    alert("Please enter correct OTP")
+    this.presenter.getCommonAlertBox("Please enter correct OTP")
     this.setState({otp_code:""})
   }
 }
@@ -232,47 +232,47 @@ isValid() {
   let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
 
   if(this.state.emailId == ""){
-    alert("Please enter Email Id")
+    this.presenter.getCommonAlertBox("Please enter Email Id")
     this.TextInput_emailId.focus()
     return false
   }
 
   if(!emailRegex.test(this.state.emailId)){
-    alert("Please enter valid email Id")
+    this.presenter.getCommonAlertBox("Please enter valid email Id")
     this.TextInput_emailId.focus()
     return false
 }
 if(!Constants.PASSWORD_REGX.test(this.state.password)){
-  alert("Password should contain atleast 1 capital letter,\n small letter, numbers and special symbols.");
+  this.presenter.getCommonAlertBox("Password should contain atleast 1 capital letter,\n small letter, numbers and special symbols.");
   this.TextInput_emailId.focus()
   return false
 }
 
   if (this.state.password.length == 0) {
-    alert("Please enter Password")
+    this.presenter.getCommonAlertBox("Please enter Password")
     this.TextInput_password.focus()
     return false
   }
   if (this.state.password.length < 8 || this.state.password.length > 16) {
-    alert("password must be greater than 8 character & less than 16 character")
+    this.presenter.getCommonAlertBox("password must be greater than 8 character & less than 16 character")
     this.TextInput_password.focus()
     return false
   }
   if (this.state.confirm_password.length < 8 || this.state.confirm_password.length > 16) {
-    alert("password must be greater than 8 character & less than 16 character")
+    this.presenter.getCommonAlertBox("password must be greater than 8 character & less than 16 character")
     this.TextInput_confirm_password.focus()
     return false
   }
   
   if (this.state.password!==this.state.confirm_password) {
-    alert("Password and Confirm Password  does not match");
+    this.presenter.getCommonAlertBox("Password and Confirm Password  does not match");
     this.TextInput_password.focus()
     return false
   }
 
   if(this.state.referalRadio_button){
     if(this.state.referral_code.length==0){
-      alert("Please enter referral code")
+      this.presenter.getCommonAlertBox("Please enter referral code")
       this.TextInput_referral_code.focus()
       return false
     }
@@ -282,7 +282,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
     this.setState({referral_code:''})
   }
   if(this.state.referalRadio_button&&this.state.referal_code==""){
-   alert("Please Enter Referal Code");
+    this.presenter.getCommonAlertBox("Please Enter Referal Code");
    return false
   }
   return true;

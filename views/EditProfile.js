@@ -822,7 +822,7 @@ export default class EditProfile extends React.Component {
         if(this.state.customerType=="company_profile"){
 
             if(this.state.company_name==""){
-                alert("Please enter company name")
+                this.presenter.getCommonAlertBox("Please enter company name")
                 return false
             }
             // if(this.state.company_contactPerson==""){
@@ -834,7 +834,7 @@ export default class EditProfile extends React.Component {
             //     return false
             // }
             if(this.state.company_telephoneNo==""){
-                alert("Please enter telephone number")
+                this.presenter.getCommonAlertBox("Please enter telephone number")
                 return false
             }
             // if(this.state.company_telephoneNo.length!=9){
@@ -842,11 +842,11 @@ export default class EditProfile extends React.Component {
             //     return false
             // }
             if(this.state.company_email==""){
-                alert("Please enter email Id")
+                this.presenter.getCommonAlertBox("Please enter email Id")
                 return false
             }
             if(!emailRegex.test(this.state.company_email)){
-                alert("Please enter valid email Id")
+                this.presenter.getCommonAlertBox("Please enter valid email Id")
                 return false
             }
             // if(this.state.company_address==""){
@@ -902,24 +902,24 @@ export default class EditProfile extends React.Component {
         if(this.state.customerType=="user_profile")
         {
             if(this.state.user_first_name==""){
-                    alert("Please enter first name")
-                    return false
+                this.presenter.getCommonAlertBox("Please enter first name")
+                return false
             }
             if(this.state.user_last_name==""){
-                    alert("Please enter last name")
-                    return false
+                this.presenter.getCommonAlertBox("Please enter last name")
+                return false
             }
             // if(this.state.user_title==""){
             //         alert("Please select title")
             //         return false
             // }
             if(this.state.user_telephoneNo==""){
-                    alert("Please enter telephone number")
-                    return false
+                this.presenter.getCommonAlertBox("Please enter telephone number")
+                return false
             }
             if(this.state.user_telephoneNo.length!=9){
-                    alert("Please enter correct telephone number")
-                    return false
+                this.presenter.getCommonAlertBox("Please enter correct telephone number")
+                return false
             }
             // if(this.state.user_docType=="0"){
             //     alert("Please select Identification")
@@ -966,12 +966,12 @@ export default class EditProfile extends React.Component {
         //             return false
         //     }
             if(this.state.email_id==""){
-                alert("Please enter email Id")
+                this.presenter.getCommonAlertBox("Please enter email Id")
                 return false
             }
             if(!emailRegex.test(this.state.email_id)){
-                    alert("Please enter valid email Id")
-                    return false
+                this.presenter.getCommonAlertBox("Please enter valid email Id")
+                return false
             }
             // if(this.state.user_password==""){
             //         alert("Please enter password")
@@ -995,19 +995,19 @@ export default class EditProfile extends React.Component {
 
     isPasswordValid(){
         if(this.state.current_password==""){
-            alert("Please enter current password")
+            this.presenter.getCommonAlertBox("Please enter current password")
             return false
         }
         if(this.state.new_password==""){
-            alert("Please enter new password")
+            this.presenter.getCommonAlertBox("Please enter new password")
             return false
         }
         if(this.state.confirm_password==""){
-            alert("Please enter confirm password")
+            this.presenter.getCommonAlertBox("Please enter confirm password")
             return false
         }
         if(this.state.confirm_password!=this.state.new_password){
-            alert("Password didn't matched.")
+            this.presenter.getCommonAlertBox("Password didn't matched.")
             return false
         }
         return true
@@ -1223,7 +1223,7 @@ export default class EditProfile extends React.Component {
           }
           case ApiConstants.updateProfilePic:{
               if(data.status){
-                alert(data.message)
+                this.presenter.getCommonAlertBox(data.message)
                 this.presenter.callPostApi(ApiConstants.getMyProfile, "", true)
               }
               else {
@@ -1236,9 +1236,9 @@ export default class EditProfile extends React.Component {
           case ApiConstants.changePassword:{
               if(data.status){
                   this.setState({current_password:"", new_password:"", confirm_password:"", modalVisible_Changepassword:false})
-                  alert(data.message)
+                  this.presenter.getCommonAlertBox(data.message)
               }else{
-                  alert(data.message)
+                this.presenter.getCommonAlertBox(data.message)
               }
               break;
           }

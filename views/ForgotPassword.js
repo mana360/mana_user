@@ -38,12 +38,12 @@ export default class ForgotPassword extends React.Component {
     
     isValidEmail(){
         if(this.state.emailId==""){
-            alert("Please enter email Id")
+            this.presenter.getCommonAlertBox("Please enter email Id")
             this.input_emailId.focus()
             return false
         }
         if(!Constants.EMAIL_REGX.test(this.state.emailId)){
-            alert("Please enter valid email Id")
+            this.presenter.getCommonAlertBox("Please enter valid email Id")
             this.input_emailId.focus()
             return false
         }
