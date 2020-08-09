@@ -88,7 +88,7 @@ class HeaderBar extends React.Component {
           }else{
               // log out failed
               this.setState({isLogoutModalVisible:false})
-              alert(data.msg)
+              this.presenter.getCommonAlertBox(data.msg)
           }
         break;
       }
