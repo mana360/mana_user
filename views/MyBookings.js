@@ -259,12 +259,50 @@ export default class MyBookings extends React.Component{
                                         </View>
                                     </View>
 
-                                    <View style={item.status=="order_placed"?{display:'none'}:{flex:2, flexDirection:'row',  marginVertical:4}}>
+                                    <View style={item.status=="order_placed"?{display:'none'}:{flex:3, flexDirection:'row',  marginVertical:4}}>
                                         <View style={{flex:1}}>
                                             <Text style={StyleMyBooking.labelText}>{Constants.DRIVER_NUMBER}</Text>
                                         </View>
                                         <View style={{flex:1}}>
                                             <Text style={StyleMyBooking.valueText}>{item.driver_contact}</Text>
+                                        </View>
+                                        <View style={{flex:1}}>
+                                            <TouchableOpacity 
+                                                onPress={()=>{
+                                                    if(item.pickup_coords!="" && item.pickup_coords!=null){
+                                                        if(item.dropoff_coords!="" && item.dropoff_coords!=null){
+                                                            this.props.navigation.navigate('Tripmap',{'pickup_coords':item.pickup_coords, 'dropoff_coords':item.dropoff_coords})
+                                                        }else{
+                                                        this.presenter.getCommonAlertBox("Coordinates are not available.")
+                                                        }
+                                                    }else{
+                                                    this.presenter.getCommonAlertBox("Coordinates are not available.")
+                                                    }
+                                                }}
+                                                style={{width:30, height:25, justifyContent:'center', alignItems:'center', padding:5,
+                                                display: item.status_id==Constants.STATUS_ONGOING ? 'flex'
+                                                    : item.status_id==Constants.STATUS_ARRIVED_PICKED_TIME ? 'flex'
+                                                    : item.status_id==Constants.STATUS_START_THE_TRIP ? 'flex'
+                                                    : item.status_id==Constants.STATUS_ON_ROUTE_TO_DESTINATIONATION ? 'flex'
+                                                    : item.status_id==Constants.STATUS_ARRIVED_AT_DESTINATIONATION ? 'flex'
+                                                    : item.status_id==Constants.STATUS_DROP1_DELIVERED ? 'flex'
+                                                    : item.status_id==Constants.STATUS_DROP2_DELIVERED ? 'flex'
+                                                    : 'none'
+                                                }}
+                                                >
+                                                    <Image 
+                                                        style={{width:20, height:20, alignSelf:'center',
+                                                        display: item.status_id==Constants.STATUS_ONGOING ? 'flex'
+                                                        : item.status_id==Constants.STATUS_ARRIVED_PICKED_TIME ? 'flex'
+                                                        : item.status_id==Constants.STATUS_START_THE_TRIP ? 'flex'
+                                                        : item.status_id==Constants.STATUS_ON_ROUTE_TO_DESTINATIONATION ? 'flex'
+                                                        : item.status_id==Constants.STATUS_ARRIVED_AT_DESTINATIONATION ? 'flex'
+                                                        : item.status_id==Constants.STATUS_DROP1_DELIVERED ? 'flex'
+                                                        : item.status_id==Constants.STATUS_DROP2_DELIVERED ? 'flex'
+                                                        : 'none'
+                                                        }}
+                                                    source={require('../images/address.png')}/>
+                                                </TouchableOpacity>
                                         </View>
                                     </View>
 
