@@ -43,7 +43,7 @@ export default ApiConstants = {
     referFriend:"customer/referFriend",
     cancelBooking:"customer/cancelBooking",
     shareMyRide:"customer/shareMyRide",
-    
+    getDriverLocation:"customer/getDriverLocation",
 
     /* ------------Mayur----------- */
     forgotPassword:"customer/forgotPassword",

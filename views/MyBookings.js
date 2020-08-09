@@ -26,8 +26,8 @@ export default class MyBookings extends React.Component{
         }
     }
 
-   async componentDidMount(){
-    // this.getCurrentBookingList();
+    componentDidMount(){
+    this.getCurrentBookingList();
     this.willFocusSubscription = this.props.navigation.addListener(
         'willFocus',
         () => {   
@@ -259,19 +259,17 @@ export default class MyBookings extends React.Component{
                                         </View>
                                     </View>
 
-                                    <View style={item.status=="order_placed"?{display:'none'}:{flex:3, flexDirection:'row',  marginVertical:4}}>
+                                    <View style={item.status=="order_placed"?{display:'none'}:{flex:2, flexDirection:'row',  marginVertical:4}}>
                                         <View style={{flex:1}}>
                                             <Text style={StyleMyBooking.labelText}>{Constants.DRIVER_NUMBER}</Text>
                                         </View>
-                                        <View style={{flex:1}}>
+                                        <View style={{flex:1, flexDirection:'row'}}>
                                             <Text style={StyleMyBooking.valueText}>{item.driver_contact}</Text>
-                                        </View>
-                                        <View style={{flex:1}}>
                                             <TouchableOpacity 
                                                 onPress={()=>{
-                                                    if(item.pickup_coords!="" && item.pickup_coords!=null){
-                                                        if(item.dropoff_coords!="" && item.dropoff_coords!=null){
-                                                            this.props.navigation.navigate('Tripmap',{'pickup_coords':item.pickup_coords, 'dropoff_coords':item.dropoff_coords})
+                                                    if(item.pickup_latlng!="" && item.pickup_latlng!=null){
+                                                        if(item.drop1_latlng!="" && item.drop1_latlng!=null){
+                                                            this.props.navigation.navigate('Tripmap',{driver_id:item.driver_id, 'pickup_coords':item.pickup_latlng, 'dropoff_coords':item.drop1_latlng})
                                                         }else{
                                                         this.presenter.getCommonAlertBox("Coordinates are not available.")
                                                         }
@@ -279,30 +277,29 @@ export default class MyBookings extends React.Component{
                                                     this.presenter.getCommonAlertBox("Coordinates are not available.")
                                                     }
                                                 }}
-                                                style={{width:30, height:25, justifyContent:'center', alignItems:'center', padding:5,
-                                                display: item.status_id==Constants.STATUS_ONGOING ? 'flex'
-                                                    : item.status_id==Constants.STATUS_ARRIVED_PICKED_TIME ? 'flex'
-                                                    : item.status_id==Constants.STATUS_START_THE_TRIP ? 'flex'
-                                                    : item.status_id==Constants.STATUS_ON_ROUTE_TO_DESTINATIONATION ? 'flex'
-                                                    : item.status_id==Constants.STATUS_ARRIVED_AT_DESTINATIONATION ? 'flex'
-                                                    : item.status_id==Constants.STATUS_DROP1_DELIVERED ? 'flex'
-                                                    : item.status_id==Constants.STATUS_DROP2_DELIVERED ? 'flex'
+                                                style={{width:30, height:25, justifyContent:'center', alignItems:'center', padding:5, marginLeft:10,
+                                                display: item.booking_status==Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_PICKUP_LOCATION ? 'flex'
+                                                    : item.current_status==Constants.BOOKING_CURRENT_STATUS_PICKUP ? 'flex'
+                                                    : item.current_status==Constants.BOOKING_CURRENT_STATUS_DELIVERED ? 'flex'
+                                                    : item.current_status==Constants.BOOKING_CURRENT_STATUS_ON_ROUTE_TO_DESTINATION ? 'flex'
+                                                    : item.current_status==Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION ? 'flex'
+                                                    : item.current_status==Constants.BOOKING_CURRENT_STATUS_DRIVER_DISPATCHED ? 'flex'
                                                     : 'none'
                                                 }}
                                                 >
                                                     <Image 
                                                         style={{width:20, height:20, alignSelf:'center',
-                                                        display: item.status_id==Constants.STATUS_ONGOING ? 'flex'
-                                                        : item.status_id==Constants.STATUS_ARRIVED_PICKED_TIME ? 'flex'
-                                                        : item.status_id==Constants.STATUS_START_THE_TRIP ? 'flex'
-                                                        : item.status_id==Constants.STATUS_ON_ROUTE_TO_DESTINATIONATION ? 'flex'
-                                                        : item.status_id==Constants.STATUS_ARRIVED_AT_DESTINATIONATION ? 'flex'
-                                                        : item.status_id==Constants.STATUS_DROP1_DELIVERED ? 'flex'
-                                                        : item.status_id==Constants.STATUS_DROP2_DELIVERED ? 'flex'
+                                                        display: item.booking_status==Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_PICKUP_LOCATION ? 'flex'
+                                                        : item.current_status==Constants.BOOKING_CURRENT_STATUS_PICKUP ? 'flex'
+                                                        : item.current_status==Constants.BOOKING_CURRENT_STATUS_DELIVERED ? 'flex'
+                                                        : item.current_status==Constants.BOOKING_CURRENT_STATUS_ON_ROUTE_TO_DESTINATION ? 'flex'
+                                                        : item.current_status==Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION ? 'flex'
+                                                        : item.current_status==Constants.BOOKING_CURRENT_STATUS_DRIVER_DISPATCHED ? 'flex'
                                                         : 'none'
                                                         }}
                                                     source={require('../images/address.png')}/>
                                                 </TouchableOpacity>
+ 
                                         </View>
                                     </View>
 
