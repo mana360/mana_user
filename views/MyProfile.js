@@ -8,7 +8,7 @@
 
 */
 import React from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput, FlatList } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput, FlatList, Platform } from 'react-native';
 import { StyleMyProfile } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import HeaderBar from '../config/HeaderBar';
@@ -604,7 +604,7 @@ export default class MyProfile extends React.Component {
                                     ?
                                     <Image 
                                         source ={{uri: this.state.userData.profile_picture}}
-                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="UserProfile" ? 'flex' : 'none' , resizeMode:'contain'}]}
+                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="UserProfile" ? 'flex' : 'none' , resizeMode: Platform.OS=="android"? 'cover' :'contain'}]}
                                     />
                                     :
                                     <Image 
@@ -617,7 +617,7 @@ export default class MyProfile extends React.Component {
                                     ?
                                     <Image 
                                         source ={{uri: this.state.userData.company_logo}}
-                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="CompanyProfile" ? 'flex' : 'none' , resizeMode:'contain'}]}
+                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="CompanyProfile" ? 'flex' : 'none' , resizeMode: Platform.OS=="android"? 'cover' :'contain'}]}
                                     />
                                     :
                                     <Image 
