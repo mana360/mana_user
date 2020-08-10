@@ -767,7 +767,7 @@ export default class MyBookingDetails extends React.Component {
                                 onChangeText={(value)=>{ this.setState({shareByEmail:value}) }}
                                 keyboardType="email-address"
                                 autoCapitalize="none"
-                                placeholder="Enter email id"
+                                placeholder="Enter email address"
                                 style={{width:'60%', borderBottomWidth:0.5, borderBottomColor:Constants.COLOR_GREY_DARK}}
                             />
                             <TouchableOpacity

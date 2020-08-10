@@ -199,7 +199,7 @@ const Constants = {
     cancellation_msgPayment: "Are you sure you want to Cancel the Booking?",
 
     TripCanceledSuccessfully: 'Trip Cancelled Successfully.',
-    checkYourregisteredEmailIdPeneltyInfo: 'Check your registered email ID for \n penalty information.',
+    checkYourregisteredEmailIdPeneltyInfo: 'Check your registered email address for \n penalty information.',
     Duration: 'Duration',
     TelephoneNo: 'Telephone No.',
     StorageType: 'Storage Type',

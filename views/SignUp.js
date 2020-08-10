@@ -232,13 +232,13 @@ isValid() {
   let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
 
   if(this.state.emailId == ""){
-    this.presenter.getCommonAlertBox("Please enter Email Id")
+    this.presenter.getCommonAlertBox("Please enter email address")
     this.TextInput_emailId.focus()
     return false
   }
 
   if(!emailRegex.test(this.state.emailId)){
-    this.presenter.getCommonAlertBox("Please enter valid email Id")
+    this.presenter.getCommonAlertBox("Please enter valid email address")
     this.TextInput_emailId.focus()
     return false
 }

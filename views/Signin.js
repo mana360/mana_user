@@ -51,13 +51,13 @@ export default class SignIn extends Component {
 
   isValid() {
     if (this.state.input_email_id.length == 0) {
-      this.presenter.getCommonAlertBox("Please enter email id")
+      this.presenter.getCommonAlertBox("Please enter email address")
       this.Input_emailId.focus()
       return false
     }
     if (!Constants.EMAIL_REGX.test(this.state.input_email_id)) {
       // console.log(this.state.input_email_id)
-      this.presenter.getCommonAlertBox("Please enter valid email id")
+      this.presenter.getCommonAlertBox("Please enter valid email address")
       this.Input_emailId.focus()
       return false
     }

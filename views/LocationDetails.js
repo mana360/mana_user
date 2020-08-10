@@ -129,12 +129,13 @@ export default class LocationDetails extends React.Component {
                        
                         if(currentHour<=hour){
                         }else{
+                            this.setState({ pickup_time: ""});
                             this.presenter.getCommonAlertBox("invalid Time");
-                            // this.setState({ pickup_time: ""});
                         }
 
                         if(currentHour==hour){
                             if(minute<=currentMinute){
+                                this.setState({ pickup_time: ""});
                                 this.presenter.getCommonAlertBox("Invalid Time");
                             }
                         }else{

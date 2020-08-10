@@ -99,7 +99,7 @@ export default class CollectMyLoad extends React.Component {
                                     source={require('../images/email_id.png')} />
                                 <Text style={StyleCollectMyLoad.labelBoxText}>{Constants.Email}</Text>
                             </View>
-                            <TextInput placeholder='Enter Email Id'
+                            <TextInput placeholder='Enter Email Address'
                                 style={StyleCollectMyLoad.textInput_style}
                                 keyboardType="email-address"
                                 autoCapitalize="none"
@@ -176,7 +176,7 @@ export default class CollectMyLoad extends React.Component {
         let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
         if(type==0){
             if(!emailRegex.test(this.state.refer_emailId)){
-                this.presenter.getCommonAlertBox("Please enter correct email Id.")
+                this.presenter.getCommonAlertBox("Please enter correct email address.")
             }else{
                 let params = {
                     "type" : 0,

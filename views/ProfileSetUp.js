@@ -345,11 +345,11 @@ export default class ProfileSetUp extends React.Component {
 
                 <View style={StyleSetUpProfile.TextInputView}>
                     <View style={StyleSetUpProfile.LabelView}>
-                        <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>Email ID</Text>
+                        <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>Email Address</Text>
                         <Text style={{ color: 'red' }}>*</Text>
                     </View>
                     <TextInput
-                        placeholder="Enter Email Id"
+                        placeholder="Enter Email Address"
                         style={StyleSetUpProfile.TextInput}
                         editable={false}
                         keyboardType="email-address"
@@ -1121,12 +1121,12 @@ export default class ProfileSetUp extends React.Component {
                 return false
             }
             if(this.state.user_email==""){
-                this.presenter.getCommonAlertBox("Please enter email Id")
+                this.presenter.getCommonAlertBox("Please enter email address")
                     this.input_user_emailId.focus()
                     return false
             }
             if(!emailRegex.test(this.state.user_email)){
-                this.presenter.getCommonAlertBox("Please enter valid email Id")
+                this.presenter.getCommonAlertBox("Please enter valid email address")
                     this.input_user_emailId.focus()
                     return false
             }
@@ -1218,12 +1218,12 @@ export default class ProfileSetUp extends React.Component {
                 return false
             }
             if(this.state.company_emailId==""){
-                this.presenter.getCommonAlertBox("Please enter email Id")
+                this.presenter.getCommonAlertBox("Please enter email address")
                 this.input_company_emailId.focus()
                 return false
             }
             if(!emailRegex.test(this.state.company_emailId)){
-                this.presenter.getCommonAlertBox("Please enter valid email Id")
+                this.presenter.getCommonAlertBox("Please enter valid email address")
                 this.input_company_emailId.focus()
                 return false
             }

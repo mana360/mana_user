@@ -278,7 +278,7 @@ export default class EditProfile extends React.Component {
                         <Text style={StyleEditProfile.modalLabelText}>{Constants.EmailAddress}</Text>
                     </View>
                     <TextInput
-                        placeholder="Enter Email Id"
+                        placeholder="Enter Email Address"
                         style={StyleEditProfile.TextInput}
                         value={this.state.company_email}
                         onChangeText={(text) => { this.setState({ company_email: text }) }}
@@ -774,10 +774,10 @@ export default class EditProfile extends React.Component {
                         <Image source={require('../images/email_id.png')}
                             style={StyleEditProfile.labelIcon}
                         />
-                        <Text style={StyleEditProfile.modalLabelText}>{Constants.Email}</Text>
+                        <Text style={StyleEditProfile.modalLabelText}>{Constants.EmailAddress}</Text>
                     </View>
                     <TextInput
-                        placeholder="Enter Email Id"
+                        placeholder="Enter Email Address"
                         style={StyleEditProfile.TextInput}
                         value={this.state.email_id}
                         onChangeText={(text) => { this.setState({ email_id: text }) }}
@@ -842,11 +842,11 @@ export default class EditProfile extends React.Component {
             //     return false
             // }
             if(this.state.company_email==""){
-                this.presenter.getCommonAlertBox("Please enter email Id")
+                this.presenter.getCommonAlertBox("Please enter email address")
                 return false
             }
             if(!emailRegex.test(this.state.company_email)){
-                this.presenter.getCommonAlertBox("Please enter valid email Id")
+                this.presenter.getCommonAlertBox("Please enter valid email address")
                 return false
             }
             // if(this.state.company_address==""){
@@ -966,11 +966,11 @@ export default class EditProfile extends React.Component {
         //             return false
         //     }
             if(this.state.email_id==""){
-                this.presenter.getCommonAlertBox("Please enter email Id")
+                this.presenter.getCommonAlertBox("Please enter email address")
                 return false
             }
             if(!emailRegex.test(this.state.email_id)){
-                this.presenter.getCommonAlertBox("Please enter valid email Id")
+                this.presenter.getCommonAlertBox("Please enter valid email address")
                 return false
             }
             // if(this.state.user_password==""){
