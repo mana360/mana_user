@@ -124,7 +124,7 @@ VerifySuccess() {
                         <TextInput placeholder='Enter Mobile Number'
                             style={StyleSignIn.textInput_style}
                             keyboardType="number-pads"
-                            maxLength={10}
+                            maxLength={9}
                             value={this.state.mobile_number}
                             onChangeText={(newText) => {
                                 if (!isNaN(newText))

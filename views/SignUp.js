@@ -310,7 +310,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
           <View style={StyleSignUp.textInput_container}>
             <View style={StyleSignUp.labelBox}>
               <Image style={StyleSignUp.LabelBoxIcon}
-                source={require('../images/mobile_number.png')} />
+                source={require('../images/email_id-signin.png')} />
               <Text style={StyleSignUp.labelBoxText}>{Constants.Email}</Text>
             </View>
             <TextInput placeholder='Enter Email Address'

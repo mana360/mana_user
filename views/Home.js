@@ -63,6 +63,7 @@ export default class Home extends React.Component {
                                 keyboardType="number-pad"
                                 style={StyleCollectMyLoad.textInput_style}
                                 value={this.state.mobile_number}
+                                maxLength={9}
                                 onChangeText={(newText) => {
                                     this.setState({ mobile_number: newText })
                                 }}
