@@ -25,6 +25,7 @@ export default class Tripmap extends React.Component {
 
      componentDidMount(){
         this.driver_id = this.props.navigation.getParam('driver_id')
+        console.log("driver id ===> "+this.driver_id)
         this.setState({
             pickup_coords  : this.props.navigation.getParam('pickup_coords'),
             dropoff_coords : this.props.navigation.getParam('dropoff_coords')
@@ -37,6 +38,10 @@ export default class Tripmap extends React.Component {
         this.init()
     }
 
+    componentWillUnmount(){
+        clearInterval(this.timer)
+    }
+
     async init(){
         if(Platform.OS=="android"){
             const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
@@ -46,7 +51,7 @@ export default class Tripmap extends React.Component {
         }else{
             this.updateCurrentLocation()
         }
-        //this.getDriverLocation()
+        this.getDriverLocation()
     }
 
     updateCurrentLocation(){
@@ -68,7 +73,9 @@ export default class Tripmap extends React.Component {
         let param = {
             driver_id : this.driver_id
         }
-        this.presenter.callPostApi(ApiConstants.getDriverLocation, param, false)
+        if(this.presenter!=null){
+            this.presenter.callPostApi(ApiConstants.getDriverLocation, param, false)
+        }
 
         this.timer = setInterval(()=>{
             this.getDriverLocation()
@@ -81,11 +88,11 @@ export default class Tripmap extends React.Component {
             case ApiConstants.getDriverLocation:{
                 if(data.status){
                     console.log("driver location ====> "+JSON.stringify(data))
-                    //let latlng = data.latlng.split(",")
-                    // this.setState({
-                    //     driver_lat:latlng[0],
-                    //     driver_lng:latlng[1]
-                    // })
+                    let latlng = data.location_details.driver_latlng.split(",")
+                    this.setState({
+                        driver_lat: parseFloat(latlng[0]),
+                        driver_lng: parseFloat(latlng[1])
+                    })
                 }else{
                     this.presenter.getCommonAlertBox(data.message)
                 }
@@ -118,12 +125,17 @@ export default class Tripmap extends React.Component {
                                 latitudeDelta: 0.0059397161733585335,
                                 longitudeDelta: 0.005845874547958374
                             })
-                            // this.driver_marker.animateMarkerToCoordinate({
-                            //     latitude: this.state.driver_lat,
-                            //     longitude: this.state.driver_lng,
-                            //     latitudeDelta: 0.0059397161733585335,
-                            //     longitudeDelta: 0.005845874547958374
-                            // }, 10000)
+                            {
+                                this.state.driver_lat!=""
+                                ?
+                                    this.driver_marker.animateMarkerToCoordinate({
+                                    latitude: this.state.driver_lat,
+                                    longitude: this.state.driver_lng,
+                                    latitudeDelta: 0.0059397161733585335,
+                                    longitudeDelta: 0.005845874547958374
+                                }, 10000)
+                                : null
+                            }
                         }}
                         // onLayout={ () => this.googleMap.fitToCoordinates(
                         //         [{ latitude: this.state.current_lat, longitude: this.state.current_lng,}],
@@ -138,17 +150,22 @@ export default class Tripmap extends React.Component {
                             description={""}
                         >
                         </Marker>
-
-                        {/* <Marker
-                            ref={(ref)=>{this.driver_marker = ref}}
-                            coordinate={{ latitude:this.state.driver_lat, longitude:this.state.driver_lng}}
-                            title={""}  
-                            description={""}
-                        >
-                            <View style={{backgroundColor:Constants.COLOR_GREEN, justifyContent:'center', alignItems:'center', padding:5, borderRadius:50}}>
-                                <Image source={require('../images/truck_icon.png')} style={{width:35, height:35, resizeMode:'contain', tintColor:Constants.COLOR_WHITE}}/>
-                            </View>
-                        </Marker> */}
+                        
+                        {
+                            this.state.driver_lat!=""
+                            ?
+                            <Marker
+                                ref={(ref)=>{this.driver_marker = ref}}
+                                coordinate={{ latitude:this.state.driver_lat, longitude:this.state.driver_lng}}
+                                title={""}  
+                                description={""}
+                            >
+                                <View style={{backgroundColor:Constants.COLOR_GREEN, justifyContent:'center', alignItems:'center', padding:5, borderRadius:50}}>
+                                    <Image source={require('../images/truck_icon.png')} style={{width:35, height:35, resizeMode:'contain', tintColor:Constants.COLOR_WHITE}}/>
+                                </View>
+                            </Marker>
+                            : null
+                        }
 
                         <MapViewDirections
                             origin={this.state.pickup_coords}
