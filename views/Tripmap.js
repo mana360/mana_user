@@ -46,6 +46,9 @@ export default class Tripmap extends React.Component {
             })
         }
         this.init()
+        this.timer = setInterval(()=>{
+            this.state.isRefresh ? this.getDriverLocation() : null
+         }, 20000)
     }
 
     componentWillUnmount(){
@@ -87,10 +90,6 @@ export default class Tripmap extends React.Component {
         if(this.presenter!=null){
             this.presenter.callPostApi(ApiConstants.getDriverLocation, param, false)
         }
-
-        this.timer = setInterval(()=>{
-           this.state.isRefresh ? this.getDriverLocation() : null
-        }, 20000)
     }
 
     onResponse(apiConstant, data){
