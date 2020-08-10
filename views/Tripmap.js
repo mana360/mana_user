@@ -19,7 +19,10 @@ export default class Tripmap extends React.Component {
             dropoff_coords:"",
             driver_lat:"",
             driver_lng:"",
+            drop1_lat:"",
+            drop1_lng:"",
             is_map_error:0,
+            isRefresh:true,
         }
     }
 
@@ -30,15 +33,23 @@ export default class Tripmap extends React.Component {
             pickup_coords  : this.props.navigation.getParam('pickup_coords'),
             dropoff_coords : this.props.navigation.getParam('dropoff_coords')
         })
-        let latlng = this.props.navigation.getParam('dropoff_coords').split(",")
+        let latlng = this.props.navigation.getParam('pickup_coords').split(",")
         this.setState({
             current_lat : parseFloat(latlng[0]),
             current_lng : parseFloat(latlng[1])
         })
+        if(this.props.navigation.getParam('drop1')!=""){
+            let drop1_latlng = this.props.navigation.getParam('drop1').split(",")
+            this.setState({
+                drop1_lat : parseFloat(drop1_latlng[0]),
+                drop1_lng : parseFloat(drop1_latlng[1])
+            })
+        }
         this.init()
     }
 
     componentWillUnmount(){
+        this.setState({isRefresh:false})
         clearInterval(this.timer)
     }
 
@@ -78,7 +89,7 @@ export default class Tripmap extends React.Component {
         }
 
         this.timer = setInterval(()=>{
-            this.getDriverLocation()
+           this.state.isRefresh ? this.getDriverLocation() : null
         }, 20000)
     }
 
@@ -128,7 +139,7 @@ export default class Tripmap extends React.Component {
                             {
                                 this.state.driver_lat!=""
                                 ?
-                                    this.driver_marker.animateMarkerToCoordinate({
+                                    this.current_marker.animateMarkerToCoordinate({
                                     latitude: this.state.driver_lat,
                                     longitude: this.state.driver_lng,
                                     latitudeDelta: 0.0059397161733585335,
@@ -150,7 +161,19 @@ export default class Tripmap extends React.Component {
                             description={""}
                         >
                         </Marker>
-                        
+                        {
+                            this.state.drop1_lat!=""
+                            ?
+                            <Marker  
+                                ref={(ref)=>{this.current_marker = ref}}
+                                coordinate={{ latitude:this.state.drop1_lat, longitude:this.state.drop1_lng}}
+                                title={""}  
+                                description={""}
+                            >
+                            </Marker>
+                            : null
+                        }
+
                         {
                             this.state.driver_lat!=""
                             ?

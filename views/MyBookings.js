@@ -269,7 +269,7 @@ export default class MyBookings extends React.Component{
                                                 onPress={()=>{
                                                     if(item.pickup_latlng!="" && item.pickup_latlng!=null){
                                                         if(item.drop1_latlng!="" && item.drop1_latlng!=null){
-                                                            this.props.navigation.navigate('Tripmap',{driver_id:item.driver_id, 'pickup_coords':item.pickup_latlng, 'dropoff_coords':item.drop1_latlng})
+                                                            this.props.navigation.navigate('Tripmap',{driver_id:item.driver_id, 'pickup_coords':item.pickup_latlng, 'dropoff_coords':item.drop2_latlng, 'drop1':item.drop1_latlng})
                                                         }else{
                                                         this.presenter.getCommonAlertBox("Coordinates are not available.")
                                                         }
