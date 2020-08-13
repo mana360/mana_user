@@ -71,6 +71,7 @@ export default class BookingSummary extends React.Component{
             grand_total:0,
             total_price:0,
             vat:0,
+            distance:"",
 
             countList:[],
             otherServicesList:[],
@@ -234,7 +235,8 @@ export default class BookingSummary extends React.Component{
         "coupon_id":this.state.discountAmount_ID,
         "load_category_id":this.state.load_category_id,
         "payment_mode":payment_mode,
-        "payment_transaction_id":transaction_id
+        "payment_transaction_id":transaction_id,
+        "distance":this.state.distance,
        }
      this.presenter.callPostApi(ApiConstants.bookCMLTrip,params,true);
     }
@@ -313,11 +315,12 @@ export default class BookingSummary extends React.Component{
             if(data.status){
                 this.setState({grand_total:data.booking_summary.grand_total,
                     otherServices_amount:data.booking_summary.other_services,
-                    discountAmount:data.booking_summary.discount,
+                    // discountAmount:data.booking_summary.discount,
                     total_price:data.booking_summary.booking_amount,
                     booking_amount:data.booking_summary.booking_amount,
                     vat:data.booking_summary.vat_tax_per,
                     chargesTripCost:data.booking_summary.other_per,
+                    distance:data.booking_summary.total_distance,
                   });
               }else{
                 //   alert(data.message);
@@ -896,7 +899,7 @@ export default class BookingSummary extends React.Component{
                                             this.discountCoupon_amount=item.coupon_desc;
                                             this.discountCoupon_id=item.coupon_id;
                                             console.log("discoun coupon value and ID"+  this.discountCoupon_amount+" , "+ this.discountCoupon_id);
-                                            console.log("discount Amount==>"+JSON.stringify("coupon details"+item));
+                                            console.log("discount Amount==>"+JSON.stringify("coupon details"+JSON.stringify(item)));
                                            
                                             this.getcalculatingBooking();
                                             }})

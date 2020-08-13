@@ -27,7 +27,8 @@ export default class MyBookings extends React.Component{
     }
 
     componentDidMount(){
-    this.getCurrentBookingList();
+    // this.getCurrentBookingList();       
+                                                          
     this.willFocusSubscription = this.props.navigation.addListener(
         'willFocus',
         () => {   

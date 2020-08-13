@@ -164,8 +164,9 @@ class HeaderBar extends React.Component {
                 style={[styles.headerIcon, { width: 33, height: 33, }]}
               />
               { this.state.notification_count==0?null:
-                <Badge style={{position:"absolute",right: -5,padding:5,top:-8,justifyContent:'center'}}>
+                <Badge style={{position:"absolute",right: -10,top:-8,justifyContent:'center',borderRadius:50,width:31,height:30,alignItems:'center'}}>
                   <Text style={{color:Constants.COLOR_WHITE,fontSize:10,}}>{this.state.notification_count}</Text>
+                  {/* <Text style={{color:Constants.COLOR_WHITE,fontSize:11,}}>451</Text> */}
 
                 </Badge>
               }
