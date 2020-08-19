@@ -22,6 +22,10 @@ export default class Notification extends React.Component {
             dataSource: [],
             RatingModelVisisble:false,
             starCount:0,
+            notificationItem:[],
+            serviceTypeID:"",
+            bookingID:'',
+
 
         }
     }
@@ -50,8 +54,8 @@ export default class Notification extends React.Component {
 
     async submitRating(){
         let params = {
-            'booking_id' : this.service_type_id,
-            'service_type_id':this.service_type_id,
+            'booking_id' : this.state.bookingID,
+            'service_type_id':this.state.serviceTypeID,
             'rating_value':this.state.starCount,
             "rating_message":"",
                 }
@@ -86,8 +90,11 @@ export default class Notification extends React.Component {
                 //                  {text: 'OK',
                 //                   onPress:()=>{}},
                 //                  ],{ cancelable: false })
+                        if(this.state.notificationItem.booking_status=="completed"){
+                            this.setState({RatingModelVisisble:true});
+                        }else{
                 this.presenter.getCommonAlertBox(data.message);
-                        
+                        }
                  this.getAllNotification()            
                 } else {
                     this.presenter.getCommonAlertBox(data.message);
@@ -121,19 +128,21 @@ export default class Notification extends React.Component {
                 break;
             }
 
-            case ApiConstants.rateBooking: {
-                console.log("RatingReview => " + JSON.stringify(data))
+            case ApiConstants.RateBookings :{
                 if(data.status){
-                    this.setState({ RatingModelVisisble: false });
-                }
-                else{
-                  //   alert(data.message)
-                  this.setState({ RatingModelVisisble: false });
-                  this.presenter.getCommonAlertBox(data.message);
-      
-                }
-              break;
+                            this.setState({ RatingModelVisisble: false ,starCount:""});
+                         
+                        }
+                        else{
+                        
+        
+                        //   this.setState({ RatingModelVisisble: false })
+                          this.presenter.getCommonAlertBox(data.message);
+              
+                        }
+                break;
             }
+           
         }
     }
     
@@ -159,10 +168,12 @@ export default class Notification extends React.Component {
                             <TouchableOpacity style={StyleNotification.row}
                                 onPress={() => {
                                     if (item.is_read == 1) {
+                              
                                     //    this.props.navigation.navigate('RateAndReview', { item: item });
                                     } else  {
-                                        // this.setState({bookingItem});
-                                        
+                                        // this.setState({RatingModelVisisble:true});
+                                        console.log("NOTIFICATION ITEM===>"+JSON.stringify(item))
+                                            this.setState({notificationItem:item,serviceTypeID:item.service_type_id,bookingID:item.booking_id});
                                         this.callMarkAsReadApi(item.noti_id);
 
                                     }
@@ -251,13 +262,13 @@ export default class Notification extends React.Component {
 
                         />
                         </View>
-                        <View style={{flexDirection:'row',justifyContent:"center",paddingTop:30}}>
+                        <View style={{flexDirection:'row',justifyContent:"center",paddingTop:30,paddingBottom:15}}>
                             <TouchableOpacity style={{backgroundColor:"green",justifyContent:'center',width:'35%',borderRadius:20,right:25,paddingVertical:10}}
                             onPress={()=>{
                                 this.submitRating();
                             }}
                             >
-                                <Text style={{color:Constants.COLOR_WHITE,alignSelf:'center',alignSelf:'center'}}>SUBMIT</Text>
+                                <Text style={{color:Constants.COLOR_WHITE,alignSelf:'center',alignSelf:'center',}}>SUBMIT</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={{backgroundColor:"green",justifyContent:'center',width:'35%',borderRadius:20,left:25,paddingVertical:10}}
                             onPress={()=>{
@@ -265,7 +276,7 @@ export default class Notification extends React.Component {
                             }}
                             >
                            
-                            <Text style={{color:Constants.COLOR_WHITE,alignSelf:'center',width:'50%'}}>BACK</Text>
+                            <Text style={{color:Constants.COLOR_WHITE,alignSelf:'center',}}>BACK</Text>
                               
                             </TouchableOpacity> 
                         </View>

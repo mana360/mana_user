@@ -174,6 +174,15 @@ export default class BookingSummary extends React.Component{
             this.presenter.getCommonAlertBox("Please Enter valid Date");
             return false;
         }
+        if(this.state.pick_up_addressDetails==""){
+            this.presenter.getCommonAlertBox("Please Enter Pickup Address");
+            return false;
+        }
+        if(this.state.drop_off_addressDetails==""){
+            this.presenter.getCommonAlertBox("Please Enter Dropoff Address");
+            return false;
+        }
+      
         if(this.state.pickup_time==""){
             this.presenter.getCommonAlertBox("Please Enter valid Time");
             return false;
