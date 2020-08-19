@@ -330,7 +330,7 @@ export default class ProfileSetUp extends React.Component {
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.company_telephoneNo}
                         ref={(ref)=>{this.input_company_telephone_number = ref}}
-                        maxLength={9}
+                        maxLength={25}
                         keyboardType="number-pad"
                         onChangeText={(text) => { 
                             if(!isNaN(text))
@@ -615,7 +615,7 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Telephone Number"
                         style={StyleSetUpProfile.TextInput}
                         keyboardType="number-pad"
-                        maxLength={9}
+                        maxLength={25}
                         ref={(ref)=>{this.input_user_telephone_number=ref}}
                         value={this.state.user_telephoneNumber}
                         onChangeText={(text) => { 
@@ -685,6 +685,7 @@ export default class ProfileSetUp extends React.Component {
                             
                             <TextInput
                                 placeholder="Enter Number"
+                                maxLength={13}
                                 style={StyleSetUpProfile.TextInput}
                                 keyboardType="number-pad"
                                 ref={(ref)=>{this.input_user_rsa_id=ref}}
@@ -1105,11 +1106,11 @@ export default class ProfileSetUp extends React.Component {
                     this.input_user_telephone_number.focus()
                     return false
             }
-            if(this.state.user_telephoneNumber.length!=9){
-                this.presenter.getCommonAlertBox("Please enter correct telephone number")
-                    this.input_user_telephone_number.focus()
-                    return false
-            }
+            // if(this.state.user_telephoneNumber.length!=9){
+            //     this.presenter.getCommonAlertBox("Please enter correct telephone number")
+            //         this.input_user_telephone_number.focus()
+            //         return false
+            // }
             if(this.state.user_rsaPassport=="" && this.state.user_docType=="1"){
                 this.presenter.getCommonAlertBox("Please enter RSA Id")
                     this.input_user_rsa_id.focus()
@@ -1212,11 +1213,11 @@ export default class ProfileSetUp extends React.Component {
                 this.input_company_telephone_number.focus()
                 return false
             }
-            if(this.state.company_telephoneNo.length!=9){
-                this.presenter.getCommonAlertBox("Please enter correct telephone number")
-                this.input_company_telephone_number.focus()
-                return false
-            }
+            // if(this.state.company_telephoneNo.length!=9){
+            //     this.presenter.getCommonAlertBox("Please enter correct telephone number")
+            //     this.input_company_telephone_number.focus()
+            //     return false
+            // }
             if(this.state.company_emailId==""){
                 this.presenter.getCommonAlertBox("Please enter email address")
                 this.input_company_emailId.focus()

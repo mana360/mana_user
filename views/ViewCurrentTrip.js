@@ -230,14 +230,24 @@ export default class ViewCurrentTrip extends React.Component {
                                                     this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_UPCOMING ? "Upcoming"
                                                     :
                                                     this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In Storage"
-                                                   : 
-                                                   this.state.truckData.current_status==Constants.BOOKING_CURRENT_STATUS_DELIVERED? "Delivered"
-                                                   :
+                                                    : 
+                                                    this.state.truckData.current_status==Constants.BOOKING_CURRENT_STATUS_DELIVERED? "Delivered"
+                                                    :
                                                     this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_PENDING? "Pending"
-                                                   
-
-
-                                                    :null
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_ONGOING? "Ongoing"
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_DRIVER? "Canceled by Driver"
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_CUSTOMER? "Canceled by Customer"
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_PARTNER? "Canceled by Partner"
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_ADMIN? "Canceled by Admin"
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_DELIVERED_TO_DROP1? "Delivered to Drop Address 1"    
+                                                    :
+                                                    null
                                                 }
                                                 </Text>
                                     </View>
@@ -249,7 +259,7 @@ export default class ViewCurrentTrip extends React.Component {
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
                                             <Text style={StyleViewCurrentTrip.col2Text}>{
-                                            moment(this.state.truckData.arrivalDateAndTime,"hh:mm:ss").format("hh:mm A")
+                                            moment(this.state.truckData.arrivalDateAndTime).format("hh:mm A")
                                             }</Text>
                                         </View>
                                     </View>
@@ -280,7 +290,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             }</Text>
                                         </View>
                                     </View>
-
+{/* 
                                     <View style={StyleViewCurrentTrip.row}>
                                         <View style={StyleViewCurrentTrip.col1}>
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.ContactNo}</Text>
@@ -301,7 +311,7 @@ export default class ViewCurrentTrip extends React.Component {
                                                 <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
                                             </TouchableOpacity>
                                         </View>
-                                    </View>
+                                    </View> */}
 
                                     <View style={StyleViewCurrentTrip.row}>
                                         <View style={StyleViewCurrentTrip.col1}>

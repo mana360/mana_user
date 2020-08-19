@@ -872,7 +872,7 @@ export default class BookingSummary extends React.Component{
 
                                     <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={[StyleBookingSummary.priceTxt,{width:'70%'}]}>{Constants.DiscountVoucher}</Text>
-                                        <Text style={[StyleBookingSummary.priceVol,{width:'20%',}]}> R {this.state.discountAmount} </Text>
+                                        <Text style={[StyleBookingSummary.priceVol,{width:'20%',}]}>  {this.state.discountAmount} %</Text>
                                         <TouchableOpacity
                                             style={{ display: this.state.Discount_status?'flex':'none', width:30, justifyContent:'center', alignItems:'center', marginRight:5, marginTop:5}}
                                             onPress={()=>{

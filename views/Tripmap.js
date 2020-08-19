@@ -170,6 +170,8 @@ export default class Tripmap extends React.Component {
                                 title={""}  
                                 description={""}
                             >
+                                 <View style={{width:20, height:20, backgroundColor:Constants.COLOR_GREEN, borderRadius:50, borderWidth:1, borderColor:Constants.COLOR_BLACK}}>
+                                    </View>
                             </Marker>
                             : null
                         }

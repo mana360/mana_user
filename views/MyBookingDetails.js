@@ -555,18 +555,27 @@ export default class MyBookingDetails extends React.Component {
                         <View style={{ flex: 1 }}>
                             <Text style={this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_CANCELLED ? [StyleMyBookingDetails.detailsValue, { color: Constants.COLOR_RED }] : [StyleMyBookingDetails.detailsValue, { color: Constants.COLOR_GREEN }]}>
                                 {  
-                              this.state.truck_booking_details.current_status== Constants.BOOKING_CURRENT_STATUS_PICKUP ? "Trip Started" 
-                                    :
-                                    this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW ? "New"
-                                        :
-                                        
-                                          this.state.truck_booking_details['booking_status'] ==Constants.BOOKING_STATUS_DELIVERED ? "Delivered"
-                                         :   this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_PICKED_UP ? "Driver Assigned"
-                                                
-                                                        :
-                                                        this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_CANCELLED ? "Cancelled"
-                                                   
-                                                        : null
+                                this.state.truck_booking_details.current_status== Constants.BOOKING_CURRENT_STATUS_PICKUP ? "Trip Started" 
+                                :
+                                this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW ? "New"
+                                :
+                                this.state.truck_booking_details['booking_status'] ==Constants.BOOKING_STATUS_DELIVERED ? "Delivered"
+                                :   
+                                this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_PICKED_UP ? "Driver Assigned"
+                                :
+                                this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_CANCELLED ? "Cancelled"
+                               :
+                                this.state.truck_booking_details['booking_status']== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_DRIVER? "Canceled by Driver"
+                               :
+                                this.state.truck_booking_details['booking_status']== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_CUSTOMER? "Canceled by Customer"
+                                :
+                                this.state.truck_booking_details['booking_status']== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_PARTNER? "Canceled by Partner"
+                                :
+                                this.state.truck_booking_details['booking_status']== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_ADMIN? "Canceled by Admin"
+                                :
+                                this.state.truck_booking_details['booking_status']== Constants.BOOKING_CURRENT_STATUS_DELIVERED_TO_DROP1? "Delivered to Drop Address 1" 
+                                :
+                                 null
                                 }
                             </Text>
                         </View>

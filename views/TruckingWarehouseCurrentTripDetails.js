@@ -240,7 +240,7 @@ componentDidMount(){
                                             <Text style={StyleViewCurrentTrip.col2Text}>{this.state.warehouseTrucking_data.driver_name}</Text>
                                         </View>
                                     </View>
-
+{/* 
                                     <View style={StyleViewCurrentTrip.row}>
                                         <View style={StyleViewCurrentTrip.col1}>
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.PhoneNumber}</Text>
@@ -255,7 +255,7 @@ componentDidMount(){
                                                 <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
                                             </TouchableOpacity>
                                         </View>
-                                    </View>
+                                    </View> */}
 
                                     <View style={StyleViewCurrentTrip.row}>
                                         <View style={StyleViewCurrentTrip.col1}>
