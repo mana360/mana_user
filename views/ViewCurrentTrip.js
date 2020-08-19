@@ -55,7 +55,7 @@ export default class ViewCurrentTrip extends React.Component {
             this.booking_id = this.props.navigation.getParam('booking_id')
             console.log('bookig_id  ' + JSON.stringify(this.booking_id));
             this.tripDetails= this.props.navigation.getParam("bookingItem");
-            console.log(JSON.stringify( "Trip Details==>"+JSON.stringify( this.tripDetails)));
+            console.log(JSON.stringify( "Trip Details===========================>"+ JSON.stringify(this.tripDetails)));
             this.setState({truckData:this.tripDetails});
     
         // this.presenter.callPostApi(ApiConstants.getBookingDetails, {'service_type_id':this.service_type_id,'booking_id':this.booking_id}, true)
@@ -258,9 +258,14 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedTimeTocmpleteTrip}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{
-                                            moment(this.state.truckData.arrivalDateAndTime).format("hh:mm A")
-                                            }</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>
+                                                {
+                                                this.state.truckData.arrivalDateAndTime==undefined?"NA"
+                                                :this.state.truckData.arrivalDateAndTime==""?
+                                                "NA":
+                                            moment(this.state.truckData.arrivalDateAndTime,"hh:mm:ss ").format("hh:mm A")
+                                            }
+                                            </Text>
                                         </View>
                                     </View>
 
@@ -270,7 +275,10 @@ export default class ViewCurrentTrip extends React.Component {
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
                                             <Text style={StyleViewCurrentTrip.col2Text}>{
-                                            moment(this.state.truckData.arrivalDateAndTime,"YYYY-MMMM-DDDD").format("YYYY/MMMM/DD")
+                                                this.state.truckData.arrivalDateAndTime==undefined?"NA"
+                                                :this.state.truckData.arrivalDateAndTime==""?
+                                                "NA":
+                                            moment(this.state.truckData.arrivalDateAndTime,"YYYY-MM-DDDD").format("DD/MM/YYYY")
                                                                                         
                                             }</Text>
                                         </View>
