@@ -290,7 +290,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             }</Text>
                                         </View>
                                     </View>
-{/* 
+{/*     
                                     <View style={StyleViewCurrentTrip.row}>
                                         <View style={StyleViewCurrentTrip.col1}>
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.ContactNo}</Text>
