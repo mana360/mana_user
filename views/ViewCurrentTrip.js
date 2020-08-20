@@ -263,7 +263,7 @@ export default class ViewCurrentTrip extends React.Component {
                                                 this.state.truckData.arrivalDateAndTime==undefined?"NA"
                                                 :this.state.truckData.arrivalDateAndTime==""?
                                                 "NA":
-                                            moment(this.state.truckData.arrivalDateAndTime,"hh:mm:ss ").format("hh:mm A")
+                                            moment(this.state.truckData.arrivalDateAndTime).format("hh:mm A")
                                             }
                                             </Text>
                                         </View>
@@ -278,7 +278,7 @@ export default class ViewCurrentTrip extends React.Component {
                                                 this.state.truckData.arrivalDateAndTime==undefined?"NA"
                                                 :this.state.truckData.arrivalDateAndTime==""?
                                                 "NA":
-                                            moment(this.state.truckData.arrivalDateAndTime,"YYYY-MM-DDDD").format("DD/MM/YYYY")
+                                            moment(this.state.truckData.arrivalDateAndTime).format("DD/MM/YYYY")
                                                                                         
                                             }</Text>
                                         </View>
