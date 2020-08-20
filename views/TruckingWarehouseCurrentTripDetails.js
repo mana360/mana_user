@@ -112,7 +112,7 @@ componentDidMount(){
             }
         }
         config(options).fetch('GET', image_URL).then((res) => {
-            alert("File is downloaded successfully.");
+            this.presenter.getCommonAlertBox("File is downloaded successfully.");
         });
     }
 
@@ -132,7 +132,7 @@ componentDidMount(){
             }
             else {
                 // permission denied
-                alert("File downloading faild.");
+                this.presenter.getCommonAlertBox("File downloading faild.");
                 return false
             }
           } catch (err) {
@@ -219,7 +219,7 @@ componentDidMount(){
                                             <Text style={StyleViewCurrentTrip.col1Text}>Estimated time to completion of trip</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{moment(this.state.warehouseTrucking_data.date_of_drop).format("hh:mm a")}</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>{moment(this.state.warehouseTrucking_data.date_of_drop).format("hh:mm A")}</Text>
                                         </View>
                                     </View>
 
@@ -240,7 +240,7 @@ componentDidMount(){
                                             <Text style={StyleViewCurrentTrip.col2Text}>{this.state.warehouseTrucking_data.driver_name}</Text>
                                         </View>
                                     </View>
-
+{/* 
                                     <View style={StyleViewCurrentTrip.row}>
                                         <View style={StyleViewCurrentTrip.col1}>
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.PhoneNumber}</Text>
@@ -255,7 +255,7 @@ componentDidMount(){
                                                 <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
                                             </TouchableOpacity>
                                         </View>
-                                    </View>
+                                    </View> */}
 
                                     <View style={StyleViewCurrentTrip.row}>
                                         <View style={StyleViewCurrentTrip.col1}>
@@ -266,9 +266,9 @@ componentDidMount(){
                                                 // this.props.navigation.navigate('MapViews', { flag: 'truckingWarehouse',"latlong":"" })
                                         this.props.navigation.navigate('MapViews', { flag_marker:true,
                                             "TripDetials":this.state.warehouseTrucking_data.drop_location.drop_latlng[1]==undefined?
-                                            alert("Co-ordinate Not Found")
+                                            this.presenter.getCommonAlertBox("Co-ordinate Not Found")
                                             :this.state.warehouseTrucking_data.drop_location.drop_latlng[1]==""?
-                                            alert("Co-ordinate Not Found")
+                                            this.presenter.getCommonAlertBox("Co-ordinate Not Found")
                                             :
                                             this.state.warehouseTrucking_data.drop_location.drop_latlng[1]
                                         });

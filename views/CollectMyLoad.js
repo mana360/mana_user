@@ -99,7 +99,7 @@ export default class CollectMyLoad extends React.Component {
                                     source={require('../images/email_id.png')} />
                                 <Text style={StyleCollectMyLoad.labelBoxText}>{Constants.Email}</Text>
                             </View>
-                            <TextInput placeholder='Enter Email Id'
+                            <TextInput placeholder='Enter Email Address'
                                 style={StyleCollectMyLoad.textInput_style}
                                 keyboardType="email-address"
                                 autoCapitalize="none"
@@ -132,6 +132,7 @@ export default class CollectMyLoad extends React.Component {
                             </View>
                             <TextInput placeholder='Enter Mobile Number'
                                 keyboardType="number-pad"
+                                maxLength={9}
                                 style={StyleCollectMyLoad.textInput_style}
                                 value={this.state.refer_mobile_number}
                                 onChangeText={(newText) => {
@@ -175,7 +176,7 @@ export default class CollectMyLoad extends React.Component {
         let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
         if(type==0){
             if(!emailRegex.test(this.state.refer_emailId)){
-                alert("Please enter correct email Id.")
+                this.presenter.getCommonAlertBox("Please enter correct email address.")
             }else{
                 let params = {
                     "type" : 0,
@@ -186,8 +187,8 @@ export default class CollectMyLoad extends React.Component {
             }
         }
         if(type==1){
-            if(this.state.refer_mobile_number.length!=10){
-                alert("Please enter correct mobile number.")
+            if(this.state.refer_mobile_number.length!=9){
+                this.presenter.getCommonAlertBox("Please enter correct mobile number.")
             }else{
                 let params ={
                     "type" : 1,
@@ -215,7 +216,9 @@ export default class CollectMyLoad extends React.Component {
                             })
                         }
                     } else {
-                        alert(data.message)
+                        // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                     }
                     break;
                 }
@@ -225,7 +228,9 @@ export default class CollectMyLoad extends React.Component {
                         this.setState({truckList:data.truck_category});
                         console.log('truck value===>',data.truck_category);
                     }else{
-                        alert(data.message)
+                        // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                     }
 
                     break;
@@ -236,15 +241,15 @@ export default class CollectMyLoad extends React.Component {
                             // console.log("Other Services Data===>"+ JSON.stringify(data.booking_rates));
                            var  truckTableData=[];
                            var otherServices_Data=[];
+                           
                            data.booking_rates.truck_type.forEach((currentItem,index)=>{
                             currentItem.category_list.forEach(child=>{
                                 truckTableData[index]=[index+1 , currentItem.truck_type_name , child.categoty_name, child.rate]
-                                  
                             })
                             })
                             this.setState({truckTableData:truckTableData});
 
-                            console.log("=mayure =====>"+ JSON.stringify(data.booking_rates.other_service));
+                            console.log("=OtherServices =====>"+ JSON.stringify(data.booking_rates.other_service));
 
                                          data.booking_rates.other_service.forEach((currentItem,index) => {
                                           otherServices_Data[index]=[index+1,currentItem.other_service, currentItem.rate]
@@ -252,22 +257,26 @@ export default class CollectMyLoad extends React.Component {
 
                                              
                                          });
-
-                            
-
                             this.setState({otherServicesData:otherServices_Data});
                             console.log("======>"+ this.state.otherServicesData);
                           }else{
                             console.log(data.message);
+                    //  this.presenter.getCommonAlertBox(data.message);
+
                           }
+                       
                         break;
                 }
                 case ApiConstants.referFriend:{
                     this.setState({ModalVisible_referFriend:false, refer_emailId:"", refer_mobile_number:""})
                     if(data.status){
-                        alert(data.message)
+                        // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                     }else{
-                        alert(data.message)
+                        // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                     }
                     break;
                 }       
@@ -275,7 +284,14 @@ export default class CollectMyLoad extends React.Component {
                     break;
         }
     }
-
+  newBookingButton(){
+   //await  this.presenter.callGetApi(ApiConstants.getCMLTruckCategory,"",true);
+   if(this.state.truckList==""){
+    this.presenter.getCommonAlertBox("Truck List Not Available")
+   }else{
+    this.RBSheet.open()
+   }
+}
     render() {
         let { navigation } = this.props;
         return (
@@ -308,18 +324,16 @@ export default class CollectMyLoad extends React.Component {
 
                                 <View style={StyleTruckBooking.col2}>
                                     
-                                    
-                                    
                                     <TouchableOpacity style={[StyleTruckBooking.button,{paddingHorizontal:15,width:'75%',alignSelf:'center'}]}
                                         onPress={() => {
                                             item.type == "upcoming"
                                                 ?
-                                                this.RBSheet.open()
+                                                this.newBookingButton()
                                                 :
                                                 this.props.navigation.navigate('MyBookings',{
                                                     callback:(item)=>{
                                                             if(item==true){
-                                                                this.RBSheet.open();
+                                                                this.newBookingButton()
                                                             }
                                                     }
                                                 });
@@ -431,9 +445,8 @@ export default class CollectMyLoad extends React.Component {
                                             <View style={StyleCollectMyLoad.outerCircle}>
                                                 <View style={StyleCollectMyLoad.innerCircle}>
                                                     <Image style={StyleCollectMyLoad.truckImg}
-                                                        source={{uri:Constants.BASE_URL.substr(0,Constants.BASE_URL.length-5)+item.image}}
+                                                        source={{uri:item.image}}
                                                     />
-                                                    
                                                 </View>
                                             </View>
 

@@ -55,7 +55,7 @@ export default class ViewCurrentTrip extends React.Component {
             this.booking_id = this.props.navigation.getParam('booking_id')
             console.log('bookig_id  ' + JSON.stringify(this.booking_id));
             this.tripDetails= this.props.navigation.getParam("bookingItem");
-            // console.log(JSON.stringify( "Trip Details==>"+JSON.stringify(this.tripDetails)));
+            console.log(JSON.stringify( "Trip Details===========================>"+ JSON.stringify(this.tripDetails)));
             this.setState({truckData:this.tripDetails});
     
         // this.presenter.callPostApi(ApiConstants.getBookingDetails, {'service_type_id':this.service_type_id,'booking_id':this.booking_id}, true)
@@ -77,16 +77,20 @@ export default class ViewCurrentTrip extends React.Component {
                         
                     }
                 } else {
-                    alert(data.message)
+                    // alert(data.message)
+                    this.presenter.getCommonAlertBox(data.message);
+
                 }
     
                 break;
             }
         }
     }
+    
     getExtention(filename){
         return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
     }
+
     async requestFilePermission(file_path){
         try {
             const granted = await PermissionsAndroid.request(
@@ -103,7 +107,9 @@ export default class ViewCurrentTrip extends React.Component {
             }
             else {
                 // permission denied
-                alert("File downloading faild.");
+                // alert("File downloading faild.");
+                this.presenter.getCommonAlertBox("File downloading faild");
+
                 return false
             }
           } catch (err) {
@@ -111,6 +117,7 @@ export default class ViewCurrentTrip extends React.Component {
           }
           return false
     }
+
     getDownloadFile(file_path){
         var date = new Date();
         var image_URL = file_path;
@@ -128,7 +135,7 @@ export default class ViewCurrentTrip extends React.Component {
             }
         }
         config(options).fetch('GET', image_URL).then((res) => {
-            alert("File is downloaded successfully.");
+            this.presenter.getCommonAlertBox("File is downloaded successfully.");
         });
     }
     render() {
@@ -223,8 +230,24 @@ export default class ViewCurrentTrip extends React.Component {
                                                     this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_UPCOMING ? "Upcoming"
                                                     :
                                                     this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In Storage"
-
-                                                    :null
+                                                    : 
+                                                    this.state.truckData.current_status==Constants.BOOKING_CURRENT_STATUS_DELIVERED? "Delivered"
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_PENDING? "Pending"
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_ONGOING? "Ongoing"
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_DRIVER? "Canceled by Driver"
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_CUSTOMER? "Canceled by Customer"
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_PARTNER? "Canceled by Partner"
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_ADMIN? "Canceled by Admin"
+                                                    :
+                                                    this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_DELIVERED_TO_DROP1? "Delivered to Drop Address 1"    
+                                                    :
+                                                    null
                                                 }
                                                 </Text>
                                     </View>
@@ -235,9 +258,14 @@ export default class ViewCurrentTrip extends React.Component {
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.EstimatedTimeTocmpleteTrip}</Text>
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
-                                            <Text style={StyleViewCurrentTrip.col2Text}>{
-                                            moment(this.state.truckData.arrivalDateAndTime,"hh:mm:ss").format("hh:mm:ss")
-                                            }</Text>
+                                            <Text style={StyleViewCurrentTrip.col2Text}>
+                                                {
+                                                this.state.truckData.arrivalDateAndTime==undefined?"NA"
+                                                :this.state.truckData.arrivalDateAndTime==""?
+                                                "NA":
+                                            moment(this.state.truckData.arrivalDateAndTime).format("hh:mm A")
+                                            }
+                                            </Text>
                                         </View>
                                     </View>
 
@@ -247,7 +275,10 @@ export default class ViewCurrentTrip extends React.Component {
                                         </View>
                                         <View style={StyleViewCurrentTrip.col2}>
                                             <Text style={StyleViewCurrentTrip.col2Text}>{
-                                            moment(this.state.truckData.arrivalDateAndTime,"YYYY-MMMM-DDDD").format("YYYY/MMMM/DD")
+                                                this.state.truckData.arrivalDateAndTime==undefined?"NA"
+                                                :this.state.truckData.arrivalDateAndTime==""?
+                                                "NA":
+                                            moment(this.state.truckData.arrivalDateAndTime).format("DD/MM/YYYY")
                                                                                         
                                             }</Text>
                                         </View>
@@ -267,7 +298,7 @@ export default class ViewCurrentTrip extends React.Component {
                                             }</Text>
                                         </View>
                                     </View>
-
+{/*     
                                     <View style={StyleViewCurrentTrip.row}>
                                         <View style={StyleViewCurrentTrip.col1}>
                                             <Text style={StyleViewCurrentTrip.col1Text}>{Constants.ContactNo}</Text>
@@ -288,7 +319,7 @@ export default class ViewCurrentTrip extends React.Component {
                                                 <Image source={require('../images/call_01.png')} style={{ width: 30, height: 30, }} />
                                             </TouchableOpacity>
                                         </View>
-                                    </View>
+                                    </View> */}
 
                                     <View style={StyleViewCurrentTrip.row}>
                                         <View style={StyleViewCurrentTrip.col1}>
@@ -336,17 +367,22 @@ export default class ViewCurrentTrip extends React.Component {
 
                             <TouchableOpacity style={[StyleViewCurrentTrip.bottomButton, { marginRight: 15, width: '40%' }]}
                                 onPress={() => {
-                                    if (this.state.live_geopin == true)
-                                        this.props.navigation.navigate('MapViews', { flag_marker:true,
-                                            "TripDetials": this.state.truckData.drop_location.drop_latlng[1]==undefined?
-                                            alert("Co-ordinate Not Found")
-                                            : this.state.truckData.drop_location.drop_latlng[1]==""?
-                                            alert("Co-ordinate Not Found")
+                                    if (this.state.live_geopin == true){
+                                            // alert(this.state.truckData.drop_location.drop_latlng[1]);
+                                            this.state.truckData.drop_location.drop_latlng[1] ==undefined
+                                            ?
+                                            // alert("Co-ordinate Not Found")
+                                            this.presenter.getCommonAlertBox( this.state.truckData.drop_location.drop_latlng[1])
                                             :
-                                             this.state.truckData.drop_location.drop_latlng[1]
-                                     });
-                                    else
+                                            this.state.truckData.drop_location.drop_latlng[1]==""?
+                                            this.presenter.getCommonAlertBox("Co-ordinate Not Found")
+                                            :
+                                this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials": this.state.truckData.drop_location.drop_latlng[1]  });
+                                    }
+
+                                    else{
                                         this.RBSheet.open(); //delay msg
+                                    }
                                 }}
                             >
                                 <Image source={require('../images/live_geo_pin.png')}

@@ -8,7 +8,7 @@
 
 */
 import React from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput, FlatList } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput, FlatList, Platform } from 'react-native';
 import { StyleMyProfile } from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
 import HeaderBar from '../config/HeaderBar';
@@ -61,14 +61,18 @@ export default class MyProfile extends React.Component {
                     }
                     this.updateUserObject(data.user_data)           // storing user details in local db
                 }else{
-                    alert(data.msg)
+                    // alert(data.msg)
+            this.presenter.getCommonAlertBox(data.message);
+
                 }
                 break;
             }
             case ApiConstants.updateProfilePic: {
                 if (data.status) {
                 } else {
-                    alert(data.message)
+                    // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                 }
     
                 break;
@@ -76,9 +80,13 @@ export default class MyProfile extends React.Component {
             case ApiConstants.changePassword:{
                 if(data.status){
                     this.setState({ modalVisible_Changepassword: false, current_password:"", new_password:"", confirm_password:"" })
-                    alert(data.message)
+                    // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                 }else{
-                    alert(data.message)
+                    // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                 }
                 break;
             }
@@ -133,7 +141,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.CompanyTelephonenumber}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.tele_number!=undefined ? this.state.userData.tele_number : "" }</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.telephone_number!=undefined ? this.state.userData.telephone_number : "" }</Text>
                     </View>
                 </View>
 
@@ -262,7 +270,7 @@ export default class MyProfile extends React.Component {
                         <Text style={StyleMyProfile.col1Text}>{Constants.TelephoneNo}</Text>
                     </View>
                     <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.tele_number!=undefined ? this.state.userData.tele_number : ""}</Text>
+                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.telephone_number!=undefined ? this.state.userData.telephone_number : ""}</Text>
                     </View>
                 </View>
 
@@ -374,8 +382,8 @@ export default class MyProfile extends React.Component {
                         />
                         <Text style={StyleMyProfile.col1Text}>{Constants.EmailAddress}</Text>
                     </View>
-                    <View style={StyleMyProfile.col2}>
-                        <Text style={StyleMyProfile.col2Text}>{this.state.userData.email!=undefined ? this.state.userData.email : ""}</Text>
+                    <View style={[StyleMyProfile.col2]}>
+                        <Text style={[StyleMyProfile.col2Text]}>{this.state.userData.email!=undefined ? this.state.userData.email : ""}</Text>
                     </View>
                 </View>
 
@@ -395,19 +403,19 @@ export default class MyProfile extends React.Component {
     
     isValidPasswords(){
         if(this.state.current_password==""){
-            alert("Please enter current password")
+            this.presenter.getCommonAlertBox("Please enter current password")
             return false
         }
         if(this.state.new_password==""){
-            alert("Please enter new password")
+            this.presenter.getCommonAlertBox("Please enter new password")
             return false
         }
         if(this.state.confirm_password==""){
-            alert("Please enter confirm passowrd")
+            this.presenter.getCommonAlertBox("Please enter confirm passowrd")
             return false
         }
         if(this.state.new_password != this.state.confirm_password){
-            alert("New and Confirm password doesn't matched.")
+            this.presenter.getCommonAlertBox("New and Confirm password doesn't matched.")
             return false
         }
         return true
@@ -457,6 +465,7 @@ export default class MyProfile extends React.Component {
                                 style={StyleMyProfile.TextInput}
                                 value={this.state.current_password}
                                 secureTextEntry={true}
+                                maxLength={12}
                                 autoCapitalize="none"
                                 onChangeText={(text) => { this.setState({ current_password: text }) }}
                                 onBlur={()=>{ this.input_new_password.focus() }}
@@ -476,6 +485,7 @@ export default class MyProfile extends React.Component {
                                 style={StyleMyProfile.TextInput}
                                 value={this.state.new_password}
                                 secureTextEntry={true}
+                                maxLength={12}
                                 autoCapitalize="none"
                                 onChangeText={(text) => { this.setState({ new_password: text }) }}
                                 onBlur={()=>{this.input_confirm_password.focus()}}
@@ -494,6 +504,7 @@ export default class MyProfile extends React.Component {
                                 ref={(ref)=>{this.input_confirm_password = ref}}
                                 style={StyleMyProfile.TextInput}
                                 value={this.state.confirm_password}
+                                maxLength={12}
                                 secureTextEntry={true}
                                 autoCapitalize="none"
                                 onChangeText={(text) => { this.setState({ confirm_password: text }) }}
@@ -593,12 +604,12 @@ export default class MyProfile extends React.Component {
                                     ?
                                     <Image 
                                         source ={{uri: this.state.userData.profile_picture}}
-                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="UserProfile" ? 'flex' : 'none'}]}
+                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="UserProfile" ? 'flex' : 'none' , resizeMode: Platform.OS=="android"? 'cover' :'contain'}]}
                                     />
                                     :
                                     <Image 
                                         source ={require('../images/user_name.png')}
-                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="UserProfile" ? 'flex' : 'none'}]}
+                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="UserProfile" ? 'flex' : 'none', resizeMode:'contain'}]}
                                     />
                                 }
                                 {
@@ -606,7 +617,7 @@ export default class MyProfile extends React.Component {
                                     ?
                                     <Image 
                                         source ={{uri: this.state.userData.company_logo}}
-                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="CompanyProfile" ? 'flex' : 'none'}]}
+                                        style={[StyleMyProfile.ProfileImage,{display: this.state.screen_title=="CompanyProfile" ? 'flex' : 'none' , resizeMode: Platform.OS=="android"? 'cover' :'contain'}]}
                                     />
                                     :
                                     <Image 
@@ -632,7 +643,9 @@ export default class MyProfile extends React.Component {
                         <Text style={[StyleMyProfile.label,{textTransform:'capitalize'}]}>
                             {
                                 this.state.screen_title == 'UserProfile' 
-                                ? this.state.userData.first_name+" "+ this.state.userData.last_name
+                                ? this.state.userData.first_name==undefined?""
+                                :
+                                this.state.userData.first_name+" "+ this.state.userData.last_name
                                 : this.state.userData.company_name
                             }
                         </Text>

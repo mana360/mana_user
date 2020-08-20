@@ -3,7 +3,7 @@
     dev + api by Udayraj
  */
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, DatePickerAndroid, TimePickerAndroid, TextInput, Modal, FlatList} from 'react-native';
+import {Platform, View, Text, TouchableOpacity, Image, ScrollView, DatePickerAndroid, TimePickerAndroid, TextInput, Modal, FlatList} from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { StyleLocationDetails } from '../config/CommonStyles';
 import { Picker, List } from "native-base";
@@ -14,6 +14,7 @@ import Textarea from 'react-native-textarea';
 import moment from 'moment'
 import ApiConstants from '../config/ApiConstants';
 import { MainPresenter } from '../config/MainPresenter';
+import {DateIOS} from '../config/DateIOS'
 
 export default class LocationDetails extends React.Component {
     constructor(props) {
@@ -121,17 +122,39 @@ export default class LocationDetails extends React.Component {
         let currentMinute = new moment().format('m')
 
         if(this.state.pickup_date == new moment().format('YYYY-MM-DD')){
-            if(hour>=currentHour){
-                if(minute>=currentMinute){
-                    console.log("Time is valid")
-                    this.setState({ pickup_time:  selectedTime+":00", isTimerError:false})
-                }else{
-                    // alert('Enter correct minutes in time.')    
-                }
+            console.log("Time is valid")
+            this.setState({ pickup_time:  selectedTime+":00", isTimerError:false});
+                        console.log(currentHour+"   "+currentMinute);
+                        // console.log(hour+"   "+minute);
+                       
+                        if(currentHour<=hour){
+                        }else{
+                            this.setState({ pickup_time: ""});
+                            this.presenter.getCommonAlertBox("invalid Time");
+                        }
 
-            }else{
-                // alert('Enter correct hours in time.')
-            }
+                        if(currentHour==hour){
+                            if(minute<=currentMinute){
+                                this.setState({ pickup_time: ""});
+                                this.presenter.getCommonAlertBox("Invalid Time");
+                            }
+                        }else{
+
+                        }
+          
+            // if(hour>=currentHour){
+            //     if(minute>=currentMinute){
+
+                    
+                      
+                 
+            //     }else{
+            //         // alert('Enter correct minutes in time.')    
+            //     }
+
+            // }else{
+            //     // alert('Enter correct hours in time.')
+            // }
 
             // if(moment(selectedDT).isBefore(new moment().format('YYYY-MM-DD H:m'))){
             //     alert("Enter correct time.")
@@ -141,6 +164,7 @@ export default class LocationDetails extends React.Component {
             //     this.setState({ pickup_time:  selectedTime+":00", isTimerError:false})
             // }
         }else{
+                   
             this.setState({ pickup_time:  selectedTime, isTimerError:false})
         }
         
@@ -172,7 +196,9 @@ export default class LocationDetails extends React.Component {
                   })
                 }
               else {
-                  alert(data.message);
+                //   alert(data.message);
+            this.presenter.getCommonAlertBox(data.message);
+
               }
             break;
           }
@@ -192,33 +218,42 @@ export default class LocationDetails extends React.Component {
 
     isValid(){
         if(this.state.LoadCategoryItemsSelected==""){
-            alert("Please Select Load Category");
+            this.presenter.getCommonAlertBox("Please Select Load Category");
             return false
         }
         if(this.state.isOtherLoadCategorySelected && this.state.otherLoadCategoryText==""){
-            alert("Please Enter Other Load Category");
+            this.presenter.getCommonAlertBox("Please Enter Other Load Category");
             return false
         }
         if(this.state.pick_up_address==""){
-            alert("Please Enter Pickup Address");
+            this.presenter.getCommonAlertBox("Please Enter Pickup Address");
             return false;
         }
         if(this.state.drop_off_address==""){
-            alert("Please Enter Dropup Address");
+            this.presenter.getCommonAlertBox("Please Enter Dropup Address");
             return false;
         }
         if(this.state.pickup_date==""){
-            alert("Please Enter valid Date");
+            this.presenter.getCommonAlertBox("Please Enter valid Date");
             return false;
         }
         if(this.state.pickup_time==""){
-            alert("Please Enter valid Time");
+            this.presenter.getCommonAlertBox("Please Enter valid Time");
             return false;
         }
         if(this.state.instructContainer==""){
-            alert("Please Enter Instruction");
+            this.presenter.getCommonAlertBox("Please Enter Instruction");
             return false;
         }
+        if(this.state.drop_off_addressDetails==""){
+            this.presenter.getCommonAlertBox("Please Enter Dropoff Addresss Details");
+            return false;
+        }
+        if(this.state.pick_up_addressDetails==""){
+            this.presenter.getCommonAlertBox("Please Enter Pickup Addresss Details");
+            return false;
+        }
+       
         // if(this.state.isTimerError==false){
         //     alert("Please enter correct time")
         //     return false
@@ -261,6 +296,7 @@ export default class LocationDetails extends React.Component {
         })
     }
 
+    
     closeCategoryModal(){
         this.loadCategoryString=""
         let cat=""
@@ -282,6 +318,7 @@ export default class LocationDetails extends React.Component {
                 }
             }
         })
+        this.loadCategoryString = this.loadCategoryString.substring(0, this.loadCategoryString.length - 1)
         console.log("item selected are ====>"+JSON.stringify(this.state.LoadCategoryItemsSelected))
         console.log("load cat ==="+this.loadCategoryString)
         this.setState({isLoadCategoryVisible:false,})
@@ -298,6 +335,16 @@ export default class LocationDetails extends React.Component {
         return isPresent
     }
 
+    getIOSDate(resp){
+        this.setState({ pickup_date: moment.utc(resp).local().format("YYYY-MM-DD") })
+    }
+
+    getIOSTime(resp){
+        console.log("received time => "+resp)
+        resp==""? this.setState({pickup_time:""})
+        : this.setState({ pickup_time: moment.utc(resp).local().format("HH:mm") })
+    }
+
     render() {
 
         let { navigation } = this.props;
@@ -308,10 +355,12 @@ export default class LocationDetails extends React.Component {
 
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
 
+                <DateIOS ref={(ref)=>{this.iosDatePicker = ref}} getDate={this.getIOSDate.bind(this)} getTime={this.getIOSTime.bind(this)}/>
+
                 <ScrollView bounces={false} style={{ width: wp('100%') }}>
 
                     <View style={{ flex: 1, backgroundColor: Constants.COLOR_WHITE }}>
-
+                    
                         <View style={StyleLocationDetails.locationWrapp}>
 
                             <View style={[StyleLocationDetails.inputContainer,{}]}>
@@ -489,7 +538,9 @@ export default class LocationDetails extends React.Component {
                                 />
                                 <TouchableOpacity
                                     style={{ width: 30, alignSelf: 'flex-end', justifyContent: 'center', alignItems: 'center', marginTop: -32, marginRight: 15 }}
-                                    onPress={() => { this.openCalender() }}
+                                    onPress={() => { 
+                                        Platform.OS=="android" ? this.openCalender() : this.iosDatePicker.getDateIOSPicker()
+                                    }}
                                 >
                                     <Image style={{ width: 20, height: 20, }}
                                         source={require('../images/date_icon.png')}
@@ -507,7 +558,13 @@ export default class LocationDetails extends React.Component {
                                 />
                                 <TouchableOpacity
                                     style={{ width: 30, alignSelf: 'flex-end', justifyContent: 'center', alignItems: 'center', marginTop: -32, marginRight: 15 }}
-                                    onPress={() => { this.state.pickup_date =="" ? alert('Please select date first.') : this.openTimer() }}
+                                    onPress={() => { 
+                                        if(Platform.OS=="android"){
+                                            this.state.pickup_date =="" ? this.presenter.getCommonAlertBox('Please select date first.') : this.openTimer() 
+                                        }else{
+                                            this.state.pickup_date =="" ? this.presenter.getCommonAlertBox('Please select date first.') : this.iosDatePicker.getTimeIOSPicker(this.state.pickup_date)
+                                        }
+                                    }}
                                 >
                                     <Image style={{ width: 20, height: 20, }}
                                         source={require('../images/time_icon.png')}
@@ -633,16 +690,7 @@ export default class LocationDetails extends React.Component {
 
                             <TouchableOpacity
                                 onPress={() => {
-                                    if(this.state.isOtherLoadCategorySelected){
-                                        this.state.LoadCategoryItemsSelected.map((item)=>{
-                                            if(item.category_name=="Others"){
-                                                item.category_name=this.state.otherLoadCategoryText
-                                            }
-                                        })
-                                    }
-                                    console.log("sending cat ===>"+JSON.stringify(this.state.LoadCategoryItemsSelected))
-                                    this.loadCategoryString = this.loadCategoryString.slice(0,-1)
-                                    console.log("string====> "+this.loadCategoryString)
+                                   console.log("hy date pahije==>"+this.state.pickup_date);
 
                                     let drop_list =[
                                         {
@@ -688,7 +736,8 @@ export default class LocationDetails extends React.Component {
                                         //"load_category_id":this.other_flag==0?this.load_category_id:this.other_flag,
                                        " other_flag":this.other_flag,
                                     }
-
+                                    console.log("seletedLoad Category"+this.state.loadCategoryString);
+                                    
                                     if(!this.isValid()){
                                     }else{
                                         this.props.navigation.navigate('BookingSummary',{'booking_data':booking_data});
@@ -727,6 +776,20 @@ export default class LocationDetails extends React.Component {
                                                 const temp =[...this.state.LoadCategoryItems]
                                                 temp[index].isChecked = ! temp[index].isChecked
                                                 this.setState({LoadCategoryItems : temp})
+                                                console.log("checked===>"+JSON.stringify(temp));
+
+                                                // ==============================
+                                                if(this.state.isOtherLoadCategorySelected){
+                                                    this.state.LoadCategoryItemsSelected.map((item)=>{
+                                                        if(item.category_name=="Others"){
+                                                            item.category_name=this.state.otherLoadCategoryText
+                                                        }
+                                                    })
+                                                }
+                                                console.log("sending cat ===>"+JSON.stringify(this.state.LoadCategoryItemsSelected))
+                                                if(this.loadCategoryString.length==1)
+                                                this.loadCategoryString = this.loadCategoryString.slice(0,-1)
+                                                console.log("string====> "+this.loadCategoryString)
                                             }}
                                         >
                                             <Image

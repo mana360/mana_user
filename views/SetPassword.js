@@ -66,20 +66,20 @@ export default class SetPassword extends React.Component {
 
     validate(){
         if(this.state.new_password==""){
-            alert("Enter new password")
+            this.presenter.getCommonAlertBox("Enter new password")
             return false
         }
         if(this.state.confirm_password==""){
-            alert("Enter confirm password")
+            this.presenter.getCommonAlertBox("Enter confirm password")
             return false
         }
         if(!Constants.PASSWORD_REGX.test(this.state.new_password)){
-            alert("Password should contain atleast 1 capital letter,\n small letter, numbers and special symbols.");
+            this.presenter.getCommonAlertBox("Password should contain atleast 1 capital letter,\n small letter, numbers and special symbols.");
             // this.TextInput_emailId.focus()
             return false
           }
         if(this.state.confirm_password!=this.state.new_password){
-            alert("Password didn't matched")
+            this.presenter.getCommonAlertBox("Password didn't matched")
             return false
         }
         return true
@@ -101,7 +101,8 @@ export default class SetPassword extends React.Component {
                     await clearAllData()
                     this.setState({modal_visible:true, api_message:data.message})
                 }else{
-                    alert(data.message)
+                    // alert(data.message)
+                    this.presenter.getCommonAlertBox(data.message);
                 }
                 break;
             }

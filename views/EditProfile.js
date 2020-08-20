@@ -7,7 +7,7 @@
     2) user type = 2 means individual profile
  */
 import React from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput,FlatList } from 'react-native';
+import {Platform, View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput,FlatList } from 'react-native';
 import { StyleEditProfile, StyleMyProfile,StyleSetUpProfile } from '../config/CommonStyles';
 import { Picker } from "native-base";
 import ImagePicker from "react-native-image-picker";
@@ -263,7 +263,7 @@ export default class EditProfile extends React.Component {
                         style={StyleEditProfile.TextInput}
                         value={this.state.company_telephoneNo}
                         keyboardType="number-pad"
-                        maxLength={10}
+                        maxLength={25}
                         onChangeText={(text) => {
                             this.setState({ company_telephoneNo: text })
                         }}
@@ -278,7 +278,7 @@ export default class EditProfile extends React.Component {
                         <Text style={StyleEditProfile.modalLabelText}>{Constants.EmailAddress}</Text>
                     </View>
                     <TextInput
-                        placeholder="Enter Email Id"
+                        placeholder="Enter Email Address"
                         style={StyleEditProfile.TextInput}
                         value={this.state.company_email}
                         onChangeText={(text) => { this.setState({ company_email: text }) }}
@@ -517,7 +517,7 @@ export default class EditProfile extends React.Component {
                         style={StyleEditProfile.TextInput}
                         value={this.state.user_telephoneNo}
                         keyboardType="number-pad"
-                        maxLength={10}
+                        maxLength={25}
                         onChangeText={(text) => {
                             if (!isNaN(text))
                                 this.setState({ user_telephoneNo: text })
@@ -774,10 +774,10 @@ export default class EditProfile extends React.Component {
                         <Image source={require('../images/email_id.png')}
                             style={StyleEditProfile.labelIcon}
                         />
-                        <Text style={StyleEditProfile.modalLabelText}>{Constants.Email}</Text>
+                        <Text style={StyleEditProfile.modalLabelText}>{Constants.EmailAddress}</Text>
                     </View>
                     <TextInput
-                        placeholder="Enter Email Id"
+                        placeholder="Enter Email Address"
                         style={StyleEditProfile.TextInput}
                         value={this.state.email_id}
                         onChangeText={(text) => { this.setState({ email_id: text }) }}
@@ -822,7 +822,7 @@ export default class EditProfile extends React.Component {
         if(this.state.customerType=="company_profile"){
 
             if(this.state.company_name==""){
-                alert("Please enter company name")
+                this.presenter.getCommonAlertBox("Please enter company name")
                 return false
             }
             // if(this.state.company_contactPerson==""){
@@ -834,19 +834,19 @@ export default class EditProfile extends React.Component {
             //     return false
             // }
             if(this.state.company_telephoneNo==""){
-                alert("Please enter telephone number")
+                this.presenter.getCommonAlertBox("Please enter telephone number")
                 return false
             }
-            if(this.state.company_telephoneNo.length!=10){
-                alert("Please enter correct telephone number")
-                return false
-            }
+            // if(this.state.company_telephoneNo.length!=9){
+            //     alert("Please enter correct telephone number")
+            //     return false
+            // }
             if(this.state.company_email==""){
-                alert("Please enter email Id")
+                this.presenter.getCommonAlertBox("Please enter email address")
                 return false
             }
             if(!emailRegex.test(this.state.company_email)){
-                alert("Please enter valid email Id")
+                this.presenter.getCommonAlertBox("Please enter valid email address")
                 return false
             }
             // if(this.state.company_address==""){
@@ -902,25 +902,25 @@ export default class EditProfile extends React.Component {
         if(this.state.customerType=="user_profile")
         {
             if(this.state.user_first_name==""){
-                    alert("Please enter first name")
-                    return false
+                this.presenter.getCommonAlertBox("Please enter first name")
+                return false
             }
             if(this.state.user_last_name==""){
-                    alert("Please enter last name")
-                    return false
+                this.presenter.getCommonAlertBox("Please enter last name")
+                return false
             }
             // if(this.state.user_title==""){
             //         alert("Please select title")
             //         return false
             // }
             if(this.state.user_telephoneNo==""){
-                    alert("Please enter telephone number")
-                    return false
+                this.presenter.getCommonAlertBox("Please enter telephone number")
+                return false
             }
-            if(this.state.user_telephoneNo.length!=10){
-                    alert("Please enter correct telephone number")
-                    return false
-            }
+            // if(this.state.user_telephoneNo.length!=9){
+            //     this.presenter.getCommonAlertBox("Please enter correct telephone number")
+            //     return false
+            // }
             // if(this.state.user_docType=="0"){
             //     alert("Please select Identification")
             //     return false
@@ -966,12 +966,12 @@ export default class EditProfile extends React.Component {
         //             return false
         //     }
             if(this.state.email_id==""){
-                alert("Please enter email Id")
+                this.presenter.getCommonAlertBox("Please enter email address")
                 return false
             }
             if(!emailRegex.test(this.state.email_id)){
-                    alert("Please enter valid email Id")
-                    return false
+                this.presenter.getCommonAlertBox("Please enter valid email address")
+                return false
             }
             // if(this.state.user_password==""){
             //         alert("Please enter password")
@@ -995,19 +995,19 @@ export default class EditProfile extends React.Component {
 
     isPasswordValid(){
         if(this.state.current_password==""){
-            alert("Please enter current password")
+            this.presenter.getCommonAlertBox("Please enter current password")
             return false
         }
         if(this.state.new_password==""){
-            alert("Please enter new password")
+            this.presenter.getCommonAlertBox("Please enter new password")
             return false
         }
         if(this.state.confirm_password==""){
-            alert("Please enter confirm password")
+            this.presenter.getCommonAlertBox("Please enter confirm password")
             return false
         }
         if(this.state.confirm_password!=this.state.new_password){
-            alert("Password didn't matched.")
+            this.presenter.getCommonAlertBox("Password didn't matched.")
             return false
         }
         return true
@@ -1053,6 +1053,7 @@ export default class EditProfile extends React.Component {
                                 style={StyleMyProfile.TextInput}
                                 value={this.state.current_password}
                                 autoCapitalize="none"
+                                maxLength={12}
                                 secureTextEntry={true}
                                 onChangeText={(text) => { this.setState({ current_password: text }) }}
 
@@ -1071,6 +1072,7 @@ export default class EditProfile extends React.Component {
                                 style={StyleMyProfile.TextInput}
                                 autoCapitalize="none"
                                 secureTextEntry={true}
+                                maxLength={12}
                                 value={this.state.new_password}
                                 onChangeText={(text) => { this.setState({ new_password: text }) }}
 
@@ -1188,7 +1190,9 @@ export default class EditProfile extends React.Component {
               if(data.status){
                   this.setState({countryList : data.countryList, isCountryListFilled:1})
               }else{
-                  alert(data.msg)
+                //   alert(data.msg)
+            this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -1199,7 +1203,9 @@ export default class EditProfile extends React.Component {
                   this.setState({provinceList : data.stateList, isProvinceListFilled:1})
               }
               else {
-                  alert(data.message)
+                //   alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
               }
             break;
           }
@@ -1209,26 +1215,30 @@ export default class EditProfile extends React.Component {
                     this.setState({cityList: data.cityList, isCityListFilled:1})
               }
               else{
-                  alert(data.message)
+                //   alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
           case ApiConstants.updateProfilePic:{
               if(data.status){
-                alert(data.message)
+                this.presenter.getCommonAlertBox(data.message)
                 this.presenter.callPostApi(ApiConstants.getMyProfile, "", true)
               }
               else {
-                  alert(data.message)
+                //   alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
           case ApiConstants.changePassword:{
               if(data.status){
                   this.setState({current_password:"", new_password:"", confirm_password:"", modalVisible_Changepassword:false})
-                  alert(data.message)
+                  this.presenter.getCommonAlertBox(data.message)
               }else{
-                  alert(data.message)
+                this.presenter.getCommonAlertBox(data.message)
               }
               break;
           }
@@ -1236,7 +1246,9 @@ export default class EditProfile extends React.Component {
               if(data.status){
                   this.setState({isProfileUpdatedModal:true})
               }else{
-                  alert(data.message)
+                //   alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -1246,7 +1258,7 @@ export default class EditProfile extends React.Component {
                     this.setState({
                         customerType:"company_profile",
                         company_name:data.user_data.company_name,
-                        company_telephoneNo:data.user_data.tele_number,
+                        company_telephoneNo:data.user_data.telephone_number,
                         company_email:data.user_data.email
                     })
                 }else{
@@ -1254,13 +1266,15 @@ export default class EditProfile extends React.Component {
                         customerType:"user_profile",
                         user_first_name:data.user_data.first_name,
                         user_last_name:data.user_data.last_name,
-                        user_telephoneNo:data.user_data.tele_number,
+                        user_telephoneNo:data.user_data.telephone_number,
                         email_id:data.user_data.email
                     })
                 }
                 this.updateUserObject(data.user_data)           // storing user details in local db
             }else{
-                alert(data.msg)
+                // alert(data.msg)
+            this.presenter.getCommonAlertBox(data.message);
+
             }
               break;
           }
@@ -1298,7 +1312,7 @@ export default class EditProfile extends React.Component {
                     "first_name":this.state.user_first_name,
                     "last_name":this.state.user_last_name,
                     "email_id":this.state.email_id,
-                    "mobile_no":this.state.user_telephoneNo,
+                    "telephone_number":this.state.user_telephoneNo,
                 }
                 this.presenter.callPostApi(ApiConstants.updateProfile, params, true)
             }
@@ -1308,7 +1322,8 @@ export default class EditProfile extends React.Component {
                 let params={
                     "registration_type":1,                  // company profile
                     "company_name":this.state.company_name,
-                    "company_contact":this.state.company_telephoneNo,
+                    // "company_contact":this.state.company_telephoneNo,
+                    "telephone_number":this.state.company_telephoneNo,
                     "email_id":this.state.company_email,
                 }
                 this.presenter.callPostApi(ApiConstants.updateProfile, params, true)
@@ -1349,7 +1364,7 @@ export default class EditProfile extends React.Component {
                                     ?
                                     <Image 
                                         source ={{uri: this.state.userData.profile_picture}}
-                                        style={[StyleEditProfile.ProfileImage,{display: this.state.customerType=="user_profile" ? 'flex' : 'none'}]}
+                                        style={[StyleEditProfile.ProfileImage,{display: this.state.customerType=="user_profile" ? 'flex' : 'none',  resizeMode: Platform.OS=="android" ? "cover" :'contain'}]}
                                     />
                                     :
                                     <Image 
@@ -1362,7 +1377,7 @@ export default class EditProfile extends React.Component {
                                     ?
                                     <Image 
                                         source ={{uri: this.state.userData.company_logo}}
-                                        style={[StyleEditProfile.ProfileImage,{display: this.state.customerType=="company_profile" ? 'flex' : 'none'}]}
+                                        style={[StyleEditProfile.ProfileImage,{display: this.state.customerType=="company_profile" ? 'flex' : 'none', resizeMode: Platform.OS=="android" ? "cover" :'contain'}]}
                                     />
                                     :
                                     <Image 
@@ -1412,7 +1427,7 @@ export default class EditProfile extends React.Component {
                                     this.setState({ modalVisible_Changepassword: true })
                                 }}
                             >
-                                <Text style={{ textTransform: 'uppercase', color: 'white', paddingVertical: 12 }}>Change Password</Text>
+                                <Text style={{ textTransform: 'uppercase', color: 'white', paddingVertical: 12, textAlign:'center' }}>Change Password</Text>
                             </TouchableOpacity>
                             
                             <TouchableOpacity style={StyleEditProfile.ButtonView} onPress={() => { this.updateProfile();}}>

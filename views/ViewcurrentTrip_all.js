@@ -31,7 +31,7 @@ export default class ViewCurrentTripAll extends React.Component {
     componentDidMount(){
         this.serviceData =this.props.navigation.getParam('item');
         this.service_name = this.props.navigation.getParam('flag_CurrentTrip');// 1 = currentTrip_truking, 2 = currentTrip_warehouse, 3 = currentTrip_warehouse_trucking,
-            alert(this.service_name);
+            //alert(this.service_name);
         
     }
 

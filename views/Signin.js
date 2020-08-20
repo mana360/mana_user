@@ -51,24 +51,24 @@ export default class SignIn extends Component {
 
   isValid() {
     if (this.state.input_email_id.length == 0) {
-      alert("Please enter email id")
+      this.presenter.getCommonAlertBox("Please enter email address")
       this.Input_emailId.focus()
       return false
     }
     if (!Constants.EMAIL_REGX.test(this.state.input_email_id)) {
       // console.log(this.state.input_email_id)
-      alert("Please enter valid email id")
+      this.presenter.getCommonAlertBox("Please enter valid email address")
       this.Input_emailId.focus()
       return false
     }
 
     if (this.state.input_password.length == 0) {
-      alert("Please enter Password")
+      this.presenter.getCommonAlertBox("Please enter Password")
       this.Input_password.focus()
       return false
     }
     if (this.state.input_password.length < 8 || this.state.input_password.length > 16) {
-      alert("password must be greater than 8 character & less than 16 character")
+      this.presenter.getCommonAlertBox("password must be greater than 8 character & less than 16 character")
       this.Input_password.focus()
       return false
     }
@@ -82,7 +82,8 @@ export default class SignIn extends Component {
           await setUserData(data.userData)
           this.presenter.callGetApi(ApiConstants.userStatus, "", true);   // checking for the status of user account
         } else {
-          alert(data.message)
+          // alert(data.message)
+          this.presenter.getCommonAlertBox(data.message);
         }
         break;
       }
@@ -106,7 +107,9 @@ export default class SignIn extends Component {
                   actions: [NavigationActions.navigate({ routeName: 'ProfileSetUp' })],
                 }))
             }else{
-              alert(data.msg)
+              // alert(data.msg)
+              this.presenter.getCommonAlertBox(data.message);
+
             }
         }
         break;
@@ -136,10 +139,10 @@ export default class SignIn extends Component {
           <View style={StyleSignIn.textInput_container}>
             <View style={StyleSignIn.labelBox}>
               <Image style={StyleSignIn.LabelBoxIcon}
-                source={require('../images/mobile_number.png')} />
+                source={require('../images/email_id-signin.png')} />
               <Text style={StyleSignIn.labelBoxText}>{Constants.Email}</Text>
             </View>
-            <TextInput placeholder='Enter Email id'
+            <TextInput placeholder='Enter Email Address'
               ref={(ref)=>{this.Input_emailId = ref}}
               style={StyleSignIn.textInput_style}
               keyboardType="email-address"
@@ -187,7 +190,7 @@ export default class SignIn extends Component {
                 
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate('TermsAndCondition', { flag: 'TermsAndCondition', isLogout:false})
+                    this.props.navigation.navigate('TermsAndCondition', { flag: 4, isLogout:false})
                   }}
                 >
                   <Text style={StyleSignUp.PolicyLabel}>{Constants.TermsAndConditions}</Text>
@@ -201,7 +204,7 @@ export default class SignIn extends Component {
                 
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate('TermsAndCondition', { flag: 'CancellationPolicy', isLogout:false })
+                    this.props.navigation.navigate('TermsAndCondition', { flag: 3, isLogout:false })
                   }}
                 >
                   <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy}, </Text>
@@ -209,7 +212,7 @@ export default class SignIn extends Component {
                 
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate('TermsAndCondition', { flag: 'PaymentPolicy', isLogout:false })
+                    this.props.navigation.navigate('TermsAndCondition', { flag: 2, isLogout:false })
                   }}
 
                 >
@@ -222,7 +225,7 @@ export default class SignIn extends Component {
             
             <TouchableOpacity style={{marginLeft:40}}
                 onPress={() => {
-                  this.props.navigation.navigate('TermsAndCondition', { flag: 'PrivacyPolicy', isLogout:false })
+                  this.props.navigation.navigate('TermsAndCondition', { flag: 1, isLogout:false })
                 }}
 
               >

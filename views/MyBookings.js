@@ -26,12 +26,24 @@ export default class MyBookings extends React.Component{
         }
     }
 
-   async componentDidMount(){
+    componentDidMount(){
+    // this.getCurrentBookingList();       
+                                                          
+    this.willFocusSubscription = this.props.navigation.addListener(
+        'willFocus',
+        () => {   
+                 this.getCurrentBookingList() ;
+                //  this.headerRefresh();
+                }
+      );
 
-            this.getCurrentBookingList()
-
-        
+ 
     }
+
+    componentWillUnmount() {
+        this.willFocusSubscription.remove();
+    }
+    
     async _isNetworkAvailable() {
         let returnValue = false
         await NetInfo.fetch().then(isConnected => {
@@ -48,7 +60,7 @@ export default class MyBookings extends React.Component{
 
     }
 
-    getCurrentBookingList(){
+  async  getCurrentBookingList(){
         this.setState({resp_handler:"1"})
         let param = {
             'service_type_id':4,
@@ -56,7 +68,8 @@ export default class MyBookings extends React.Component{
             'start_index':0,
             'total_count':10
         }
-        this.presenter.callPostApi(ApiConstants.getMyBookings, param, true)
+      await  this.presenter.callPostApi(ApiConstants.getMyBookings, param, true);
+
     }
 
     getOngoingBookingList(){
@@ -80,25 +93,45 @@ export default class MyBookings extends React.Component{
         }
         this.presenter.callPostApi(ApiConstants.getMyBookings, param, true)
     }
+    mergeArray(reponse_data){
+        let data=[...this.state.current_booking_data]
+        reponse_data.map((item,index)=>{
 
+            data.push(item)
+        })
+
+        this.setState({current_booking_data:data});
+    }
     async onResponse(apiConstant, data) {
         switch (apiConstant) {
 
             case ApiConstants.getMyBookings: {
                 if(data.status){
                     this.state.resp_handler=="1"
-                    ? this.setState({ current_booking_data : data.cml_booking_list, })
-                    : this.state.resp_handler=="3"
-                    ? this.setState({ past_booking_data : data.cml_booking_list, })
-                   
-                    : this.state.resp_handler=="2"
-                    ?data.cml_booking_list==""?
+                    ? 
+                    this.setState({ current_booking_data : data.cml_booking_list, })
+                    : 
+                    this.state.resp_handler=="3"
+                    ? 
+                    this.setState({ past_booking_data : data.cml_booking_list, })
+                    :
+                     this.state.resp_handler=="2"
+                    ?
+                    data.cml_booking_list==""
+                    ?
                     null
-                    : this.setState({ current_booking_data : data.cml_booking_list, })
-                    :null
+                    :
+                    //  this.setState({ current_booking_data : data.cml_booking_list, })
+                    this.mergeArray( data.cml_booking_list)
+                    :
+                    null
+                   
                 }else{
-                    alert(data.message)
+                    // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                 }
+                
                 this.state.resp_handler=="1"
                 ? this.getOngoingBookingList()
                 : this.state.resp_handler=="2"
@@ -141,10 +174,21 @@ export default class MyBookings extends React.Component{
                 numColumns={1}
                 renderItem={
                     ({item})=>
-                    <TouchableOpacity style={StyleMyBooking.bookingRow}
+                    <TouchableOpacity style={
+                        item.booking_status==Constants.BOOKING_STATUS_DELIVERED   ?
+                        {display:"none"}
+                        :
+                        item.booking_status==Constants.BOOKING_STATUS_CANCELLED
+                        ? 
+                        {display:"none"}
+                        :
+                        StyleMyBooking.bookingRow
+                    }
                         onPress={()=>{this.props.navigation.navigate('MyBookingDetails',{'book_item':item, cancelTripCallback: ()=>{
                             console.log("callback for cancell trip")
-                            this.getCurrentBookingList()
+                            // this.getCurrentBookingList();
+                            // this.getOngoingBookingList()
+                            // this.getPastBookingList();
                         }
                         })}}
                     >
@@ -158,9 +202,12 @@ export default class MyBookings extends React.Component{
                                         </View>
                                         <View style={{flex:1}}>
                                             <Text style={
+                                                
                                                 item.booking_status== Constants.BOOKING_STATUS_NEW ?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
                                                 :
-                                                item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
+                                                item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_GREEN}]
+                                                :
+                                                item.current_status== Constants.BOOKING_CURRENT_STATUS_PICKUP ?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_ORANGE}]
                                                 :
                                                 item.booking_status==Constants.BOOKING_STATUS_DELIVERED?[StyleMyBooking.bookingStatus,{color:Constants.COLOR_GREEN}]
                                                 :
@@ -168,11 +215,16 @@ export default class MyBookings extends React.Component{
                                                 :
                                                 null
                                             }>
-                                                {
-                                                    item.booking_status==Constants.BOOKING_STATUS_NEW?"New"
+                                                {  item.booking_status==Constants.BOOKING_STATUS_NEW?
+                                                "New"
+                                                :
+                                                   item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?
+                                                   item.current_status== Constants.BOOKING_CURRENT_STATUS_UPCOMING
+                                                   ?
+                                                   "Driver Assigned"
+                                                   :
+                                                   'Trip started'
                                                     :
-                                                    item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?"Driver Assigned"
-                                                    :   
                                                     item.booking_status==Constants.BOOKING_STATUS_DELIVERED?"Delivered"
                                                     :
                                                     item.booking_status==Constants.BOOKING_STATUS_CANCELLED?"Cancelled"
@@ -188,7 +240,7 @@ export default class MyBookings extends React.Component{
                                         </View>
                                         <View style={{flex:1}}>
                                             <Text style={StyleMyBooking.valueText}>
-                                                { moment(item.pickup_date,"YYYY-MM-DD").format("DD MMM. YYYY")} { moment(item.pickup_time,"h:m:s").format("h:m A")}
+                                                { moment(item.pickup_date,"YYYY-MM-DD").format("DD MMM. YYYY")} { moment(item.pickup_time,"h:m:s").format("hh:mm A")}
                                             </Text>
                                         </View>
                                     </View>
@@ -209,14 +261,53 @@ export default class MyBookings extends React.Component{
                                         <View style={{flex:1}}>
                                             <Text style={StyleMyBooking.valueText}>{item.driver_name}</Text>
                                         </View>
+                                       {  item.booking_status==Constants.BOOKING_STATUS_NEW?null: <View  style={{flex:1,paddingLeft:20,flexDirection:'row'}}>
+                                            <Text style={{color:Constants.COLOR_GREY_LIGHT,paddingHorizontal:15}}>{item.driver_average_rating==undefined?"0":item.driver_average_rating}</Text>
+                                            <Image source={require('../images/star_fill.png')} style={{paddingHorizontal:10,width:20,height:20}}/>
+                                        </View>}
                                     </View>
 
                                     <View style={item.status=="order_placed"?{display:'none'}:{flex:2, flexDirection:'row',  marginVertical:4}}>
-                                        <View style={{flex:1}}>
+                                        {/* <View style={{flex:1}}>
                                             <Text style={StyleMyBooking.labelText}>{Constants.DRIVER_NUMBER}</Text>
-                                        </View>
-                                        <View style={{flex:1}}>
-                                            <Text style={StyleMyBooking.valueText}>{item.driver_contact}</Text>
+                                        </View> */}
+                                        <View style={{flex:1, flexDirection:'row'}}>
+                                            {/* <Text style={StyleMyBooking.valueText}>{item.driver_contact}</Text> */}
+                                            <TouchableOpacity 
+                                                onPress={()=>{
+                                                    if(item.pickup_latlng!="" && item.pickup_latlng!=null){
+                                                        if(item.drop1_latlng!="" && item.drop1_latlng!=null){
+                                                            this.props.navigation.navigate('Tripmap',{driver_id:item.driver_id, 'pickup_coords':item.pickup_latlng, 'dropoff_coords':item.drop2_latlng, 'drop1':item.drop1_latlng})
+                                                        }else{
+                                                        this.presenter.getCommonAlertBox("Coordinates are not available.")
+                                                        }
+                                                    }else{
+                                                    this.presenter.getCommonAlertBox("Coordinates are not available.")
+                                                    }
+                                                }}
+                                                style={{width:30, height:25, justifyContent:'center', alignItems:'center', padding:5, marginLeft:10,
+                                                display: item.booking_status==Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_PICKUP_LOCATION ? 'flex'
+                                                    : item.current_status==Constants.BOOKING_CURRENT_STATUS_PICKUP ? 'flex'
+                                                    : item.current_status==Constants.BOOKING_CURRENT_STATUS_DELIVERED ? 'flex'
+                                                    : item.current_status==Constants.BOOKING_CURRENT_STATUS_ON_ROUTE_TO_DESTINATION ? 'flex'
+                                                    : item.current_status==Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION ? 'flex'
+                                                    : item.current_status==Constants.BOOKING_CURRENT_STATUS_DRIVER_DISPATCHED ? 'flex'
+                                                    : 'none'
+                                                }}
+                                                >
+                                                    <Image 
+                                                        style={{width:20, height:20, alignSelf:'center',
+                                                        display: item.booking_status==Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_PICKUP_LOCATION ? 'flex'
+                                                        : item.current_status==Constants.BOOKING_CURRENT_STATUS_PICKUP ? 'flex'
+                                                        : item.current_status==Constants.BOOKING_CURRENT_STATUS_DELIVERED ? 'flex'
+                                                        : item.current_status==Constants.BOOKING_CURRENT_STATUS_ON_ROUTE_TO_DESTINATION ? 'flex'
+                                                        : item.current_status==Constants.BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION ? 'flex'
+                                                        : item.current_status==Constants.BOOKING_CURRENT_STATUS_DRIVER_DISPATCHED ? 'flex'
+                                                        : 'none'
+                                                        }}
+                                                    source={require('../images/address.png')}/>
+                                                </TouchableOpacity>
+ 
                                         </View>
                                     </View>
 
@@ -241,10 +332,16 @@ export default class MyBookings extends React.Component{
                     numColumns={1}
                     renderItem={
                         ({item})=>
-                        <TouchableOpacity style={StyleMyBooking.bookingRow}
+                        <TouchableOpacity style={item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?
+                        {display:'none'}
+                        :
+                        item.booking_status==Constants.BOOKING_STATUS_NEW
+                        ?
+                            {display:'none'}
+                        : StyleMyBooking.bookingRow}
                             onPress={()=>{this.props.navigation.navigate('MyBookingDetails',{'book_item':item,cancelTripCallback: ()=>{
                                 console.log("callback for cancell trip");
-                                this.getPastBookingList();
+                                // this.getPastBookingList();
                             }
                         })}}
                         >
@@ -288,7 +385,7 @@ export default class MyBookings extends React.Component{
                                             </View>
                                             <View style={{flex:1}}>
                                                 <Text style={StyleMyBooking.valueText}>
-                                                    { moment(item.pickup_date,"YYYY-MM-DD").format("DD MMM. YYYY")} { moment(item.pickup_time,"h:m:s").format("h:m A")}
+                                                    { moment(item.pickup_date,"YYYY-MM-DD").format("DD MMM. YYYY")} { moment(item.pickup_time,"h:m:s").format("hh:mm A")}
                                                 </Text>
                                             </View>
                                         </View>
@@ -329,9 +426,14 @@ export default class MyBookings extends React.Component{
             </View>
         )    
     }
-
+    headerRefresh(){
+        return(
+            <HeaderBar/>
+        )
+    }
     render(){
         let {navigation} = this.props
+        
         return(
             <View style={{flex:1,}}>
                 

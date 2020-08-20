@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet, Platform } from 'react-native';
 import Constants from '../config/Constants';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -575,7 +575,8 @@ const StyleSignIn = StyleSheet.create({
         borderRadius: 50,
         paddingLeft: 25,
         marginVertical: 5,
-        borderColor: Constants.COLOR_GREY_LIGHT
+        borderColor: Constants.COLOR_GREY_LIGHT,
+        height: 40,
     },
     labelBox: {
         zIndex: 1,
@@ -1611,19 +1612,16 @@ const StyleCollectMyLoad = StyleSheet.create({
     },
     chosetruckTxt:{
         textTransform:"uppercase",
-        fontFamily: "Roboto-Medium",
         fontSize:Constants.FONT_SIZE_EXTRA_MEDIUM,
         color:Constants.COLOR_GREEN,
         marginTop:15,
     },
     weighTxt:{
-        fontFamily: "Roboto-Medium",
         fontSize:Constants.FONT_SIZE_EXTRA_MEDIUM,
         color:Constants.COLOR_GREEN_DARK,
         marginTop:15,
     },
     truckDetails:{
-        fontFamily: "Roboto-Regular",
         fontSize:Constants.FONT_SIZE_LARGE,
         color:Constants.COLOR_GREEN_DARK,
         marginTop:5,
@@ -1642,7 +1640,6 @@ const StyleCollectMyLoad = StyleSheet.create({
     },
     maxTxt:{       
         color:'#fff',
-        fontFamily: "Roboto-Medium",
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
         textTransform:"uppercase",
     },
@@ -1656,8 +1653,7 @@ const StyleCollectMyLoad = StyleSheet.create({
 	truckBtnText: {
 		color: '#fff',
 		fontSize: 16,  	
-		textTransform:'uppercase',	
-		fontFamily: "Roboto-Medium",				
+		textTransform:'uppercase',					
     },
 
 })
@@ -1720,7 +1716,7 @@ const StyleMyProfile = StyleSheet.create({
         borderBottomColor: Constants.COLOR_GREY
     },
     col1: {
-        width: '50%',
+        width: '40%',
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -1736,14 +1732,14 @@ const StyleMyProfile = StyleSheet.create({
         paddingLeft: 10,
     },
     col2: {
-        width: '50%',
+        width: '60%',
         height: '100%',
         alignItems: 'center',
         flexDirection: 'row',
     },
     col2Text: {
-        paddingLeft: 20,
-        fontSize: Constants.FONT_SIZE_LARGE,
+        paddingLeft: 10,
+        fontSize: Constants.FONT_SIZE__MEDIUM,
         color: Constants.COLOR_GREY_DARK,
     },
     ModalWrapper: {
@@ -1786,6 +1782,7 @@ const StyleMyProfile = StyleSheet.create({
         height: 17
     },
     TextInput: {
+        marginTop: Platform.OS=="android" ? 3 : 15,
         fontSize: Constants.FONT_SIZE_LARGE
     },
     ButtonView: {
@@ -1830,14 +1827,14 @@ const StyleEditProfile = StyleSheet.create({
         backgroundColor: Constants.COLOR_PRIMARY,
     },
     ProfileImage: {
-        width: 130,
-        height: 130,
-        borderRadius: 70,
+        width: 120,
+        height: 120,
+        borderRadius: 60,
         borderWidth: 8,
         borderColor: Constants.COLOR_WHITE,
         alignSelf: 'center',
         marginTop: '8%',
-        resizeMode: "cover"
+        resizeMode: "contain"
     },
     sideImageView: {
         marginTop:25,
@@ -2207,7 +2204,6 @@ const StyleDiscountVouchers = StyleSheet.create({
     },
     voucerinntxthead:{
         color: Constants.COLOR_GREEN_PROFILE,
-        fontFamily: 'Roboto-Medium',
         fontSize: Constants.FONT_SIZE_LARGE,
         width:'90%',
         paddingBottom:2,
@@ -2230,12 +2226,10 @@ const StyleDiscountVouchers = StyleSheet.create({
     },
     voucerdate: {
         color: Constants.COLOR_BLACK_LIGHT,
-        fontFamily: 'Roboto-Regular',
         fontSize: Constants.FONT_SIZE__MEDIUM,
     },
     voucerdiscount: {
         color: Constants.COLOR_GREEN,
-        fontFamily: 'Roboto-Regular',
         fontSize: Constants.FONT_SIZE__MEDIUM,
     },
     voucerbtn:{
@@ -2556,7 +2550,6 @@ const StyleViewMap = StyleSheet.create({
     mapbottbtntxt:{
         color:Constants.COLOR_WHITE,
         textTransform:'uppercase',
-        fontFamily:'Roboto-Medium',
     }
 })
 const StylePaymentMethod = StyleSheet.create({
@@ -2578,14 +2571,12 @@ const StylePaymentMethod = StyleSheet.create({
         flex:1,
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
         color: Constants.COLOR_GREY_SHADED,
-        fontFamily:'Roboto-Medium',
     },
     paymentamountrighttxt:{
         flex:1,
         textAlign: 'right',
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
         color: Constants.COLOR_GREY_SHADED,
-        fontFamily:'Roboto-Medium',
         paddingRight:10,
     },
     paymenttotal:{
@@ -2593,14 +2584,12 @@ const StylePaymentMethod = StyleSheet.create({
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
         color: Constants.COLOR_GREEN,
         textTransform:'uppercase',
-        fontFamily:'Roboto-Bold',
     },
     paymenttotalamount:{
         flex:1,
         textAlign: 'right',
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
         color: Constants.COLOR_GREEN,
-        fontFamily:'Roboto-Bold',
         paddingRight:10,
     },
     paymentmethod:{
@@ -2615,7 +2604,6 @@ const StylePaymentMethod = StyleSheet.create({
         textAlign:'center',
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
         color: Constants.COLOR_GREEN,
-        fontFamily:'Roboto-Bold',
     },
     choosetype:{
         flex:2,
@@ -2635,7 +2623,6 @@ const StylePaymentMethod = StyleSheet.create({
     cashpickuptxt:{
         fontSize:Constants.FONT_SIZE_LARGE ,
         color: '#4a4a4a',
-        fontFamily:'Roboto-Medium',  
     },
     onlinepay:{
         flex:1,
@@ -2649,7 +2636,6 @@ const StylePaymentMethod = StyleSheet.create({
     onlinepaytxt:{
         fontSize:Constants.FONT_SIZE_LARGE ,
         color: Constants.COLOR_PRIMARY ,
-        fontFamily:'Roboto-Medium',
     },
     paymentmethodpaybtn:{
         flex:1,
@@ -2662,8 +2648,7 @@ const StylePaymentMethod = StyleSheet.create({
     },
     paybtntxt:{
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
-        color: '#fff',
-        fontFamily:'Roboto-Medium',  
+        color: '#fff', 
     },
 
     popmodule:{
@@ -2702,7 +2687,6 @@ const StylePaymentMethod = StyleSheet.create({
       popbodytxt:{
         color:Constants.COLOR_FOOTER_GREY,
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
-        fontFamily:'Roboto-Medium',
         marginVertical:15,
       },
       popbtnwidth:{
@@ -2738,7 +2722,6 @@ const StylePaymentMethod = StyleSheet.create({
       popbodythankstxt:{
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE ,
         color:Constants.COLOR_FOOTER_GREY,
-        fontFamily:'Roboto-Medium', 
         marginVertical:10,
       },
       popbodynotification:{
@@ -2750,7 +2733,6 @@ const StylePaymentMethod = StyleSheet.create({
       popbodynotificationtxt:{
         fontSize:Constants.FONT_SIZE_LARGE ,
         color:Constants.COLOR_FOOTER_GREY,
-        fontFamily:'Roboto-Medium', 
         textAlign:'center',
       },
 
@@ -2794,8 +2776,7 @@ const StyleLocationDetails = StyleSheet.create({
 	labelTextNew: {
 		color: '#717880',
 		paddingLeft:6,
-		fontSize: 15,  	
-		fontFamily: "Roboto-Medium",			
+		fontSize: 15,  			
 	},
 	inputBox: {
         width:'85%',
@@ -2803,8 +2784,7 @@ const StyleLocationDetails = StyleSheet.create({
 		fontSize: Constants.FONT_SIZE_LARGE,
 		paddingLeft:26,
 		paddingRight:38,
-        fontFamily: "Roboto-Light",		
-        marginTop:4,	
+        marginTop: Platform.OS=="android"? 4 : 15,	
     },
     nextAddrBtn: {
 		backgroundColor: Constants.COLOR_GREEN,
@@ -2819,7 +2799,6 @@ const StyleLocationDetails = StyleSheet.create({
 		color: '#fff',
 		fontSize: 12,
 		textTransform:'uppercase',	
-        fontFamily: "Roboto-Medium",
     },
     instructContainer: {
 	    backgroundColor: '#fff',  
@@ -2837,7 +2816,6 @@ const StyleLocationDetails = StyleSheet.create({
         height: 140,
         fontSize: Constants.FONT_SIZE_LARGE,
         color: '#4a4a4a',
-        fontFamily: "Roboto-Light",	
         paddingLeft:25,
         marginTop:5,
     },
@@ -2851,8 +2829,7 @@ const StyleLocationDetails = StyleSheet.create({
 	logButtonText: {
 		color: '#fff',
 		fontSize:Constants.FONT_SIZE_LARGE,  	
-		textTransform:'uppercase',	
-		fontFamily: "Roboto-Medium",				
+		textTransform:'uppercase',					
     },
     IconClose:{
         position:"absolute",
@@ -2920,7 +2897,6 @@ const StyleLoadCategory = StyleSheet.create({
     },
     loadCatTxt:{
         color:Constants.COLOR_GREEN,
-        fontFamily: "Roboto-Bold",
         letterSpacing:0.3,	
         fontSize:18,	
     },    
@@ -2949,7 +2925,6 @@ const StyleBookingSummary = StyleSheet.create({
     topinnTxt:{
         color:Constants.COLOR_WHITE,
         fontSize:Constants.FONT_SIZE_EXTRA_MEDIUM,
-        fontFamily: "Roboto-Medium",
     },
 
     priceBox:{
@@ -2962,14 +2937,12 @@ const StyleBookingSummary = StyleSheet.create({
     priceTxt:{
         width:'50%',
         paddingTop:7,
-        fontFamily: "Roboto-Medium",
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
         color:Constants.COLOR_FOOTER_GREY,
     },
     priceVol:{
         width:'40%',
         paddingTop:7,
-        fontFamily: "Roboto-Medium",
         fontSize:20,
         color:Constants.COLOR_FOOTER_GREY,
         textAlign:'right'
@@ -2984,7 +2957,6 @@ const StyleBookingSummary = StyleSheet.create({
         color: '#fff',
 		fontSize: Constants.FONT_SIZE__MEDIUM,  	
 		textTransform:'uppercase',	
-        fontFamily: "Roboto-Medium",	
         backgroundColor: Constants.COLOR_GREEN,
         borderRadius: 50,
         paddingVertical:10,
@@ -3007,7 +2979,6 @@ const StyleBookingSummary = StyleSheet.create({
         paddingVertical:30,          
     },
     othserTxt:{
-        fontFamily: "Roboto-Medium",	
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE,  	
         color: Constants.COLOR_GREY_DARK,
         textTransform:"uppercase",
@@ -3031,7 +3002,6 @@ const StyleBookingSummary = StyleSheet.create({
         fontSize:14,
         width:'100%',
         height: 'auto',
-        fontFamily: "Roboto-Light",	
     },
     popCloseImg:{
         position:'absolute',
@@ -3044,7 +3014,6 @@ const StyleBookingSummary = StyleSheet.create({
         flex:1, 
     },
     otherTxtser:{
-        fontFamily: "Roboto-Medium",	
         fontSize: Constants.FONT_SIZE_EXTRA_MEDIUM,  	
         color: Constants.COLOR_GREY_DARK,
         letterSpacing:0.3,
@@ -3088,7 +3057,6 @@ const StyleNewBookingSummary = StyleSheet.create({
     topinnTxt:{
         color:Constants.COLOR_WHITE,
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
-        fontFamily: "Roboto-Medium",
     },
 
 
@@ -3102,7 +3070,6 @@ const StyleNewBookingSummary = StyleSheet.create({
     priceTxt:{
         flex:1,
         alignItems:'flex-start',
-        fontFamily: "Roboto-Medium",
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
         color:Constants.COLOR_FOOTER_GREY,
         letterSpacing:0.5,
@@ -3111,7 +3078,6 @@ const StyleNewBookingSummary = StyleSheet.create({
         flex:1,
         textAlign:'right',
         alignItems:'flex-end',
-        fontFamily: "Roboto-Medium",
         fontSize:Constants.FONT_SIZE_EXTRA_LARGE,
         color:Constants.COLOR_FOOTER_GREY,
         letterSpacing:0.5,
@@ -3126,7 +3092,6 @@ const StyleNewBookingSummary = StyleSheet.create({
         color: '#fff',
 		fontSize: Constants.FONT_SIZE__MEDIUM,  	
 		textTransform:'uppercase',	
-        fontFamily: "Roboto-Medium",	
         backgroundColor: Constants.COLOR_GREEN,
         borderRadius: 50,
         paddingVertical:10,
@@ -3151,7 +3116,6 @@ const StyleNewBookingSummary = StyleSheet.create({
         flex:1,    
     },
     othserTxt:{
-        fontFamily: "Roboto-Medium",	
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE,  	
         color: Constants.COLOR_GREY_DARK,
         textTransform:"uppercase",
@@ -3175,7 +3139,6 @@ const StyleNewBookingSummary = StyleSheet.create({
         fontSize:14,
         width:'100%',
         height: 'auto',
-        fontFamily: "Roboto-Light",	
     },
     popCloseImg:{
         position:'absolute',
@@ -3189,7 +3152,6 @@ const StyleNewBookingSummary = StyleSheet.create({
         marginTop:-15,
     },
     otherTxtser:{
-        fontFamily: "Roboto-Medium",	
         fontSize: Constants.FONT_SIZE_EXTRA_LARGE,  	
         color: Constants.COLOR_GREY_DARK,
         marginBottom:10,
@@ -3218,7 +3180,6 @@ const StyleNewBookingSummary = StyleSheet.create({
 		color: '#fff',
 		fontSize:Constants.FONT_SIZE_LARGE,  	
 		textTransform:'uppercase',	
-		fontFamily: "Roboto-Medium",				
     },
 })
 const StyleSetUpProfile = StyleSheet.create({

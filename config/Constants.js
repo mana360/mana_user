@@ -4,13 +4,17 @@ const Constants = {
 
     
 
-    BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/api/",
-    IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/",
+    // BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/api/",
+    // IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/staging/public/",
 
     // base url for QAP
     
-    // BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
-    // IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
+    BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
+    IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/",
+
+    PAYMENT_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/mobile-payment",
+    PAYMENT_SUCCESS_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/success_payment",
+    PAYMENT_FAILD_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/failed_payment",
 
     
     GOOGLE_MAP_KEY:"AIzaSyBEDVKNDyVUzE2ajUXcrpX89ZORifA0cN4",
@@ -25,19 +29,34 @@ const Constants = {
     BOOKING_STATUS_NEW:0,
     BOOKING_STATUS_PICKED_UP:1,
     BOOKING_STATUS_DELIVERED:2,
-    BOOKING_STATUS_CANCELLED:5,
+    BOOKING_STATUS_CANCELLED:3,
+
 
     BOOKING_CURRENT_STATUS_TRIP_COMPLETED_CARGO_OFFLOADED:1,
     BOOKING_CURRENT_STATUS_UPCOMING:2,
-    BOOKING_CURRENT_STATUS_IN_STORAGE:3,
+    BOOKING_CURRENT_STATUS_ONGOING:3,
+    BOOKING_CURRENT_STATUS_PENDING:4,
+    BOOKING_CURRENT_STATUS_DELIVERED:6,
     BOOKING_CURRENT_STATUS_ARRIVED_AT_PICKUP_LOCATION:7,
     BOOKING_CURRENT_STATUS_PICKUP:8,
-    // BOOKING_CURRENT_STATUS_PICKUP:3,
     BOOKING_CURRENT_STATUS_ON_ROUTE_TO_DESTINATION:9,
     BOOKING_CURRENT_STATUS_ARRIVED_AT_DESTINATION:10,
     BOOKING_CURRENT_STATUS_DRIVER_DISPATCHED:11,
     BOOKING_CURRENT_STATUS_REASON_FOR_DELAY:13,
     BOOKING_CURRENT_STATUS_CANCEL_BY_DRIVER:14,
+    BOOKING_CURRENT_STATUS_CANCEL_BY_CUSTOMER:15,
+    BOOKING_CURRENT_STATUS_CANCEL_BY_PARTNER:16,
+    BOOKING_CURRENT_STATUS_CANCEL_BY_ADMIN:17,
+    BOOKING_CURRENT_STATUS_DELIVERED_TO_DROP1:18,
+    BOOKING_CURRENT_STATUS_IN_STORAGE:19,
+
+
+
+
+
+    BOOKING_CURRENT_STATUS_CANCLE:5,
+
+
 
 
     
@@ -188,8 +207,10 @@ const Constants = {
     DownloadInvoice: 'download invoice',
     Cancelleation_msg: 'Cancellation of trip will cause you with the penalty cost.',
     cancellation_msgDelete: "Are you sure you want to delete the trip?",
+    cancellation_msgPayment: "Are you sure you want to Cancel the Booking?",
+
     TripCanceledSuccessfully: 'Trip Cancelled Successfully.',
-    checkYourregisteredEmailIdPeneltyInfo: 'Check your registered email ID for \n penalty information.',
+    checkYourregisteredEmailIdPeneltyInfo: 'Check your registered email address for \n penalty information.',
     Duration: 'Duration',
     TelephoneNo: 'Telephone No.',
     StorageType: 'Storage Type',
@@ -221,7 +242,7 @@ const Constants = {
     CompanyContactPerson: 'Company Contact Person',
     CompanyContactPosition: 'Company Contact Position',
     CompanyTelephonenumber: 'Company Telephone Number',
-    Email: 'Email Id',
+    Email: 'Email Address',
     EmailAddress:'Email Address',
     Address: 'Address',
     StreetAddress:'Street Address',

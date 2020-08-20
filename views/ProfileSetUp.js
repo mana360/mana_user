@@ -19,6 +19,7 @@ export default class ProfileSetUp extends React.Component {
 
     constructor(props) {
         super(props);
+        this.title=""
         this.state = {
             policyRadio_button: false,
             customerType: '',//Individual,Company
@@ -98,9 +99,10 @@ export default class ProfileSetUp extends React.Component {
             company_emailId : global.temp_emailId,
             company_password : global.temp_password,
             company_confirmPass : global.temp_password,
+
             user_email : global.temp_emailId,
-            user_password : global.temp_emailId,
-            user_confirmPassword : global.temp_emailId,
+            user_password : global.temp_password,
+            user_confirmPassword : global.temp_password,
         })
         this.getCountryList()
     }
@@ -115,7 +117,7 @@ export default class ProfileSetUp extends React.Component {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
                 if(response.fileSize>Constants.IMAGE_MAX_SIZE){
-                    alert(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
+                    this.presenter.getCommonAlertBox(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
                     this.setState({user_profile_image : "", user_profile_image_data:""})
                 }
                 else{
@@ -138,7 +140,7 @@ export default class ProfileSetUp extends React.Component {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
                 if(response.fileSize>Constants.IMAGE_MAX_SIZE){
-                    alert(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
+                    this.presenter.getCommonAlertBox(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
                     this.setState({company_profile_image : "", company_profile_image_data : ""})
                 }else{
                     const source = { uri: response.uri };
@@ -161,7 +163,7 @@ export default class ProfileSetUp extends React.Component {
                     console.log('User tapped custom button: ', response.customButton);
                 } else {
                     if(response.fileSize>Constants.IMAGE_MAX_SIZE){
-                        alert(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
+                        this.presenter.getCommonAlertBox(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
                         this.setState({user_doc_image:"", user_doc_image_data:""})
                     }else{
                         const source = { uri: response.uri };
@@ -185,7 +187,7 @@ export default class ProfileSetUp extends React.Component {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
                 if(response.fileSize>Constants.IMAGE_MAX_SIZE){
-                    alert(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
+                    this.presenter.getCommonAlertBox(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
                     this.setState({user_doc_image:"", user_passport_image_data:""})
                 }else{
                     const source = { uri: response.uri };
@@ -328,7 +330,7 @@ export default class ProfileSetUp extends React.Component {
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.company_telephoneNo}
                         ref={(ref)=>{this.input_company_telephone_number = ref}}
-                        maxLength={10}
+                        maxLength={25}
                         keyboardType="number-pad"
                         onChangeText={(text) => { 
                             if(!isNaN(text))
@@ -343,11 +345,11 @@ export default class ProfileSetUp extends React.Component {
 
                 <View style={StyleSetUpProfile.TextInputView}>
                     <View style={StyleSetUpProfile.LabelView}>
-                        <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>Email ID</Text>
+                        <Text style={[StyleSetUpProfile.modalLabelText, { textTransform: 'none' }]}>Email Address</Text>
                         <Text style={{ color: 'red' }}>*</Text>
                     </View>
                     <TextInput
-                        placeholder="Enter Email Id"
+                        placeholder="Enter Email Address"
                         style={StyleSetUpProfile.TextInput}
                         editable={false}
                         keyboardType="email-address"
@@ -522,6 +524,7 @@ export default class ProfileSetUp extends React.Component {
                         autoCapitalize="none"
                         value={this.state.company_password}
                         secureTextEntry={true}
+                        maxLength={12}
                         ref={(ref)=>{this.input_company_new_password = ref}}
                         onChangeText={(text) => { this.setState({ company_password: text }) }}
                     />
@@ -538,6 +541,7 @@ export default class ProfileSetUp extends React.Component {
                         autoCapitalize="none"
                         value={this.state.company_confirmPass}
                         secureTextEntry={true}
+                        maxLength={12}
                         ref={(ref)=>{this.input_company_confirm_password = ref}}
                         onChangeText={(text) => { this.setState({ company_confirmPass: text }) }}
                     />
@@ -591,7 +595,10 @@ export default class ProfileSetUp extends React.Component {
                         mode="dropdown"
                         style={{ color: Constants.COLOR_GREY_LIGHT }}
                         selectedValue={this.state.user_title}
-                        onValueChange={(value) => { this.setState({ user_title: value }) }}
+                        onValueChange={(value) => { 
+                            this.title=value;
+                            this.setState({ user_title: value }) 
+                        }}
                     >
                         <Picker.Item label="Select" value="-1" />
                         <Picker.Item label="Mr" value="Mr" />
@@ -608,7 +615,7 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Telephone Number"
                         style={StyleSetUpProfile.TextInput}
                         keyboardType="number-pad"
-                        maxLength={10}
+                        maxLength={25}
                         ref={(ref)=>{this.input_user_telephone_number=ref}}
                         value={this.state.user_telephoneNumber}
                         onChangeText={(text) => { 
@@ -678,6 +685,7 @@ export default class ProfileSetUp extends React.Component {
                             
                             <TextInput
                                 placeholder="Enter Number"
+                                maxLength={13}
                                 style={StyleSetUpProfile.TextInput}
                                 keyboardType="number-pad"
                                 ref={(ref)=>{this.input_user_rsa_id=ref}}
@@ -923,6 +931,7 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Password"
                         editable={false}
                         secureTextEntry={true}
+                        maxLength={12}
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_password}
                         autoCapitalize="none"
@@ -938,6 +947,7 @@ export default class ProfileSetUp extends React.Component {
                     <TextInput
                         placeholder="Enter Confirm Password"
                         editable={false}
+                        maxLength={12}
                         secureTextEntry={true}
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.user_confirmPassword}
@@ -973,7 +983,9 @@ export default class ProfileSetUp extends React.Component {
               if(data.status){
                 this.setState({countryList : data.countryList, isCountryListFilled:1})
               }else{
-                  alert(data.msg)
+                //   alert(data.msg);
+                this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -983,7 +995,9 @@ export default class ProfileSetUp extends React.Component {
                   this.setState({provinceList : data.stateList, isProvinceListFilled:1})
               }
               else {
-                  alert(data.message)
+                  //alert(data.message);
+                  this.presenter.getCommonAlertBox(data.message);
+
               }
             break;
           }
@@ -993,7 +1007,9 @@ export default class ProfileSetUp extends React.Component {
                   this.setState({cityList: data.cityList, isCityListFilled:1})
               }
               else{
-                  alert(data.message)
+                //   alert(data.message)
+                this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -1007,7 +1023,9 @@ export default class ProfileSetUp extends React.Component {
                      })
                     this.openOTPModal()
               }else{
-                  alert(data.message)
+                //   alert(data.message)
+                this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -1016,7 +1034,9 @@ export default class ProfileSetUp extends React.Component {
                   this.onOTPVerified()
               }
               else{
-                  alert(data.message)
+                //   alert(data.message)
+                this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -1030,7 +1050,9 @@ export default class ProfileSetUp extends React.Component {
                   })
                   this.openOTPModal()
               }else{
-                  alert(data.message)
+                //   alert(data.message)
+                this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
           }
@@ -1042,120 +1064,120 @@ export default class ProfileSetUp extends React.Component {
         if(this.state.customerType=="Individual")
         {            
             if(this.state.user_profile_image==""){
-                alert("Please upload profile picture.")
+                this.presenter.getCommonAlertBox("Please upload profile picture.")
                 return false
             }
             if(this.state.user_docType=="0"){
-                alert("Please select Identification")
+                this.presenter.getCommonAlertBox("Please select Identification")
                 return false
             }
             if(this.state.user_docType!="0" && this.state.user_doc_image==""){
-                alert("Please upload document")
+                this.presenter.getCommonAlertBox("Please upload document")
                 return false
             }
             if(this.state.user_firstName==""){
-                    alert("Please enter first name")
+                this.presenter.getCommonAlertBox("Please enter first name")
                     this.input_user_first_name.focus()
                     return false
             }
             if(!Constants.NAMING_REGX.test(this.state.user_firstName)){
-                alert("First Name should contain alphabets only")
+                this.presenter.getCommonAlertBox("First Name should contain alphabets only")
                 this.input_user_first_name.focus()
                 return false
         }
             if(this.state.user_lastName==""){
-                    alert("Please enter last name")
+                this.presenter.getCommonAlertBox("Please enter last name")
                     this.input_user_last_name.focus()
                     return false
             }
 
             if(!Constants.NAMING_REGX.test(this.state.user_lastName)){
-                alert("Last Name should contain alphabets only")
+                this.presenter.getCommonAlertBox("Last Name should contain alphabets only")
                 this.input_user_last_name.focus()
                 return false
         }
             if(this.state.user_title=="-1"){
-                    alert("Please select title")
+                this.presenter.getCommonAlertBox("Please select title")
                     this.input_user_title.focus()
                     return false
             }
             if(this.state.user_telephoneNumber==""){
-                    alert("Please enter telephone number")
+                this.presenter.getCommonAlertBox("Please enter telephone number")
                     this.input_user_telephone_number.focus()
                     return false
             }
-            if(this.state.user_telephoneNumber.length!=10){
-                    alert("Please enter correct telephone number")
-                    this.input_user_telephone_number.focus()
-                    return false
-            }
+            // if(this.state.user_telephoneNumber.length!=9){
+            //     this.presenter.getCommonAlertBox("Please enter correct telephone number")
+            //         this.input_user_telephone_number.focus()
+            //         return false
+            // }
             if(this.state.user_rsaPassport=="" && this.state.user_docType=="1"){
-                    alert("Please enter RSA Id")
+                this.presenter.getCommonAlertBox("Please enter RSA Id")
                     this.input_user_rsa_id.focus()
                     return false
             }
             if(this.state.user_passport_number=="" && this.state.user_docType=="2"){
-                alert("Please enter passport number")
+                this.presenter.getCommonAlertBox("Please enter passport number")
                 this.input_user_passport.focus()
                 return false
             }
             if(this.state.user_email==""){
-                    alert("Please enter email Id")
+                this.presenter.getCommonAlertBox("Please enter email address")
                     this.input_user_emailId.focus()
                     return false
             }
             if(!emailRegex.test(this.state.user_email)){
-                    alert("Please enter valid email Id")
+                this.presenter.getCommonAlertBox("Please enter valid email address")
                     this.input_user_emailId.focus()
                     return false
             }
             if(this.state.user_address==""){
-                    alert("Please enter address")
+                this.presenter.getCommonAlertBox("Please enter address")
                     this.input_user_address.focus()
                     return false
             }
             if(this.state.user_streetAddress==""){
-                    alert("Please enter street address")
+                this.presenter.getCommonAlertBox("Please enter street address")
                     this.input_user_street_address.focus()
                     return false
             }
             if(this.state.user_Province=="-1"){
-                    alert("Please select province")
+                this.presenter.getCommonAlertBox("Please select province")
                     this.input_user_province.focus()
                     return false
             }
             if(this.state.user_City=="-1"){
-                    alert("Please select city")
+                this.presenter.getCommonAlertBox("Please select city")
                     this.input_user_city.focus()
                     return false
             }
             if(this.state.user_zipCode==""){
-                    alert("Please enter zip code")
+                this.presenter.getCommonAlertBox("Please enter zip code")
                     this.input_user_zipcode.focus()
                     return false
             }
             if(this.state.user_zipCode.length!=4){
-                    alert("Please enter correct zip code")
+                this.presenter.getCommonAlertBox("Please enter correct zip code")
                     this.input_user_zipcode.focus()
                     return false
             }
             if(this.state.user_password==""){
-                    alert("Please enter password")
+                this.presenter.getCommonAlertBox("Please enter password")
                     this.input_user_new_password.focus()
                     return false
             }
             if(this.state.user_password.length<=7){
-                    alert("Please enter strong password")
+                this.presenter.getCommonAlertBox("Please enter strong password")
                     this.input_user_new_password.focus()
                     return false
             }
             if(this.state.user_confirmPassword==""){
-                    alert("Please enter confirm password")
+                this.presenter.getCommonAlertBox("Please enter confirm password")
                     this.input_user_confirm_password.focus()
                     return false
             }
             if(this.state.user_confirmPassword != this.state.user_password){
-                    alert("Please enter confirm password matching with new password")
+                this.presenter.getCommonAlertBox("Please enter confirm password matching with new password")
                     this.input_user_confirm_password.focus()
                     return false
             }
@@ -1168,86 +1190,86 @@ export default class ProfileSetUp extends React.Component {
         if(this.state.customerType=="Company"){
 
             if(this.state.company_profile_image==""){
-                alert("Please upload company logo")
+                this.presenter.getCommonAlertBox("Please upload company logo")
                 return false
             }
             if(this.state.company_name==""){
-                alert("Please enter company name")
+                this.presenter.getCommonAlertBox("Please enter company name")
                 this.input_company_name.focus()
                 return false
             }
             if(this.state.company_contactPerson==""){
-                alert("Please enter company contact person name")
+                this.presenter.getCommonAlertBox("Please enter company contact person name")
                 this.input_company_contact_person.focus()
                 return false
             }
             if(this.state.company_contactPosition==""){
-                alert("Please enter position of company contact person")
+                this.presenter.getCommonAlertBox("Please enter position of company contact person")
                 this.input_company_contact_position.focus()
                 return false
             }
             if(this.state.company_telephoneNo==""){
-                alert("Please enter telephone number")
+                this.presenter.getCommonAlertBox("Please enter telephone number")
                 this.input_company_telephone_number.focus()
                 return false
             }
-            if(this.state.company_telephoneNo.length!=10){
-                alert("Please enter correct telephone number")
-                this.input_company_telephone_number.focus()
-                return false
-            }
+            // if(this.state.company_telephoneNo.length!=9){
+            //     this.presenter.getCommonAlertBox("Please enter correct telephone number")
+            //     this.input_company_telephone_number.focus()
+            //     return false
+            // }
             if(this.state.company_emailId==""){
-                alert("Please enter email Id")
+                this.presenter.getCommonAlertBox("Please enter email address")
                 this.input_company_emailId.focus()
                 return false
             }
             if(!emailRegex.test(this.state.company_emailId)){
-                alert("Please enter valid email Id")
+                this.presenter.getCommonAlertBox("Please enter valid email address")
                 this.input_company_emailId.focus()
                 return false
             }
             if(this.state.company_streetAddress==""){
-                alert("Please enter street address")
+                this.presenter.getCommonAlertBox("Please enter street address")
                 this.input_company_street_address.focus()
                 return false
             }
             if(this.state.company_Province=="-1"){
-                alert("Please select province")
+                this.presenter.getCommonAlertBox("Please select province")
                 this.input_company_province.focus()
                 return false
             }
             if(this.state.company_City=="-1"){
-                alert("Please select city")
+                this.presenter.getCommonAlertBox("Please select city")
                 this.input_company_city.focus()
                 return false
             }
             if(this.state.company_zipCode==""){
-                alert("Please enter zip code")
+                this.presenter.getCommonAlertBox("Please enter zip code")
                 this.input_company_zipcode.focus()
                 return false
             }
             if(this.state.company_zipCode.length != 4){
-                alert("Please enter correct zip code")
+                this.presenter.getCommonAlertBox("Please enter correct zip code")
                 this.input_company_zipcode.focus()
                 return false
             }
             if(this.state.company_password==""){
-                alert("Please enter password")
+                this.presenter.getCommonAlertBox("Please enter password")
                 this.input_company_new_password.focus()
                 return false
             }
             if(this.state.company_password.length <=7){
-                alert("Please enter strong password")
+                this.presenter.getCommonAlertBox("Please enter strong password")
                 this.input_company_new_password.focus()
                 return false
             }
             if(this.state.company_confirmPass==""){
-                alert("Please enter confirm password")
+                this.presenter.getCommonAlertBox("Please enter confirm password")
                 this.input_company_confirm_password.focus()
                 return false
             }
             if(this.state.company_confirmPass!= this.state.company_password){
-                alert("Please enter confirm password matching with new password")
+                this.presenter.getCommonAlertBox("Please enter confirm password matching with new password")
                 this.input_company_confirm_password.focus()
                 return false
             }
@@ -1262,7 +1284,7 @@ export default class ProfileSetUp extends React.Component {
                 let params = {
                     "first_name":this.state.user_firstName,
                     "last_name":this.state.user_lastName,
-                    "title":this.state.user_title,
+                    "title":this.title,
                     "telephone_number":this.state.user_telephoneNumber,    // missing param in api
                     "rsa_id":   this.state.user_docType=="1" ? this.state.user_rsaPassport : 0,
                     "rsa_file": this.state.user_docType=="1" ? this.state.user_doc_image_data : "",
@@ -1457,7 +1479,7 @@ export default class ProfileSetUp extends React.Component {
                                     <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold', paddingHorizontal: 3 }}>{Constants.IagreeTo}</Text>
                                     <TouchableOpacity
                                         onPress={() => {
-                                            this.props.navigation.navigate('TermsAndCondition', { flag: 'TermsAndCondition' })
+                                            this.props.navigation.navigate('TermsAndCondition', { flag: 4 })
                                         }}
                                     >
                                         <Text style={StyleSignUp.PolicyLabel}>{Constants.TermsAndConditions}</Text>
@@ -1469,7 +1491,7 @@ export default class ProfileSetUp extends React.Component {
                                     
                                     <TouchableOpacity
                                         onPress={() => {
-                                            this.props.navigation.navigate('TermsAndCondition', { flag: 'CancellationPolicy' })
+                                            this.props.navigation.navigate('TermsAndCondition', { flag: 3 })
                                         }}
                                     >
                                         <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy}, </Text>
@@ -1477,7 +1499,7 @@ export default class ProfileSetUp extends React.Component {
                                     
                                     <TouchableOpacity
                                         onPress={() => {
-                                            this.props.navigation.navigate('TermsAndCondition', { flag: 'PaymentPolicy' })
+                                            this.props.navigation.navigate('TermsAndCondition', { flag: 2 })
                                         }}
 
                                     >
@@ -1492,7 +1514,7 @@ export default class ProfileSetUp extends React.Component {
                                     
                                     <TouchableOpacity
                                         onPress={() => {
-                                            this.props.navigation.navigate('TermsAndCondition', { flag: 'PrivacyPolicy' })
+                                            this.props.navigation.navigate('TermsAndCondition', { flag: 1 })
                                         }}
 
                                     >

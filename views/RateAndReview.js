@@ -26,8 +26,7 @@ export default class RateAndReview extends React.Component {
         }
     }
 componentDidMount(){
-
-}
+this.props.navigation.getParam("item");}
 
 async submitRating(){
     let params = {
@@ -48,7 +47,9 @@ onResponse(apiConstant, data) {
               this.setState({ modal_Visible: true })
           }
           else{
-              alert(data.message)
+            //   alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
           }
         break;
       }
@@ -74,16 +75,16 @@ onResponse(apiConstant, data) {
                         </View>
 
                         <View>
-
+{/* 
                             <TouchableOpacity style={StyleRateAndReview.TripDetail_View}
                                 onPress={()=>{
                                     this.props.navigation.navigate('ViewCompletedTripDetail')
                                 }}
                             >
                                 <Text style={StyleRateAndReview.TripDetail_Text}>{Constants.ViewYOurTripDetail}</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
 
-                            <View style={{ marginVertical: 10 }}>
+                            <View style={{ marginVertical: 10,paddingTop:45 }}>
 
                                 <Text style={StyleRateAndReview.ratingText}>{Constants.RateYourTrip}</Text>
                                 <StarRating disabled={true} maxStars={5}
@@ -101,7 +102,7 @@ onResponse(apiConstant, data) {
                                 />
                             </View>
 
-                            <View style={StyleRateAndReview.InputBox_Container}>
+                            {/* <View style={StyleRateAndReview.InputBox_Container}>
                                 <View style={StyleRateAndReview.labelView}>
                                     <Text style={StyleRateAndReview.labelText}>{Constants.LabelYourTrip}</Text>
                                 </View>
@@ -113,7 +114,7 @@ onResponse(apiConstant, data) {
                                         this.setState({ inputLabelTrip: newtext })
                                     }}
                                 />
-                            </View>
+                            </View> */}
 
                             <View style={StyleRateAndReview.InputBox_Container}>
                                 <View style={StyleRateAndReview.labelView}>

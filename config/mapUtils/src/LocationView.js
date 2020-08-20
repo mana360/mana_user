@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet, Animated, Platform, UIManager, TouchableOpacity, Text, ViewPropTypes, Image } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { View, StyleSheet, Animated, Platform,PermissionsAndroid, UIManager, TouchableOpacity, Text, ViewPropTypes, Image } from 'react-native';
+//import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import axios from 'axios';
 import Events from 'react-native-simple-events';
@@ -69,7 +69,7 @@ export default class LocationView extends React.Component {
     Events.listen('InputBlur', this.constructor.displayName, this._onTextBlur);
     Events.listen('InputFocus', this.constructor.displayName, this._onTextFocus);
     Events.listen('PlaceSelected', this.constructor.displayName, this._onPlaceSelected);
-    this._getCurrentLocation()
+    this._getCurrentLocation();
   }
 
   componentWillUnmount() {
@@ -77,7 +77,26 @@ export default class LocationView extends React.Component {
     Events.rm('InputFocus', this.constructor.displayName);
     Events.rm('PlaceSelected', this.constructor.displayName);
   }
+  async getCurrentCoords() {
+    const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
 
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      Geolocation.getCurrentPosition((position) => {
+        // this.setState({
+        //   current_latitude: position.coords.latitude,
+        //   current_longitude: position.coords.longitude
+        // })
+        // this.getCurrentAdddress(position.coords.latitude,position.coords.longitude);
+      }, (error) => {
+        console.log(error.code, error.message)
+      },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      )
+    }
+    else {
+      console.log("ACCESS_FINE_LOCATION permission denied")
+    }
+  }
   state = {
     inputScale: new Animated.Value(1),
     inFocus: false,
@@ -168,13 +187,14 @@ export default class LocationView extends React.Component {
     });
   };
 
-  _getCurrentLocation = () => {
+  _getCurrentLocation = async () => {
 
     // navigator.geolocation.getCurrentPosition(position => {
     //   let location = (({ latitude, longitude }) => ({ latitude, longitude }))(position.coords);
     //   this._setRegion(location);
     // });
-
+    const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
     Geolocation.getCurrentPosition((info)=>{
      
        let location = (({ latitude, longitude }) => ({ latitude, longitude }))(info.coords);
@@ -184,7 +204,14 @@ export default class LocationView extends React.Component {
       console.log("long ==== "+ info.coords.longitude)
 
       // this.setState({currentlatitude:info.coords.latitude, currentlongitude:info.coords.longitude});
-      });
+      },(error) => {
+        console.log(error.code, error.message)
+      },
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 10000 }
+      );
+    }else{
+      console.log("ACCESS_FINE_LOCATION permission denied")
+    }
   };
 
   render() {

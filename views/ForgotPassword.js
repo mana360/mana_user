@@ -38,12 +38,12 @@ export default class ForgotPassword extends React.Component {
     
     isValidEmail(){
         if(this.state.emailId==""){
-            alert("Please enter email Id")
+            this.presenter.getCommonAlertBox("Please enter email address")
             this.input_emailId.focus()
             return false
         }
         if(!Constants.EMAIL_REGX.test(this.state.emailId)){
-            alert("Please enter valid email Id")
+            this.presenter.getCommonAlertBox("Please enter valid email address")
             this.input_emailId.focus()
             return false
         }
@@ -91,7 +91,9 @@ async onResponse(apiConstant,data){
         if(data.status){
             this.onReceiveOTP(data.user_id, data.access_token, data.otp_duration)
         }else{
-            alert(data.message);
+            // alert(data.message);
+            this.presenter.getCommonAlertBox(data.message);
+
         }
         break;
     }
@@ -100,7 +102,8 @@ async onResponse(apiConstant,data){
             this.setState({isTimerVisible:true,OTP:''})
             this.onReceiveOTP(data.user_id, data.access_token, data.otp_duration)
         }else{
-            alert(data.message);
+            // alert(data.message);
+            this.presenter.getCommonAlertBox(data.message);
             this.setState({OTP:''})
             this.closeModal()
         }
@@ -113,7 +116,9 @@ async onResponse(apiConstant,data){
         }else{
             this.setState({OTP:''})
             this.onReceiveOTP(this.state.user_id, this.state.access_token, this.state.timerValue)
-            alert(data.message);
+            // alert(data.message);
+            this.presenter.getCommonAlertBox(data.message);
+
         }
     }
     break;
@@ -220,7 +225,7 @@ render() {
                             <Text style={StyleForgotPassword.modalLabelText}>{Constants.Email}</Text>
                         </View>
                         <TextInput
-                            placeholder="Enter Email Id"
+                            placeholder="Enter Email Address"
                             ref={(ref)=>{this.input_emailId = ref}}
                             autoCapitalize="none"
                             style={StyleForgotPassword.TextInput}

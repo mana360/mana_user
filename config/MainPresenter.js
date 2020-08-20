@@ -7,7 +7,7 @@
  * 
  * */
 import React, { useState } from 'react'
-import { View, Text, Modal, ActivityIndicator } from 'react-native'
+import { View, Text, Modal, ActivityIndicator ,Alert} from 'react-native'
 import Constants from './Constants';
 import ApiConstants from './ApiConstants';
 import NetInfo from "@react-native-community/netinfo";
@@ -19,12 +19,37 @@ export class MainPresenter extends React.Component {
     state = {
         isLoader: false
     }
+
+    getCommonAlertBox(message){
+        Alert.alert(
+            'Message',
+            message,
+            [
+            //   {
+            //     text: 'Ask me later', 
+            //     onPress:()=>{}
+            //   },
+            //   {
+            //     text: 'Cancel',
+            //     onPress:()=>{},
+            //     style: 'cancel',
+            //   },
+              {
+                text: 'OK', 
+                onPress:()=>{}
+              },
+            ],
+            {cancelable: false},
+          );
+    }
+
+
     /* -------------Public method------------------- */
     async callPostApi(apiConstant, params, loader) {
         let isConnected=await this._isNetworkAvailable();
-        console.log("Rietsh bhau==>"+isConnected);
+        console.log("ISconnected"+isConnected);
         if (!isConnected) {
-            alert("No Network")
+            this.getCommonAlertBox("Internet connection is unavailable.")
             return
         }
 
@@ -60,7 +85,7 @@ export class MainPresenter extends React.Component {
         let isConnected=await this._isNetworkAvailable();
         console.log("Rietsh bhau==>"+isConnected);
         if (!isConnected) {
-            alert("No Network")
+            this.getCommonAlertBox("Internet connection is unavailable.")
             return 
         }
 
@@ -90,9 +115,8 @@ export class MainPresenter extends React.Component {
 
     async callMultipartApi(apiConstant, params, loader) {
         let isConnected=await this._isNetworkAvailable();
-        console.log("Rietsh bhau==>"+isConnected);
         if (!isConnected) {
-            alert("No Network")
+            this.getCommonAlertBox("Internet connection is unavailable.")
             return
         }
         let authToken = await getAuthToken()
@@ -113,7 +137,7 @@ export class MainPresenter extends React.Component {
 
         fetch(URL, options).then(it => it.json(), (e) => { console.log(e) })
             .then(it => this._setResponse(apiConstant, it))
-            .catch(e => console.error(e))
+            .catch(e => console.log(e))
             .finally(() => { this._stopLoader() })
 
     }
@@ -122,7 +146,7 @@ export class MainPresenter extends React.Component {
         let isConnected=await this._isNetworkAvailable();
         console.log("Rietsh bhau==>"+isConnected);
         if (!isConnected) {
-            alert("No Network")
+            this.getCommonAlertBox("Internet connection is unavailable.")
             return
         }
         let authToken = await getAuthToken()
@@ -140,7 +164,7 @@ export class MainPresenter extends React.Component {
 
         fetch(URL, options).then(it => it.json(), (e) => { console.log(e) })
             .then(it => this._setResponse(apiConstant, it))
-            .catch(e => console.error(e))
+            .catch(e => console.log(e))
             .finally(() => { this._stopLoader() })
 
     }
@@ -169,7 +193,7 @@ export class MainPresenter extends React.Component {
         let isConnected=await this._isNetworkAvailable();
         console.log("Rietsh bhau==>"+isConnected);
         if (!isConnected) {
-            alert("No Network")
+            this.getCommonAlertBox("Internet connection is unavailable.")
             return
         }
         let authToken = await getAuthToken()
@@ -187,7 +211,7 @@ export class MainPresenter extends React.Component {
 
         fetch(URL, options).then(it => it.json(), (e) => { console.log(e) })
             .then(it => this._setResponse(apiConstant, it))
-            .catch(e => console.error(e))
+            .catch(e => console.log(e))
             .finally(() => { this._stopLoader() })
 
     }
@@ -252,7 +276,7 @@ export class MainPresenter extends React.Component {
         let isConnected=await this._isNetworkAvailable();
         console.log("Rietsh bhau==>"+isConnected);
         if (!isConnected) {
-            alert("No Network")
+            this.getCommonAlertBox("Internet connection is unavailable.")
             return
         }
         
@@ -279,7 +303,7 @@ export class MainPresenter extends React.Component {
             it.json(), (e) => {
             console.log(e)})
             .then(it => this._setResponse(apiConstant, it))
-            .catch(e => console.error(e))
+            .catch(e => console.log(e))
             .finally(() => { this._stopLoader() })
     }
 
@@ -358,7 +382,7 @@ export class MainPresenter extends React.Component {
         if (this.props.onResponse) {
             this.props.onResponse(apiConstant, data?data:{})
         } else {
-            alert('No \'onResponse\' callback register for api call')
+            this.getCommonAlertBox('No \'onResponse\' callback register for api call')
         }
     }
     _initLoader(isloading) {

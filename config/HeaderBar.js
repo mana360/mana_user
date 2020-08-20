@@ -39,10 +39,17 @@ class HeaderBar extends React.Component {
   }
   componentDidMount(){
     this.getUserStatus();
+    this.willFocusSubscription = this.props.navigation.addListener(
+      'willFocus',
+      () => { this.getUserStatus() }
+    );
+    
     
   }
   componentWillUnmount() {
     this.backHandler.remove();
+    this.willFocusSubscription.remove();
+
   }
 
   handleBackPress() {
@@ -56,7 +63,7 @@ class HeaderBar extends React.Component {
 
 
    getUserStatus(){
- this.presenter.callGetApi(ApiConstants.userStatus, "", true);
+ this.presenter.callGetApi(ApiConstants.userStatus, "", false);
 }
 
   onResponse(apiConstant, data) {
@@ -74,22 +81,25 @@ class HeaderBar extends React.Component {
                   this.props.navigation.dispatch(
                     StackActions.reset({
                     index: 0,
-                    actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
+                    actions: [NavigationActions.navigate({ routeName: 'Splash' })],
                   })
                 )
               }, 2000);
           }else{
               // log out failed
               this.setState({isLogoutModalVisible:false})
-              alert(data.msg)
+              this.presenter.getCommonAlertBox(data.msg)
           }
         break;
       }
 
       case ApiConstants.userStatus: {
         if(data.status){
-        this.setState({notification_count:data.userStatus[0].notifications_count});
-        // alert(JSON.stringify(data.userStatus[0].notifications_count));
+          
+        this.setState({notification_count:data.noti_count});
+
+        console.log("user data===>"+JSON.stringify(data));
+  
         }else{
       
         }
@@ -151,11 +161,13 @@ class HeaderBar extends React.Component {
             >
               <Image
                 source={require('../images/notification.png')}
-                style={[styles.headerIcon, { width: 30, height: 30, }]}
+                style={[styles.headerIcon, { width: 33, height: 33, }]}
               />
-              {
-                <Badge style={{position:"absolute",right: 0,width: 20,height: 20,}}>
-                  <Text style={{color:Constants.COLOR_WHITE}}>{this.state.notification_count}</Text>
+              { this.state.notification_count==0?null:
+                <Badge style={{position:"absolute",right: -10,top:-8,justifyContent:'center',borderRadius:50,width:31,height:30,alignItems:'center'}}>
+                  <Text style={{color:Constants.COLOR_WHITE,fontSize:10,}}>{this.state.notification_count}</Text>
+                  {/* <Text style={{color:Constants.COLOR_WHITE,fontSize:11,}}>451</Text> */}
+
                 </Badge>
               }
             </TouchableOpacity>
@@ -282,7 +294,7 @@ class HeaderBar extends React.Component {
               >
                 <Image style={StylePaymentMethod.popcloseimg} source={require('../images/close.png')}></Image>
               </TouchableOpacity>
-              <Text style={[StylePaymentMethod.popbodythankstxt, { textAlign: 'center', width: '80%', alignSelf: 'center' }]}>Are you sure you want to Cancel the order?</Text>
+              <Text style={[StylePaymentMethod.popbodythankstxt, { textAlign: 'center', width: '80%', alignSelf: 'center' }]}>{Constants.cancellation_msgPayment}</Text>
               <TouchableOpacity style={StylePaymentMethod.modal_cancleBtn}
                 onPress={() => {
                   this.setState({ isPaymentBackModalVisible: false });
@@ -351,7 +363,6 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: Constants.FONT_SIZE_EXTRA_LARGE,
-    fontFamily: "Roboto-Bold",
     textTransform: 'uppercase',
     color: Constants.COLOR_WHITE,
     alignSelf: 'center',

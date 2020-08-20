@@ -22,7 +22,7 @@ export default class ViewCompletedTripDetail extends React.Component {
     }
     onStarRatingPress(rating) {
         this.setState({ starCount: rating })
-        alert(rating)
+        //this.presenter.getCommonAlertBox(rating)
     }
     render() {
         let { navigation } = this.props

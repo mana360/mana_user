@@ -43,7 +43,7 @@ export default ApiConstants = {
     referFriend:"customer/referFriend",
     cancelBooking:"customer/cancelBooking",
     shareMyRide:"customer/shareMyRide",
-
+    getDriverLocation:"customer/getDriverLocation",
 
     /* ------------Mayur----------- */
     forgotPassword:"customer/forgotPassword",
@@ -61,5 +61,6 @@ export default ApiConstants = {
     cancelTrip:'customer/cancelTrip',
     RateBookings:"customer/rateBooking",
     generateOTP:"customer/generateTripOTP",
+    getPolicyContent:"getPolicyContent",
 
 } 

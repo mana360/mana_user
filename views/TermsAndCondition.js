@@ -6,17 +6,39 @@ import { View, Text, FlatList, } from 'react-native';
 import HeaderBar from '../config/HeaderBar'
 import { StyleTermsAndCondition } from '../config/CommonStyles'
 import Constants from '../config/Constants'
+import { MainPresenter } from '../config/MainPresenter';
+import ApiConstants from '../config/ApiConstants';
+import { ScrollView } from 'react-native-gesture-handler';
 export default class TermsAndCondition extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-        { title: "Lorem ipsum dolor si amet, consectetur adipisicing", desc: "Lorem ipsum dolor si amet, consectetur adipisicing Lorem ipsum dolor si amet, consectetur adipisicing Lorem ipsum dolor si amet, consectetur adipisicing" },
-        { title: "Lorem ipsum dolor si amet, consectetur adipisicing", desc: "Lorem ipsum dolor si amet, consectetur adipisicing Lorem ipsum dolor si amet, consectetur adipisicing Lorem ipsum dolor si amet, consectetur adipisicing" },
-        { title: "Lorem ipsum dolor si amet, consectetur adipisicing", desc: "Lorem ipsum dolor si amet, consectetur adipisicing Lorem ipsum dolor si amet, consectetur adipisicing Lorem ipsum dolor si amet, consectetur adipisicing" },
-        { title: "Lorem ipsum dolor si amet, consectetur adipisicing", desc: "Lorem ipsum dolor si amet, consectetur adipisicing Lorem ipsum dolor si amet, consectetur adipisicing Lorem ipsum dolor si amet, consectetur adipisicing" },
-        { title: "Lorem ipsum dolor si amet, consectetur adipisicing", desc: "Lorem ipsum dolor si amet, consectetur adipisicing Lorem ipsum dolor si amet, consectetur adipisicing Lorem ipsum dolor si amet, consectetur adipisicing" }, { title: "Lorem ipsum dolor si amet, consectetur adipisicing", desc: "Lorem ipsum dolor si amet, consectetur adipisicing Lorem ipsum dolor si amet, consectetur adipisicing Lorem ipsum dolor si amet, consectetur adipisicing" },]
+      data:""
     }
+  }
+
+  componentDidMount(){
+    let param = {
+      'flag' : this.props.navigation.getParam('flag')
+    }
+    this.presenter.callPostApi(ApiConstants.getPolicyContent, param, true)
+  }
+
+
+  onResponse(apiConstant,data){
+ switch (apiConstant) {
+  case ApiConstants.getPolicyContent : {
+    if(data.status){
+      this.setState({data : data.content})
+    }else{
+      this.presenter.getCommonAlertBox(data.message)
+    }
+    break;
+  }
+ 
+   default:
+     break;
+ }
   }
   render() {
     let { navigation } = this.props;
@@ -25,50 +47,35 @@ export default class TermsAndCondition extends Component {
 
     return (
       <View style={{ flex: 1, backgroundColor: Constants.colorGrey }}>
+        <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
+
         <HeaderBar
-        isLogout
         isBack={true}
           title={
-            flag=="TermsAndCondition"
+            flag==4
             ?
             "Terms & Conditions"
             :
-            flag=="CancellationPolicy"
+            flag==3
             ?
             "Cancellation Policy"
             :
-            flag=="PaymentPolicy"
+            flag==2
             ?
             "Payment Policy"
             :
-            flag=="AboutUs"
-            ?
-            "About Us"
-            :
-            flag=="PrivacyPolicy"
+            flag==1
             ?
             "Privacy Policy"
-            :  "Terms & Conditions"
+            :  ""
           }
            isBack={true} isLogout={ isLogout ? true : false } navigation={navigation} />
-        <FlatList
-            data={this.state.data}
-            extraData={this.state}
-            keyExtractor={(index) => index.toString()}
-            numColumns={1}
-            bounces={false}
-            renderItem={
-            ({ item }) =>
+       <ScrollView style={{width:'100%',}} bounces={false}>
+         <View style={{flex:1,padding:15}} >
+           <Text style={{fontSize:12,textAlign:'justify',color:'black'}}>{this.state.data}</Text>
+         </View>
 
-              <View style={StyleTermsAndCondition.container}>
-
-                <Text style={StyleTermsAndCondition.title}>{item.title}</Text>
-
-                <Text style={StyleTermsAndCondition.desc}>{item.desc}</Text>
-
-              </View>
-          }
-        />
+       </ScrollView>
       </View>
     )
   }

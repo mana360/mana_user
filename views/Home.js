@@ -37,7 +37,7 @@ export default class Home extends React.Component {
                                     source={require('../images/email_id.png')} />
                                 <Text style={StyleCollectMyLoad.labelBoxText}>{Constants.Email}</Text>
                             </View>
-                            <TextInput placeholder='Enter Email Id'
+                            <TextInput placeholder='Enter Email Address'
                                 style={StyleCollectMyLoad.textInput_style}
                                 value={this.state.email_id}
                                 onChangeText={(newText) => {
@@ -56,13 +56,14 @@ export default class Home extends React.Component {
                         <View style={{ width: '75%', alignSelf: 'center', paddingLeft: 15 }}>
                             <View style={StyleCollectMyLoad.labelBox}>
                                 <Image style={StyleCollectMyLoad.LabelBoxIcon}
-                                    source={require('../images/email_id.png')} />
+                                    source={require('../images/mobile_number.png')} />
                                 <Text style={StyleCollectMyLoad.labelBoxText}>{Constants.MobileNumber}</Text>
                             </View>
                             <TextInput placeholder='Enter Mobile Number'
                                 keyboardType="number-pad"
                                 style={StyleCollectMyLoad.textInput_style}
                                 value={this.state.mobile_number}
+                                maxLength={9}
                                 onChangeText={(newText) => {
                                     this.setState({ mobile_number: newText })
                                 }}

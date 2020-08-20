@@ -58,7 +58,9 @@ export default class CurrentTrip extends React.Component {
                     }
             
                 } else {
-                    alert(data.message)
+                    // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
                 }
     
                 break;
@@ -97,9 +99,13 @@ dateAndTime(itemDate,value){
                             <TouchableOpacity style={StyleCurrentTrip.row} onPress={() =>{
 
                                 if(this.service_type_id==1){
+                                    if(item.recurring_req==1){
+                                        this.props.navigation.navigate('RecurringTrips', {'booking_id':item.truck_booking_id,"currentTrip":true,"reccurringItems":item.recurring_trips,"service_type_id":1})
+                                    }else{
                                     this.props.navigation.navigate('ViewCurrentTrip',
                                     {'booking_id':item.truck_booking_id,'service_type_id':1,"bookingItem":item});
-                                }
+                                      }
+                                  }
                                 if(this.service_type_id==2){
                                     this.props.navigation.navigate('ViewUpcomingTrip',
                                     {item:item,"flag_upcoming_Trip":2,'service_type_id':2,'booking_id':item.warehouse_booking_id,Flag_currentTtrip:true})
@@ -131,7 +137,7 @@ dateAndTime(itemDate,value){
                                     <View style={StyleCurrentTrip.bottomLine}>
                                         <Text style={StyleCurrentTrip.title}>
                                             {     this.service_type_id==1 
-                                                ? `${item.pickup_location} - ${item.drop_location.drop_location[0]}`
+                                                ? `${item.pickup_location} - ${item.Last_drop_location}`
                                                 : this.service_type_id==2
                                                 ? item.partner_name
                                                 :this.service_type_id==3
@@ -148,7 +154,7 @@ dateAndTime(itemDate,value){
 
                                         <Text style={StyleUpcomingTrip.labeltext}>{this.service_type_id==3? Constants.PICKEDUP:null}</Text>
                                         <Text style={StyleUpcomingTrip.datacss}>:
-                                            { moment(item.pickedup_date_time).format("DD/MMMM/YYYY")
+                                            { moment(item.pickedup_date_time,"YYYY-MM-DD").format("DD/MM/YYYY")
                                                 
                                             }
                                         </Text>
@@ -169,7 +175,7 @@ dateAndTime(itemDate,value){
                                        ?
                                        this.dateAndTime(item.pickedup_date_time,0)
                                        :
-                                       moment(item.service_start_date).format("DD/MMM/YYYY")
+                                       moment(item.service_start_date,"YYYY-MM-DD").format("DD MMMM YYYY")
                                        
                                         }</Text>
                                         </View>
@@ -197,7 +203,7 @@ dateAndTime(itemDate,value){
                                           this.service_type_id==1?
                                            this.dateAndTime(item.arrivalDateAndTime,0)
                                           :
-                                           moment(item.service_end_date).format("DD/MMM/YYYY  hh:mm:ss A")
+                                           moment(item.service_end_date,"YYYY-MM-DD").format("DD MMMM YYYY  hh:mm A")
                                         
                                         }</Text>
 

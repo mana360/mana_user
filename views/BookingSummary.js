@@ -4,7 +4,7 @@
     dev + api by Udayraj (place booking order)
  */
 import React, { Component } from 'react';
-import {View, Text, TouchableOpacity, Image, ScrollView, TextInput, Modal, DatePickerAndroid, TimePickerAndroid, TouchableHighlight} from 'react-native';
+import {Platform, View, Text, TouchableOpacity, Image, ScrollView, TextInput, Modal, DatePickerAndroid, TimePickerAndroid, TouchableHighlight} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {StyleBookingSummary, StyleLocationDetails, StylePaymentMethod} from '../config/CommonStyles';
 import FooterBar from '../config/FooterBar';
@@ -17,7 +17,7 @@ import ApiConstants from '../config/ApiConstants';
 import { FlatList } from 'react-native-gesture-handler';
 import { Picker } from 'native-base';
 import {getUserData  } from "../config/AppSharedPreference";
-
+import {DateIOS} from '../config/DateIOS'
 
 export default class BookingSummary extends React.Component{
     setModalVisible(visible) {
@@ -71,6 +71,7 @@ export default class BookingSummary extends React.Component{
             grand_total:0,
             total_price:0,
             vat:0,
+            distance:"",
 
             countList:[],
             otherServicesList:[],
@@ -90,19 +91,28 @@ export default class BookingSummary extends React.Component{
 
     componentDidMount(){
         this.booking_data = this.props.navigation.getParam('booking_data')
-        console.log("booking data ======> "+JSON.stringify(this.booking_data))
+        console.log("booking data =====================> "+JSON.stringify(this.booking_data));
+
         this.initServices();
         this.getOtherServices();
     }
 
     async initServices(){
         let user_data = JSON.parse(await getUserData())
-        this.setState({name : user_data[0].first_name+ " "+user_data[0].last_name, contact_number:user_data[0].contact})
+        console.log("USerData====>"+JSON.stringify(user_data));
+        this.setState({
+            name : user_data[0].user_type==1?user_data[0].company_name:user_data[0].first_name+ " "+user_data[0].last_name, 
+            contact_number:user_data[0].telephone_number})
         
         let i=1
         for(i=1;i<=5;i++){
                 this.state.countList.push(i);
         }
+
+        // let agb= this.user_data.filter((item)=>{
+        //         item.load_category.category_id
+        // })
+        // alert(""+JSON.stringify(agb));
         // this.userInfo = await getUserData();
         // this.userInfo = JSON.parse(this.userInfo);
         // console.log("userData_object========>"+ JSON.stringify(this.userInfo));
@@ -153,37 +163,34 @@ export default class BookingSummary extends React.Component{
     isValid(){
     
         if(this.state.pick_up_address==""){
-            alert("Please Enter Pickup Address");
+            this.presenter.getCommonAlertBox("Please Enter Pickup Address");
             return false;
         }
         if(this.state.drop_off_address==""){
-            alert("Please Enter Dropup Address");
+            this.presenter.getCommonAlertBox("Please Enter Dropup Address");
             return false;
         }
         if(this.state.pickup_date==""){
-            alert("Please Enter valid Date");
+            this.presenter.getCommonAlertBox("Please Enter valid Date");
             return false;
         }
+        if(this.state.pick_up_addressDetails==""){
+            this.presenter.getCommonAlertBox("Please Enter Pickup Address");
+            return false;
+        }
+        if(this.state.drop_off_addressDetails==""){
+            this.presenter.getCommonAlertBox("Please Enter Dropoff Address");
+            return false;
+        }
+      
         if(this.state.pickup_time==""){
-            alert("Please Enter valid Time");
+            this.presenter.getCommonAlertBox("Please Enter valid Time");
             return false;
         }
-        if(this.state.instructContainer==""){
-            alert("Please Enter Instruction");
+        if(this.state.instructions==""){
+            this.presenter.getCommonAlertBox("Please Enter Instruction");
             return false;
-        }
-        if(this.state.name==""){
-            alert("Please Enter Name");
-            return false;
-        }
-        if(this.state.contact_number==""){
-            alert("Please Enter Contact Number");
-            return false;
-        }
-        if(this.state.contact_number.length>10&&this.state.contact_number.length<13){
-            alert("Please Enter Contact Number");
-            return false;
-        }
+        }   
 
         return true
     }
@@ -192,7 +199,7 @@ export default class BookingSummary extends React.Component{
         await this.presenter.callGetApi(ApiConstants.getotherServices,"",true);
     }
    
-   async bookCMLtrip(){
+    bookCMLtrip(payment_mode, transaction_id){
         // let dropoff_list = [{ "drop_location":"test 123","drop_latlng":"18.5590, 73.7868", "drop_address":"test 123"}, 
         // { "drop_location":"test 123", "drop_latlng":"18.5590, 73.7868", "drop_address":"test 123"}]
         
@@ -236,30 +243,15 @@ export default class BookingSummary extends React.Component{
         "grand_total":this.state.grand_total,
         "coupon_id":this.state.discountAmount_ID,
         "load_category_id":this.state.load_category_id,
-
-
-        // "pickup_address":"test 1",
-        // "pickup_latlng":"18.5590, 73.7868",
-        // "drop1_address":"road 123 highway",
-        // "drop1_latlng":"18.5590, 73.7868",
-        // "drop2_address":"road 124 highway",
-        // "drop2_latlng":"18.5590, 73.7868",
-        // "truck_type_id":"2",
-        // "pickup_date":"2029-12-12",
-        // "pickup_time":"12:30",
-        // "instructions":"no instructions",
-        // "other_services":[{"service_id" : 1, "qty": 23}],
-        // "booking_amount":"1200",
-        // "discount":"10",
-        // "grand_total":"1100",
-        // "coupon_id":"1",
-        // "load_category_id":"1",
-        
+        "payment_mode":payment_mode,
+        "payment_transaction_id":transaction_id,
+        "distance":this.state.distance,
        }
-       await this.presenter.callPostApi(ApiConstants.bookCMLTrip,params,true);
-   }
+     this.presenter.callPostApi(ApiConstants.bookCMLTrip,params,true);
+    }
    
    async getcalculatingBooking(){
+       
        let params=  {
         "pickup_latlng":{
             "latitude": this.state.pick_up_address_lat,
@@ -274,7 +266,7 @@ export default class BookingSummary extends React.Component{
             "longitude":this.state.drop_off_address_1_long
         },
         "truck_type_id" : this.state.truck_Type_id,
-        "pickup_date": this.state.pick_time,
+        "pickup_date": this.state.pickup_date,
         "load_category_id":this.state.load_category_id , 
         
         "other_services" :this.other_servicesData,
@@ -288,10 +280,16 @@ export default class BookingSummary extends React.Component{
        await this.presenter.callPostApi(ApiConstants.calculateBooking,params,true);
     }
 
-    doPayment(resp){
-        this.props.navigation.navigate("PaymentMethod", {paymentSuccess : ()=>{
-            console.log("payment callback received")
-            this.setState({paymentSuccessModal:true})
+    doPayment(){
+        this.props.navigation.navigate("PaymentMethod", {payment_amount : this.state.grand_total,
+            paymentCallback : (payment_mode, payment_flag, transaction_id)=>{
+                console.log("payment callback received")
+                if(payment_flag==1)
+                {
+                    this.bookCMLtrip(payment_mode, transaction_id)
+                }else{
+                    this.presenter.getCommonAlertBox("Payment failed.")
+                }
             }
         })
     }
@@ -304,16 +302,20 @@ export default class BookingSummary extends React.Component{
                console.log(data);
                this.setState({otherServicesList:data.other_services,selectedOtherService_value:data.other_services});
             } else {
-               alert(data.message)
+            //    alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
              }
              break;
          }
 
          case ApiConstants.bookCMLTrip:{
              if(data.status){
-               this.doPayment(data)
+                this.setState({paymentSuccessModal:true})
+                //this.doPayment(data)
              }else{
-                 alert(data.message);
+                //  alert(data.message);
+            this.presenter.getCommonAlertBox(data.message);
+
              }
              break;
          }
@@ -322,14 +324,17 @@ export default class BookingSummary extends React.Component{
             if(data.status){
                 this.setState({grand_total:data.booking_summary.grand_total,
                     otherServices_amount:data.booking_summary.other_services,
-                    discountAmount:data.booking_summary.discount,
+                    // discountAmount:data.booking_summary.discount,
                     total_price:data.booking_summary.booking_amount,
                     booking_amount:data.booking_summary.booking_amount,
                     vat:data.booking_summary.vat_tax_per,
-                    chargesTripCost:data.booking_summary.per_kilomiter_price,
+                    chargesTripCost:data.booking_summary.other_per,
+                    distance:data.booking_summary.total_distance,
                   });
               }else{
-                  alert(data.message);
+                //   alert(data.message);
+            this.presenter.getCommonAlertBox(data.message);
+
               }
               break;
 
@@ -338,37 +343,70 @@ export default class BookingSummary extends React.Component{
          }
     }
 
+    // getAddress(flag){
+    //     this.props.navigation.navigate('MapViews', {
+    //         flag_location:flag, address: (resp) => {
+    //             console.log("callback flag==>"+flag);
+    //                     if(flag=="1"){
+    //                         this.setState({
+    //                             pick_up_address:resp.results[0].formatted_address,
+    //                             pick_up_address_lat:resp.results[0].geometry.location.lat,
+    //                             pick_up_address_long:resp.results[0].geometry.location.lng
+    //                                 });
+    //                         this.getcalculatingBooking();
+
+    //                     }
+    //                     if(flag=="2"){
+    //                             this.setState({
+    //                             drop_off_address:resp.results[0].formatted_address,
+    //                             drop_off_address_lat:resp.results[0].geometry.location.lat,
+    //                             drop_off_address_long:resp.results[0].geometry.location.lng
+    //                             });
+    //                     this.getcalculatingBooking();
+
+    //                     }
+    //                     if(flag=='3'){
+    //                         this.setState({
+    //                             drop_off_address_1:resp.results[0].formatted_address,
+    //                             drop_off_address_1_lat:resp.results[0].geometry.location.lat,
+    //                             drop_off_address_1_long:resp.results[0].geometry.location.lng
+    //                             });
+    //                     this.getcalculatingBooking();
+
+    //                     }
+    //         }
+    //     })
+    // }
+
+
     getAddress(flag){
-        this.props.navigation.navigate('MapViews', {
+        //MapViews removed
+        this.props.navigation.navigate('placePicker', {
             flag_location:flag, address: (resp) => {
                 console.log("callback flag==>"+flag);
+                console.log("received location ==>"+JSON.stringify(resp))
                         if(flag=="1"){
                             this.setState({
-                                pick_up_address:resp.results[0].formatted_address,
-                                pick_up_address_lat:resp.results[0].geometry.location.lat,
-                                pick_up_address_long:resp.results[0].geometry.location.lng
+                                pick_up_address:resp.address,
+                                pick_up_address_lat:resp.latitude,
+                                pick_up_address_long:resp.longitude
                                     });
-                            this.getcalculatingBooking();
-
                         }
                         if(flag=="2"){
                                 this.setState({
-                                drop_off_address:resp.results[0].formatted_address,
-                                drop_off_address_lat:resp.results[0].geometry.location.lat,
-                                drop_off_address_long:resp.results[0].geometry.location.lng
+                                    drop_off_address:resp.address,
+                                    drop_off_address_lat:resp.latitude,
+                                    drop_off_address_long:resp.longitude
                                 });
-                        this.getcalculatingBooking();
-
                         }
                         if(flag=='3'){
                             this.setState({
-                                drop_off_address_1:resp.results[0].formatted_address,
-                                drop_off_address_1_lat:resp.results[0].geometry.location.lat,
-                                drop_off_address_1_long:resp.results[0].geometry.location.lng
+                                drop_off_address_1:resp.address,
+                                drop_off_address_1_lat:resp.latitude,
+                                drop_off_address_1_long:resp.longitude
                                 });
-                        this.getcalculatingBooking();
-
                         }
+                        this. getcalculatingBooking();
             }
         })
     }
@@ -384,7 +422,7 @@ export default class BookingSummary extends React.Component{
           if (action !== DatePickerAndroid.dismissedAction) {
             const finalDate = `${month + 1}/${day}/${year}`;
             console.log(finalDate)
-            this.setState({ pickup_date: moment(finalDate).format('DD/MM/YYYY') })
+            this.setState({ pickup_date: moment(finalDate).format('YYYY-MM-DD') })
             console.log("selected date ===>"+this.state.pickup_date)
           }
     
@@ -409,16 +447,32 @@ export default class BookingSummary extends React.Component{
             let currentMinute = new moment().format('m')
             
             if(this.state.pickup_date == new moment().format('YYYY-MM-DD')){
-                if(hour>=currentHour){
-                    if(minute>=currentMinute){
-                        console.log("Time is valid")
-                        this.setState({ pick_time:  selectedTime+":00", isTimerError:false})
-                    }else{
-                        alert('Enter correct time.')    
-                    }    
+                console.log("Time is valid")
+                this.setState({ pick_time:  selectedTime+":00", isTimerError:false});
+                console.log(currentHour+"<="+hour);
+               
+                if(currentHour<=hour){
                 }else{
-                    alert('Enter correct time.')
+                    this.presenter.getCommonAlertBox("invalid Time");
+                    // this.setState({ pickup_time: ""});
                 }
+
+                if(currentHour==hour){
+                    if(minute<=currentMinute){
+                        this.presenter.getCommonAlertBox("Invalid Time");
+                    }
+                }else{
+
+                }
+                // if(hour>=currentHour){
+                //     if(minute>=currentMinute){
+                    
+                //     }else{
+                //         alert('Enter correct time.')    
+                //     }    
+                // }else{
+                //     alert('Enter correct time.')
+                // }
             }else{
                 this.setState({ pick_time:  selectedTime, isTimerError:false})
             }
@@ -433,6 +487,16 @@ export default class BookingSummary extends React.Component{
         this.discountCoupon_amount=0,
         this.discountCoupon_id=0,
         this.getcalculatingBooking();
+    }
+
+    getIOSDate(resp){
+        this.setState({ pickup_date: moment.utc(resp).local().format("YYYY-MM-DD") })
+    }
+
+    getIOSTime(resp){
+        console.log("received time => "+resp)
+        resp==""? this.setState({pick_time:""})
+        : this.setState({ pick_time: moment.utc(resp).local().format("HH:mm") })
     }
 
     render(){
@@ -450,7 +514,7 @@ export default class BookingSummary extends React.Component{
             <View style={{flex:1,}}>
                 
                 <HeaderBar  title="Booking Summary" isBack={true} isLogout={true} navigation={navigation}/>
-
+                <DateIOS ref={(ref)=>{this.iosDatePicker = ref}} getDate={this.getIOSDate.bind(this)} getTime={this.getIOSTime.bind(this)}/>
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
 
                     <ScrollView bounces={false} style={{width:wp('100%')}}>
@@ -464,8 +528,8 @@ export default class BookingSummary extends React.Component{
                                    <View style={StyleBookingSummary.topBox}>
                                         
                                         <View style={[StyleBookingSummary.topinnBox, { borderBottomColor:'#a9b0b5', borderBottomWidth:0.8,} ]}>
-                                            <Text style={StyleBookingSummary.topinnTxt}>Truck Type - {this.state.truck_Type_id}</Text>
-                                            <Text style={StyleBookingSummary.topinnTxt}>Truck Name - {this.state.truck_name}</Text>
+                                            <Text style={StyleBookingSummary.topinnTxt}>Truck Type - {this.state.truck_name}</Text>
+                                            {/* <Text style={StyleBookingSummary.topinnTxt}>Truck Name - {this.state.truck_name}</Text> */}
                                             <Text style={StyleBookingSummary.topinnTxt}>Truck Description</Text>
                                             <Text style={[StyleBookingSummary.topinnTxt,{fontSize:14, marginTop:10}]}>{this.state.truck_desc}</Text>
                                         </View>
@@ -542,7 +606,6 @@ export default class BookingSummary extends React.Component{
 
                                         <TouchableOpacity style={StyleLocationDetails.iconView}
                                             onPress={()=>{
-                                                this.props.navigation.navigate("MapViews");
                                                 let flag="2"
                                                 this.getAddress(flag);
                                             }}
@@ -589,7 +652,7 @@ export default class BookingSummary extends React.Component{
                                             onPress={()=>{
                                                 let flag="3"
                                                 this.getAddress(flag);
-                                                // this.props.navigation.navigate("MapViews");
+                                              
                                             }}
                                         >
                                             <Image style={StyleLocationDetails.labelIconLoc}
@@ -627,7 +690,9 @@ export default class BookingSummary extends React.Component{
                                             editable={false} />
 
                                         <TouchableOpacity style={StyleLocationDetails.iconView}
-                                            onPress={()=>{ this.openCalender() }}
+                                            onPress={()=>{ 
+                                                Platform.OS=="android" ? this.openCalender() : this.iosDatePicker.getDateIOSPicker()
+                                            }}
                                         >
                                             <Image style={StyleLocationDetails.labelIconLoc}
                                                 source={require('../images/date_icon.png')} />
@@ -646,7 +711,13 @@ export default class BookingSummary extends React.Component{
                                             editable={false}
                                         />
                                         <TouchableOpacity style={StyleLocationDetails.iconView}
-                                            onPress={()=>{ this.openTimer() }}
+                                            onPress={()=>{ 
+                                                if(Platform.OS=="android"){
+                                                    this.state.pickup_date =="" ? this.presenter.getCommonAlertBox('Please select date first.') : this.openTimer() 
+                                                }else{
+                                                    this.state.pickup_date =="" ? this.presenter.getCommonAlertBox('Please select date first.') : this.iosDatePicker.getTimeIOSPicker(this.state.pickup_date)
+                                                }
+                                            }}
                                         >
                                             <Image style={StyleLocationDetails.labelIconLoc}
                                                 source={require('../images/time_icon.png')} />
@@ -735,7 +806,7 @@ export default class BookingSummary extends React.Component{
                                                 this.state.otherServicesdata.map((item)=>{
                                                     this.state.otherServicesList.map((Item, Index)=>{
                                                         if(item.service_id == Item.id){
-                                                            <Text style={{color:'#a3a3a3', fontFamily: "Roboto-Light",fontSize:14, width:"90%",}}>
+                                                            <Text style={{color:'#a3a3a3', fontSize:14, width:"90%",}}>
                                                             {Item.service_name} -
                                                             </Text>
                                                         }
@@ -755,7 +826,7 @@ export default class BookingSummary extends React.Component{
                                                         )
                                                }
 
-                                                 <Text style={{color:'#a3a3a3', fontFamily: "Roboto-Light",fontSize:14, width:"90%",}}>
+                                                 <Text style={{color:'#a3a3a3', fontSize:14, width:"90%",}}>
                                                     {/* {item.service_id}-{item.qty}, */}
                                                       </Text>
                                             <TouchableOpacity style={StyleBookingSummary.rtSec}
@@ -765,7 +836,7 @@ export default class BookingSummary extends React.Component{
                                                 this.getcalculatingBooking();
                                                 // this.setState({otherServiceSelected:temparry})
                                             }}>
-                                                    <Image style={StyleBookingSummary.removeImg}
+                                                    <Image style={this.state.otherServicesdata==""?{display:'none'}: StyleBookingSummary.removeImg}
                                                     source={require('../images/remove.png')} />
                                             </TouchableOpacity>
                                         </View>
@@ -810,7 +881,7 @@ export default class BookingSummary extends React.Component{
 
                                     <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={[StyleBookingSummary.priceTxt,{width:'70%'}]}>{Constants.DiscountVoucher}</Text>
-                                        <Text style={[StyleBookingSummary.priceVol,{width:'20%',}]}> R {this.state.discountAmount} </Text>
+                                        <Text style={[StyleBookingSummary.priceVol,{width:'20%',}]}>  {this.state.discountAmount} %</Text>
                                         <TouchableOpacity
                                             style={{ display: this.state.Discount_status?'flex':'none', width:30, justifyContent:'center', alignItems:'center', marginRight:5, marginTop:5}}
                                             onPress={()=>{
@@ -823,8 +894,8 @@ export default class BookingSummary extends React.Component{
                                     </View>
 
                                     <View style={{flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15, }}>
-                                        <Text style={[StyleBookingSummary.priceTxt, {color:Constants.COLOR_GREEN, textTransform:"uppercase", fontFamily: "Roboto-Bold",} ]}>{Constants.GrandTotal}</Text>
-                                        <Text style={[StyleBookingSummary.priceVol, {color:Constants.COLOR_GREEN, fontFamily: "Roboto-Bold",} ]}>{this.state.grand_total}</Text>
+                                        <Text style={[StyleBookingSummary.priceTxt, {color:Constants.COLOR_GREEN, textTransform:"uppercase",} ]}>{Constants.GrandTotal}</Text>
+                                        <Text style={[StyleBookingSummary.priceVol, {color:Constants.COLOR_GREEN,} ]}>{this.state.grand_total}</Text>
                                     </View>
                                    
                                 </View>            
@@ -837,7 +908,7 @@ export default class BookingSummary extends React.Component{
                                             this.discountCoupon_amount=item.coupon_desc;
                                             this.discountCoupon_id=item.coupon_id;
                                             console.log("discoun coupon value and ID"+  this.discountCoupon_amount+" , "+ this.discountCoupon_id);
-                                            console.log("discount Amount==>"+JSON.stringify("coupon details"+item));
+                                            console.log("discount Amount==>"+JSON.stringify("coupon details"+JSON.stringify(item)));
                                            
                                             this.getcalculatingBooking();
                                             }})
@@ -849,8 +920,10 @@ export default class BookingSummary extends React.Component{
                                 
                                 <TouchableOpacity 
                                     onPress={()=>{
-                                        this.bookCMLtrip();
-                                    //   this.props.navigation.navigate('PaymentMethod');
+                                        //this.bookCMLtrip();
+                                        if(this.isValid()){
+                                            this.doPayment()
+                                        }
 
                                     }}
                                     style={[StyleLocationDetails.logButton, {marginTop:0, marginHorizontal:25,} ]}
@@ -948,9 +1021,14 @@ export default class BookingSummary extends React.Component{
                                                             onPress={()=>{
                                                                 this.setState({modalVisible:false});
                                                                 console.log("Other service data ===> "+JSON.stringify(this.state.otherServicesdata))
+
+                                                                console.log("Other service data 1111111===> "+JSON.stringify(this.other_servicesData));
+
+
                                                                 // this.getOtherServices();
                                                             //   this.props.navigation.navigate('PaymentMethod');
                                                                  this.getcalculatingBooking();
+                                                            
 
                                                         }}
                                                         style={[StyleLocationDetails.logButton, {marginTop:0, marginBottom:0,} ]}>

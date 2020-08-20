@@ -50,7 +50,9 @@ export default class TruckBooking extends React.Component {
                         console.log("--> " + this.state.truckBookingData)
                     }
                 } else {
-                    alert(data.message)
+                    // alert(data.message)
+                    this.presenter.getCommonAlertBox(data.message);
+
                 }
                 break;
 

@@ -48,7 +48,8 @@ export default class HelpAndSupport extends React.Component {
 
     async getUserLocalInfo(){
         let data = JSON.parse(await getUserData())
-        // console.log("are bhai mai agaya"+JSON.stringify(data));
+
+        console.log("UserData"+JSON.stringify(data));
         if(data[0].user_type==1){
             this.setState({isUser:false})
         }else{
@@ -56,18 +57,9 @@ export default class HelpAndSupport extends React.Component {
         }
         this.setState({userData : data[0]})
 
-        if(this.state.isUser){
-            this.setState({
-                supportSubjectList:[
-                    { subject_id:0, subject_name:'Cargo Lost'},
-                    { subject_id:1, subject_name:'Late Delivery'},
-                    { subject_id:2, subject_name:'Driver not in contact'},
-                    { subject_id:3, subject_name:'Others'}
-                ]
-            })
-        }else{
+     
             this.getSupportSubjectList()
-        }
+        
     }
 
     async getSupportSubjectList(){
@@ -83,12 +75,19 @@ export default class HelpAndSupport extends React.Component {
 
     async sendMessage(){
         if(this.subject_id=="-1"){
-            alert("Please select subject")
+            this.presenter.getCommonAlertBox("Please select subject")
+
         }else if(this.state.support_message==""){
-            alert("Please enter subject")
+            this.presenter.getCommonAlertBox("Please enter subject")
         }else{
             let param ={
-                'booking_id':this.booking_id==undefined?0:this.booking_id,
+                'booking_id':this.booking_id==undefined
+                ?
+                0
+                :this.booking_id==""?
+                0
+                :
+                this.booking_id,
                 'service_type_id':this.service_type_id==undefined?5:this.service_type_id,
                 'subject_id':this.subject_id,
                 'message': this.state.support_message
@@ -112,7 +111,9 @@ export default class HelpAndSupport extends React.Component {
               if(data.status){
                 this.setState({modal_Visible : true})
               }else{
-                alert(data.message)
+                // alert(data.message);
+            this.presenter.getCommonAlertBox(data.message);
+
               }
             
           break;
@@ -176,10 +177,13 @@ export default class HelpAndSupport extends React.Component {
 
                         <View style={{ backgroundColor: Constants.COLOR_WHITE }}>
 
-                            <View style={this.state.isUser ? { display: 'none' }:[{ paddingLeft: 45, marginTop: 15, }]}>
-                                <Text style={StyleTripHelpAndSupport.pickerTitle}>{Constants.Trip}</Text>
-                                <Text style={{ color: Constants.COLOR_GREY_LIGHT, marginVertical: 2 }}>{Constants.Nyc_Syc}</Text>
+                            {/* { 
+                            this.state.tripHelpAndSupport==true?
+                                <View style={this.state.isUser ? { display: 'none' }:[{ paddingLeft: 45, marginTop: 15, }]}>
+                                <Text style={StyleTripHelpAndSupport.pickerTitle}>{Constants.Trip} ID</Text>
+                                <Text style={{ color: Constants.COLOR_GREY_LIGHT, marginVertical: 2 }}>{this.booking_id}</Text>
                             </View>
+                            :null} */}
 
                             <View style={
                                 this.state.tripHelpAndSupport==true 
@@ -213,7 +217,7 @@ export default class HelpAndSupport extends React.Component {
                                         this.state.supportSubjectList!=""
                                         ?
                                             this.state.supportSubjectList.map((item)=>
-                                                <Picker.Item key={item.subject_id} value={item.subject_id} label={item.subject_name}/>
+                                                <Picker.Item key={item.id} value={item.id} label={item.subject_name}/>
                                             )
                                         : null
                                     }

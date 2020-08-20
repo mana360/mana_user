@@ -4,7 +4,7 @@
     api by    :  Udayraj
  */
 import React from 'react'
-import { View, Text, Image, TouchableOpacity, TouchableWithoutFeedback, ScrollView, FlatList, TextInput, } from 'react-native'
+import { View, Text, Image, TouchableOpacity, TouchableWithoutFeedback, ScrollView, FlatList, TextInput, PermissionsAndroid, } from 'react-native'
 import Constants from '../config/Constants'
 import HeaderBar from '../config/HeaderBar'
 import FooterBar from '../config/FooterBar'
@@ -14,6 +14,7 @@ import Modal from "react-native-modal";
 import {MainPresenter} from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
 import RNFetchBlob from 'rn-fetch-blob';
+import moment from 'moment'
 
 export default class MyBookingDetails extends React.Component {
 
@@ -142,7 +143,7 @@ export default class MyBookingDetails extends React.Component {
             // 2 mobile
             param = {
                 'booking_id':this.state.truck_booking_details.booking_id,
-                'share_type' : 0,
+                'share_type' : 2,
                 'mobile_no': this.state.shareByMobile
             }
         }
@@ -164,9 +165,11 @@ export default class MyBookingDetails extends React.Component {
         case ApiConstants.shareMyRide:{
             this.setState({shareByEmail:"", shareByMobile:"", shareMyRideType:""})
             if(data.status){
-
+                this.presenter.getCommonAlertBox(data.message);
             }else{
-                alert(data.message)
+                // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
             }
             break;
         }
@@ -175,7 +178,9 @@ export default class MyBookingDetails extends React.Component {
             if(data.status){
                 this.setState({ isReasonModalvisible: true, reasonText: "", reasonSubmit: true })
             }else{
-                alert(data.message)
+                // alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
             }
             break;
         }
@@ -183,7 +188,9 @@ export default class MyBookingDetails extends React.Component {
            if(data.status){
             this.setState({isgenerateOTPSuccessModalVisisble:true});
            }else{
-               alert(data.message)
+            //    alert(data.message)
+            this.presenter.getCommonAlertBox(data.message);
+
            }
           break;
       }
@@ -196,12 +203,13 @@ export default class MyBookingDetails extends React.Component {
                 })
               this.setState({ truck_booking_details : this.state.truck_booking_details[0] })
                 console.log("other =====> "+JSON.stringify(this.state.other_services))
+                console.log("Date ===>"+ moment(this.state.truck_booking_details.booking_date_time).toDate().format("DD/MM/YYY hh:mm A"));
             break;
         }
 
         }
     }
-
+   
     getExtention(filename){
         return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
     }
@@ -223,7 +231,7 @@ export default class MyBookingDetails extends React.Component {
             }
         }
         config(options).fetch('GET', image_URL).then((res) => {
-            alert("File is downloaded successfully.");
+            this.presenter.getCommonAlertBox("File is downloaded successfully.");
         });
     }
 
@@ -243,7 +251,7 @@ export default class MyBookingDetails extends React.Component {
             }
             else {
                 // permission denied
-                alert("File downloading faild.");
+                this.presenter.getCommonAlertBox("File downloading faild.");
                 return false
             }
           } catch (err) {
@@ -253,6 +261,7 @@ export default class MyBookingDetails extends React.Component {
     }
 
     render() {
+        
         let { navigation } = this.props
         return (
             <View style={{ flex: 1, }}>
@@ -272,12 +281,13 @@ export default class MyBookingDetails extends React.Component {
                         </View>
                     </View>
 
-                    <View style={StyleMyBookingDetails.detailsRow}>
+                    <View style={ this.state.truck_booking_details.booking_date_time==undefined?{display:'none'}:StyleMyBookingDetails.detailsRow}>
                         <View style={{ flex: 1 }}>
                             <Text style={StyleMyBookingDetails.detailsKey}>{Constants.BOOKING_DATE_TIME}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.pickup_date} {this.state.truck_booking_details.pickup_time} </Text>
+                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.booking_date_time==undefined?"":moment(this.state.truck_booking_details.booking_date_time).format("DD/MM/YYYY  hh:mm A") } </Text>
+                  
                         </View>
                     </View>
 
@@ -286,7 +296,7 @@ export default class MyBookingDetails extends React.Component {
                             <Text style={StyleMyBookingDetails.detailsKey}>{Constants.EXPECTED_PICKUP}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.pickup_date} {this.state.truck_booking_details.pickup_time}</Text>
+                            <Text style={StyleMyBookingDetails.detailsValue}>{ this.state.truck_booking_details.pickup_date_time?moment(this.state.truck_booking_details.pickup_date_time).format("DD/MM/YYYY hh:mm A"):""} </Text>
                         </View>
                     </View>
 
@@ -423,11 +433,14 @@ export default class MyBookingDetails extends React.Component {
                             <Text style={StyleMyBookingDetails.detailsKey}>{Constants.LOAD_CATEGORY}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>
-                                {
-                                    this.state.load_category.slice(1,this.state.load_category.length-1)
+                           
+                                { this.state.truck_booking_details.load_category==undefined?null:
+                                    this.state.truck_booking_details.load_category.map((item,index)=>{
+                                        return(
+                                        <Text style={StyleMyBookingDetails.detailsValue}>{index+1})   { item.category_name} </Text>
+                                    )})
                                 }
-                            </Text>
+                           
                         </View>
                     </View>
 
@@ -452,42 +465,50 @@ export default class MyBookingDetails extends React.Component {
                             />
                         </View>
                     </View>
+                 
+                    {
+                        this.state.truck_booking_details.driver_allocate
+                        ?
+                            <View>
+                        <View style={StyleMyBookingDetails.detailsRow}>
+                            <View style={{ flex: 1 }}>
+                                <Text style={StyleMyBookingDetails.detailsKey}>{Constants.TruckName}</Text>
+                            </View>
+                            <View style={{ flex: 1 }}>
+                                <Text style={StyleMyBookingDetails.detailsValue}>{ this.state.truck_booking_details.truck_name }</Text>
+                            </View>
+                        </View>
 
-                    <View style={StyleMyBookingDetails.detailsRow}>
-                        <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsKey}>{Constants.TruckName}</Text>
+                        <View style={StyleMyBookingDetails.detailsRow}>
+                            <View style={{ flex: 1 }}>
+                                <Text style={StyleMyBookingDetails.detailsKey}>{Constants.TruckRegistrationNo}</Text>
+                            </View>
+                            <View style={{ flex: 1 }}>
+                                <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.truck_registration_number}</Text>
+                            </View>
                         </View>
-                        <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>{ this.state.truck_booking_details.truck_name }</Text>
-                        </View>
-                    </View>
 
-                    <View style={StyleMyBookingDetails.detailsRow}>
-                        <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsKey}>{Constants.TruckRegistrationNo}</Text>
+                        <View style={StyleMyBookingDetails.detailsRow}>
+                            <View style={{ flex: 1 }}>
+                                <Text style={StyleMyBookingDetails.detailsKey}>{Constants.TruckInsurance}</Text>
+                            </View>
+                            <View style={{ flex: 1 }}>
+                                <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.truck_insurance}</Text>
+                            </View>
                         </View>
-                        <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.truck_registration_number}</Text>
-                        </View>
-                    </View>
 
-                    <View style={StyleMyBookingDetails.detailsRow}>
-                        <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsKey}>{Constants.TruckInsurance}</Text>
+                        <View style={StyleMyBookingDetails.detailsRow}>
+                            <View style={{ flex: 1 }}>
+                                <Text style={StyleMyBookingDetails.detailsKey}>{Constants.TruckColor}</Text>
+                            </View>
+                            <View style={{ flex: 1 }}>
+                                <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.truck_color}</Text>
+                            </View>
                         </View>
-                        <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.truck_insurance}</Text>
                         </View>
-                    </View>
-
-                    <View style={StyleMyBookingDetails.detailsRow}>
-                        <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsKey}>{Constants.TruckColor}</Text>
-                        </View>
-                        <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.truck_color}</Text>
-                        </View>
-                    </View>
+                       :
+                        null
+                    }
 
                     <View style={StyleMyBookingDetails.detailsRow}>
                         <View style={{ flex: 1 }}>
@@ -516,12 +537,14 @@ export default class MyBookingDetails extends React.Component {
                         </View>
                     </View>
 
-                    <View style={[StyleMyBookingDetails.detailsRow,{display:this.state.truck_booking_details['driver_allocate']?'flex':'none'}]}>
+                    <View style={ 
+                        this.state.truck_booking_details.driver_alternative_no==""?{display:'none'}:
+                        [StyleMyBookingDetails.detailsRow,{display:this.state.truck_booking_details['driver_allocate']?'flex':'none'}]}>
                         <View style={{ flex: 1 }}>
                             <Text style={StyleMyBookingDetails.detailsKey}>{Constants.DRIVER_ALTERNATE_NUMBER}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.driver_alternate_no}</Text>
+                            <Text style={StyleMyBookingDetails.detailsValue}>{this.state.truck_booking_details.driver_alternative_no}</Text>
                         </View>
                     </View>
 
@@ -531,32 +554,98 @@ export default class MyBookingDetails extends React.Component {
                         </View>
                         <View style={{ flex: 1 }}>
                             <Text style={this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_CANCELLED ? [StyleMyBookingDetails.detailsValue, { color: Constants.COLOR_RED }] : [StyleMyBookingDetails.detailsValue, { color: Constants.COLOR_GREEN }]}>
-                                {
-                                    this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW ? "New"
-                                        :
-                                            this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_PICKED_UP ? "Driver Assigned"
-                                                :
-                                                    this.state.truck_booking_details['booking_status'] ==Constants.BOOKING_STATUS_DELIVERED ? "Delivered"
-                                                        :
-                                                        this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_CANCELLED ? "Cancelled"
-                                                            : null
+                                {  
+                                this.state.truck_booking_details.current_status== Constants.BOOKING_CURRENT_STATUS_PICKUP ? "Trip Started" 
+                                :
+                                this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW ? "New"
+                                :
+                                this.state.truck_booking_details['booking_status'] ==Constants.BOOKING_STATUS_DELIVERED ? "Delivered"
+                                :   
+                                this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_PICKED_UP ? "Driver Assigned"
+                                :
+                                this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_CANCELLED ? "Cancelled"
+                               :
+                                this.state.truck_booking_details['booking_status']== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_DRIVER? "Canceled by Driver"
+                               :
+                                this.state.truck_booking_details['booking_status']== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_CUSTOMER? "Canceled by Customer"
+                                :
+                                this.state.truck_booking_details['booking_status']== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_PARTNER? "Canceled by Partner"
+                                :
+                                this.state.truck_booking_details['booking_status']== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_ADMIN? "Canceled by Admin"
+                                :
+                                this.state.truck_booking_details['booking_status']== Constants.BOOKING_CURRENT_STATUS_DELIVERED_TO_DROP1? "Delivered to Drop Address 1" 
+                                :
+                                 null
                                 }
                             </Text>
                         </View>
                     </View>
 
-                    <View style={this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW ? StyleMyBookingDetails.detailsRow : { display: "none" }}>
+                    {/* <View style={this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW ? StyleMyBookingDetails.detailsRow : { display: "none" }}>
                         <View style={{ flex: 1 }}>
                             <Text style={[StyleMyBookingDetails.detailsKey, { textTransform: 'none', }]}>{Constants.Resend_OTP}</Text>
                         </View>
                         <TouchableOpacity style={{ flex: 1 }}
+                         disabled={this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW?true:false}
                             onPress={()=>{
+                                console.log("Booking status"+this.state.truck_booking_details.booking_status);
                                 this.generateOTP();
                             }}
                         >
-                            <Text style={[StyleMyBookingDetails.detailsValue, { color: Constants.COLOR_GREEN, textDecorationLine: 'underline' }]}>Generate OTP</Text>
+                            <Text style={
+                                this.state.truck_booking_details.booking_status==1?
+                                [StyleMyBookingDetails.detailsValue, { color: Constants.COLOR_GREEN, textDecorationLine: 'underline' }]
+                                :
+                                [StyleMyBookingDetails.detailsValue, { color: Constants.COLOR_GREY_DARK, textDecorationLine: 'underline' }]
+
+                            } >Generate OTP</Text>
                         </TouchableOpacity>
+                    </View> */}
+
+
+
+                     <View style={  this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_DELIVERED?
+                     {display:'none'}
+                     :
+                           this.state.truck_booking_details.current_status==Constants.BOOKING_CURRENT_STATUS_UPCOMING?
+                                {display:'none'}
+                                :
+                           this.state.truck_booking_details.booking_status== Constants.BOOKING_STATUS_PICKED_UP?StyleMyBookingDetails.detailsRow:{display:'none'} }>
+                        <View style={{ flex: 1 }}>
+                            <Text style={[StyleMyBookingDetails.detailsKey, { textTransform: 'none', }]}>{Constants.Resend_OTP}</Text>
+                        </View>
+                        <TouchableOpacity style={{ flex: 1 }}
+                        //  disabled={this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW?true:false}
+                            onPress={()=>{
+                                console.log("Booking status"+this.state.truck_booking_details.booking_status);
+                                this.generateOTP();
+                            }}
+                        >
+                            <Text style={ [StyleMyBookingDetails.detailsValue, { color: Constants.COLOR_GREEN, textDecorationLine: 'underline' }]
+
+                            } >Generate OTP</Text>
+                        </TouchableOpacity>
+                    </View> 
+
+                    <View style={ this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW
+                     ?{ display: "none" } 
+                     :
+                      this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_CANCELLED
+                     ? {display:"none"}
+                    : 
+                    this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_DELIVERED
+                     ?  {display:"none"}
+                     :
+                      [StyleMyBookingDetails.detailsRow,{justifyContent:'center'} ]}>
+                       
+                            <TouchableOpacity style={{width:120, justifyContent:'center', alignItems:'center', backgroundColor:Constants.COLOR_GREEN, padding:10}}
+                                onPress={()=>{ this.setState({isShareMyRideModalVisible:true}) }}>
+                                <Text style={{color:Constants.COLOR_WHITE, textAlign:'center'}}>Share my Ride</Text>
+                            </TouchableOpacity>
+                        
+                       
                     </View>
+
 
                     <View style={this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW ? StyleMyBookingDetails.detailsRow : { display: "none" }}>
                         <View style={{ flex: 1 }}>
@@ -687,7 +776,7 @@ export default class MyBookingDetails extends React.Component {
                                 onChangeText={(value)=>{ this.setState({shareByEmail:value}) }}
                                 keyboardType="email-address"
                                 autoCapitalize="none"
-                                placeholder="Enter email id"
+                                placeholder="Enter email address"
                                 style={{width:'60%', borderBottomWidth:0.5, borderBottomColor:Constants.COLOR_GREY_DARK}}
                             />
                             <TouchableOpacity
@@ -706,6 +795,7 @@ export default class MyBookingDetails extends React.Component {
                                 onChangeText={(value)=>{ this.setState({shareByMobile:value}) }}
                                 keyboardType="number-pad"
                                 autoCapitalize="none"
+                                maxLength={9}
                                 placeholder="Enter mobile number"
                                 style={{width:'60%', borderBottomWidth:0.5, borderBottomColor:Constants.COLOR_GREY_DARK}}
                             />

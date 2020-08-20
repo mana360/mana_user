@@ -51,15 +51,6 @@ export default class MapViews extends React.Component {
     console.log("truckDetails==af===>"+JSON.stringify(tempTruckDetails));
     let warehouse_flag=this.props.navigation.getParam("warehouse_flag");
     let warehouseLocation=this.props.navigation.getParam("WarehouseCoordinates");
-  //   if(warehouse_flag==true){ 
-  //      var Templatlong=warehouseLocation.split(",");
-  //     this.setState({
-        
-  //     warehouse_lat:parseFloat(Templatlong[0]),
-  //     warehouse_long:parseFloat(Templatlong[1])
-  //     })
-  // }
-      // console.log("bhai bhai==>"+JSON.stringify(Templatlong[1]));
 
     this.setState({ 
       warehouse_flag:warehouse_flag,
@@ -98,6 +89,7 @@ export default class MapViews extends React.Component {
     }
   }
 
+  
   async getCurrentAdddress(lat, long) {
     await fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + Constants.GOOGLE_MAP_KEY)
       .then((response) => response.json()
@@ -107,7 +99,7 @@ export default class MapViews extends React.Component {
           this.setState({ current_address: responseJson.results[0].formatted_address,current_latlong:responseJson.results[0].geometry.location })
           this.props.navigation.state.params.address(responseJson);
         }).catch(error=>
-          console.log(error))
+          console.warn(error))
       )
   }
 
@@ -116,7 +108,7 @@ export default class MapViews extends React.Component {
     if(temp==""){
       return 0
     }else{
-    return temp[value];
+    return parseFloat(temp[value]);
     }
   }
 
@@ -126,9 +118,9 @@ export default class MapViews extends React.Component {
       
       <MapView
       style={StyleMapView.mapStyle}
-      showsUserLocation={true}
+      // showsUserLocation={true}
       zoomEnabled={true}
-      followsUserLocation={true}
+      // followsUserLocation={true}
       zoomControlEnabled={true}
       initialRegion={{
         latitude: this.state.current_latitude,
@@ -137,19 +129,23 @@ export default class MapViews extends React.Component {
         longitudeDelta: 0.0421,
       }}
     >
-    
-      {/* <Marker
-            coordinate={{latitude:parseFloat(this.latANDlong(origin,0)),longitude:parseFloat(this.latANDlong(origin,1))}}
-          /> */}
 
+                  <Marker
+                              coordinate={{ latitude:this.state.current_latitude, longitude: this.state.current_longitude}}
+                                title={""}  
+                                description={""}
+                            >
+                                <View style={{backgroundColor:Constants.COLOR_GREEN, justifyContent:'center', alignItems:'center', padding:5, borderRadius:50}}>
+                                    <Image source={require('../images/truck_icon.png')} style={{width:35, height:35, resizeMode:'contain', tintColor:Constants.COLOR_WHITE}}/>
+                                </View>
+                            </Marker>
         <Marker  
-            coordinate={{latitude:parseFloat(this.latANDlong(destination,0)),longitude:parseFloat(this.latANDlong(destination,1))}}
-          />
-          {/*  <MapViewDirections
-          apikey={Constants.GOOGLE_MAP_KEY}
-          origin={{latitude:parseFloat(this.state.current_latitude),longitude:parseFloat(this.state.current_longitude)}}
-          destination={{latitude:parseFloat(25.2325),longitude:parseFloat(25.2154)}}
-          /> */}
+            coordinate={{latitude:this.latANDlong(destination,0),longitude:this.latANDlong(destination,1)}}
+          >
+            <View style={{width:20, height:20, backgroundColor:Constants.COLOR_GREEN, borderRadius:50, borderWidth:1, borderColor:Constants.COLOR_BLACK}}>
+                                    </View>
+          </Marker>
+ 
     
     </MapView>
 
@@ -167,11 +163,13 @@ export default class MapViews extends React.Component {
           this.state.flag_marker==true?
 
         this.markerDirection(this.state.TripDetials)
-          :this.state.warehouse_flag==true?
+          :
+          this.state.warehouse_flag==true
+          ?
           <MapView
           ref={(ref)=>{this.googleMap = ref}}
           style={StyleMapView.mapStyle}
-          showsUserLocation={true}
+          // showsUserLocation={true}
           zoomEnabled={true}
           zoomControlEnabled={true}
           initialRegion={{
@@ -182,8 +180,20 @@ export default class MapViews extends React.Component {
           }}
           >
             <Marker
+                              coordinate={{ latitude:this.state.current_latitude, longitude: this.state.current_longitude}}
+                                title={""}  
+                                description={""}
+                            >
+                                <View style={{backgroundColor:Constants.COLOR_GREEN, justifyContent:'center', alignItems:'center', padding:5, borderRadius:50}}>
+                                    <Image source={require('../images/truck_icon.png')} style={{width:35, height:35, resizeMode:'contain', tintColor:Constants.COLOR_WHITE}}/>
+                                </View>
+                            </Marker>
+            <Marker
             coordinate={{latitude:this.state.warehouse_lat,longitude:this.state.warehouse_long}}
-            />
+            >
+                  <View style={{width:20, height:20, backgroundColor:Constants.COLOR_GREEN, borderRadius:50, borderWidth:1, borderColor:Constants.COLOR_BLACK}}>
+                                    </View>
+            </Marker>
           </MapView>
           :
         <View  style={ StyleMapView.MainContainer}>
@@ -247,7 +257,11 @@ export default class MapViews extends React.Component {
                      this.RBSheet.open();
                   }}
                   coordinate={{latitude:this.state.current_latitude,longitude:this.state.current_longitude}}
-                />
+                >
+                    <View style={{backgroundColor:Constants.COLOR_GREEN, justifyContent:'center', alignItems:'center', padding:5, borderRadius:50}}>
+                                    <Image source={require('../images/truck_icon.png')} style={{width:35, height:35, resizeMode:'contain', tintColor:Constants.COLOR_WHITE}}/>
+                                </View>
+                </Marker>
 
           </MapView>
   }

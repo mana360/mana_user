@@ -140,7 +140,9 @@ getUserStatus(){
                         this.setState({role_id:data.userStatus.role_id,active_status:data.userStatus.active_status,notifications_count:data.userStatus.notifications_count});
                    console.log(data.userStatus);
                     }else{
-                        alert(data.message);
+                        // alert(data.message);
+                     this.presenter.getCommonAlertBox(data.message);
+
                     }
                     break;
                 }
@@ -150,6 +152,13 @@ getUserStatus(){
                 break;
         }
     }
+
+    totalBookingValue(item){
+        let value = parseInt(item.current_trips)+parseInt(item.upcoming_trips);
+        console.log(value)
+        return value
+    }
+    
     getDashboard() {
         return (
             <View>
@@ -168,7 +177,7 @@ getUserStatus(){
                                     <AnimatedCircularProgress
                                         size={90}
                                         width={10}
-                                        fill={item.current_trips}
+                                        fill={this.totalBookingValue(item)}
                                         rotation="0"
                                         lineCap="round"
                                         duration={1200}
@@ -185,7 +194,7 @@ getUserStatus(){
                                                     index % 4 == 1 ? "#9ABD08" :
                                                         index % 5 == 2 ? "#FA4009" :
                                                             index % 4 == 3 ? "#57C9EB" : null
-                                        }}> {item.current_trips} </Text>)}
+                                        }}> {this.totalBookingValue(item)} </Text>)}
                                     </AnimatedCircularProgress>
 
                                 </View>

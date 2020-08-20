@@ -28,6 +28,7 @@ export default class SignUp extends Component {
       resp_user_id:'',
       resp_otp_code:'',
       resp_temp_token:'',
+      userData:"",
     }
   }
   static navigationOptions = ({ navigation }) => {
@@ -69,7 +70,9 @@ export default class SignUp extends Component {
           console.log(data);
           this.setState({otp_modal_visible:true, resp_otp_code:data.email_otp, resp_user_id:data.user_id, resp_temp_token:data.access_token});
           //await setAuthToken(data.access_token);  //token required for temp purpose only.
-          await setUserData(data)
+          this.setState({userData:data});
+          // await setUserData(data);
+
           // this.timer = setInterval(()=>{
           //   this.setState({modalVisible_welcome:false})
           //   clearInterval(this.timer)
@@ -82,7 +85,8 @@ export default class SignUp extends Component {
           //this.props.navigation.navigate('ProfileSetUp')
         } else {
           await clearAllData()
-          alert(data.message)
+          // alert(data.message)
+          this.presenter.getCommonAlertBox(data.message);
         }
         break;
       }
@@ -93,7 +97,9 @@ export default class SignUp extends Component {
         }
         else {
           await clearAllData()
-          alert(data.message)
+          // alert(data.message)
+          this.presenter.getCommonAlertBox(data.message);
+
         }
         break;
       }
@@ -113,21 +119,25 @@ export default class SignUp extends Component {
           }, 3000)
         }else{
           await clearAllData()
-          alert(data.message)
+          // alert(data.message)
+          this.presenter.getCommonAlertBox(data.message);
+
         }
         break;
       }
       }
     }
 
-verifyOTP(){
+async verifyOTP(){
+          await setUserData(this.state.userData);
+  
   if(this.state.resp_otp_code==this.state.otp_code){
     let params = {
       "mobile_otp":this.state.otp_code,
     }
    this.presenter.callPostApi(ApiConstants.verifyOTP, params, true);
   }else{
-    alert("Please enter correct OTP")
+    this.presenter.getCommonAlertBox("Please enter correct OTP")
     this.setState({otp_code:""})
   }
 }
@@ -191,7 +201,7 @@ showOTpModal() {
                       <TouchableOpacity style={StyleForgotPassword.modalButtonView}
                           onPress={()=>{
                               this.setState({otp_modal_visible:false})
-                              this.props.navigation.pop()
+                              // this.props.navigation.pop()
                           }}
                       >
                           <Text style={StyleForgotPassword.modalButtonLabel}>{Constants.BACK}</Text>
@@ -222,47 +232,47 @@ isValid() {
   let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
 
   if(this.state.emailId == ""){
-    alert("Please enter Email Id")
+    this.presenter.getCommonAlertBox("Please enter email address")
     this.TextInput_emailId.focus()
     return false
   }
 
   if(!emailRegex.test(this.state.emailId)){
-    alert("Please enter valid email Id")
+    this.presenter.getCommonAlertBox("Please enter valid email address")
     this.TextInput_emailId.focus()
     return false
 }
 if(!Constants.PASSWORD_REGX.test(this.state.password)){
-  alert("Password should contain atleast 1 capital letter,\n small letter, numbers and special symbols.");
+  this.presenter.getCommonAlertBox("Password should contain atleast 1 capital letter,\n small letter, numbers and special symbols.");
   this.TextInput_emailId.focus()
   return false
 }
 
   if (this.state.password.length == 0) {
-    alert("Please enter Password")
+    this.presenter.getCommonAlertBox("Please enter Password")
     this.TextInput_password.focus()
     return false
   }
   if (this.state.password.length < 8 || this.state.password.length > 16) {
-    alert("password must be greater than 8 character & less than 16 character")
+    this.presenter.getCommonAlertBox("password must be greater than 8 character & less than 16 character")
     this.TextInput_password.focus()
     return false
   }
   if (this.state.confirm_password.length < 8 || this.state.confirm_password.length > 16) {
-    alert("password must be greater than 8 character & less than 16 character")
+    this.presenter.getCommonAlertBox("password must be greater than 8 character & less than 16 character")
     this.TextInput_confirm_password.focus()
     return false
   }
   
   if (this.state.password!==this.state.confirm_password) {
-    alert("Password and Confirm Password  does not match");
+    this.presenter.getCommonAlertBox("Password and Confirm Password  does not match");
     this.TextInput_password.focus()
     return false
   }
 
   if(this.state.referalRadio_button){
     if(this.state.referral_code.length==0){
-      alert("Please enter referral code")
+      this.presenter.getCommonAlertBox("Please enter referral code")
       this.TextInput_referral_code.focus()
       return false
     }
@@ -271,7 +281,10 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
   if(!this.state.referalRadio_button){
     this.setState({referral_code:''})
   }
-
+  if(this.state.referalRadio_button&&this.state.referal_code==""){
+    this.presenter.getCommonAlertBox("Please Enter Referal Code");
+   return false
+  }
   return true;
 } 
 
@@ -297,10 +310,10 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
           <View style={StyleSignUp.textInput_container}>
             <View style={StyleSignUp.labelBox}>
               <Image style={StyleSignUp.LabelBoxIcon}
-                source={require('../images/mobile_number.png')} />
+                source={require('../images/email_id-signin.png')} />
               <Text style={StyleSignUp.labelBoxText}>{Constants.Email}</Text>
             </View>
-            <TextInput placeholder='Enter Email Id'
+            <TextInput placeholder='Enter Email Address'
               ref={(ref)=>(this.TextInput_emailId = ref)}
               style={StyleSignUp.textInput_style}
               autoCapitalize="none"
@@ -319,6 +332,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
             <TextInput placeholder='Enter Password'
               ref={(ref)=>(this.TextInput_password = ref)}
               secureTextEntry={true}
+              maxLength={12}
               style={StyleSignUp.textInput_style}
               value={this.state.password}
               onChangeText={(newtext) => { this.setState({ password: newtext }) }}
@@ -381,7 +395,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
             <Text style={{ color: Constants.COLOR_GREY_DARK, fontWeight: 'bold' }}>{Constants.IagreeTo}</Text>
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('TermsAndCondition', { flag: 'TermsAndCondition' })
+                this.props.navigation.navigate('TermsAndCondition', { flag: 4 })
               }}
             >
               <Text style={StyleSignUp.PolicyLabel}>{Constants.TermsAndConditions}</Text>
@@ -393,7 +407,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
           
           <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('TermsAndCondition', { flag: 'CancellationPolicy' })
+                this.props.navigation.navigate('TermsAndCondition', { flag: 3 })
               }}
           >
               <Text style={StyleSignUp.PolicyLabel}>{Constants.CancellationPlicy} </Text>
@@ -401,7 +415,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
           
           <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('TermsAndCondition', { flag: 'PaymentPolicy' })
+                this.props.navigation.navigate('TermsAndCondition', { flag: 2 })
               }}
 
           >
@@ -414,7 +428,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
 
         <TouchableOpacity style={{marginLeft:41, marginBottom:10}}
               onPress={() => {
-                this.props.navigation.navigate('TermsAndCondition', { flag: 'PrivacyPolicy',isLogout:false })
+                this.props.navigation.navigate('TermsAndCondition', { flag: 1,isLogout:false })
               }}
 
           >
