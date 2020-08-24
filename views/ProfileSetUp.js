@@ -4,7 +4,7 @@ Screen-Id : MANAPPCUS090-1,90-3,90
 API : Udayraj
 */
 import React, { Component } from "react";
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, Modal, FlatList } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, Modal, FlatList, PermissionsAndroid } from "react-native";
 import HeaderBar from "../config/HeaderBar";
 import ImagePicker from "react-native-image-picker";
 import { Picker } from "native-base";
@@ -104,10 +104,34 @@ export default class ProfileSetUp extends React.Component {
             user_password : global.temp_password,
             user_confirmPassword : global.temp_password,
         })
-        this.getCountryList()
+        this.getCountryList();
+        this.requestCameraPermission();0
     }
-    
-    uploadUserProfile() {
+    requestCameraPermission = async () => {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            {
+              title: "Cool Photo App Camera Permission",
+              message:
+                "Cool Photo App needs access to your camera " +
+                "so you can take awesome pictures.",
+              buttonNeutral: "Ask Me Later",
+              buttonNegative: "Cancel",
+              buttonPositive: "OK"
+            }
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log("You can use the camera");
+          } else {
+            console.log("Camera permission denied");
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+      };
+  async  uploadUserProfile() {
+          
         ImagePicker.showImagePicker(this.options, (response) => {
             if (response.didCancel) {
                 console.log('User cancelled image picker');
@@ -118,7 +142,8 @@ export default class ProfileSetUp extends React.Component {
             } else {
                 if(response.fileSize>Constants.IMAGE_MAX_SIZE){
                     this.presenter.getCommonAlertBox(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
-                    this.setState({user_profile_image : "", user_profile_image_data:""})
+                    this.setState({user_profile_image : "", user_profile_image_data:""});
+                    alert("bhau");
                 }
                 else{
                     const source = { uri: response.uri };
@@ -217,9 +242,7 @@ export default class ProfileSetUp extends React.Component {
 
     options = {
         title: 'Select Image',
-        customButtons: [
-            { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-        ],
+       
         storageOptions: {
             skipBackup: true,
             path: 'images',
