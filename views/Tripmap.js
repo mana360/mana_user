@@ -23,11 +23,27 @@ export default class Tripmap extends React.Component {
             drop1_lng:"",
             is_map_error:0,
             isRefresh:true,
+
+            isforServiveType:false,
         }
     }
 
      componentDidMount(){
-        this.driver_id = this.props.navigation.getParam('driver_id')
+        this.isService = this.props.navigation.getParam('isService')
+        if(this.isService==true){
+            let drop1_latlng = this.props.navigation.getParam('drop1').split(",")
+            // alert(drop1_latlng);
+            this.setState({
+                drop1_lat : parseFloat(drop1_latlng[0]),
+                drop1_lng : parseFloat(drop1_latlng[1]),
+                isforServiveType:true
+            })
+        this.timer=  setInterval(() => {
+              this.init();
+          },5000);
+
+        }else{
+        this.driver_id = this.props.navigation.getParam('driver_id');
         console.log("driver id ===> "+this.driver_id)
         this.setState({
             pickup_coords  : this.props.navigation.getParam('pickup_coords'),
@@ -45,10 +61,13 @@ export default class Tripmap extends React.Component {
                 drop1_lng : parseFloat(drop1_latlng[1])
             })
         }
-        this.init()
+    }
+    this.init()
+
     }
 
     componentWillUnmount(){
+        // this.willFocusSubscription.remove();
         this.setState({isRefresh:false})
         clearInterval(this.timer)
     }
@@ -62,7 +81,10 @@ export default class Tripmap extends React.Component {
         }else{
             this.updateCurrentLocation()
         }
+        if(this.state.isforServiveType==false){
+
         this.getDriverLocation()
+    }
     }
 
     updateCurrentLocation(){
@@ -71,10 +93,12 @@ export default class Tripmap extends React.Component {
             let temp_longitude = position.coords.longitude
             console.log("coords======> "+temp_latitude +" +++++ "+temp_longitude)
             this.setState({ current_lat: parseFloat(temp_latitude), current_lng: parseFloat(temp_longitude) })
-            },
+            this.getMapView();
+        },
             (error) => { 
                 this.setState({is_map_error:1})
-                console.log(error.code, error.message)
+                console.log(error.code, error.message);
+            //    this.updateCurrentLocation();
             },
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
         )
@@ -88,7 +112,7 @@ export default class Tripmap extends React.Component {
             this.presenter.callPostApi(ApiConstants.getDriverLocation, param, false)
         }
 
-        this.timer = setInterval(()=>{
+        this.timer= setInterval(()=>{
            this.state.isRefresh ? this.getDriverLocation() : null
         }, 20000)
     }
@@ -115,116 +139,204 @@ export default class Tripmap extends React.Component {
 
     getMapView(){
         return(
-        <View style={{flex:1, justifyContent:'center', alignItems:'center', width:'100%', height:'100%'}}>
-            <MapView  
-                        ref={(ref)=>{this.googleMap=ref}}
-                        style={{flex:1, width:'100%', height:'100%'}}
-                        showsUserLocation={false}
-                        zoomEnabled={true}
-                        zoomControlEnabled={false}
-                        resetOnChange={true}
-                        initialRegion={{  
-                            latitude: this.state.current_lat,
-                            longitude:this.state.current_lng,
-                            latitudeDelta: 0.0922,
-                            longitudeDelta: 0.0421,
-                        }}
-                        onMapReady={()=>{
-                            this.googleMap.animateToRegion({
-                                latitude: this.state.current_lat,
-                                longitude: this.state.current_lng,
-                                latitudeDelta: 0.0059397161733585335,
-                                longitudeDelta: 0.005845874547958374
-                            })
-                            {
-                                this.state.driver_lat!=""
-                                ?
-                                    this.current_marker.animateMarkerToCoordinate({
-                                    latitude: this.state.driver_lat,
-                                    longitude: this.state.driver_lng,
-                                    latitudeDelta: 0.0059397161733585335,
-                                    longitudeDelta: 0.005845874547958374
-                                }, 10000)
-                                : null
-                            }
-                        }}
-                        // onLayout={ () => this.googleMap.fitToCoordinates(
-                        //         [{ latitude: this.state.current_lat, longitude: this.state.current_lng,}],
-                        //         { edgePadding: { top: 5, right: 5, bottom: 5, left: 5 }, animated: true }
-                        //     )
-                        // }
-                    >
-                        <Marker  
-                            ref={(ref)=>{this.current_marker = ref}}
-                            coordinate={{ latitude:this.state.current_lat, longitude:this.state.current_lng}}
-                            title={""}  
-                            description={""}
-                        >
-                            
-                            <View style={{width:20, height:20, backgroundColor:Constants.COLOR_GREEN, borderRadius:50, borderWidth:1, borderColor:Constants.COLOR_BLACK}}>
-                                    </View>
-                        </Marker>
-                        {
-                            this.state.drop1_lat!=""
-                            ?
-                            <Marker  
-                                ref={(ref)=>{this.current_marker = ref}}
-                                coordinate={{ latitude:this.state.drop1_lat, longitude:this.state.drop1_lng}}
-                                title={""}  
-                                description={""}
+                
+                    this.state.isforServiveType==true?
+                    <View style={{flex:1, justifyContent:'center', alignItems:'center', width:'100%', height:'100%'}}>
+                   {this.state.current_lat==""?null: <MapView  
+                                ref={(ref)=>{this.googleMap=ref}}
+                                style={{flex:1, width:'100%', height:'100%'}}
+                                showsUserLocation={false}
+                                zoomEnabled={true}
+                                zoomControlEnabled={false}
+                                resetOnChange={true}
+                                initialRegion={{  
+                                    latitude: this.state.current_lat,
+                                    longitude:this.state.current_lng,
+                                    latitudeDelta: 0.0922,
+                                    longitudeDelta: 0.0421,
+                                }}
+                                onMapReady={()=>{
+                                    this.googleMap.animateToRegion({
+                                        latitude: this.state.current_lat,
+                                        longitude: this.state.current_lng,
+                                        latitudeDelta: 0.0059397161733585335,
+                                        longitudeDelta: 0.005845874547958374
+                                    })
+                                    {
+                                        this.state.driver_lat!=""
+                                        ?
+                                            this.current_marker.animateMarkerToCoordinate({
+                                            latitude: this.state.driver_lat,
+                                            longitude: this.state.driver_lng,
+                                            latitudeDelta: 0.0059397161733585335,
+                                            longitudeDelta: 0.005845874547958374
+                                        }, 10000)
+                                        : null
+                                    }
+                                }}
+                              
                             >
-                                 <View style={{width:20, height:20, backgroundColor:Constants.COLOR_GREEN, borderRadius:50, borderWidth:1, borderColor:Constants.COLOR_BLACK}}>
-                                    </View>
-                            </Marker>
-                            : null
-                        }
-
-                        {
-                            this.state.driver_lat!=""
-                            ?
-                            <Marker
-                                ref={(ref)=>{this.driver_marker = ref}}
-                                coordinate={{ latitude:this.state.driver_lat, longitude:this.state.driver_lng}}
-                                title={""}  
-                                description={""}
+                                <Marker  
+                                    ref={(ref)=>{this.current_marker = ref}}
+                                    coordinate={{ latitude:this.state.drop1_lat, longitude:this.state.drop1_lng}}
+                                    title={""}  
+                                    description={""}
+                                >
+                                    
+                                    <View style={{width:20, height:20, backgroundColor:Constants.COLOR_GREEN, borderRadius:50, borderWidth:1, borderColor:Constants.COLOR_BLACK}}>
+                                            </View>
+                                </Marker>
+                                 <Marker
+                                        ref={(ref)=>{this.driver_marker = ref}}
+                                        coordinate={{ latitude:this.state.current_lat, longitude:this.state.current_lng}}
+                                        title={""}  
+                                        description={""}
+                                    >
+                                        <View style={{backgroundColor:Constants.COLOR_GREEN, justifyContent:'center', alignItems:'center', padding:5, borderRadius:50}}>
+                                            <Image source={require('../images/truck_icon.png')} style={{width:35, height:35, resizeMode:'contain', tintColor:Constants.COLOR_WHITE}}/>
+                                        </View>
+                                    </Marker>
+                                   
+        
+                              <MapViewDirections
+                                    origin={{ "latitude": this.state.current_lat,
+                                        "longitude":this.state.current_lng}}
+                                    destination={{ "latitude": this.state.drop1_lat,
+                                    "longitude":this.state.drop1_lng}}
+                                    apikey={Constants.GOOGLE_MAP_KEY}
+                                    strokeWidth={2}
+                                    strokeColor={Constants.COLOR_BLACK}
+                                    mode="DRIVING"
+                                    resetOnChange={true}
+                                    onStart={(params) => {
+                                        // console.log("Started routing between"+JSON.stringify(params.origin)+" and "+JSON.stringify(params.destination));
+                                    }}
+                                    onReady={result => {
+                                        console.log(`Distance normal = ${result.distance} km`)
+                                        console.log(`Duration normal = ${result.duration} min.`)
+                                       
+                                    }}
+                                    onError={(errorMessage) => {
+                                        console.log('GOT AN ERROR --- > '+errorMessage);
+                                    }}
+                                />
+        
+                            </MapView>
+                }
+                </View>
+                    :
+                    <View style={{flex:1, justifyContent:'center', alignItems:'center', width:'100%', height:'100%'}}>
+                    <MapView  
+                                ref={(ref)=>{this.googleMap=ref}}
+                                style={{flex:1, width:'100%', height:'100%'}}
+                                showsUserLocation={false}
+                                zoomEnabled={true}
+                                zoomControlEnabled={false}
+                                resetOnChange={true}
+                                initialRegion={{  
+                                    latitude: this.state.current_lat,
+                                    longitude:this.state.current_lng,
+                                    latitudeDelta: 0.0922,
+                                    longitudeDelta: 0.0421,
+                                }}
+                                onMapReady={()=>{
+                                    this.googleMap.animateToRegion({
+                                        latitude: this.state.current_lat,
+                                        longitude: this.state.current_lng,
+                                        latitudeDelta: 0.0059397161733585335,
+                                        longitudeDelta: 0.005845874547958374
+                                    })
+                                    {
+                                        this.state.driver_lat!=""
+                                        ?
+                                            this.current_marker.animateMarkerToCoordinate({
+                                            latitude: this.state.driver_lat,
+                                            longitude: this.state.driver_lng,
+                                            latitudeDelta: 0.0059397161733585335,
+                                            longitudeDelta: 0.005845874547958374
+                                        }, 10000)
+                                        : null
+                                    }
+                                }}
+                                // onLayout={ () => this.googleMap.fitToCoordinates(
+                                //         [{ latitude: this.state.current_lat, longitude: this.state.current_lng,}],
+                                //         { edgePadding: { top: 5, right: 5, bottom: 5, left: 5 }, animated: true }
+                                //     )
+                                // }
                             >
-                                <View style={{backgroundColor:Constants.COLOR_GREEN, justifyContent:'center', alignItems:'center', padding:5, borderRadius:50}}>
-                                    <Image source={require('../images/truck_icon.png')} style={{width:35, height:35, resizeMode:'contain', tintColor:Constants.COLOR_WHITE}}/>
-                                </View>
-                            </Marker>
-                            : null
-                        }
-
-                        <MapViewDirections
-                            origin={this.state.pickup_coords}
-                            destination={this.state.dropoff_coords}
-                            apikey={Constants.GOOGLE_MAP_KEY}
-                            strokeWidth={2}
-                            strokeColor={Constants.COLOR_BLACK}
-                            mode="DRIVING"
-                            resetOnChange={true}
-                            onStart={(params) => {
-                                // console.log("Started routing between"+JSON.stringify(params.origin)+" and "+JSON.stringify(params.destination));
-                            }}
-                            onReady={result => {
-                                console.log(`Distance normal = ${result.distance} km`)
-                                console.log(`Duration normal = ${result.duration} min.`)
-                                // this.googleMap.fitToCoordinates(result.coordinates, {
-                                //     edgePadding: {
-                                //         right: (width / 10),
-                                //         bottom: (height / 10),
-                                //         left: (width / 10),
-                                //         top: (height / 10),
-                                //     }
-                                // });
-                            }}
-                            onError={(errorMessage) => {
-                                console.log('GOT AN ERROR --- > '+errorMessage);
-                            }}
-                        />
-
-                    </MapView>
-        </View>
+                                <Marker  
+                                    ref={(ref)=>{this.current_marker = ref}}
+                                    coordinate={{ latitude:this.state.current_lat, longitude:this.state.current_lng}}
+                                    title={""}  
+                                    description={""}
+                                >
+                                    
+                                    <View style={{width:20, height:20, backgroundColor:Constants.COLOR_GREEN, borderRadius:50, borderWidth:1, borderColor:Constants.COLOR_BLACK}}>
+                                            </View>
+                                </Marker>
+                                {
+                                    this.state.drop1_lat!=""
+                                    ?
+                                    <Marker  
+                                        ref={(ref)=>{this.current_marker = ref}}
+                                        coordinate={{ latitude:this.state.drop1_lat, longitude:this.state.drop1_lng}}
+                                        title={""}  
+                                        description={""}
+                                    >
+                                         <View style={{width:20, height:20, backgroundColor:Constants.COLOR_GREEN, borderRadius:50, borderWidth:1, borderColor:Constants.COLOR_BLACK}}>
+                                            </View>
+                                    </Marker>
+                                    : null
+                                }
+        
+                                {
+                                    this.state.driver_lat!=""
+                                    ?
+                                    <Marker
+                                        ref={(ref)=>{this.driver_marker = ref}}
+                                        coordinate={{ latitude:this.state.driver_lat, longitude:this.state.driver_lng}}
+                                        title={""}  
+                                        description={""}
+                                    >
+                                        <View style={{backgroundColor:Constants.COLOR_GREEN, justifyContent:'center', alignItems:'center', padding:5, borderRadius:50}}>
+                                            <Image source={require('../images/truck_icon.png')} style={{width:35, height:35, resizeMode:'contain', tintColor:Constants.COLOR_WHITE}}/>
+                                        </View>
+                                    </Marker>
+                                    : null
+                                }
+        
+                                <MapViewDirections
+                                    origin={this.state.pickup_coords}
+                                    destination={this.state.dropoff_coords}
+                                    apikey={Constants.GOOGLE_MAP_KEY}
+                                    strokeWidth={2}
+                                    strokeColor={Constants.COLOR_BLACK}
+                                    mode="DRIVING"
+                                    resetOnChange={true}
+                                    onStart={(params) => {
+                                        // console.log("Started routing between"+JSON.stringify(params.origin)+" and "+JSON.stringify(params.destination));
+                                    }}
+                                    onReady={result => {
+                                        console.log(`Distance normal = ${result.distance} km`)
+                                        console.log(`Duration normal = ${result.duration} min.`)
+                                        // this.googleMap.fitToCoordinates(result.coordinates, {
+                                        //     edgePadding: {
+                                        //         right: (width / 10),
+                                        //         bottom: (height / 10),
+                                        //         left: (width / 10),
+                                        //         top: (height / 10),
+                                        //     }
+                                        // });
+                                    }}
+                                    onError={(errorMessage) => {
+                                        console.log('GOT AN ERROR --- > '+errorMessage);
+                                    }}
+                                />
+        
+                            </MapView>
+                </View>
+                
+       
         )
     }
 

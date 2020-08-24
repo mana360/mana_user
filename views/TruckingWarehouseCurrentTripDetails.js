@@ -263,9 +263,11 @@ componentDidMount(){
                                         </View>
                                         <TouchableOpacity style={StyleViewCurrentTrip.col2}
                                             onPress={() => {
+                                // this.props.navigation.navigate('Tripmap',{ 'pickup_coords': this.state.truckData.drop_location.drop_latlng[1],"isService":true})
+                                                
                                                 // this.props.navigation.navigate('MapViews', { flag: 'truckingWarehouse',"latlong":"" })
-                                        this.props.navigation.navigate('MapViews', { flag_marker:true,
-                                            "TripDetials":this.state.warehouseTrucking_data.drop_location.drop_latlng[1]==undefined?
+                                        this.props.navigation.navigate('Tripmap', { "isService":true,
+                                            "drop1":this.state.warehouseTrucking_data.drop_location.drop_latlng[1]==undefined?
                                             this.presenter.getCommonAlertBox("Co-ordinate Not Found")
                                             :this.state.warehouseTrucking_data.drop_location.drop_latlng[1]==""?
                                             this.presenter.getCommonAlertBox("Co-ordinate Not Found")

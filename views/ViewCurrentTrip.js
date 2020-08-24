@@ -377,7 +377,9 @@ export default class ViewCurrentTrip extends React.Component {
                                             this.state.truckData.drop_location.drop_latlng[1]==""?
                                             this.presenter.getCommonAlertBox("Co-ordinate Not Found")
                                             :
-                                this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials": this.state.truckData.drop_location.drop_latlng[1]  });
+                                // this.props.navigation.navigate('MapViews', { flag_marker:true,"TripDetials": this.state.truckData.drop_location.drop_latlng[1]  });
+                                this.props.navigation.navigate('Tripmap',{ 'drop1': this.state.truckData.drop_location.drop_latlng[1],"isService":true})
+
                                     }
 
                                     else{

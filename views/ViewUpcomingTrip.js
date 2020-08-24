@@ -858,10 +858,19 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 if( this.state.truckData.warehouse_latlng==""||this.state.warehouse_booking_detailsi.warehouse_latlng==""){
                                                                     this.presenter.getCommonAlertBox("Co-ordinate Not Found");
                                                                 }else{
-                                                                    this.props.navigation.navigate('MapViews',{"warehouse_flag":true,'WarehouseCoordinates': 
+                                                                    this.props.navigation.navigate('MapViews',{"warehouse_flag":true,'WarehouseCoordinates'
+                                                                    : 
                                                                     this.service_type_id==3?
                                                                     this.state.truckData.warehouse_latlng
                                                                     :this.state.warehouse_booking_detailsi.warehouse_latlng})
+
+                                                                                this.props.navigation.navigate('Tripmap',{"isService":true, 'drop1':
+                                                                                this.service_type_id==3?
+                                                                                this.state.truckData.warehouse_latlng
+                                                                                :this.state.warehouse_booking_detailsi.warehouse_latlng
+                                                                            
+                                                                            })
+                                                                                          
                                                                 }
                                                                 
                                                             }}
