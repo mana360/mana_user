@@ -230,7 +230,7 @@ export default class LocationDetails extends React.Component {
             return false;
         }
         if(this.state.drop_off_address==""){
-            this.presenter.getCommonAlertBox("Please Enter Dropup Address");
+            this.presenter.getCommonAlertBox(" Please Enter Dropp Off Address ");
             return false;
         }
         if(this.state.pickup_date==""){

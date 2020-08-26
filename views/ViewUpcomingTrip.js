@@ -887,7 +887,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <View style={StyleViewUpcomingTrip.col2}>
                                                             <Text style={StyleViewUpcomingTrip.col2Text}>
                                                                 {this.state.warehouse_booking_detailsi.service_start_date==""?null:
-                                                                moment(this.state.warehouse_booking_detailsi.service_start_date).format("DD/MM/YYYY")} To {this.state.warehouse_booking_detailsi.service_end_date==""?null: moment(this.state.warehouse_booking_detailsi.service_end_date).format("DD/MM/YYYY")}
+                                                                moment(this.state.warehouse_booking_detailsi.service_start_date,"YYYY-MM-DD").format("DD/MM/YYYY")} To {this.state.warehouse_booking_detailsi.service_end_date==""?null: moment(this.state.warehouse_booking_detailsi.service_end_date,"YYYY-MM-DD").format("DD/MM/YYYY")}
                                                                 
                                                             </Text>
                                                         </View>

@@ -69,7 +69,7 @@ export default class PaymentMethod extends React.Component {
         return (
             <View style={{ flex: 1, }}>
 
-                <HeaderBar title="Payment Method" isBack={true} isPaymentBack={true} isNotification={true} navigation={navigation} />
+                <HeaderBar title="Payment Method" isBack={true} isPaymentBack={false} isNotification={true} navigation={navigation} />
                 
                 <MainPresenter ref={(ref) => { this.presenter = ref }} onResponse={this.onResponse.bind(this)} />
                 
