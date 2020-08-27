@@ -48,7 +48,8 @@ export default class Tripmap extends React.Component {
         this.setState({
             pickup_coords  : this.props.navigation.getParam('pickup_coords'),
             dropoff_coords : this.props.navigation.getParam('dropoff_coords')
-        })
+        });
+        console.log(this.state.pickup_coords+"---="+this.state.dropoff_coords)
         let latlng = this.props.navigation.getParam('pickup_coords').split(",")
         this.setState({
             current_lat : parseFloat(latlng[0]),
@@ -84,6 +85,7 @@ export default class Tripmap extends React.Component {
         if(this.state.isforServiveType==false){
 
         this.getDriverLocation()
+         
     }
     }
 
@@ -264,7 +266,7 @@ export default class Tripmap extends React.Component {
                                 //     )
                                 // }
                             >
-                                <Marker  
+                                {/* <Marker  
                                     ref={(ref)=>{this.current_marker = ref}}
                                     coordinate={{ latitude:this.state.current_lat, longitude:this.state.current_lng}}
                                     title={""}  
@@ -273,7 +275,7 @@ export default class Tripmap extends React.Component {
                                     
                                     <View style={{width:20, height:20, backgroundColor:Constants.COLOR_GREEN, borderRadius:50, borderWidth:1, borderColor:Constants.COLOR_BLACK}}>
                                             </View>
-                                </Marker>
+                                </Marker> */}
                                 {
                                     this.state.drop1_lat!=""
                                     ?
