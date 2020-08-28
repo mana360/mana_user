@@ -143,7 +143,7 @@ export default class ProfileSetUp extends React.Component {
                 if(response.fileSize>Constants.IMAGE_MAX_SIZE){
                     this.presenter.getCommonAlertBox(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
                     this.setState({user_profile_image : "", user_profile_image_data:""});
-                    alert("bhau");
+                    
                 }
                 else{
                     const source = { uri: response.uri };

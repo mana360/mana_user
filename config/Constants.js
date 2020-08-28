@@ -9,12 +9,12 @@ const Constants = {
 
     // base url for QAP
     
-    BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
-    IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/",
+    // BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/api/",
+    // IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/",
 
     //Base url for Production
-    // BASE_URL:"http://54.205.90.119/api/",
-    // IMAGE_BASE_URL :"http://54.205.90.119/api/",
+    BASE_URL:"http://54.205.90.119/api/",
+    IMAGE_BASE_URL :"http://54.205.90.119/api/",
 
     PAYMENT_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/mobile-payment",
     PAYMENT_SUCCESS_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/success_payment",

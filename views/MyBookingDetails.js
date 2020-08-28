@@ -604,13 +604,14 @@ export default class MyBookingDetails extends React.Component {
 
 
 
-                     <View style={  this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_DELIVERED?
-                     {display:'none'}
-                     :
+                     <View style={ 
+                          this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_DELIVERED?
+                            {display:'none'}
+                            :
                            this.state.truck_booking_details.current_status==Constants.BOOKING_CURRENT_STATUS_UPCOMING?
                                 {display:'none'}
                                 :
-                           this.state.truck_booking_details.booking_status== Constants.BOOKING_STATUS_PICKED_UP?StyleMyBookingDetails.detailsRow:{display:'none'} }>
+                           this.state.truck_booking_details["booking_status"]== Constants.BOOKING_STATUS_PICKED_UP?StyleMyBookingDetails.detailsRow:{display:'none'} }>
                         <View style={{ flex: 1 }}>
                             <Text style={[StyleMyBookingDetails.detailsKey, { textTransform: 'none', }]}>{Constants.Resend_OTP}</Text>
                         </View>
@@ -625,8 +626,8 @@ export default class MyBookingDetails extends React.Component {
 
                             } >Generate OTP</Text>
                         </TouchableOpacity>
-                    </View> 
-
+                    </View>
+                     
                     <View style={ this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW
                      ?{ display: "none" } 
                      :
