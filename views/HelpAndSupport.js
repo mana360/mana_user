@@ -57,18 +57,9 @@ export default class HelpAndSupport extends React.Component {
         }
         this.setState({userData : data[0]})
 
-        if(this.state.isUser){
-            this.setState({
-                supportSubjectList:[
-                    { id:0, subject_name:'Cargo Lost'},
-                    { id:1, subject_name:'Late Delivery'},
-                    { id:2, subject_name:'Driver not in contact'},
-                    { id:3, subject_name:'Others'}
-                ]
-            })
-        }else{
+     
             this.getSupportSubjectList()
-        }
+        
     }
 
     async getSupportSubjectList(){

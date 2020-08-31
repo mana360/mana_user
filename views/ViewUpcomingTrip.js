@@ -444,7 +444,18 @@ export default class ViewUpcomingTrip extends React.Component {
                                                 :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_PICKUP ? "Pickup"
                                                 :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_DRIVER ? "Cancel by driver"
                                                 :this.state.warehouse_booking_detailsi.current_status == Constants.BOOKING_CURRENT_STATUS_UPCOMING ? "Upcoming"
-
+                                                :
+                                                this.state.warehouse_booking_detailsi.current_status== Constants.BOOKING_CURRENT_STATUS_ONGOING? "Ongoing"
+                                                :
+                                                this.state.warehouse_booking_detailsi.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_DRIVER? "Canceled by Driver"
+                                                :
+                                                this.state.warehouse_booking_detailsi.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_CUSTOMER? "Canceled by Customer"
+                                                :
+                                                this.state.warehouse_booking_detailsi.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_PARTNER? "Canceled by Partner"
+                                                :
+                                                this.state.warehouse_booking_detailsi.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_ADMIN? "Canceled by Admin"
+                                                :
+                                                this.state.warehouse_booking_detailsi.current_status== Constants.BOOKING_CURRENT_STATUS_DELIVERED_TO_DROP1? "Delivered to Drop Address 1"  
                                                 :null
                                             }
                                             </Text>
@@ -459,7 +470,18 @@ export default class ViewUpcomingTrip extends React.Component {
                                                 :this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_IN_STORAGE ? "In Storage"
                                                 :this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_DELIVERED? "Delivered"
                                                 :this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_PENDING? "Pending"
-
+                                                :
+                                                 this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_ONGOING? "Ongoing"
+                                                    :
+                                                this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_DRIVER? "Canceled by Driver"
+                                                    :
+                                                this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_CUSTOMER? "Canceled by Customer"
+                                                    :
+                                                this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_PARTNER? "Canceled by Partner"
+                                                    :
+                                                this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_CANCEL_BY_ADMIN? "Canceled by Admin"
+                                                    :
+                                                this.state.truckData.current_status== Constants.BOOKING_CURRENT_STATUS_DELIVERED_TO_DROP1? "Delivered to Drop Address 1" 
 
 
 
@@ -635,7 +657,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         </View>
                                                         <View style={StyleViewUpcomingTrip.col2}>
                                                             <Text style={StyleViewUpcomingTrip.col2Text}>
-                                                                {this.state.truckData.arrivalDateAndTime?moment(this.state.truckData.arrivalDateAndTime,"hh:mm:ss").format("hh:mm A"):""}
+                                                                {this.state.truckData.arrivalDateAndTime?moment(this.state.truckData.arrivalDateAndTime).format("hh:mm A"):""}
                                                             </Text>
                                                         </View>
                                                     </View>
@@ -836,10 +858,19 @@ export default class ViewUpcomingTrip extends React.Component {
                                                                 if( this.state.truckData.warehouse_latlng==""||this.state.warehouse_booking_detailsi.warehouse_latlng==""){
                                                                     this.presenter.getCommonAlertBox("Co-ordinate Not Found");
                                                                 }else{
-                                                                    this.props.navigation.navigate('MapViews',{"warehouse_flag":true,'WarehouseCoordinates': 
+                                                                    this.props.navigation.navigate('MapViews',{"warehouse_flag":true,'WarehouseCoordinates'
+                                                                    : 
                                                                     this.service_type_id==3?
                                                                     this.state.truckData.warehouse_latlng
                                                                     :this.state.warehouse_booking_detailsi.warehouse_latlng})
+
+                                                                                this.props.navigation.navigate('Tripmap',{"isService":true, 'drop1':
+                                                                                this.service_type_id==3?
+                                                                                this.state.truckData.warehouse_latlng
+                                                                                :this.state.warehouse_booking_detailsi.warehouse_latlng
+                                                                            
+                                                                            })
+                                                                                          
                                                                 }
                                                                 
                                                             }}
@@ -856,7 +887,7 @@ export default class ViewUpcomingTrip extends React.Component {
                                                         <View style={StyleViewUpcomingTrip.col2}>
                                                             <Text style={StyleViewUpcomingTrip.col2Text}>
                                                                 {this.state.warehouse_booking_detailsi.service_start_date==""?null:
-                                                                moment(this.state.warehouse_booking_detailsi.service_start_date).format("DD/MM/YYYY")} To {this.state.warehouse_booking_detailsi.service_end_date==""?null: moment(this.state.warehouse_booking_detailsi.service_end_date).format("DD/MM/YYYY")}
+                                                                moment(this.state.warehouse_booking_detailsi.service_start_date,"YYYY-MM-DD").format("DD/MM/YYYY")} To {this.state.warehouse_booking_detailsi.service_end_date==""?null: moment(this.state.warehouse_booking_detailsi.service_end_date,"YYYY-MM-DD").format("DD/MM/YYYY")}
                                                                 
                                                             </Text>
                                                         </View>

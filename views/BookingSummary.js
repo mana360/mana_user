@@ -71,6 +71,7 @@ export default class BookingSummary extends React.Component{
             grand_total:0,
             total_price:0,
             vat:0,
+            distance:"",
 
             countList:[],
             otherServicesList:[],
@@ -166,13 +167,22 @@ export default class BookingSummary extends React.Component{
             return false;
         }
         if(this.state.drop_off_address==""){
-            this.presenter.getCommonAlertBox("Please Enter Dropup Address");
+            this.presenter.getCommonAlertBox("Please Enter Dropoff Address");
             return false;
         }
         if(this.state.pickup_date==""){
             this.presenter.getCommonAlertBox("Please Enter valid Date");
             return false;
         }
+        if(this.state.pick_up_addressDetails==""){
+            this.presenter.getCommonAlertBox("Please Enter Pickup Address");
+            return false;
+        }
+        if(this.state.drop_off_addressDetails==""){
+            this.presenter.getCommonAlertBox("Please Enter Dropoff Address");
+            return false;
+        }
+      
         if(this.state.pickup_time==""){
             this.presenter.getCommonAlertBox("Please Enter valid Time");
             return false;
@@ -234,7 +244,8 @@ export default class BookingSummary extends React.Component{
         "coupon_id":this.state.discountAmount_ID,
         "load_category_id":this.state.load_category_id,
         "payment_mode":payment_mode,
-        "payment_transaction_id":transaction_id
+        "payment_transaction_id":transaction_id,
+        "distance":this.state.distance,
        }
      this.presenter.callPostApi(ApiConstants.bookCMLTrip,params,true);
     }
@@ -313,11 +324,12 @@ export default class BookingSummary extends React.Component{
             if(data.status){
                 this.setState({grand_total:data.booking_summary.grand_total,
                     otherServices_amount:data.booking_summary.other_services,
-                    discountAmount:data.booking_summary.discount,
+                    // discountAmount:data.booking_summary.discount,
                     total_price:data.booking_summary.booking_amount,
                     booking_amount:data.booking_summary.booking_amount,
                     vat:data.booking_summary.vat_tax_per,
                     chargesTripCost:data.booking_summary.other_per,
+                    distance:data.booking_summary.total_distance,
                   });
               }else{
                 //   alert(data.message);
@@ -869,7 +881,7 @@ export default class BookingSummary extends React.Component{
 
                                     <View style={{ flexDirection:'row', borderTopColor:'#c6c6c6', borderTopWidth:1, paddingTop:15, marginTop:15,}}>
                                         <Text style={[StyleBookingSummary.priceTxt,{width:'70%'}]}>{Constants.DiscountVoucher}</Text>
-                                        <Text style={[StyleBookingSummary.priceVol,{width:'20%',}]}> R {this.state.discountAmount} </Text>
+                                        <Text style={[StyleBookingSummary.priceVol,{width:'20%',}]}>  {this.state.discountAmount} %</Text>
                                         <TouchableOpacity
                                             style={{ display: this.state.Discount_status?'flex':'none', width:30, justifyContent:'center', alignItems:'center', marginRight:5, marginTop:5}}
                                             onPress={()=>{
@@ -896,7 +908,7 @@ export default class BookingSummary extends React.Component{
                                             this.discountCoupon_amount=item.coupon_desc;
                                             this.discountCoupon_id=item.coupon_id;
                                             console.log("discoun coupon value and ID"+  this.discountCoupon_amount+" , "+ this.discountCoupon_id);
-                                            console.log("discount Amount==>"+JSON.stringify("coupon details"+item));
+                                            console.log("discount Amount==>"+JSON.stringify("coupon details"+JSON.stringify(item)));
                                            
                                             this.getcalculatingBooking();
                                             }})

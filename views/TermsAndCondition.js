@@ -9,6 +9,7 @@ import Constants from '../config/Constants'
 import { MainPresenter } from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
 import { ScrollView } from 'react-native-gesture-handler';
+import HTML from 'react-native-render-html';
 export default class TermsAndCondition extends Component {
   constructor(props) {
     super(props);
@@ -72,7 +73,10 @@ export default class TermsAndCondition extends Component {
            isBack={true} isLogout={ isLogout ? true : false } navigation={navigation} />
        <ScrollView style={{width:'100%',}} bounces={false}>
          <View style={{flex:1,padding:15}} >
-           <Text style={{fontSize:12,textAlign:'justify',color:'black'}}>{this.state.data}</Text>
+           {/* <Text style={{fontSize:12,textAlign:'justify',color:'black'}}>{this.state.data}</Text> */}
+           {/* <Text style={{fontSize:12,textAlign:'justify',color:'black'}}>{this.state.data.replace( /(&nbsp;|<([^>]+)>)/ig, "")}</Text> */}
+          
+          <HTML html={this.state.data}/>
          </View>
 
        </ScrollView>

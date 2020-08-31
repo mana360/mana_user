@@ -4,7 +4,7 @@ Screen-Id : MANAPPCUS090-1,90-3,90
 API : Udayraj
 */
 import React, { Component } from "react";
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, Modal, FlatList } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, Modal, FlatList, PermissionsAndroid } from "react-native";
 import HeaderBar from "../config/HeaderBar";
 import ImagePicker from "react-native-image-picker";
 import { Picker } from "native-base";
@@ -104,10 +104,34 @@ export default class ProfileSetUp extends React.Component {
             user_password : global.temp_password,
             user_confirmPassword : global.temp_password,
         })
-        this.getCountryList()
+        this.getCountryList();
+        this.requestCameraPermission();0
     }
-    
-    uploadUserProfile() {
+    requestCameraPermission = async () => {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            {
+              title: "Cool Photo App Camera Permission",
+              message:
+                "Cool Photo App needs access to your camera " +
+                "so you can take awesome pictures.",
+              buttonNeutral: "Ask Me Later",
+              buttonNegative: "Cancel",
+              buttonPositive: "OK"
+            }
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log("You can use the camera");
+          } else {
+            console.log("Camera permission denied");
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+      };
+  async  uploadUserProfile() {
+          
         ImagePicker.showImagePicker(this.options, (response) => {
             if (response.didCancel) {
                 console.log('User cancelled image picker');
@@ -118,7 +142,8 @@ export default class ProfileSetUp extends React.Component {
             } else {
                 if(response.fileSize>Constants.IMAGE_MAX_SIZE){
                     this.presenter.getCommonAlertBox(Constants.IMAGE_MAX_SIZE_EXCEED_MESSAGE)
-                    this.setState({user_profile_image : "", user_profile_image_data:""})
+                    this.setState({user_profile_image : "", user_profile_image_data:""});
+                    
                 }
                 else{
                     const source = { uri: response.uri };
@@ -217,9 +242,7 @@ export default class ProfileSetUp extends React.Component {
 
     options = {
         title: 'Select Image',
-        customButtons: [
-            { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-        ],
+       
         storageOptions: {
             skipBackup: true,
             path: 'images',
@@ -330,7 +353,7 @@ export default class ProfileSetUp extends React.Component {
                         style={StyleSetUpProfile.TextInput}
                         value={this.state.company_telephoneNo}
                         ref={(ref)=>{this.input_company_telephone_number = ref}}
-                        maxLength={9}
+                        maxLength={25}
                         keyboardType="number-pad"
                         onChangeText={(text) => { 
                             if(!isNaN(text))
@@ -615,7 +638,7 @@ export default class ProfileSetUp extends React.Component {
                         placeholder="Enter Telephone Number"
                         style={StyleSetUpProfile.TextInput}
                         keyboardType="number-pad"
-                        maxLength={9}
+                        maxLength={25}
                         ref={(ref)=>{this.input_user_telephone_number=ref}}
                         value={this.state.user_telephoneNumber}
                         onChangeText={(text) => { 
@@ -685,6 +708,7 @@ export default class ProfileSetUp extends React.Component {
                             
                             <TextInput
                                 placeholder="Enter Number"
+                                maxLength={13}
                                 style={StyleSetUpProfile.TextInput}
                                 keyboardType="number-pad"
                                 ref={(ref)=>{this.input_user_rsa_id=ref}}
@@ -1105,11 +1129,11 @@ export default class ProfileSetUp extends React.Component {
                     this.input_user_telephone_number.focus()
                     return false
             }
-            if(this.state.user_telephoneNumber.length!=9){
-                this.presenter.getCommonAlertBox("Please enter correct telephone number")
-                    this.input_user_telephone_number.focus()
-                    return false
-            }
+            // if(this.state.user_telephoneNumber.length!=9){
+            //     this.presenter.getCommonAlertBox("Please enter correct telephone number")
+            //         this.input_user_telephone_number.focus()
+            //         return false
+            // }
             if(this.state.user_rsaPassport=="" && this.state.user_docType=="1"){
                 this.presenter.getCommonAlertBox("Please enter RSA Id")
                     this.input_user_rsa_id.focus()
@@ -1212,11 +1236,11 @@ export default class ProfileSetUp extends React.Component {
                 this.input_company_telephone_number.focus()
                 return false
             }
-            if(this.state.company_telephoneNo.length!=9){
-                this.presenter.getCommonAlertBox("Please enter correct telephone number")
-                this.input_company_telephone_number.focus()
-                return false
-            }
+            // if(this.state.company_telephoneNo.length!=9){
+            //     this.presenter.getCommonAlertBox("Please enter correct telephone number")
+            //     this.input_company_telephone_number.focus()
+            //     return false
+            // }
             if(this.state.company_emailId==""){
                 this.presenter.getCommonAlertBox("Please enter email address")
                 this.input_company_emailId.focus()

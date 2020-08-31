@@ -118,9 +118,9 @@ export default class MapViews extends React.Component {
       
       <MapView
       style={StyleMapView.mapStyle}
-      showsUserLocation={true}
+      // showsUserLocation={true}
       zoomEnabled={true}
-      followsUserLocation={true}
+      // followsUserLocation={true}
       zoomControlEnabled={true}
       initialRegion={{
         latitude: this.state.current_latitude,
@@ -130,10 +130,21 @@ export default class MapViews extends React.Component {
       }}
     >
 
-
+                  <Marker
+                              coordinate={{ latitude:this.state.current_latitude, longitude: this.state.current_longitude}}
+                                title={""}  
+                                description={""}
+                            >
+                                <View style={{backgroundColor:Constants.COLOR_GREEN, justifyContent:'center', alignItems:'center', padding:5, borderRadius:50}}>
+                                    <Image source={require('../images/truck_icon.png')} style={{width:35, height:35, resizeMode:'contain', tintColor:Constants.COLOR_WHITE}}/>
+                                </View>
+                            </Marker>
         <Marker  
             coordinate={{latitude:this.latANDlong(destination,0),longitude:this.latANDlong(destination,1)}}
-          />
+          >
+            <View style={{width:20, height:20, backgroundColor:Constants.COLOR_GREEN, borderRadius:50, borderWidth:1, borderColor:Constants.COLOR_BLACK}}>
+                                    </View>
+          </Marker>
  
     
     </MapView>
@@ -158,7 +169,7 @@ export default class MapViews extends React.Component {
           <MapView
           ref={(ref)=>{this.googleMap = ref}}
           style={StyleMapView.mapStyle}
-          showsUserLocation={true}
+          // showsUserLocation={true}
           zoomEnabled={true}
           zoomControlEnabled={true}
           initialRegion={{
@@ -169,8 +180,20 @@ export default class MapViews extends React.Component {
           }}
           >
             <Marker
+                              coordinate={{ latitude:this.state.current_latitude, longitude: this.state.current_longitude}}
+                                title={""}  
+                                description={""}
+                            >
+                                <View style={{backgroundColor:Constants.COLOR_GREEN, justifyContent:'center', alignItems:'center', padding:5, borderRadius:50}}>
+                                    <Image source={require('../images/truck_icon.png')} style={{width:35, height:35, resizeMode:'contain', tintColor:Constants.COLOR_WHITE}}/>
+                                </View>
+                            </Marker>
+            <Marker
             coordinate={{latitude:this.state.warehouse_lat,longitude:this.state.warehouse_long}}
-            />
+            >
+                  <View style={{width:20, height:20, backgroundColor:Constants.COLOR_GREEN, borderRadius:50, borderWidth:1, borderColor:Constants.COLOR_BLACK}}>
+                                    </View>
+            </Marker>
           </MapView>
           :
         <View  style={ StyleMapView.MainContainer}>
@@ -234,7 +257,11 @@ export default class MapViews extends React.Component {
                      this.RBSheet.open();
                   }}
                   coordinate={{latitude:this.state.current_latitude,longitude:this.state.current_longitude}}
-                />
+                >
+                    <View style={{backgroundColor:Constants.COLOR_GREEN, justifyContent:'center', alignItems:'center', padding:5, borderRadius:50}}>
+                                    <Image source={require('../images/truck_icon.png')} style={{width:35, height:35, resizeMode:'contain', tintColor:Constants.COLOR_WHITE}}/>
+                                </View>
+                </Marker>
 
           </MapView>
   }

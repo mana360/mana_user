@@ -27,7 +27,8 @@ export default class MyBookings extends React.Component{
     }
 
     componentDidMount(){
-    this.getCurrentBookingList();
+    // this.getCurrentBookingList();       
+                                                          
     this.willFocusSubscription = this.props.navigation.addListener(
         'willFocus',
         () => {   
@@ -183,7 +184,8 @@ export default class MyBookings extends React.Component{
                         :
                         StyleMyBooking.bookingRow
                     }
-                        onPress={()=>{this.props.navigation.navigate('MyBookingDetails',{'book_item':item, cancelTripCallback: ()=>{
+                        onPress={()=>{
+                            this.props.navigation.navigate('MyBookingDetails',{'book_item':item, cancelTripCallback: ()=>{
                             console.log("callback for cancell trip")
                             // this.getCurrentBookingList();
                             // this.getOngoingBookingList()
@@ -214,13 +216,16 @@ export default class MyBookings extends React.Component{
                                                 :
                                                 null
                                             }>
-                                                { 
-                                                 item.current_status== Constants.BOOKING_CURRENT_STATUS_UPCOMING ? "Trip Started" 
+                                                {  item.booking_status==Constants.BOOKING_STATUS_NEW?
+                                                "New"
+                                                :
+                                                   item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?
+                                                   item.current_status== Constants.BOOKING_CURRENT_STATUS_UPCOMING
+                                                   ?
+                                                   "Driver Assigned"
+                                                   :
+                                                   'Trip started'
                                                     :
-                                                    item.booking_status==Constants.BOOKING_STATUS_NEW?"New"
-                                                    :
-                                                    item.booking_status==Constants.BOOKING_STATUS_PICKED_UP?"Driver Assigned"
-                                                    :   
                                                     item.booking_status==Constants.BOOKING_STATUS_DELIVERED?"Delivered"
                                                     :
                                                     item.booking_status==Constants.BOOKING_STATUS_CANCELLED?"Cancelled"
@@ -257,14 +262,18 @@ export default class MyBookings extends React.Component{
                                         <View style={{flex:1}}>
                                             <Text style={StyleMyBooking.valueText}>{item.driver_name}</Text>
                                         </View>
+                                       {  item.booking_status==Constants.BOOKING_STATUS_NEW?null: <View  style={{flex:1,paddingLeft:20,flexDirection:'row'}}>
+                                            <Text style={{color:Constants.COLOR_GREY_LIGHT,paddingHorizontal:15}}>{item.driver_average_rating==undefined?"0":item.driver_average_rating}</Text>
+                                            <Image source={require('../images/star_fill.png')} style={{paddingHorizontal:10,width:20,height:20}}/>
+                                        </View>}
                                     </View>
 
                                     <View style={item.status=="order_placed"?{display:'none'}:{flex:2, flexDirection:'row',  marginVertical:4}}>
-                                        <View style={{flex:1}}>
+                                        {/* <View style={{flex:1}}>
                                             <Text style={StyleMyBooking.labelText}>{Constants.DRIVER_NUMBER}</Text>
-                                        </View>
+                                        </View> */}
                                         <View style={{flex:1, flexDirection:'row'}}>
-                                            <Text style={StyleMyBooking.valueText}>{item.driver_contact}</Text>
+                                            {/* <Text style={StyleMyBooking.valueText}>{item.driver_contact}</Text> */}
                                             <TouchableOpacity 
                                                 onPress={()=>{
                                                     if(item.pickup_latlng!="" && item.pickup_latlng!=null){

@@ -230,7 +230,7 @@ export default class LocationDetails extends React.Component {
             return false;
         }
         if(this.state.drop_off_address==""){
-            this.presenter.getCommonAlertBox("Please Enter Dropup Address");
+            this.presenter.getCommonAlertBox(" Please Enter Dropp Off Address ");
             return false;
         }
         if(this.state.pickup_date==""){
@@ -245,6 +245,15 @@ export default class LocationDetails extends React.Component {
             this.presenter.getCommonAlertBox("Please Enter Instruction");
             return false;
         }
+        if(this.state.drop_off_addressDetails==""){
+            this.presenter.getCommonAlertBox("Please Enter Dropoff Addresss Details");
+            return false;
+        }
+        if(this.state.pick_up_addressDetails==""){
+            this.presenter.getCommonAlertBox("Please Enter Pickup Addresss Details");
+            return false;
+        }
+       
         // if(this.state.isTimerError==false){
         //     alert("Please enter correct time")
         //     return false

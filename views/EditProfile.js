@@ -263,7 +263,7 @@ export default class EditProfile extends React.Component {
                         style={StyleEditProfile.TextInput}
                         value={this.state.company_telephoneNo}
                         keyboardType="number-pad"
-                        maxLength={9}
+                        maxLength={25}
                         onChangeText={(text) => {
                             this.setState({ company_telephoneNo: text })
                         }}
@@ -517,7 +517,7 @@ export default class EditProfile extends React.Component {
                         style={StyleEditProfile.TextInput}
                         value={this.state.user_telephoneNo}
                         keyboardType="number-pad"
-                        maxLength={9}
+                        maxLength={25}
                         onChangeText={(text) => {
                             if (!isNaN(text))
                                 this.setState({ user_telephoneNo: text })
@@ -917,10 +917,10 @@ export default class EditProfile extends React.Component {
                 this.presenter.getCommonAlertBox("Please enter telephone number")
                 return false
             }
-            if(this.state.user_telephoneNo.length!=9){
-                this.presenter.getCommonAlertBox("Please enter correct telephone number")
-                return false
-            }
+            // if(this.state.user_telephoneNo.length!=9){
+            //     this.presenter.getCommonAlertBox("Please enter correct telephone number")
+            //     return false
+            // }
             // if(this.state.user_docType=="0"){
             //     alert("Please select Identification")
             //     return false
