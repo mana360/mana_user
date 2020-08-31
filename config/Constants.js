@@ -281,7 +281,7 @@ const Constants = {
     NewPassword:'New Password',
     PasswordHasResetSuccessfully:'Password has Reset Successfully.',
     SignUp:'Sign Up',
-    AlreadyAMember:'Already a Member?',
+    AlreadyAMember:'Already a member?',
     IhaveAReferalCode:'I have a referral code',
     IagreeTo:'I agree to ',
     TermsAndConditions:'Terms & Conditions',

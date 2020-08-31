@@ -22,6 +22,8 @@ export default class SetPassword extends React.Component {
             modal_visible:false,
             OTP:'',
             api_message:"",
+            password1_visible:true,
+            password2_visible:true
         }
     }
 
@@ -123,7 +125,7 @@ export default class SetPassword extends React.Component {
                     <Text style={[StyleForgotPassword.textMsg,{marginTop:30,marginBottom:25}]}>{Constants.EnteredCodeIssuccessFullyVerified}</Text>
                     <Text style={[StyleForgotPassword.modalTextMSg,{textTransform:"uppercase"}]}>{Constants.SetNewPassword}</Text>
 
-                    <View style={[StyleForgotPassword.TextInputView,{marginTop:5}]}>
+                    <View style={[StyleForgotPassword.TextInputView,{marginTop:5, flexDirection:'row', justifyContent:'flex-start', alignItems:'center'}]}>
                         <View style={StyleForgotPassword.LabelView}>
                             <Image source={require('../images/password.png')}
                                 style={StyleForgotPassword.labelIcon}
@@ -132,15 +134,23 @@ export default class SetPassword extends React.Component {
                         </View>
                         <TextInput
                             placeholder="Enter Password"
-                            style={StyleForgotPassword.TextInput}
+                            style={[StyleForgotPassword.TextInput,{width:'80%',}]}
                             autoCapitalize="none"
-                            secureTextEntry={true}
+                            secureTextEntry={this.state.password1_visible}
                             value={this.state.new_password}
                             onChangeText={(text) => { this.setState({ new_password: text }) }}
                         />
+                        <TouchableOpacity style={{justifyContent:'center', alignItems:'center', marginLeft:15}}
+                            onPress={()=>{ this.setState({password1_visible : ! this.state.password1_visible}) }}
+                        >
+                            <Image
+                                source={ this.state.password1_visible ? require('../images/show_pass.png') : require('../images/hide_pass.png')}
+                                style={{width:25, height:25, resizeMode:'contain'}}
+                            />
+                        </TouchableOpacity>
                     </View>
 
-                    <View style={[StyleForgotPassword.TextInputView,{marginTop:25}]}>
+                    <View style={[StyleForgotPassword.TextInputView,{marginTop:25,  flexDirection:'row', justifyContent:'flex-start', alignItems:'center'}]}>
                         <View style={StyleForgotPassword.LabelView}>
                             <Image source={require('../images/password.png')}
                                 style={StyleForgotPassword.labelIcon}
@@ -149,12 +159,20 @@ export default class SetPassword extends React.Component {
                         </View>
                         <TextInput
                             placeholder="Enter Confirm Password"
-                            style={StyleForgotPassword.TextInput}
+                            style={[StyleForgotPassword.TextInput,{width:'80%',}]}
                             autoCapitalize="none"
-                            secureTextEntry={true}
+                            secureTextEntry={this.state.password2_visible}
                             value={this.state.confirm_password}
                             onChangeText={(text) => { this.setState({ confirm_password: text }) }}
                         />
+                        <TouchableOpacity style={{justifyContent:'center', alignItems:'center', marginLeft:15}}
+                            onPress={()=>{ this.setState({password2_visible : ! this.state.password2_visible}) }}
+                        >
+                            <Image
+                                source={ this.state.password2_visible ? require('../images/show_pass.png') : require('../images/hide_pass.png')}
+                                style={{width:25, height:25, resizeMode:'contain'}}
+                            />
+                        </TouchableOpacity>
                     </View>
                     
                     <TouchableOpacity

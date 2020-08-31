@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* Mana360_customerUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Mana360_customerUserTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -47,7 +48,7 @@
 		01263D82E79C4A0388635D06 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		01ACCBF9287E4D658E29F88E /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		0DF2C696EA044BDD97A21D04 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Mana360_customerUser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mana360_customerUser.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Mana360 Customer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mana360 Customer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Mana360_customerUser/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Mana360_customerUser/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -235,7 +236,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Mana360_customerUser.app */,
+				13B07F961A680F5B00A75B9A /* Mana360 Customer.app */,
 				00E356EE1AD99517003FC87E /* Mana360_customerUserTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* Mana360_customerUser-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* Mana360_customerUser-tvOSTests.xctest */,
@@ -334,7 +335,7 @@
 			);
 			name = Mana360_customerUser;
 			productName = Mana360_customerUser;
-			productReference = 13B07F961A680F5B00A75B9A /* Mana360_customerUser.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Mana360 Customer.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* Mana360_customerUser-tvOS */ = {
@@ -390,7 +391,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = WDJ285H69Q;
+						DevelopmentTeam = A98FD2B86S;
 						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -789,19 +790,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.3;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = WDJ285H69Q;
+				DEVELOPMENT_TEAM = A98FD2B86S;
 				INFOPLIST_FILE = Mana360_customerUser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.etpl.-";
-				PRODUCT_NAME = Mana360_customerUser;
-				PROVISIONING_PROFILE_SPECIFIER = WildCard_AdHoc;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mana360customer.customer;
+				PRODUCT_NAME = "Mana360 Customer";
+				PROVISIONING_PROFILE_SPECIFIER = manaCustomerProvisionProfileAppStore;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -813,18 +815,19 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WDJ285H69Q;
+				CURRENT_PROJECT_VERSION = 1.3;
+				DEVELOPMENT_TEAM = A98FD2B86S;
 				INFOPLIST_FILE = Mana360_customerUser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.etpl.-";
-				PRODUCT_NAME = Mana360_customerUser;
-				PROVISIONING_PROFILE_SPECIFIER = WildCard_AdHoc;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mana360customer.customer;
+				PRODUCT_NAME = "Mana360 Customer";
+				PROVISIONING_PROFILE_SPECIFIER = manaCustomerProvisionProfileAppStore;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
