@@ -20,11 +20,11 @@ export default class HelpAndSupport extends React.Component {
 
     constructor(props) {
         super(props);
-        this.subject_id="",
+        this.subject_id="-1",
         this.driver_id=""
         this.state = {
             tripHelpAndSupport:false,
-            support_subject: "",
+            support_subject: "-1",
             support_message: "",
             support_contact_number: "",
             support_email:"jim.d@abc.com",
@@ -78,8 +78,11 @@ export default class HelpAndSupport extends React.Component {
             this.presenter.getCommonAlertBox("Please select subject")
 
         }else if(this.state.support_message==""){
-            this.presenter.getCommonAlertBox("Please enter subject")
-        }else{
+            this.presenter.getCommonAlertBox("Please enter message")
+        }else if(this.state.support_subject=="-1"){
+            this.presenter.getCommonAlertBox("Please select subject")
+        }
+        else{
             let param ={
                 'booking_id':this.booking_id==undefined
                 ?

@@ -251,7 +251,7 @@ export default class MyBookingDetails extends React.Component {
             }
             else {
                 // permission denied
-                this.presenter.getCommonAlertBox("File downloading faild.");
+                this.presenter.getCommonAlertBox("File downloading failed.");
                 return false
             }
           } catch (err) {

@@ -625,6 +625,8 @@ export default class ProfileSetUp extends React.Component {
                     >
                         <Picker.Item label="Select" value="-1" />
                         <Picker.Item label="Mr" value="Mr" />
+                        <Picker.Item label="Miss" value="Miss" />
+                        <Picker.Item label="Master" value="Master" />
                         <Picker.Item label="Mrs" value="Mrs" />
                     </Picker>
                 </View>

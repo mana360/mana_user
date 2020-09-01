@@ -39,7 +39,17 @@ export default class MyProfile extends React.Component {
     }
 
     componentDidMount() {
+        this.willFocusSubscription = this.props.navigation.addListener(
+            'willFocus',
+            () => {   
+                    this.presenter.callPostApi(ApiConstants.getMyProfile, "", true)
+                }
+          );
         this.presenter.callPostApi(ApiConstants.getMyProfile, "", true)
+    }
+
+    componentWillUnmount() {
+        this.willFocusSubscription.remove();
     }
 
     async updateUserObject(data){

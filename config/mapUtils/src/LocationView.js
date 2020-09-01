@@ -52,8 +52,8 @@ export default class LocationView extends React.Component {
     debounceDuration: 300,
     components: [],
     initialLocation: {
-       latitude: 18.5670,
-       longitude:73.8072,
+       latitude: -26.195246,
+       longitude:28.034088,
     },
     apiKey: "AIzaSyBEDVKNDyVUzE2ajUXcrpX89ZORifA0cN4"
   };
@@ -157,7 +157,6 @@ export default class LocationView extends React.Component {
 
   _setRegion = (region, animate = true) => {
     //this.setState({region:region})
-  
     this.state.region = { ...this.state.region, ...region };
     this.setState({ outputResult: region })
     if (animate) this._map.animateToRegion(this.state.region);
@@ -202,7 +201,6 @@ export default class LocationView extends React.Component {
 
       console.log("lat ==== "+ info.coords.latitude)
       console.log("long ==== "+ info.coords.longitude)
-
       // this.setState({currentlatitude:info.coords.latitude, currentlongitude:info.coords.longitude});
       },(error) => {
         console.log(error.code, error.message)
@@ -478,7 +476,8 @@ export default class LocationView extends React.Component {
               const { navigation } = this.props;
               this.setState({selected_address_data:formattedData})
               console.log("LOCATION SELECTED ===> "+JSON.stringify(formattedData))
-              this.RBSheet.open()
+              console.log("location ===> "+formattedData.address)
+              formattedData.address=="" ? alert("Please select location first") :  this.RBSheet.open()
             }
           }}
         >

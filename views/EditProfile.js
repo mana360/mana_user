@@ -263,7 +263,7 @@ export default class EditProfile extends React.Component {
                         style={StyleEditProfile.TextInput}
                         value={this.state.company_telephoneNo}
                         keyboardType="number-pad"
-                        maxLength={25}
+                        maxLength={9}
                         onChangeText={(text) => {
                             this.setState({ company_telephoneNo: text })
                         }}
@@ -517,7 +517,7 @@ export default class EditProfile extends React.Component {
                         style={StyleEditProfile.TextInput}
                         value={this.state.user_telephoneNo}
                         keyboardType="number-pad"
-                        maxLength={25}
+                        maxLength={9}
                         onChangeText={(text) => {
                             if (!isNaN(text))
                                 this.setState({ user_telephoneNo: text })
@@ -1470,7 +1470,7 @@ export default class EditProfile extends React.Component {
                             <TouchableOpacity style={{ alignSelf: 'flex-end', top: 10, right: 10 }}
                                 onPress={() => {
                                     this.setState({ isProfileUpdatedModal: false,})
-                                    this.props.navigation.navigate("Dashboard")
+                                    this.props.navigation.navigate("MyProfile")
                                 }}
                             >
                                 <Image source={require('../images/close.png')}
@@ -1487,7 +1487,7 @@ export default class EditProfile extends React.Component {
                             <TouchableOpacity style={[StyleMyProfile.ButtonView, { paddingHorizontal: 50, marginVertical: 15 }]}
                                 onPress={() => {
                                     this.setState({ isProfileUpdatedModal: false})
-                                    this.props.navigation.navigate("Dashboard")
+                                    this.props.navigation.navigate("MyProfile")
                                 }}
                             >
                                 <Text style={StyleMyProfile.ButtonLabel}>{Constants.OK}</Text>

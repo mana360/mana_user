@@ -29,7 +29,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Mana360_customerUser.app"
+               BuildableName = "Mana360 Customer.app"
                BlueprintName = "Mana360_customerUser"
                ReferencedContainer = "container:Mana360_customerUser.xcodeproj">
             </BuildableReference>
@@ -59,7 +59,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Mana360_customerUser.app"
+            BuildableName = "Mana360 Customer.app"
             BlueprintName = "Mana360_customerUser"
             ReferencedContainer = "container:Mana360_customerUser.xcodeproj">
          </BuildableReference>
@@ -93,7 +93,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Mana360_customerUser.app"
+            BuildableName = "Mana360 Customer.app"
             BlueprintName = "Mana360_customerUser"
             ReferencedContainer = "container:Mana360_customerUser.xcodeproj">
          </BuildableReference>
@@ -110,7 +110,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Mana360_customerUser.app"
+            BuildableName = "Mana360 Customer.app"
             BlueprintName = "Mana360_customerUser"
             ReferencedContainer = "container:Mana360_customerUser.xcodeproj">
          </BuildableReference>

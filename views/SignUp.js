@@ -332,7 +332,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
             <TextInput placeholder='Enter Password'
               ref={(ref)=>(this.TextInput_password = ref)}
               secureTextEntry={true}
-              maxLength={12}
+              maxLength={15}
               style={StyleSignUp.textInput_style}
               value={this.state.password}
               onChangeText={(newtext) => { this.setState({ password: newtext }) }}
@@ -348,6 +348,7 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
             <TextInput placeholder='Enter Confirm Password'
               ref={(ref)=>(this.TextInput_confirm_password = ref)}
               secureTextEntry={true}
+              maxLength={15}
               style={StyleSignUp.textInput_style}
               value={this.state.confirm_password}
               onChangeText={(newText) => { this.setState({ confirm_password: newText }) }}
