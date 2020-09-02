@@ -127,6 +127,9 @@ export default class Splash extends React.Component {
     }
 
     displayNotification(notification){
+        console.log(JSON.stringify("notification data================>"+notification.data))
+        console.log("notification data================>"+notification.data)
+
         this.setState({isNotifcation:"true"})
         const localNotification = new firebase.notifications.Notification({
           show_in_foreground:true,
@@ -138,6 +141,7 @@ export default class Splash extends React.Component {
           .android.setSmallIcon('ic_launcher')
           .android.setPriority(firebase.notifications.Android.Priority.High) 
           .setData(notification.data);
+          
         
           firebase.notifications()
           .displayNotification(localNotification) 
