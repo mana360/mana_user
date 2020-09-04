@@ -1097,7 +1097,7 @@ export default class ProfileSetUp extends React.Component {
                 return false
             }
             if(this.state.user_docType!="0" && this.state.user_doc_image==""){
-                this.presenter.getCommonAlertBox("Please upload document")
+                this.presenter.getCommonAlertBox("Please upload an ID Document ")
                 return false
             }
             if(this.state.user_firstName==""){

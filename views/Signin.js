@@ -38,12 +38,15 @@ export default class SignIn extends Component {
      global.temp_emailId = this.state.input_email_id;
      global.temp_password = this.state.input_password;
 
-     let fbToken=await getFirebaseToken()
+     let fbToken=await getFirebaseToken();
+    //  alert("FBtoken==>"+fbToken);
+     console.log("FBtoken==>"+JSON.stringify(fbToken));
+
      let params = {
        "username": this.state.input_email_id,
        "password": this.state.input_password,
        "device_type": Platform.OS=="android" ? 2 : Platform.OS=="ios" ? 3 : 1,
-       "device_token": fbToken==null ?'no-token':fbToken ,
+       "device_token":fbToken,
        "app_version": "1"
      }
     this.presenter.callPostApi(ApiConstants.login, params, true);
