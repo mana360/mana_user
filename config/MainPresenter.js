@@ -83,7 +83,7 @@ export class MainPresenter extends React.Component {
     
     async callGetApi(apiConstant, queryParams, loader) {
         let isConnected=await this._isNetworkAvailable();
-        console.log("Rietsh bhau==>"+isConnected);
+
         if (!isConnected) {
             this.getCommonAlertBox("Internet connection is unavailable.")
             return 
@@ -144,7 +144,7 @@ export class MainPresenter extends React.Component {
 
     async setupProfileCompany(apiConstant, params, loader) {
         let isConnected=await this._isNetworkAvailable();
-        console.log("Rietsh bhau==>"+isConnected);
+        
         if (!isConnected) {
             this.getCommonAlertBox("Internet connection is unavailable.")
             return
@@ -191,7 +191,7 @@ export class MainPresenter extends React.Component {
 
     async setupProfileIndividual(apiConstant, params, loader) {
         let isConnected=await this._isNetworkAvailable();
-        console.log("Rietsh bhau==>"+isConnected);
+        
         if (!isConnected) {
             this.getCommonAlertBox("Internet connection is unavailable.")
             return
@@ -274,7 +274,7 @@ export class MainPresenter extends React.Component {
     async upload(apiConstant, params, loader) {
         
         let isConnected=await this._isNetworkAvailable();
-        console.log("Rietsh bhau==>"+isConnected);
+        
         if (!isConnected) {
             this.getCommonAlertBox("Internet connection is unavailable.")
             return

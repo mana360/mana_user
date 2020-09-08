@@ -29,6 +29,7 @@ export default class SignUp extends Component {
       resp_otp_code:'',
       resp_temp_token:'',
       userData:"",
+      mailAlreadyUsedModalVisible:false,
     }
   }
   static navigationOptions = ({ navigation }) => {
@@ -148,6 +149,15 @@ resendOTP(){
         "user_id":this.state.resp_user_id,
       }
      this.presenter.callPostApi(ApiConstants.resendOTP, params, true);
+}
+
+mailAlreadyused(){
+  return(
+    <View>
+
+    </View>
+
+  )
 }
 
 showOTpModal() {
@@ -476,7 +486,14 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
         >
           {this.showOTpModal()}
         </Modal>
+        <Modal
+          transparent={true}
+          visible={this.state.mailAlreadyUsedModalVisible}
+          
 
+        >
+          {/* {this.mailAlreadyused()} */}
+        </Modal>
       </View>
 
     )

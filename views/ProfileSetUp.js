@@ -50,7 +50,7 @@ export default class ProfileSetUp extends React.Component {
             user_docType:"0",
             user_profile_image:"",
             user_profile_image_data:"",
-
+            user_fullName:"",
             company_contactPerson: '',
             company_name: '',
             company_contactPosition: '',
@@ -532,7 +532,9 @@ export default class ProfileSetUp extends React.Component {
                         maxLength={4}
                         value={this.state.company_zipCode}
                         ref={(ref)=>{this.input_company_zipcode = ref}}
-                        onChangeText={(text) => { this.setState({ company_zipCode: text }) }}
+                        onChangeText={(text) => { this.setState({ company_zipCode: text })
+                    // alert("zip code==>"+text)
+                 }}
                     />
                 </View>
 
@@ -1327,6 +1329,8 @@ export default class ProfileSetUp extends React.Component {
                     "registration_type":2,                                  // 1 for company,   2 for individual
                     "terms_accepted":this.state.policyRadio_button? 1 : 0,
                 }
+                console.log("zip code is =================>"+this.state.user_zipCode)
+
                 if(this.state.user_docType=="1"){
                     delete params.passport_file
                     console.log("passport param deleted")
@@ -1357,6 +1361,7 @@ export default class ProfileSetUp extends React.Component {
                     "registration_type":1,                                    // 1 for company,   2 for individual
                     "terms_accepted": this.state.policyRadio_button? 1 : 0,
                 }
+                console.log("zip code is =================>"+this.state.company_zipCode)
                 this.presenter.setupProfileCompany(ApiConstants.profileSetup, params, true);
             }
         }
@@ -1602,7 +1607,7 @@ export default class ProfileSetUp extends React.Component {
                                 source={require('../images/sent_icon.png')}
                             />
                             <Text style={StyleSetUpProfile.modalMsg}>{Constants.ProfileSetUPDoneSuccessFul}</Text>
-                            <Text style={[StyleSetUpProfile.modalMsg, { fontWeight: 'normal' }]}>{Constants.YouwillRevicefromourSupportTeam}</Text>
+                            <Text style={[StyleSetUpProfile.modalMsg, { fontWeight: 'normal' }]}>Dear CML Driver {this.state.customerType=="Company"?this.state.company_name:`${this.state.user_firstName} ${this.state.user_lastName}`} {Constants.YouwillRevicefromourSupportTeam}</Text>
                             <TouchableOpacity style={StyleSetUpProfile.modalButton}
                                 onPress={async() => {
                                     this.setState({ Modal_visible: false })
@@ -1612,7 +1617,7 @@ export default class ProfileSetUp extends React.Component {
                                     this.props.navigation.dispatch(
                                         StackActions.reset({
                                             index :0,
-                                            actions :[NavigationActions.navigate({routeName : 'SignIn'})]
+                                            actions :[NavigationActions.navigate({routeName : 'Splash'})]
                                         })
                                     );
                                 }}
