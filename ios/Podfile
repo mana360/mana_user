@@ -42,6 +42,8 @@ target 'Mana360_customerUser' do
 
   pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
 
+  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
+
   target 'Mana360_customerUserTests' do
     inherit! :search_paths
     # Pods for testing

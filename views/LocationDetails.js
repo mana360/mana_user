@@ -15,6 +15,7 @@ import moment from 'moment'
 import ApiConstants from '../config/ApiConstants';
 import { MainPresenter } from '../config/MainPresenter';
 import {DateIOS} from '../config/DateIOS'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class LocationDetails extends React.Component {
     constructor(props) {
@@ -539,9 +540,14 @@ export default class LocationDetails extends React.Component {
                                 <TouchableOpacity
                                     style={{ width: 30, alignSelf: 'flex-end', justifyContent: 'center', alignItems: 'center', marginTop: -32, marginRight: 15 }}
                                     onPress={() => { 
-                                        Platform.OS=="android" ? this.openCalender() : this.iosDatePicker.getDateIOSPicker()
+
+                                        Platform.OS=="android" ?
+                                         this.openCalender() 
+                                         : 
+                                         this.iosDatePicker.getDateIOSPicker()
                                     }}
                                 >
+                              
                                     <Image style={{ width: 20, height: 20, }}
                                         source={require('../images/date_icon.png')}
                                     />

@@ -608,7 +608,7 @@ export default class MyBookingDetails extends React.Component {
                         <View style={{ flex: 1 }}>
                             <Text style={[StyleMyBookingDetails.detailsKey, { textTransform: 'none', }]}>{Constants.Resend_OTP}</Text>
                         </View>
-                    
+                        
                         <TouchableOpacity style={{ flex: 1 }}
                         //  disabled={this.state.truck_booking_details['booking_status'] == Constants.BOOKING_STATUS_NEW?true:false}
                             onPress={()=>{

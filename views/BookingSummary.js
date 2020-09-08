@@ -205,12 +205,12 @@ export default class BookingSummary extends React.Component{
         
     let dropoff_list =    [
         {
-            "drop_location":this.state.drop_off_addressDetails+","+this.state.drop_off_address,
+            "drop_location":this.state.drop_off_address==""?"":this.state.drop_off_addressDetails+","+this.state.drop_off_address,
             "drop_latlng":this.state.drop_off_address_lat+","+this.state.drop_off_address_long,
             "drop_address":this.state.drop_off_addressDetails
         },
         {
-            "drop_location":this.state.drop_off_address_1Details+","+this.state.drop_off_address_1,
+            "drop_location":this.state.drop_off_address_1==""?"": this.state.drop_off_address_1Details+","+this.state.drop_off_address_1,
             "drop_latlng":this.state.drop_off_address_1_lat+","+this.state.drop_off_address_1_long,
             "drop_address":this.state.drop_off_address_1Details
        }
@@ -222,16 +222,15 @@ export default class BookingSummary extends React.Component{
                 delete item.service_name
             })
         }
-      
 
     let params={
         "pickup_address":`${this.state.pick_up_addressDetails},${this.state.pick_up_address}`,
         "pickup_latlng":`${this.state.pick_up_address_lat},${this.state.pick_up_address_long}`,
         "drop_list" : dropoff_list,
         "other_services":JSON.stringify(this.state.otherServicesdata),
-        "drop1_address":`${this.state.drop_off_addressDetails},${this.state.drop_off_address}`,
+        "drop1_address":this.state.drop_off_address==""?"": `${this.state.drop_off_addressDetails},${this.state.drop_off_address}`,
         "drop1_latlng":`${this.state.drop_off_address_lat},${this.state.drop_off_address_long}`,
-        "drop2_address":`${this.state.drop_off_address_1Details},${this.state.drop_off_address_1}`,
+        "drop2_address": this.state.drop_off_address_1==""?"":`${this.state.drop_off_address_1Details},${this.state.drop_off_address_1}`,
         "drop2_latlng":`${this.state.drop_off_address_1_lat},${this.state.drop_off_address_1_long}`,
         "truck_type_id":this.state.truck_Type_id,
         "pickup_date":this.state.pickup_date,
@@ -247,6 +246,7 @@ export default class BookingSummary extends React.Component{
         "payment_transaction_id":transaction_id,
         "distance":this.state.distance,
        }
+       console.log("PAram REsponse ============================>"+JSON.stringify(params))
      this.presenter.callPostApi(ApiConstants.bookCMLTrip,params,true);
     }
    
@@ -937,7 +937,7 @@ export default class BookingSummary extends React.Component{
                     
                     </ScrollView> 
 
-                            <Modal          
+                    <Modal          
                                 animationType="fade"
                                 transparent={true}
                                 visible={this.state.modalVisible}
