@@ -16,11 +16,18 @@ const Constants = {
     BASE_URL:"http://54.205.90.119/api/",   
     IMAGE_BASE_URL :"http://54.205.90.119/api/",
 
-    PAYMENT_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/mobile-payment",
-    PAYMENT_SUCCESS_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/success_payment",
-    PAYMENT_FAILD_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/failed_payment",
 
-    
+
+    // PAYMENT_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/mobile-payment",
+    // PAYMENT_SUCCESS_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/success_payment",
+    // PAYMENT_FAILD_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/failed_payment",
+
+    PAYMENT_URL:"http://54.205.90.119/api/mobile-payment",
+    PAYMENT_SUCCESS_URL:"http://54.205.90.119/api/success_payment",
+    PAYMENT_FAILD_URL:"http://54.205.90.119/api/failed_payment",
+
+
+
     GOOGLE_MAP_KEY:"AIzaSyBEDVKNDyVUzE2ajUXcrpX89ZORifA0cN4",
 
     EMAIL_REGX:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,

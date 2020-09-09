@@ -449,7 +449,8 @@ export default class MyBookingDetails extends React.Component {
                             <Text style={StyleMyBookingDetails.detailsKey}>{Constants.OTHER_SERVICES}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <FlatList
+                            {this.state.other_services==""?<Text style={{color:Constants.COLOR_GREY_DARK}}> NA</Text>:
+                                <FlatList
                                 data={this.state.other_services}
                                 numColumns={1}
                                 keyExtractor={index => index.toString()}
@@ -462,7 +463,7 @@ export default class MyBookingDetails extends React.Component {
                                             </Text>
                                         </View>
                                 }
-                            />
+                            />}
                         </View>
                     </View>
                  

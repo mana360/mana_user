@@ -46,6 +46,8 @@ export default class Splash extends React.Component {
         messaging().onMessage( (notification)=>{
             //when app is working in foreground
             console.log("notification ====> "+JSON.stringify(notification))
+            console.log("notification copy ====> "+JSON.stringify(notification))
+
         } )
 
         messaging().setBackgroundMessageHandler((notification)=>{

@@ -224,8 +224,8 @@ showOTpModal() {
 
 onClickSignup(){
   if(!this.isValid()){
-    return
-  }
+  
+  }else{
 
   global.temp_emailId = this.state.emailId;
   global.temp_password = this.state.password;
@@ -235,7 +235,9 @@ onClickSignup(){
     "password":this.state.confirm_password,
     "referal_code":this.state.referral_code
   }
+
  this.presenter.callPostApi(ApiConstants.register, params, true);
+}
 }
 
 isValid() {
