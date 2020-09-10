@@ -9,6 +9,7 @@ import Constants from '../config/Constants';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { MainPresenter } from '../config/MainPresenter';
 import ApiConstants from '../config/ApiConstants';
+import {Toast} from "native-base";
 import { setUserData, setAuthToken, clearAllData,} from '../config/AppSharedPreference';
 
 export default class SignUp extends Component {
@@ -148,6 +149,7 @@ resendOTP(){
       let params = {
         "user_id":this.state.resp_user_id,
       }
+    
      this.presenter.callPostApi(ApiConstants.resendOTP, params, true);
 }
 
@@ -223,9 +225,6 @@ showOTpModal() {
 }
 
 onClickSignup(){
-  if(!this.isValid()){
-  
-  }else{
 
   global.temp_emailId = this.state.emailId;
   global.temp_password = this.state.password;
@@ -235,9 +234,8 @@ onClickSignup(){
     "password":this.state.confirm_password,
     "referal_code":this.state.referral_code
   }
-
  this.presenter.callPostApi(ApiConstants.register, params, true);
-}
+
 }
 
 isValid() {
@@ -458,7 +456,12 @@ if(!Constants.PASSWORD_REGX.test(this.state.password)){
               }
               disabled={ this.state.policyRadio_button ? false : true}
               onPress={() => {
-                this.onClickSignup();
+                
+                if(this.isValid()){
+                  this.onClickSignup();
+                }
+
+
               }}
             >
             <Text style={StyleSignUp.Login_buttonText}>{Constants.SignUp}</Text>
