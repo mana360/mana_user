@@ -3,7 +3,7 @@
     api by  Udayraj
  */
 import React, { Component } from 'react';
-import { View, Image, Platform } from 'react-native'
+import { View, Image, Platform, PermissionsAndroid } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { getAuthToken, clearAllData, setFirebaseToken, getFirebaseToken} from '../config/AppSharedPreference';
@@ -25,12 +25,35 @@ export default class Splash extends React.Component {
 
     componentDidMount() {
         if(Platform.OS=="android"){
+            this.getAndroidPermissions()
             this.firebaseForAndroid()
         }
         if(Platform.OS=="ios"){
             this.checkFirebasePermission()
         }
         this.init()
+    }
+
+    async getAndroidPermissions(){
+        try {
+            const granted = await PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.CAMERA,
+              {
+                title: "Camera Permission Request",
+                message:
+                  "This app needs access to your camera ",
+                buttonNegative: "Deny",
+                buttonPositive: "Allow"
+              }
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+              console.log("You can use the camera");
+            } else {
+              console.log("Camera permission denied");
+            }
+          } catch (err) {
+            console.log("Error camera===> "+err);
+          }
     }
 
     componentWillUnmount() {
