@@ -1607,7 +1607,7 @@ export default class ProfileSetUp extends React.Component {
                                 source={require('../images/sent_icon.png')}
                             />
                             <Text style={StyleSetUpProfile.modalMsg}>{Constants.ProfileSetUPDoneSuccessFul}</Text>
-                            <Text style={[StyleSetUpProfile.modalMsg, { fontWeight: 'normal' }]}>Dear CML Driver {this.state.customerType=="Company"?this.state.company_name:`${this.state.user_firstName} ${this.state.user_lastName}`} {Constants.YouwillRevicefromourSupportTeam}</Text>
+                            <Text style={[StyleSetUpProfile.modalMsg, { fontWeight: 'normal' }]}>Dear {this.state.customerType=="Company"?this.state.company_name:`${this.state.user_firstName} ${this.state.user_lastName}`} {Constants.YouwillRevicefromourSupportTeam}</Text>
                             <TouchableOpacity style={StyleSetUpProfile.modalButton}
                                 onPress={async() => {
                                     this.setState({ Modal_visible: false })
