@@ -15,7 +15,7 @@ import moment from 'moment'
 import ApiConstants from '../config/ApiConstants';
 import { MainPresenter } from '../config/MainPresenter';
 import {DateIOS} from '../config/DateIOS'
-import DateTimePicker from '@react-native-community/datetimepicker';
+
 
 export default class LocationDetails extends React.Component {
     constructor(props) {
