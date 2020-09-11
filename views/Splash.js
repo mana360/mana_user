@@ -152,8 +152,8 @@ export default class Splash extends React.Component {
     }
 
     displayNotification(notification){
-        console.log(JSON.stringify("notification data================>"+notification.data))
-        console.log("notification data================>"+notification.data)
+        console.log("notification data================>"+JSON.stringify(notification.data))
+        console.log("notification data= copy===============>"+ JSON.stringify(notification.data))
 
         this.setState({isNotifcation:"true"})
         const localNotification = new firebase.notifications.Notification({

@@ -86,7 +86,7 @@ dateAndTime(itemDate,value){
             <HeaderBar title="Current Trips" isBack={true} isLogout={true} navigation={navigation} />
 
             <View style={{ display : this.state.dataSource=="" ? 'flex' : 'none', flex:1, justifyContent:'center', alignItems:'center' }}>
-                <Text style={{fontSize:16}}> No trip is available. </Text>
+                <Text style={{fontSize:16}}> {  this.service_type_id==2?"no warehouse bookings":"No trip is available." }</Text>
             </View>
                 <FlatList
                     style={{ display: this.state.dataSource=="" ? 'none' : 'flex', marginVertical: 15}}
