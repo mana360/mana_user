@@ -460,7 +460,7 @@ export default class CollectMyLoad extends React.Component {
                                                 <Text style={StyleCollectMyLoad.truckDetails}>{item.desc}</Text>
                                                 
                                                 <View style={StyleCollectMyLoad.grayBox}>
-                                                    <Text style={[StyleCollectMyLoad.maxTxt, { marginBottom: 6 }]}>Maximum Weight : {item.weight} TON</Text>
+                                                    <Text style={[StyleCollectMyLoad.maxTxt, { marginBottom: 6 }]}>Maximum Weight : {item.weight} KG</Text>
                                                     <Text style={StyleCollectMyLoad.maxTxt}>Size : {item.size} (m)</Text>
                                                 </View>
                                                 
