@@ -86,6 +86,7 @@ export default class PaymentMethod extends React.Component {
                                 onPress={()=>{
                                     this.payment_method="cash"
                                     this.setState({payment_method:"cash"})
+                                    this.onPaymentSucess()
                                 }}
                             >
                                 <Text style={ this.state.payment_method=="cash" ? StylePaymentMethod.onlinepaytxt : StylePaymentMethod.cashpickuptxt}>Cash On Pick Up</Text>
@@ -96,6 +97,7 @@ export default class PaymentMethod extends React.Component {
                                 onPress={() => { 
                                     this.payment_method="online"
                                     this.setState({payment_method:"online",}) 
+                                    this.setState({modalVisible:true})
                                 }}
                                 underlayColor='#fff'
                             >
@@ -106,7 +108,7 @@ export default class PaymentMethod extends React.Component {
 
                         <View style={StylePaymentMethod.paymentmethodpaybtn}>
                             <TouchableOpacity 
-                                style={[StylePaymentMethod.paybtn,{backgroundColor : this.state.payment_method=="" ? Constants.COLOR_GREY_LIGHT  : Constants.COLOR_GREEN,}]}
+                                style={[StylePaymentMethod.paybtn,{disable:'none', backgroundColor : this.state.payment_method=="" ? Constants.COLOR_GREY_LIGHT  : Constants.COLOR_GREEN,}]}
                                 disabled={this.state.payment_method=="" ? true : false}
                                 onPress={()=>{
                                     this.payment_method=="cash" ? this.onPaymentSucess() : this.setState({modalVisible:true})
