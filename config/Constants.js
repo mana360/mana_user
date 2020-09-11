@@ -309,7 +309,7 @@ const Constants = {
     AdditionalContactNumber:'Additional Contact Number',
     ProfileSetUPDoneSuccessFul:"Profile setup done Successfully.",
     // YouwillRevicefromourSupportTeam:"You will receive an \n acknowledgement once your profile \n is verified from our Support team ",
-     YouwillRevicefromourSupportTeam:"\n Your Profile has been submitted,\n You will receive an confirmations once your profile is verified from our Support team.\n If you have any questions, please feel free to email us at support@mana360.co.za or you can reach out to us on  +27 11 719 7100",
+     YouwillRevicefromourSupportTeam:"\n Your profile has been submitted,\n You will receive a confirmation once your profile is verified from our support team.\n If you have any questions, please feel free to email us at support@mana360.co.za or you can reach out to us on  +27 11 719 7100",
 
     AddServices:'Add Services',
     TotalPrice:'Total Price',
