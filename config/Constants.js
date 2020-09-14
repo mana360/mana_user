@@ -13,8 +13,8 @@ const Constants = {
     // IMAGE_BASE_URL :"http://laravel.exceptionaire.tk/mana/QAP/public/",
 
     //Base url for Production
-    BASE_URL:"http://54.205.90.119/api/",   
-    IMAGE_BASE_URL :"http://54.205.90.119/api/",
+    BASE_URL:"https://www.mana-360.co.za/api/",   
+    IMAGE_BASE_URL :"https://www.mana-360.co.za/api/",
 
 
 
@@ -22,9 +22,9 @@ const Constants = {
     // PAYMENT_SUCCESS_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/success_payment",
     // PAYMENT_FAILD_URL:"http://laravel.exceptionaire.tk/mana/QAP/public/failed_payment",
 
-    PAYMENT_URL:"http://54.205.90.119/api/mobile-payment",
-    PAYMENT_SUCCESS_URL:"http://54.205.90.119/api/success_payment",
-    PAYMENT_FAILD_URL:"http://54.205.90.119/api/failed_payment",
+    PAYMENT_URL:"https://www.mana-360.co.za/api/mobile-payment",
+    PAYMENT_SUCCESS_URL:"https://www.mana-360.co.za/api/success_payment",
+    PAYMENT_FAILD_URL:"https://www.mana-360.co.za/api/failed_payment",
 
 
 
